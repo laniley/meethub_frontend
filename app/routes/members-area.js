@@ -100,7 +100,8 @@ export default AuthenticateRoute.extend({
                   name: response.name,
                   description: response.descrption,
                   start_time: response.start_time,
-                  timezone: response.timezone
+                  timezone: response.timezone,
+                  location: location
                 });
               }
               else
