@@ -5,13 +5,16 @@ export default Ember.Controller.extend({
   actions: {
     login: function()
     {
-      var controller = this.controllerFor('login');
-
-      this.get('session').authenticate('simple-auth-authenticator:torii', 'facebook-connect').then(function(authorization){
-        // FB.api is now available. authorization contains the UID and
-        // accessToken.
-        controller.set('hasFacebook', true);
-      });
+      this.get('session').authenticate('simple-auth-authenticator:torii', 'facebook-connect').then(
+        function(authorization) {
+          // FB.api is now available. authorization contains the UID and
+          // accessToken.
+          console.log('SUCCESS: ' + authorization);
+        },
+        function(error) {
+          console.error(error.stack);
+        }
+      );
     }
   }
 });

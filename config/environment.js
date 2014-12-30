@@ -16,6 +16,18 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+    },
+
+    // for the FB-SDK
+    contentSecurityPolicy: {
+      'default-src': "'none'",
+      'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net facebook.com graph.facebook.com maps.googleapis.com maps.gstatic.com",
+      'font-src': "'self' data: use.typekit.net",
+      'connect-src': "'self' localhost:8000",
+      'img-src': "'self' www.facebook.com p.typekit.net",
+      'style-src': "'self' 'unsafe-inline' use.typekit.net",
+      'frame-src': "s-static.ak.facebook.com static.ak.facebook.com www.facebook.com",
+      'report-uri': '/_/csp-reports'
     }
   };
 
@@ -34,8 +46,8 @@ module.exports = function(environment) {
         },
         'facebook-connect': {
           appId: '560143030797393',
-          scope: 'public_profile, user_friends'
-          //redirectUri: 'http://localhost:4200/members-area'
+          scope: 'public_profile, user_friends',
+          redirectUri: 'http://localhost:4200/'
         }
       }
     };
@@ -59,7 +71,24 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
+    ENV['torii'] = {
+      providers: {
+        'facebook-oauth2': {
+          apiKey: '560143030797393',
+          redirectUri: 'http://localhost:4200/'
+        },
+        'facebook-connect': {
+          appId: '560143030797393',
+          scope: 'public_profile, user_friends'
+          //redirectUri: 'http://localhost:4200/members-area'
+        }
+      }
+    };
 
+    ENV['simple-auth'] = {
+      routeAfterAuthentication: 'members-area',
+      routeIfAlreadyAuthenticated: 'members-area'
+    };
   }
 
   return ENV;
