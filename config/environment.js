@@ -25,6 +25,25 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     ENV.APP.LOG_VIEW_LOOKUPS = true;
+
+    ENV['torii'] = {
+      providers: {
+        'facebook-oauth2': {
+          apiKey: '560143030797393',
+          redirectUri: 'http://localhost:4200/'
+        },
+        'facebook-connect': {
+          appId: '560143030797393',
+          scope: 'public_profile, user_friends'
+          //redirectUri: 'http://localhost:4200/members-area'
+        }
+      }
+    };
+
+    ENV['simple-auth'] = {
+      routeAfterAuthentication: 'members-area',
+      routeIfAlreadyAuthenticated: 'members-area'
+    };
   }
 
   if (environment === 'test') {
