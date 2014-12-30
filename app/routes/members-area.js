@@ -78,6 +78,37 @@ export default AuthenticateRoute.extend({
               }
             });
 
+            FB.api('/1523279254598611', function(response)
+            {
+              if( !response.error )
+              {
+                console.log(response);
+
+                var location = self.store.createRecord('location', {
+                  id: response.venue.id,
+                  name: response.location,
+                  country: response.venue.country,
+                  city: response.venue.city,
+                  zip: response.venue.zip,
+                  street: response.venue.street,
+                  latitude: response.venue.latitude,
+                  longitude: response.venue.longitude
+                });
+
+                var event = self.store.createRecord('event', {
+                  id: response.id,
+                  name: response.name,
+                  description: response.descrption,
+                  start_time: response.start_time,
+                  timezone: response.timezone
+                });
+              }
+              else
+              {
+                console.log(response.error);
+              }
+            });
+
         //     console.log('charachters', user.get('characters.length'));
 
 
