@@ -1,3 +1,15 @@
 .map-canvas {
-  height: 600px;
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  @media (min-width: $screen-sm-min) {
+    top: 70px;
+  }
+
+  @media (max-width: $screen-xs-max) {
+    top: 50px;
+  }
 }
