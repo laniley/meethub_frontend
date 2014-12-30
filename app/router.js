@@ -7,7 +7,7 @@ var Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('login', { path: '/'});
-  this.resource('members-area', { path: 'members-areas/:members-area_id' }, function() { });
+  this.resource('members-area', { path: 'members-area' }, function() { });
 });
 
 export default Router;
