@@ -16,4 +16,12 @@ body {
 
 .main-row {
   margin: 0;
+
+  @media (min-width: $screen-sm-min) {
+    margin-top: 70px;
+  }
+
+  @media (max-width: $screen-xs-max) {
+    margin-top: 50px;
+  }
 }
