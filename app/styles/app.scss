@@ -1,6 +1,7 @@
 @import "bootstrap-custom";
 @import "variables";
 @import "login";
+@import "top_nav_bar";
 
 html, body {
   margin: 0;
@@ -10,4 +11,8 @@ html, body {
 
 body {
   font-family: Calibri, Arial, sans-serif;
+}
+
+.main-row {
+  margin: 0;
 }

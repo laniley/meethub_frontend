@@ -1,0 +1,52 @@
+.navbar-brand {
+  font-family: Ethno_regular;
+  color: $header-text-color !important;
+
+  @media (min-width: $screen-sm-min) {
+    line-height: 40px;
+  }
+
+  img {
+    float: left;
+    margin-right: 5px;
+
+    @media (min-width: $screen-sm-min) {
+      width: 40px;
+    }
+
+    @media (max-width: $screen-xs-max) {
+      width: 20px;
+    }
+  }
+
+  .brand-name {
+    float: left;
+  }
+}
+
+.navbar .navbar-collapse {
+
+  @media (min-width: $screen-sm-min) {
+    text-align: center;
+  }
+
+  @media (max-width: $screen-xs-max) {
+    background: rgba(76, 78, 90, 0.5);
+  }
+}
+
+.dropdown-toggle {
+  .account_img_container {
+    display: inline-block;
+    margin-right: 5px;
+
+    img {
+      height: 40px;
+      @include all_browser(border-radius, 5px);
+    }
+  }
+  .account_name {
+    display: inline-block;
+  }
+}
+
