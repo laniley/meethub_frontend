@@ -31,11 +31,11 @@ export default AuthenticateRoute.extend({
 
     var self = this;
 
-    FB.api('/me', {fields: 'id,name,picture.width(120).height(120)'}, function(response)
+    FB.api('/me', {fields: 'id,name,picture.width(120).height(120),friends'}, function(response)
     {
       if( !response.error )
       {
-        console.log('Successful login to FB for: ' + response.name);
+        console.log('Successful login to FB for: ' + response.name, response);
 
         var user = self.store.createRecord('user', {
           id: response.id,
@@ -43,11 +43,40 @@ export default AuthenticateRoute.extend({
           picture: response.picture.data.url
         });
 
+        if(response.friends.data.length > 0)
+        {
+
+        }
+
         // user.save().then
         // (
         //   function()
         //   {
             controller.set('model', user);
+
+            FB.api('/me/events/attending', function(response)
+            {
+              if( !response.error )
+              {
+                console.log(response);
+              }
+              else
+              {
+                console.log(response.error);
+              }
+            });
+
+            FB.api('/me/events/maybe', function(response)
+            {
+              if( !response.error )
+              {
+                console.log(response);
+              }
+              else
+              {
+                console.log(response.error);
+              }
+            });
 
         //     console.log('charachters', user.get('characters.length'));
 

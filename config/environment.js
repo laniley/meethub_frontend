@@ -46,7 +46,7 @@ module.exports = function(environment) {
         },
         'facebook-connect': {
           appId: '560143030797393',
-          scope: 'public_profile, user_friends',
+          scope: 'public_profile, user_friends, user_events',
           redirectUri: 'http://localhost:4200/'
         }
       }
@@ -79,7 +79,7 @@ module.exports = function(environment) {
         },
         'facebook-connect': {
           appId: '560143030797393',
-          scope: 'public_profile, user_friends'
+          scope: 'public_profile, user_friends, user_events'
           //redirectUri: 'http://localhost:4200/members-area'
         }
       }
