@@ -103,6 +103,8 @@ export default AuthenticateRoute.extend({
                   timezone: response.timezone,
                   location: location
                 });
+
+                self.transitionTo('members-area.map');
               }
               else
               {
