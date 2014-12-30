@@ -1,1 +1,67 @@
-{{outlet}}
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="navbar-brand">MEETHUB</div>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      {{!-- CENTER AREA --}}
+      <ul class="nav navbar-nav center-links">
+{{!--         <li class="active">
+          <a href="#">
+            <span>{{unbound fa-icon "fa-fixed-with fa-group" title="Characters"}}<span class="sr-only">(current)</span></span>
+            <span class="link-label">Characters</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <span>{{unbound fa-icon "fa-fixed-with fa-book" title="Tales and history of Dunya"}}</span>
+            <span><span class="link-label">Tales and history of Dunya</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <span>{{unbound fa-icon "fa-fixed-with fa-envelope" title="Messages"}}</span>
+            <span><span class="link-label">Messages</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <span>{{unbound fa-icon "fa-fixed-with fa-cogs" title="Settings"}}</span>
+            <span><span class="link-label">Settings</span>
+          </a>
+        </li> --}}
+      </ul>
+      {{!-- RIGHT AREA --}}
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            <div class="account_img_container">
+              <img {{bind-attr src=model.picture}} class="account_img" />
+            </div>
+            <div class="account_name">
+              {{model.name}}
+            </div>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li {{action "invalidateSession"}}><a href="#">{{unbound fa-icon "fa-sign-out"}} Log Out</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<div class="row align-center">
+  <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+    {{outlet}}
+  </div>
+</div>
