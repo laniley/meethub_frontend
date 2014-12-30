@@ -1,0 +1,34 @@
+$orange: #de2c14;
+$darkgreen: #4a6f12;
+$darkblue: #2A2C4C;
+
+$header-text-color: $orange;
+$text-color: $darkblue;
+
+$font-size-input: 18px;
+
+@font-face
+{
+  font-family: Ethno_regular;
+  src:  url('/assets/fonts/ethnocentric_rg.ttf') format('truetype') /* Safari, Android, iOS, Chrome, Firefox */
+}
+
+@font-face
+{
+  font-family: Ethno_italic;
+  src:  url('/assets/fonts/ethnocentric_rg_it.ttf') format('truetype') /* Safari, Android, iOS, Chrome, Firefox */
+}
+
+// needed for:
+// border-radius
+@mixin all_browser($property, $value)
+{
+     @each $prefix in -webkit-, -moz-, -ms-, -o-, ''
+     {
+         #{$prefix}#{$property}: $value;
+     }
+}
+
+.align-center {
+  text-align: center;
+}
