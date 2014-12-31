@@ -1,3 +1,38 @@
+.navbar-default {
+  background: none;
+
+  .navbar-nav {
+    li {
+      a {
+        @media (max-width: $screen-xs-max) {
+          color: #ddd;
+          font-size: 20px;
+
+          &:hover, &:focus {
+            color: white;
+          }
+        }
+      }
+    }
+
+    .open {
+      .dropdown-menu {
+        li {
+          a {
+            @media (max-width: $screen-xs-max) {
+              color: #ddd;
+
+              &:hover, &:focus {
+                color: white;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 .navbar-brand {
   font-family: Ethno_regular;
   color: $header-text-color !important;
@@ -31,7 +66,7 @@
   }
 
   @media (max-width: $screen-xs-max) {
-    background: rgba(76, 78, 90, 0.5);
+    background: rgba(76, 78, 90, 0.7);
   }
 }
 
