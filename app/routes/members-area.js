@@ -104,6 +104,11 @@ export default AuthenticateRoute.extend({
                   location: location
                 });
 
+                var map_controller = self.controllerFor('members-area.map');
+                    map_controller.getCurrentPosition();
+                    // map_controller.set('lat', response.venue.latitude);
+                    // map_controller.set('lng', response.venue.longitude);
+
                 self.transitionTo('members-area.map');
               }
               else
