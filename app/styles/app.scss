@@ -24,3 +24,9 @@ body {
     margin-top: 50px;
   }
 }
+
+.button {
+  cursor: pointer;
+  @include all_browser(border-radius, 5px);
+  border: 1px solid $border-color;
+}
