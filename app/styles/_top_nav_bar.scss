@@ -59,6 +59,24 @@
   }
 }
 
+.center-links {
+
+  font-size: 20px;
+
+  @media (max-width: $screen-xs-max) {
+    margin: 0 -15px 7.5px -15px;
+  }
+
+  @media (min-width: $screen-sm-min) {
+    li {
+      a {
+        padding-top: 25px;
+        padding-bottom: 25px;
+      }
+    }
+  }
+}
+
 .navbar .navbar-collapse {
 
   @media (min-width: $screen-sm-min) {
