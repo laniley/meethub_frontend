@@ -13,6 +13,8 @@
     "ember-qunit": "0.1.8",
     "ember-qunit-notifications": "0.0.4",
     "qunit": "~1.15.0",
-    "ember-simple-auth": "0.7.2"
+    "ember-simple-auth": "0.7.2",
+    "ember-i18n": "~2.9.1",
+    "jquery-cookie": "~1.4.1"
   }
 }
