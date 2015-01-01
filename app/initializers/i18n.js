@@ -7,14 +7,21 @@ export function initialize(/* container, application */) {
 
   var lang = Ember.$.cookie( 'user-lang' );
 
-  if ( lang === undefined ) {
-    if ( typeof window.clientInformation !== 'undefined' && typeof window.clientInformation.browserLanguage !== 'undefined' ) {
+  if ( lang === undefined )
+  {
+    if ( typeof window.clientInformation !== 'undefined' && typeof window.clientInformation.browserLanguage !== 'undefined' )
+    {
       lang = window.clientInformation.browserLanguage.substring(0,2);
-    } else if ( typeof window.navigator !== 'undefined' && typeof window.navigator.language !== 'undefined' ) {
+    }
+    else if ( typeof window.navigator !== 'undefined' && typeof window.navigator.language !== 'undefined' )
+    {
       lang = window.navigator.language.substring(0,2);
-    } else {
+    }
+    else
+    {
       lang = 'en';
     }
+
     Ember.$.cookie( 'user-lang', lang, { expires: 365, path: '/' } );
   }
 
@@ -25,15 +32,18 @@ export function initialize(/* container, application */) {
     url: './locales/' + Ember.I18n.locale + '.js',
     async: false,
     dataType: 'script',
-    error: function () {
-      Ember.Logger.warn( 'Default language loaded' );
+    error: function (e)
+    {
+      Ember.Logger.warn(Ember.I18n.locale + ' language file could not be loaded! Trying to load default language file...', e );
+
       Ember.$.ajax
       ( {
-        url: './javascript/translations/en.js',
+        url: './locales/en.js',
         async: false,
         dataType: 'script',
-        error: function () {
-          Ember.Logger.warn( 'Language file could not be loaded' );
+        error: function (e)
+        {
+          Ember.Logger.warn( 'Language file could not be loaded', e );
         }
       } );
     }
