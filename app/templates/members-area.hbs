@@ -18,30 +18,30 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       {{!-- CENTER AREA --}}
       <ul class="nav navbar-nav center-links">
-{{!--         <li class="active">
-          <a href="#">
-            <span>{{unbound fa-icon "fa-fixed-with fa-group" title="Characters"}}<span class="sr-only">(current)</span></span>
-            <span class="link-label">Characters</span>
-          </a>
+        <li class="active">
+          {{#link-to 'members-area.map.meethubs'}}
+            <span>{{unbound fa-icon "fa-fixed-with fa-group" title="Meethubs"}}<span class="sr-only">(current)</span></span>
+            <span class="link-label">Meethubs</span>
+          {{/link-to}}
         </li>
-        <li>
-          <a href="#">
-            <span>{{unbound fa-icon "fa-fixed-with fa-book" title="Tales and history of Dunya"}}</span>
-            <span><span class="link-label">Tales and history of Dunya</span>
-          </a>
+        <li class="active">
+          {{#link-to 'members-area.map.friends'}}
+            <span>{{unbound fa-icon "fa-fixed-with fa-group" title="Your friends"}}<span class="sr-only">(current)</span></span>
+            <span class="link-label">Friends</span>
+          {{/link-to}}
         </li>
-        <li>
-          <a href="#">
-            <span>{{unbound fa-icon "fa-fixed-with fa-envelope" title="Messages"}}</span>
-            <span><span class="link-label">Messages</span>
-          </a>
+        <li class="active">
+          {{#link-to 'members-area.map.events'}}
+            <span>{{unbound fa-icon "fa-fixed-with fa-group" title="Events"}}<span class="sr-only">(current)</span></span>
+            <span class="link-label">Events</span>
+          {{/link-to}}
         </li>
-        <li>
-          <a href="#">
-            <span>{{unbound fa-icon "fa-fixed-with fa-cogs" title="Settings"}}</span>
-            <span><span class="link-label">Settings</span>
-          </a>
-        </li> --}}
+        <li class="active">
+          {{#link-to 'members-area.map.locations'}}
+            <span>{{unbound fa-icon "fa-fixed-with fa-group" title="Locations"}}<span class="sr-only">(current)</span></span>
+            <span class="link-label">Locations</span>
+          {{/link-to}}
+        </li>
       </ul>
       {{!-- RIGHT AREA --}}
       <ul class="nav navbar-nav navbar-right">

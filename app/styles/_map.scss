@@ -1,3 +1,5 @@
+$side-navbar-width: 400px;
+
 .map-canvas {
   position: absolute;
 
@@ -12,4 +14,23 @@
   @media (max-width: $screen-xs-max) {
     top: 50px;
   }
+}
+
+.side-nav-bar {
+  position: absolute;
+
+  @media (min-width: $screen-sm-min) {
+    top: 70px;
+  }
+
+  @media (max-width: $screen-xs-max) {
+    top: 50px;
+  }
+
+  right: 0;
+  bottom: 0;
+  width: $side-navbar-width;
+
+  background-color: white;
+  border-left: 1px solid #e7e7e7;
 }
