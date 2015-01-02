@@ -2,11 +2,11 @@
   position: absolute;
   font-size: 18px;
 
-  @media (min-width: $breakpoint-min) {
+  @media (min-width: $screen-sm-min) {
     top: 70px;
   }
 
-  @media (max-width: $breakpoint-max) {
+  @media (max-width: $screen-xs-max) {
     top: 50px;
   }
 
@@ -26,7 +26,6 @@
     font-family: Ethno_regular, Arial, sans-serif;
     font-size: 20px;
     color: $header-text-color;
-    // margin-bottom: 10px;
   }
 
   .no-content-text {

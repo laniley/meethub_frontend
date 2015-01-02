@@ -9,7 +9,10 @@ Router.map(function() {
   this.route('login', { path: '/'});
   this.resource('members-area', { path: 'members-area' }, function() {
     this.route('map', function() {
-      this.route('meethubs');
+      this.route('meethubs', function() {
+        this.route('create');
+        this.route('search');
+      });
       this.route('friends');
       this.route('events');
       this.route('locations');
