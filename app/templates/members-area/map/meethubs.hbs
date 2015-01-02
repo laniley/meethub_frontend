@@ -6,14 +6,16 @@
 {{!-- <div class="no-content-text">{{t meethub.not-in-a-meethub}}</div> --}}
 
 <div class="side-nav-item">
-  <button class="button">
-    {{#link-to 'members-area.map.meethubs.create'}}
+  {{#link-to 'members-area.map.meethubs.create'}}
+    <button class="button">
       {{unbound fa-icon "fa-fixed-with fa-pencil"}} {{t meethub.button.create}}
-    {{/link-to}}
-  </button>
-  <button class="button">
-    {{#link-to 'members-area.map.meethubs.search'}}
+    </button>
+  {{/link-to}}
+  {{#link-to 'members-area.map.meethubs.search'}}
+    <button class="button">
       {{unbound fa-icon "fa-fixed-with fa-search"}} {{t meethub.button.search}}
-    {{/link-to}}
-  </button>
+    </button>
+  {{/link-to}}
 </div>
+
+{{outlet}}
