@@ -15,36 +15,3 @@ $side-navbar-width: 400px;
     top: 50px;
   }
 }
-
-.side-nav-bar {
-  position: absolute;
-  font-size: 18px;
-
-  @media (min-width: $screen-sm-min) {
-    top: 70px;
-  }
-
-  @media (max-width: $screen-xs-max) {
-    top: 50px;
-  }
-
-  right: 0;
-  bottom: 0;
-  width: $side-navbar-width;
-
-  background-color: white;
-  border-left: 1px solid $border-color;
-
-  .map-section-title {
-    font-family: Ethno_regular, Arial, sans-serif;
-    font-size: 20px;
-    color: $header-text-color;
-    padding: 15px 0;
-    margin-bottom: 10px;
-    border-bottom: 1px solid $border-color;
-  }
-
-  .no-content-text {
-    margin-bottom: 20px;
-  }
-}
