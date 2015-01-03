@@ -9,6 +9,10 @@ export default Ember.Controller.extend({
   type:     'road',
   mapTypes: MAP_TYPES,
 
+  markers: [],
+
+  hasMarkerForCurrentPosition: false,
+
   getCurrentPosition: function()
   {
     console.log('Getting your current position...');
@@ -29,17 +33,24 @@ export default Ember.Controller.extend({
           console.log('Your current position: ', position);
           self.set('lat', position.coords.latitude);
           self.set('lng', position.coords.longitude);
+
+          if(!self.get('hasMarkerForCurrentPosition'))
+          {
+            self.get('markers').addObject({title: 'new', lat: position.coords.latitude, lng: position.coords.longitude, isDraggable: true});
+
+            self.set('hasMarkerForCurrentPosition', true);
+          }
         },
         function()
         {
-          handleNoGeolocation(browserSupportFlag);
+          self.handleNoGeolocation(browserSupportFlag);
         }
       );
     }
     // Browser doesn't support Geolocation
     else
     {
-      controller.handleNoGeolocation(browserSupportFlag);
+      this.handleNoGeolocation(browserSupportFlag);
     }
   },
 

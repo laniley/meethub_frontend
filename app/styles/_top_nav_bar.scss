@@ -21,6 +21,47 @@
           }
         }
       }
+
+      .link-icon {
+        float: left;
+        margin-right: 3px;
+      }
+    }
+
+    &.navbar-right {
+
+      @media (max-width: $screen-xs-max) {
+        color: #ddd;
+        font-size: 20px;
+        margin: 0 -15px 0px -15px;
+      }
+
+      li {
+        &.custom-link {
+          cursor: pointer;
+
+          @media (max-width: $screen-xs-max) {
+            padding: 10px 15px;
+            line-height: 20px;
+
+            &:hover, &:focus {
+              color: white;
+            }
+          }
+
+          @media (min-width: $screen-sm-min) {
+            padding: 20px 20px;
+            line-height: 20px;
+
+            color: #777;
+            font-size: 28px;
+
+            &:hover, &:focus {
+              color: black;
+            }
+          }
+        }
+      }
     }
 
     .open {
@@ -84,7 +125,7 @@
   font-size: 20px;
 
   @media (max-width: $screen-xs-max) {
-    margin: 0 -15px 7.5px -15px;
+    margin: 0 -15px 0px -15px;
   }
 
   @media (min-width: $screen-sm-min) {

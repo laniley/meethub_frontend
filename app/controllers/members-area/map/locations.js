@@ -8,6 +8,9 @@ export default Ember.Controller.extend({
     center_map: function(location) {
       this.get('map_controller').set('lat', location.get('latitude'));
       this.get('map_controller').set('lng', location.get('longitude'));
+    },
+    centerMapOnCurrentPosition: function() {
+      this.get('map_controller').getCurrentPosition();
     }
   }
 });
