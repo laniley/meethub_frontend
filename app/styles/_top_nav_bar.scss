@@ -4,26 +4,46 @@
   .navbar-nav {
     li {
       a {
-        @media (max-width: $screen-xs-max) {
-          color: #ddd;
-          font-size: 20px;
 
-          &:hover, &:focus {
-            color: white;
+        &.active {
+          color: black;
+          background-color: $active-item-background-color;
+        }
+
+        &:not(.active) {
+          @media (max-width: $screen-xs-max) {
+            color: #ddd;
+            font-size: 20px;
+
+            &:hover, &:focus {
+              color: white;
+            }
           }
         }
       }
     }
 
     .open {
+      .dropdown-toggle {
+        color: black !important;
+        background-color: $active-item-background-color;
+      }
       .dropdown-menu {
         li {
           a {
-            @media (max-width: $screen-xs-max) {
-              color: #ddd;
 
-              &:hover, &:focus {
-                color: white;
+            &.active {
+              color: black;
+              background-color: $active-item-background-color;
+            }
+
+            &:not(.active) {
+              @media (max-width: $screen-xs-max) {
+                color: #ddd;
+
+                &:hover, &:focus {
+                  color: white;
+                }
               }
             }
           }

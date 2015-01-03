@@ -27,4 +27,12 @@
     font-size: 20px;
     color: $header-text-color;
   }
+
+  .selectable {
+    cursor: pointer;
+
+    &:hover {
+      color: black;
+    }
+  }
 }
