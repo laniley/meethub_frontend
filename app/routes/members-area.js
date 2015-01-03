@@ -85,7 +85,7 @@ export default AuthenticateRoute.extend({
                 console.log(response);
 
                 var location = self.store.createRecord('location', {
-                  id: response.venue.id,
+                  fb_id: response.venue.id,
                   name: response.location,
                   country: response.venue.country,
                   city: response.venue.city,
@@ -96,7 +96,7 @@ export default AuthenticateRoute.extend({
                 });
 
                 var event = self.store.createRecord('event', {
-                  id: response.id,
+                  fb_id: response.id,
                   name: response.name,
                   description: response.descrption,
                   start_time: response.start_time,

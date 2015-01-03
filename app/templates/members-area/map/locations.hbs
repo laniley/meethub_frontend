@@ -1,3 +1,11 @@
 <div class="map-section-title">Locations</div>
 
 {{outlet}}
+
+{{#each location in model}}
+  <div class="side-nav-item">
+    <div>{{location.name}}</div>
+    <div>{{locaiton.city}}</div>
+    <div>{{location.street}}</div>
+  </div>
+{{/each}}
