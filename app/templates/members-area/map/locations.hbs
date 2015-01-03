@@ -3,7 +3,7 @@
 {{outlet}}
 
 {{#each location in model}}
-  <div class="side-nav-item selectable">
+  <div class="side-nav-item selectable" {{action 'center_map' location}}>
     <div>{{location.name}}</div>
     <div>{{locaiton.city}}</div>
     <div>{{location.street}}</div>

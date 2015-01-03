@@ -32,7 +32,7 @@
     cursor: pointer;
 
     &:hover {
-      color: black;
+      background-color: $active-item-background-color;
     }
   }
 }
