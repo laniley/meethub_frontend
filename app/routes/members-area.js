@@ -38,7 +38,7 @@ export default AuthenticateRoute.extend({
         console.log('Successful login to FB for: ' + response.name, response);
 
         var user = self.store.createRecord('user', {
-          id: response.id,
+          fb_id: response.id,
           name: response.name,
           picture: response.picture.data.url
         });
@@ -48,10 +48,10 @@ export default AuthenticateRoute.extend({
 
         }
 
-        // user.save().then
-        // (
-        //   function()
-        //   {
+        user.save().then
+        (
+          function()
+          {
             controller.set('model', user);
 
             FB.api('/me/events/attending', function(response)
@@ -116,100 +116,8 @@ export default AuthenticateRoute.extend({
                 console.log(response.error);
               }
             });
-
-        //     console.log('charachters', user.get('characters.length'));
-
-
-        //     // if(userModel.first_login)
-        //     //   self.transitionTo('members-area.settings');
-        //     if(user.get('characters.length') > 0)
-        //     {
-        //       self.transitionTo('members-area.characters');
-        //     }
-        //     else
-        //     {
-        //       var new_char = self.store.createRecord('character', {
-        //         name: '',
-        //         user: user,
-        //         race: 'human',
-        //         char_class: 'mage',
-        //         gender: 'female'
-        //       });
-
-        //       self.controllerFor('members-area.characters.new').set('model', new_char);
-
-        //       self.transitionTo('members-area.characters.new');
-        //     }
-
-        //   // loadUserData(function()
-        //   // {
-        //     // $('#audio-player').mediaelementplayer
-        //     // ({
-        //     //         alwaysShowControls: true,
-        //     //         features: ['volume'],
-        //     //         audioVolume: 'horizontal',
-        //     //         startVolume: userModel.volume,
-        //     //         success: function(player, node)
-        //     //         {
-        //     //             $(".mejs-horizontal-volume-slider").show();
-
-        //     //             if(userModel.volume == 0)
-        //     //             {
-        //     //               player.muted = true;
-        //     //             }
-
-        //     //             player.play();
-
-        //     //             player.addEventListener('ended', function(e)
-        //     //             {
-        //     //               // player.src = 'audio/forest_song.mp3';
-        //     //               player.src = 'audio/choral.mp3';
-        //     //                 // player.src = 'audio/guitar_loop.mp3';
-        //     //                 player.load();
-        //     //                 player.play();
-        //     //             });
-
-        //     //             player.addEventListener('volumechange', function(e)
-        //     //             {
-        //     //               if(player.muted)
-        //     //               {
-        //     //                 saveVolume(0);
-        //     //             $("#mute-unmute > i").removeClass("fa-volume-up");
-        //     //             $("#mute-unmute > i").addClass("fa-volume-off");
-        //     //                 $("#current-volume").width(0);
-        //     //               }
-        //     //               else
-        //     //               {
-        //     //                 saveVolume(player.volume);
-
-        //     //                 if(player.volume == 0)
-        //     //                 {
-        //     //                   $(".mejs-volume-button").removeClass("mejs-mute");
-        //     //                   $(".mejs-volume-button").addClass("mejs-unmute");
-
-        //     //                   $("#mute-unmute > i").removeClass("fa-volume-up");
-        //     //               $("#mute-unmute > i").addClass("fa-volume-off");
-        //     //                 }
-        //     //                 else
-        //     //                 {
-        //     //                   $("#mute-unmute > i").removeClass("fa-volume-off");
-        //     //               $("#mute-unmute > i").addClass("fa-volume-up");
-        //     //                 }
-
-        //     //                 $("#current-volume").width(100 * player.volume);
-        //     //               }
-        //     //             });
-        //     //         }
-        //     // });
-        //   // });
-        //   },
-        //   function(resp)
-        //   {
-        //     console.log(resp);
-        //   }
-        // );
-
-        // $("#fb-like").html('<iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fskillforgegame&amp;width=200&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=21&amp;appId=609402455837135" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:21px;" allowTransparency="true"></iframe>');
+          }
+        );
       }
       else
       {
