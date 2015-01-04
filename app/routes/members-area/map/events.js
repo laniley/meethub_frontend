@@ -5,6 +5,7 @@ export default Ember.Route.extend({
     controller.set('model', this.store.all('event'));
   },
   renderTemplate: function() {
-    this.render({ outlet: 'side-nav-bar' });
+    this.render('members-area.map.events', { outlet: 'side-nav-bar' });
+    this.render('members-area.side-bar-links.events', { outlet: 'side-bar-links' });
   }
 });

@@ -71,6 +71,14 @@
 
   {{outlet main-area}}
 
-  <div class="side-nav-bar">{{outlet side-nav-bar}}</div>
+  <div class="side-nav-bar">
+    <div class="side-bar-links">
+      <div>{{unbound fa-icon "fa-reorder"}}</div>
+      {{outlet side-bar-links}}
+    </div>
+    <div class="section-content">
+      {{outlet side-nav-bar}}
+    </div>
+  </div>
 
 </div>

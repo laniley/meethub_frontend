@@ -17,6 +17,12 @@ Router.map(function() {
       this.route('events');
       this.route('locations');
     });
+    this.route('calendar', function() {
+      this.route('meethubs');
+      this.route('friends');
+      this.route('events');
+      this.route('locations');
+    });
   });
 });
 

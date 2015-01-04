@@ -5,6 +5,7 @@ export default Ember.Route.extend({
     controller.set('model', this.store.all('location'));
   },
   renderTemplate: function() {
-    this.render({ outlet: 'side-nav-bar' });
+    this.render('members-area.map.locations', { outlet: 'side-nav-bar' });
+    this.render('members-area.side-bar-links.locations', { outlet: 'side-bar-links' });
   }
 });

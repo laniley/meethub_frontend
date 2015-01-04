@@ -15,7 +15,6 @@
   width: $side-navbar-width;
 
   background-color: white;
-  border-left: 1px solid $border-color;
 
   .map-section-title, .side-nav-item {
     padding: 15px 0;
@@ -34,5 +33,22 @@
     &:hover {
       background-color: $active-item-background-color;
     }
+  }
+
+  .side-bar-links {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50px;
+    padding: 5px;
+    border-left: 1px solid $border-color;
+    border-right: 1px solid $border-color;
+    font-size: 28px;
+  }
+
+  .section-content {
+    position: absolute;
+    left: 50px;
+    right: 0;
   }
 }
