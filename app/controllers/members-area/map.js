@@ -36,7 +36,7 @@ export default Ember.Controller.extend({
 
           if(!self.get('hasMarkerForCurrentPosition'))
           {
-            self.get('markers').addObject({title: 'new', lat: position.coords.latitude, lng: position.coords.longitude, isDraggable: true});
+            self.get('markers').addObject({title: 'your position', lat: position.coords.latitude, lng: position.coords.longitude, isDraggable: false});
 
             self.set('hasMarkerForCurrentPosition', true);
           }

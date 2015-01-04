@@ -59,6 +59,11 @@ export default AuthenticateRoute.extend({
               if( !response.error )
               {
                 console.log(response);
+
+                for(var i = 0; i < response.data.length; i++)
+                {
+                  self.handleFBEventResponse(response.data[i]);
+                }
               }
               else
               {
@@ -71,6 +76,11 @@ export default AuthenticateRoute.extend({
               if( !response.error )
               {
                 console.log(response);
+
+                for(var i = 0; i < response.data.length; i++)
+                {
+                  self.handleFBEventResponse(response.data[i]);
+                }
               }
               else
               {
@@ -84,36 +94,15 @@ export default AuthenticateRoute.extend({
               {
                 console.log(response);
 
-                var location = self.store.createRecord('location', {
-                  fb_id: response.venue.id,
-                  name: response.location,
-                  country: response.venue.country,
-                  city: response.venue.city,
-                  zip: response.venue.zip,
-                  street: response.venue.street,
-                  latitude: response.venue.latitude,
-                  longitude: response.venue.longitude
-                });
-
-                var event = self.store.createRecord('event', {
-                  fb_id: response.id,
-                  name: response.name,
-                  description: response.descrption,
-                  start_time: response.start_time,
-                  timezone: response.timezone,
-                  location: location
-                });
-
-                var map_controller = self.controllerFor('members-area.map');
-                    map_controller.getCurrentPosition();
-
-                self.transitionTo('members-area.map.meethubs');
+                self.handleFBEventResponse(response);
               }
               else
               {
                 console.log(response.error);
               }
             });
+
+            self.transitionTo('members-area.map.meethubs');
           }
         );
       }
@@ -125,42 +114,32 @@ export default AuthenticateRoute.extend({
     });
   },
 
-  loadUserData: function(callback) {
-    // $.ajax
-    // ({
-    //   url: controller_path_user + "?mode=get" +
-    //       "&id=" + userModel.id
+  handleFBEventResponse: function(response) {
+    var location = this.store.createRecord('location', {
+      fb_id: response.venue.id,
+      name: response.location,
+      country: response.venue.country,
+      city: response.venue.city,
+      zip: response.venue.zip,
+      street: response.venue.street,
+      latitude: response.venue.latitude,
+      longitude: response.venue.longitude
+    });
 
-    //   ,success: function( data )
-    //   {
-    //     console.log(data);
+    var event = this.store.createRecord('event', {
+      fb_id: response.id,
+      name: response.name,
+      description: response.descrption,
+      start_time: response.start_time,
+      timezone: response.timezone,
+      location: location
+    });
 
-    //     if(data.indexOf("ERROR") == -1)
-    //     {
-    //       var json = JSON.parse(data);
+    var map_controller = this.controllerFor('members-area.map');
 
-    //       userModel.volume = json[0].volume;
-    //       userModel.setLanguage(json[0].locale);
+        map_controller.get('markers').addObject({title: response.location, lat: response.venue.latitude, lng: response.venue.longitude, isDraggable: false});
 
-    //       if( json[0].first_login == 1 )
-    //         userModel.first_login = true;
-    //       else
-    //         userModel.first_login = false;
-
-    //       i18n.setLng(json[0].locale, function(t)
-    //       {
-    //         if(userModel.first_login)
-    //           hasher.setHash('section/settings');
-    //         else if(charactersCache.length > 0)
-    //           hasher.setHash('section/characters');
-    //         else
-    //           hasher.setHash('section/characters/new?race=human');
-
-    //         callback();
-    //       });
-    //     }
-    //   }
-    // });
+        map_controller.getCurrentPosition();
   }
 
 });
