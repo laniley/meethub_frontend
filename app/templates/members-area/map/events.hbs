@@ -1,3 +1,14 @@
-<div class="map-section-title">{{unbound fa-icon "fa-fixed-with fa-music"}} Events</div>
+<div class="map-section-title">Events</div>
 
 {{outlet}}
+
+<div class="side-nav-item selectable" {{action "centerMapOnCurrentPosition"}}>
+  {{unbound fa-icon "fa-fixed-with fa-home"}} Back home
+</div>
+
+{{#each event in model}}
+  <div class="side-nav-item selectable" {{action 'center_map' event}}>
+    <div>{{event.name}}</div>
+    <div>{{event.location.name}}</div>
+  </div>
+{{/each}}
