@@ -88,6 +88,23 @@ export default AuthenticateRoute.extend({
               }
             });
 
+            FB.api('/me/events/not_replied', function(response)
+            {
+              if( !response.error )
+              {
+                console.log(response);
+
+                for(var i = 0; i < response.data.length; i++)
+                {
+                  self.handleFBEventsNotReplied(response.data[i]);
+                }
+              }
+              else
+              {
+                console.log(response.error);
+              }
+            });
+
             FB.api('/1523279254598611', function(response)
             {
               if( !response.error )
@@ -140,6 +157,10 @@ export default AuthenticateRoute.extend({
         map_controller.get('markers').addObject({title: response.location, lat: response.venue.latitude, lng: response.venue.longitude, isDraggable: false});
 
         map_controller.getCurrentPosition();
+  },
+
+  handleFBEventsNotReplied: function(events) {
+    // TODO
   }
 
 });
