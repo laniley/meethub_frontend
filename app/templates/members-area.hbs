@@ -46,7 +46,8 @@
       {{!-- RIGHT AREA --}}
       <ul class="nav navbar-nav navbar-right">
         <li class="custom-link">
-          <span class="link-icon">{{unbound fa-icon "fa-fixed-with fa-envelope"}}</span>
+        {{model.messages.length}}
+          <span {{bind-attr class=":link-icon hasMessages"}}>{{unbound fa-icon "fa-fixed-with fa-envelope"}}</span>
           <span class="link-label visible-xs">Messages</span>
         </li>
         <li class="dropdown">

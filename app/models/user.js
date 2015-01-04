@@ -5,5 +5,6 @@ export default DS.Model.extend({
   name: DS.attr('string'),
   picture: DS.attr(),
   locale: DS.attr('string'),
-  friends: DS.hasMany('user')
+  friends: DS.hasMany('user'),
+  messages: DS.hasMany('message')
 });

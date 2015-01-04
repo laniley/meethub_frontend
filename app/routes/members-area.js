@@ -149,6 +149,14 @@ export default AuthenticateRoute.extend({
       status: status,
       location: location,
     });
+
+    if(status == 'not_replied')
+    {
+      this.store.createRecord('message', {
+        text: response.name,
+        user: this.get('controller').get('model')
+      });
+    }
   }
 
 });
