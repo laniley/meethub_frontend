@@ -62,7 +62,7 @@ export default AuthenticateRoute.extend({
 
                 for(var i = 0; i < response.data.length; i++)
                 {
-                  self.handleFBEventResponse(response.data[i]);
+                  self.handleFBEventResponse(response.data[i], 'attending');
                 }
               }
               else
@@ -79,7 +79,7 @@ export default AuthenticateRoute.extend({
 
                 for(var i = 0; i < response.data.length; i++)
                 {
-                  self.handleFBEventResponse(response.data[i]);
+                  self.handleFBEventResponse(response.data[i], 'maybe');
                 }
               }
               else
@@ -96,22 +96,8 @@ export default AuthenticateRoute.extend({
 
                 for(var i = 0; i < response.data.length; i++)
                 {
-                  self.handleFBEventsNotReplied(response.data[i]);
+                  self.handleFBEventResponse(response.data[i], 'not_replied');
                 }
-              }
-              else
-              {
-                console.log(response.error);
-              }
-            });
-
-            FB.api('/1523279254598611', function(response)
-            {
-              if( !response.error )
-              {
-                console.log(response);
-
-                self.handleFBEventResponse(response);
               }
               else
               {
@@ -131,17 +117,28 @@ export default AuthenticateRoute.extend({
     });
   },
 
-  handleFBEventResponse: function(response) {
-    var location = this.store.createRecord('location', {
-      fb_id: response.venue.id,
-      name: response.location,
-      country: response.venue.country,
-      city: response.venue.city,
-      zip: response.venue.zip,
-      street: response.venue.street,
-      latitude: response.venue.latitude,
-      longitude: response.venue.longitude
-    });
+  handleFBEventResponse: function(response, status) {
+
+    var map_controller = this.controllerFor('members-area.map');
+        map_controller.getCurrentPosition();
+
+    var location = null;
+
+    if(response.venue)
+    {
+      var location = this.store.createRecord('location', {
+        fb_id: response.venue.id,
+        name: response.location,
+        country: response.venue.country,
+        city: response.venue.city,
+        zip: response.venue.zip,
+        street: response.venue.street,
+        latitude: response.venue.latitude,
+        longitude: response.venue.longitude
+      });
+
+      map_controller.get('markers').addObject({title: response.location, lat: response.venue.latitude, lng: response.venue.longitude, isDraggable: false});
+    }
 
     var event = this.store.createRecord('event', {
       fb_id: response.id,
@@ -149,18 +146,9 @@ export default AuthenticateRoute.extend({
       description: response.descrption,
       start_time: response.start_time,
       timezone: response.timezone,
-      location: location
+      status: status,
+      location: location,
     });
-
-    var map_controller = this.controllerFor('members-area.map');
-
-        map_controller.get('markers').addObject({title: response.location, lat: response.venue.latitude, lng: response.venue.longitude, isDraggable: false});
-
-        map_controller.getCurrentPosition();
-  },
-
-  handleFBEventsNotReplied: function(events) {
-    // TODO
   }
 
 });
