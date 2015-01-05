@@ -49,6 +49,15 @@
     border-left: 1px solid $border-color;
     border-right: 1px solid $border-color;
     font-size: 28px;
+
+    i {
+      color: $link-color;
+
+      &:hover {
+        cursor: pointer;
+        color: black;
+      }
+    }
   }
 
   .section-content {
@@ -57,7 +66,7 @@
     right: 0;
 
     &.closed {
-      left: $side-navbar-width;
+      display: none;
     }
   }
 }
