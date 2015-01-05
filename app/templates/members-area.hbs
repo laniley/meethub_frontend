@@ -46,7 +46,7 @@
       {{!-- RIGHT AREA --}}
       <ul class="nav navbar-nav navbar-right">
         <li class="custom-link">
-        {{model.messages.length}}
+          {{!-- <span class="message-counter">{{model.messages.length}}</span> --}}
           <span {{bind-attr class=":link-icon hasMessages"}}>{{unbound fa-icon "fa-fixed-with fa-envelope"}}</span>
           <span class="link-label visible-xs">Messages</span>
         </li>

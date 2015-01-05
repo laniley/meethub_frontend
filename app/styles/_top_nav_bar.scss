@@ -62,6 +62,16 @@
           }
         }
       }
+
+      .has-messages {
+        i {
+          color: $header-text-color;
+
+          &:hover {
+            color: lighten($header-text-color, 10%);
+          }
+        }
+      }
     }
 
     .open {
