@@ -14,6 +14,10 @@
   bottom: 0;
   width: $side-navbar-width;
 
+  &.closed {
+    width: 50px;
+  }
+
   background-color: white;
 
   .map-section-title, .side-nav-item {
@@ -50,5 +54,9 @@
     position: absolute;
     left: 50px;
     right: 0;
+
+    &.closed {
+      left: $side-navbar-width;
+    }
   }
 }

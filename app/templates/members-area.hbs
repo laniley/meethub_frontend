@@ -74,7 +74,7 @@
 
   <div class="side-nav-bar">
     <div class="side-bar-links">
-      <div>{{unbound fa-icon "fa-reorder"}}</div>
+      <div {{action 'toggleSidebar'}}>{{unbound fa-icon "fa-reorder"}}</div>
       {{outlet side-bar-links}}
     </div>
     <div class="section-content">

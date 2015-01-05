@@ -7,6 +7,10 @@ $side-navbar-width: 400px;
   right: $side-navbar-width;
   bottom: 0;
 
+  &.closed {
+    right: 50px;
+  }
+
   @media (min-width: $screen-sm-min) {
     top: 70px;
   }
