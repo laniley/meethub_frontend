@@ -40,6 +40,10 @@
         &.custom-link {
           cursor: pointer;
 
+          a {
+            padding: 0;
+          }
+
           @media (max-width: $screen-xs-max) {
             padding: 10px 15px;
             line-height: 20px;

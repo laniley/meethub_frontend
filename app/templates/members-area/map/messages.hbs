@@ -1,0 +1,15 @@
+<div class="map-section-title">
+  Messages
+</div>
+
+<div class="side-nav-item selectable" {{action "centerMapOnCurrentPosition"}}>
+  {{unbound fa-icon "fa-fixed-with fa-home"}} Back home
+</div>
+
+{{#each message in model}}
+  <div class="side-nav-item selectable" {{action 'center_map' event}}>
+    <div>{{message.text}}</div>
+  </div>
+{{/each}}
+
+{{outlet}}
