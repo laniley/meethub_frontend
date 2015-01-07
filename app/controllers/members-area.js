@@ -17,7 +17,7 @@ export default Ember.Controller.extend({
     toggleSidebar: function() {
       Ember.$('.side-nav-bar').toggleClass('closed');
       Ember.$('.side-nav-bar > .section-content').toggleClass('closed');
-      Ember.$('.map-canvas').toggleClass('closed');
+      Ember.$('.google-map').toggleClass('closed');
     }
   }
 });

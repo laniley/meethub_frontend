@@ -2,7 +2,7 @@
 import Ember from 'ember';
 import helpers from 'ember-google-map/core/helpers';
 import GoogleObjectMixin from 'ember-google-map/mixins/google-object';
-
+import ResizeMixin from '../mixins/resize';
 
 function obj(o) {
   return Ember.Object.create(o);
@@ -28,9 +28,18 @@ export var PLACE_TYPES = Ember.A([
  * @uses GoogleObjectMixin
  * @constructor
  */
-var GoogleMapComponent = Ember.Component.extend(GoogleObjectMixin, {
+var GoogleMapComponent = Ember.Component.extend(GoogleObjectMixin, ResizeMixin, {
   classNames: ['google-map'],
 
+  didInsertElement: function() {
+    this.bindResize();
+  },
+
+  resized: function() {
+    console.log('test');
+    this.set('lat', this.get('lat_cache'));
+    this.set('lng', this.get('lng_cache'));
+  },
   /**
    * Defines all properties bound to the google map object
    * @property googleProperties

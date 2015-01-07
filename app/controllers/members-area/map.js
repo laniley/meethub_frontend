@@ -3,8 +3,11 @@ import {MAP_TYPES} from '../../components/google-map';
 
 export default Ember.Controller.extend({
 
-  lat:      0,
-  lng:      0,
+  lat:        0,
+  lng:        0,
+  lat_cache:  0,
+  lng_cache:  0,
+
   zoom:     14,
   type:     'road',
   mapTypes: MAP_TYPES,
@@ -32,7 +35,9 @@ export default Ember.Controller.extend({
         {
           console.log('Your current position: ', position);
           self.set('lat', position.coords.latitude);
+          self.set('lat_cache', position.coords.latitude);
           self.set('lng', position.coords.longitude);
+          self.set('lng_cache', position.coords.longitude);
 
           if(!self.get('hasMarkerForCurrentPosition'))
           {
