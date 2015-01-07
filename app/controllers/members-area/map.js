@@ -2,6 +2,7 @@ import Ember from 'ember';
 import {MAP_TYPES} from '../../components/google-map';
 
 export default Ember.Controller.extend({
+  needs: "members-area",
 
   lat:        0,
   lng:        0,
