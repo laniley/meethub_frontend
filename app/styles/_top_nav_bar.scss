@@ -40,12 +40,19 @@
         &.custom-link {
           cursor: pointer;
 
-          a {
-            padding: 0;
+          @media (min-width: $screen-sm-min) {
+            a {
+              height: 70px;
+              width: 50px;
+              padding: 20px 10px;
+
+              &.active {
+                background-color: #e7e7e7;
+              }
+            }
           }
 
           @media (max-width: $screen-xs-max) {
-            padding: 10px 15px;
             line-height: 20px;
 
             &:hover, &:focus {
@@ -54,7 +61,6 @@
           }
 
           @media (min-width: $screen-sm-min) {
-            padding: 20px 20px;
             line-height: 20px;
 
             color: #777;
