@@ -1,5 +1,6 @@
 .side-nav-bar {
   position: absolute;
+  overflow: hidden;
   font-size: 18px;
 
   @media (min-width: $screen-sm-min) {
@@ -20,25 +21,6 @@
   }
 
   background-color: white;
-
-  .map-section-title, .side-nav-item {
-    padding: 15px 0;
-    border-bottom: 1px solid $border-color;
-  }
-
-  .map-section-title {
-    font-family: Ethno_regular, Arial, sans-serif;
-    font-size: 20px;
-    color: $header-text-color;
-  }
-
-  .selectable {
-    cursor: pointer;
-
-    &:hover {
-      background-color: $active-item-background-color;
-    }
-  }
 
   .side-bar-links {
     position: absolute;
@@ -80,17 +62,51 @@
         }
       }
     }
-
-
   }
 
   .section-content {
+
     position: absolute;
+    top: 0;
+    bottom: 0;
     left: 50px;
     right: 0;
 
     &.closed {
       display: none;
+    }
+
+    .section-title, .side-nav-item {
+      padding: 15px 10px;
+      border-bottom: 1px solid $border-color;
+    }
+
+    .section-title {
+      font-family: Ethno_regular, Arial, sans-serif;
+      font-size: 20px;
+      color: $header-text-color;
+    }
+
+    .side-nav-item-container {
+      position: absolute;
+      top: 115px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      overflow: auto;
+
+      .selectable {
+        cursor: pointer;
+
+        &:hover {
+          background-color: $active-item-background-color;
+        }
+
+        .title {
+          font-weight: bold;
+          margin-bottom: 10px;
+        }
+      }
     }
   }
 }

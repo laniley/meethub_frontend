@@ -139,6 +139,12 @@ export default AuthenticateRoute.extend({
 
       map_controller.get('markers').addObject({title: response.location, lat: response.venue.latitude, lng: response.venue.longitude, isDraggable: false});
     }
+    else
+    {
+      var location = this.store.createRecord('location', {
+        name: response.location,
+      });
+    }
 
     var event = this.store.createRecord('event', {
       fb_id: response.id,
@@ -154,7 +160,8 @@ export default AuthenticateRoute.extend({
     {
       this.store.createRecord('message', {
         text: response.name,
-        user: this.get('controller').get('model')
+        user: this.get('controller').get('model'),
+        event: event
       });
     }
   }

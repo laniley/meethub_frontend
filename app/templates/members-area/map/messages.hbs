@@ -1,4 +1,4 @@
-<div class="map-section-title">
+<div class="section-title">
   Messages
 </div>
 
@@ -6,10 +6,21 @@
   {{unbound fa-icon "fa-fixed-with fa-home"}} Back home
 </div>
 
-{{#each message in model}}
-  <div class="side-nav-item selectable" {{action 'center_map' event}}>
-    <div>{{message.text}}</div>
-  </div>
-{{/each}}
+<div class="side-nav-item-container">
+  {{#each message in model}}
+    <div class="side-nav-item selectable" {{action 'center_map' event}}>
+      <div class="title">{{message.text}}</div>
+      {{#if message.isEvent}}
+        <div>
+          <span class="button accept">accept</span>
+          <span class="button maybe">maybe</span>
+          <span class="button decline">decline</span>
+        <div>
+        <div class="start_time">{{message.event.start_time}}</div>
+        <div class="location">{{message.event.location.name}}</div>
+      {{/if}}
+    </div>
+  {{/each}}
 
-{{outlet}}
+  {{outlet}}
+</div>
