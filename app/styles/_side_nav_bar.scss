@@ -51,13 +51,37 @@
     font-size: 28px;
 
     i {
-      color: $link-color;
-
       &:hover {
         cursor: pointer;
-        color: black;
       }
     }
+
+    a {
+      i {
+        width: 100%;
+      }
+
+      &.active {
+
+        background-color: $active-item-background-color;
+
+        i {
+          color: $link-color-active;
+        }
+      }
+
+      &:not(.active) {
+        i {
+          color: $link-color;
+
+          &:hover {
+            color: $link-color-active;
+          }
+        }
+      }
+    }
+
+
   }
 
   .section-content {
