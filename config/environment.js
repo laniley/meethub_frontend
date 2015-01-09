@@ -39,6 +39,8 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     ENV.APP.LOG_VIEW_LOOKUPS = true;
 
+    ENV.backend_url = 'http://localhost:8000',
+
     ENV['torii'] = {
       providers: {
         'facebook-oauth2': {
