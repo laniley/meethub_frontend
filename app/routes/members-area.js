@@ -124,6 +124,8 @@ export default AuthenticateRoute.extend({
     var map_controller = this.controllerFor('members-area.map');
         map_controller.getCurrentPosition();
 
+    var self = this;
+
     var location = null;
 
     if(response.venue)
@@ -148,28 +150,31 @@ export default AuthenticateRoute.extend({
       });
     }
 
-    var date_time_arr = response.start_time.split('T');
+    location.save().then(function() {
+      var date_time_arr = response.start_time.split('T');
 
-    var event = this.store.createRecord('event', {
-      fb_id: response.id,
-      name: response.name,
-      description: response.descrption,
-      start_time: date_time_arr[1],
-      start_date: date_time_arr[0],
-      timezone: response.timezone,
-      location: location,
+      var event = self.store.createRecord('event', {
+        fb_id: response.id,
+        name: response.name,
+        description: response.descrption,
+        start_time: date_time_arr[1],
+        start_date: date_time_arr[0],
+        timezone: response.timezone,
+        location: location,
+      });
+
+      event.save().then(function() {
+        if(status === 'not_replied')
+        {
+          self.store.createRecord('message', {
+            subject: response.name,
+            user: this.get('controller').get('model'),
+            event: event
+          });
+        }
+      });
     });
 
-    event.save().then(function() {
-      if(status === 'not_replied')
-      {
-        this.store.createRecord('message', {
-          subject: response.name,
-          user: this.get('controller').get('model'),
-          event: event
-        });
-      }
-    });
   }
 
 });
