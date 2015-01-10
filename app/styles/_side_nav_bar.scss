@@ -99,47 +99,60 @@
 
   .title {
     font-weight: bold;
+    padding: 15px 10px;
   }
 
-  .button {
-    padding: 2px 5px;
-    margin: 0 10px;
-    margin-bottom: 10px;
+  .body {
+    padding: 10px;
 
-    &.accept {
-      border-color: $green;
+    &:not(.open) {
+      display: none;
+    }
 
-      &:hover {
-        color: darken($green, 10%);
+    .question {
+      padding: 0 15px 15px 15px;
+    }
+
+    .button {
+      padding: 2px 5px;
+      margin: 0 10px;
+      margin-bottom: 10px;
+
+      &.accept {
+        border-color: $green;
+
+        &:hover {
+          color: darken($green, 10%);
+        }
+      }
+
+      &.maybe {
+        border-color: $yellow;
+
+        &:hover {
+          color: darken($yellow, 10%);
+        }
+      }
+
+      &.decline {
+        border-color: $orange;
+
+        &:hover {
+          color: $orange;
+        }
       }
     }
 
-    &.maybe {
-      border-color: $yellow;
-
-      &:hover {
-        color: darken($yellow, 10%);
-      }
+    .start_time {
+      line-height: 50px;
     }
 
-    &.decline {
-      border-color: $orange;
-
+    .location {
       &:hover {
-        color: $orange;
+        text-decoration: underline;
+        color: $link-color-hover;
+        cursor: pointer;
       }
-    }
-  }
-
-  .start_time, .question {
-    line-height: 50px;
-  }
-
-  .location {
-    &:hover {
-      text-decoration: underline;
-      color: $link-color-hover;
-      cursor: pointer;
     }
   }
 

@@ -1,4 +1,4 @@
-import Ember from 'ember';
+// import Ember from 'ember';
 import AuthenticateRoute from './authenticate';
 
 /* global FB */
@@ -15,9 +15,11 @@ export default AuthenticateRoute.extend({
     }
     else
     {
-      this.get('torii').open('facebook-connect').then(function(authorization){
-        // FB.api is now available. authorization contains the UID and
-        // accessToken.
+      this.get('torii').open('facebook-connect').then(function(){
+        // FB.api is now available. authorization contains the UID and accessToken.
+        // var UID = authorization.UID;
+        // var accessToken = authorization.accessToken;
+
         self.controllerFor('login').set('hasFacebook', true);
 
         self.getUserInfos(controller);
@@ -126,7 +128,7 @@ export default AuthenticateRoute.extend({
 
     if(response.venue)
     {
-      var location = this.store.createRecord('location', {
+        location = this.store.createRecord('location', {
         fb_id: response.venue.id,
         name: response.location,
         country: response.venue.country,
@@ -141,7 +143,7 @@ export default AuthenticateRoute.extend({
     }
     else
     {
-      var location = this.store.createRecord('location', {
+        location = this.store.createRecord('location', {
         name: response.location,
       });
     }
@@ -156,7 +158,7 @@ export default AuthenticateRoute.extend({
       location: location,
     });
 
-    if(status == 'not_replied')
+    if(status === 'not_replied')
     {
       this.store.createRecord('message', {
         subject: response.name,

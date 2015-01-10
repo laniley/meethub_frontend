@@ -3,7 +3,7 @@ import {
   test
 } from 'ember-qunit';
 
-moduleFor('controller:members-area/map/events', 'MembersAreaMapEventsController', {
+moduleFor('controller:members-area/map/messages', 'MembersAreaMapMessagesController', {
   // Specify the other units that are required for this test.
   // needs: ['controller:foo']
 });

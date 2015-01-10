@@ -62,7 +62,7 @@ export default Ember.Controller.extend({
     var lat = 40.730610;
     var lng = -73.935242;
 
-    if (errorFlag == true) {
+    if (errorFlag === true) {
       console.error("Geolocation service failed. We've placed you in New York.");
     }
     else {
