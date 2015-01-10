@@ -6,15 +6,13 @@ export default Ember.Controller.extend({
 
   hasUnreadMessages: function() {
 
+    var unreadMessages = [];
+
     if(this.get('model.messages.length') > 0)
     {
-      var unreadMessages = this.get('model.messages').filter(function(message) {
+      unreadMessages = this.get('model.messages').filter(function(message) {
         return message.get('hasBeenRead') === false;
       });
-    }
-    else
-    {
-      var unreadMessages = []
     }
 
     if(unreadMessages.get('length') > 0)

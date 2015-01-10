@@ -73,7 +73,7 @@ export default Ember.Controller.extend({
     this.set('lng', lng);
   },
   centerMap: function(location) {
-    if(location != undefined)
+    if(location !== undefined)
     {
       this.set('lat', location.get('latitude'));
       this.set('lat_cache', location.get('latitude'));

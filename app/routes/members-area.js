@@ -157,18 +157,19 @@ export default AuthenticateRoute.extend({
       start_time: date_time_arr[1],
       start_date: date_time_arr[0],
       timezone: response.timezone,
-      status: status,
       location: location,
     });
 
-    if(status === 'not_replied')
-    {
-      this.store.createRecord('message', {
-        subject: response.name,
-        user: this.get('controller').get('model'),
-        event: event
-      });
-    }
+    event.save().then(function() {
+      if(status === 'not_replied')
+      {
+        this.store.createRecord('message', {
+          subject: response.name,
+          user: this.get('controller').get('model'),
+          event: event
+        });
+      }
+    });
   }
 
 });
