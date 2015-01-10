@@ -4,8 +4,20 @@ export default Ember.Controller.extend({
 
   isSidebarOpen: true,
 
-  hasMessages: function() {
+  hasUnreadMessages: function() {
+
     if(this.get('model.messages.length') > 0)
+    {
+      var unreadMessages = this.get('model.messages').filter(function(message) {
+        return message.get('hasBeenRead') === false;
+      });
+    }
+    else
+    {
+      var unreadMessages = []
+    }
+
+    if(unreadMessages.get('length') > 0)
     {
       return true;
     }
@@ -13,7 +25,8 @@ export default Ember.Controller.extend({
     {
       return false;
     }
-  }.property('model.messages.length'),
+
+  }.property('model.messages.@each.hasBeenRead'),
 
   actions: {
     toggleSidebar: function() {
