@@ -3,19 +3,19 @@
   <div class="meethub-counter"></div>
 </div>
 
-{{!-- <div class="no-content-text">{{t meethub.not-in-a-meethub}}</div> --}}
+<div class="side-nav-item-container">
+  <div class="side-nav-item">
+    {{#link-to 'members-area.map.meethubs.create'}}
+      <button class="button">
+        {{unbound fa-icon "fa-fixed-with fa-pencil"}} {{t meethub.button.create}}
+      </button>
+    {{/link-to}}
+    {{#link-to 'members-area.map.meethubs.search'}}
+      <button class="button">
+        {{unbound fa-icon "fa-fixed-with fa-search"}} {{t meethub.button.search}}
+      </button>
+    {{/link-to}}
+  </div>
 
-<div class="side-nav-item">
-  {{#link-to 'members-area.map.meethubs.create'}}
-    <button class="button">
-      {{unbound fa-icon "fa-fixed-with fa-pencil"}} {{t meethub.button.create}}
-    </button>
-  {{/link-to}}
-  {{#link-to 'members-area.map.meethubs.search'}}
-    <button class="button">
-      {{unbound fa-icon "fa-fixed-with fa-search"}} {{t meethub.button.search}}
-    </button>
-  {{/link-to}}
+  {{outlet}}
 </div>
-
-{{outlet}}

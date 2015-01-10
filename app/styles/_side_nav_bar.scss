@@ -94,19 +94,60 @@
       right: 0;
       bottom: 0;
       overflow: auto;
+    }
+  }
 
-      .selectable {
-        cursor: pointer;
+  .title {
+    font-weight: bold;
+  }
 
-        &:hover {
-          background-color: $active-item-background-color;
-        }
+  .button {
+    padding: 2px 5px;
+    margin: 0 10px;
+    margin-bottom: 10px;
 
-        .title {
-          font-weight: bold;
-          margin-bottom: 10px;
-        }
+    &.accept {
+      border-color: $green;
+
+      &:hover {
+        color: darken($green, 10%);
       }
+    }
+
+    &.maybe {
+      border-color: $yellow;
+
+      &:hover {
+        color: darken($yellow, 10%);
+      }
+    }
+
+    &.decline {
+      border-color: $orange;
+
+      &:hover {
+        color: $orange;
+      }
+    }
+  }
+
+  .start_time, .question {
+    line-height: 50px;
+  }
+
+  .location {
+    &:hover {
+      text-decoration: underline;
+      color: $link-color-hover;
+      cursor: pointer;
+    }
+  }
+
+  .selectable {
+    cursor: pointer;
+
+    &:hover {
+      background-color: #f7f7f7;
     }
   }
 }

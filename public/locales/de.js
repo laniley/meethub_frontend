@@ -10,5 +10,11 @@ Em.I18n.translations = {
       "create": "Meethub erstellen",
       "search": "Meethub suchen"
     }
+  },
+  "messages": {
+    "participation-question": "Nimmst du teil?",
+    "accept": "Ja",
+    "maybe": "Vielleicht",
+    "decline": "Nein"
   }
 };
