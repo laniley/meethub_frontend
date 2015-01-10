@@ -159,7 +159,7 @@ export default AuthenticateRoute.extend({
     if(status == 'not_replied')
     {
       this.store.createRecord('message', {
-        text: response.name,
+        subject: response.name,
         user: this.get('controller').get('model'),
         event: event
       });

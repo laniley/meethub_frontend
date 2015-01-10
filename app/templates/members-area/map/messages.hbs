@@ -1,7 +1,7 @@
 <div class="side-nav-item-container">
   {{#each message in model}}
     <div class="side-nav-item">
-      <div class="title">{{message.text}}</div>
+      <div class="title">{{message.subject}}</div>
       {{#if message.isEvent}}
       <div class="question">{{t 'messages.participation-question'}}</div>
       <div>
