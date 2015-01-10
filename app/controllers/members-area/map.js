@@ -17,8 +17,7 @@ export default Ember.Controller.extend({
 
   hasMarkerForCurrentPosition: false,
 
-  getCurrentPosition: function()
-  {
+  getCurrentPosition: function() {
     console.log('Getting your current position...');
 
     var browserSupportFlag = false;
@@ -59,9 +58,7 @@ export default Ember.Controller.extend({
       this.handleNoGeolocation(browserSupportFlag);
     }
   },
-
-  handleNoGeolocation: function(errorFlag)
-  {
+  handleNoGeolocation: function(errorFlag) {
     var lat = 40.730610;
     var lng = -73.935242;
 
@@ -74,6 +71,18 @@ export default Ember.Controller.extend({
 
     this.set('lat', lat);
     this.set('lng', lng);
+  },
+
+  actions: {
+    center_map: function(location) {
+      this.set('lat', location.get('latitude'));
+      this.set('lat_cache', location.get('latitude'));
+      this.set('lng', location.get('longitude'));
+      this.set('lng_cache', location.get('longitude'));
+    },
+    centerMapOnCurrentPosition: function() {
+      this.getCurrentPosition();
+    }
   }
 
 });
