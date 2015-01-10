@@ -4,6 +4,7 @@ export default DS.Model.extend({
   subject: DS.attr('string'),
   text: DS.attr('string'),
   isOpen: DS.attr('boolean', {defaultValue: false}),
+  hasBeenRead: DS.attr('boolean', {defaultValue: false}),
   user: DS.belongsTo('user'),
   event: DS.belongsTo('event'),
 

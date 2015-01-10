@@ -94,6 +94,14 @@
       right: 0;
       bottom: 0;
       overflow: auto;
+
+      .side-nav-item {
+        &.message {
+          &:not(.has-been-read) {
+            background-color: $unread-message-color;
+          }
+        }
+      }
     }
   }
 

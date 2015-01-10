@@ -9,6 +9,11 @@ export default Ember.Controller.extend({
       if(message.get('isOpen') === false)
       {
         message.set('isOpen', true);
+
+        if(message.get('hasBeenRead') === false)
+        {
+          message.set('hasBeenRead', true);
+        }
       }
       else
       {

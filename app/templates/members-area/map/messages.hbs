@@ -1,6 +1,6 @@
 <div class="side-nav-item-container">
   {{#each message in model}}
-    <div class="side-nav-item no-padding">
+    <div {{bind-attr class=":side-nav-item :message :no-padding message.hasBeenRead:has-been-read"}}>
       <div class="title selectable" {{action 'toggleMessage' message}}>{{message.subject}}</div>
       {{#if message.isEvent}}
       <div {{bind-attr class=":body message.isOpen:open"}}>
@@ -10,7 +10,7 @@
           <span class="button maybe">{{unbound fa-icon "fa-question"}} {{t 'messages.maybe'}}</span>
           <span class="button decline">{{unbound fa-icon "fa-remove"}} {{t 'messages.decline'}}</span>
         <div>
-        <div class="start_time">{{message.event.start_time}}</div>
+        <div class="start_time">{{message.event.start_date}} {{message.event.start_time}}</div>
         <div class="location" {{action 'centerMap' message.location}}>{{message.event.location.name}}</div>
       </div>
       {{/if}}
