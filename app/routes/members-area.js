@@ -130,7 +130,7 @@ export default AuthenticateRoute.extend({
 
     if(response.venue)
     {
-        location = this.store.createRecord('location', {
+      location = this.store.createRecord('location', {
         fb_id: response.venue.id,
         name: response.location,
         country: response.venue.country,
@@ -166,15 +166,17 @@ export default AuthenticateRoute.extend({
       event.save().then(function() {
         if(status === 'not_replied')
         {
-          self.store.createRecord('message', {
+          var message = self.store.createRecord('message', {
+            fb_id: response.id,
             subject: response.name,
-            user: this.get('controller').get('model'),
+            user: self.get('controller').get('model'),
             event: event
           });
+
+          message.save();
         }
       });
     });
-
   }
 
 });
