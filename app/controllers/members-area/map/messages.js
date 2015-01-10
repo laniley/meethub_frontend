@@ -1,6 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
+  needs: "members-area/map",
+  map_controller: Ember.computed.alias("controllers.members-area/map"),
+
   actions: {
     toggleMessage: function(message) {
       if(message.get('isOpen') === false)
@@ -11,6 +14,9 @@ export default Ember.Controller.extend({
       {
         message.set('isOpen', false);
       }
-    }
+    },
+    centerMap: function(location) {
+      this.get('map_controller').centerMap(location);
+    },
   }
 });

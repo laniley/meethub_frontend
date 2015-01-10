@@ -72,14 +72,21 @@ export default Ember.Controller.extend({
     this.set('lat', lat);
     this.set('lng', lng);
   },
-
-  actions: {
-    center_map: function(location) {
+  centerMap: function(location) {
+    if(location != undefined)
+    {
       this.set('lat', location.get('latitude'));
       this.set('lat_cache', location.get('latitude'));
       this.set('lng', location.get('longitude'));
       this.set('lng_cache', location.get('longitude'));
-    },
+    }
+    else
+    {
+      console.log("TO DO: show no location coords info!!!!! (members-area.map.controller");
+    }
+  },
+
+  actions: {
     centerMapOnCurrentPosition: function() {
       this.getCurrentPosition();
     }
