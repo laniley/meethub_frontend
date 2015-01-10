@@ -1,11 +1,3 @@
-<div class="section-title">Locations</div>
-
-{{outlet}}
-
-<div class="side-nav-item selectable" {{action "centerMapOnCurrentPosition"}}>
-  {{unbound fa-icon "fa-fixed-with fa-home"}} Back home
-</div>
-
 <div class="side-nav-item-container">
   {{#each location in model}}
     <div class="side-nav-item selectable" {{action 'center_map' location}}>

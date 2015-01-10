@@ -7,5 +7,8 @@ export default Ember.Route.extend({
       outlet: 'top-nav-bar-links',
       controller: 'members-area'
     });
+    this.render('members-area.side-nav-bar.filter.calendar', {
+      outlet: 'area-filter'
+    });
   }
 });
