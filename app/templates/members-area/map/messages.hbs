@@ -9,8 +9,8 @@
           <div class="button accept" {{translateAttr  title='messages.accept'}}>{{unbound fa-icon "fa-check"}}</div>
           <div class="button maybe" {{translateAttr  title='messages.maybe'}}>{{unbound fa-icon "fa-question"}}</div>
           <div class="button decline" {{translateAttr  title='messages.decline'}}>{{unbound fa-icon "fa-remove"}}</div>
-        <div>
-        <div class="start_time">{{message.event.start_date}} {{message.event.start_time}}</div>
+        </div>
+        <div class="start_time">{{message.event.start_date}} {{message.event.start_time_converted}}</div>
         <div class="location" {{action 'centerMap' message.location}}>{{message.event.location.name}}</div>
       </div>
       {{/if}}

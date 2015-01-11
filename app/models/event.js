@@ -6,5 +6,9 @@ export default DS.Model.extend({
   description: DS.attr('string'),
   start_time: DS.attr('string'),
   start_date: DS.attr('string'),
-  location: DS.belongsTo('location')
+  location: DS.belongsTo('location'),
+
+  start_time_converted: function() {
+    return this.get('start_time').substr(0,5);
+  }.property('start_time')
 });

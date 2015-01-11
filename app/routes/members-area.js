@@ -154,13 +154,15 @@ export default AuthenticateRoute.extend({
 
     location.save().then(function() {
       var date_time_arr = response.start_time.split('T');
+      var date_time = date_time_arr[1];
+      var date_day = date_time_arr[0];
 
       var event = self.store.createRecord('event', {
         fb_id: response.id,
         name: response.name,
         description: response.descrption,
-        start_time: date_time_arr[1],
-        start_date: date_time_arr[0],
+        start_time: date_time,
+        start_date: date_day,
         timezone: response.timezone,
         location: location,
       });
