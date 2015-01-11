@@ -7,10 +7,10 @@ export default DS.Model.extend({
   isOpen: DS.attr('boolean', {defaultValue: false}),
   hasBeenRead: DS.attr('boolean', {defaultValue: false}),
   user: DS.belongsTo('user'),
-  event: DS.belongsTo('event'),
+  eventInvitation: DS.belongsTo('eventInvitation'),
 
-  isEvent: function() {
-    if(event != null)
+  isEventInvitation: function() {
+    if(this.get('eventInvitation') != null)
     {
       return true;
     }
@@ -18,5 +18,5 @@ export default DS.Model.extend({
     {
       return false;
     }
-  }.property('event')
+  }.property('eventInvitation')
 });

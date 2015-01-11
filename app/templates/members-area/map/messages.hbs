@@ -2,7 +2,7 @@
   {{#each message in model}}
     <div {{bind-attr class=":side-nav-item :message :no-padding message.hasBeenRead:has-been-read"}}>
       <div class="title selectable" {{action 'toggleMessage' message}}>{{message.subject}}</div>
-      {{#if message.isEvent}}
+      {{#if message.isEventInvitation}}
       <div {{bind-attr class=":body message.isOpen:open"}}>
         <div class="question">{{t 'messages.participation-question'}}</div>
         <div>
@@ -12,13 +12,13 @@
         </div>
         <div class="start">
           {{#if isGerman}}
-            <div class="start_date">{{message.event.start_date_converted_to_de}}</div>
+            <div class="start_date">{{message.eventInvitation.event.start_date_converted_to_de}}</div>
           {{else}}
-            <div class="start_date">{{message.event.start_date_converted_to_us}}</div>
+            <div class="start_date">{{message.eventInvitation.event.start_date_converted_to_us}}</div>
           {{/if}}
-          <div class="start_time">{{message.event.start_time_converted}}</div>
+          <div class="start_time">{{message.eventInvitation.event.start_time_converted}}</div>
         </div>
-        <div class="location" {{action 'centerMap' message.location}}>{{message.event.location.name}}</div>
+        <div class="location" {{action 'centerMap' message.location}}>{{message.eventInvitation.event.location.name}}</div>
       </div>
       {{/if}}
     </div>

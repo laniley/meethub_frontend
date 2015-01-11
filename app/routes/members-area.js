@@ -168,18 +168,29 @@ export default AuthenticateRoute.extend({
       });
 
       event.save().then(function() {
-        if(status === 'not_replied')
-        {
-          var message = self.store.createRecord('message', {
-            fb_id: response.id,
-            subject: response.name,
-            user: self.get('controller').get('model'),
-            event: event
+
+        var message = self.store.createRecord('message', {
+          fb_id: response.id,
+          subject: response.name,
+          user: self.get('controller').get('model')
+        });
+
+        message.save().then(function() {
+
+          var eventInvitation = self.store.createRecord('eventInvitation', {
+            event: event,
+            invited_user: self.get('controller').get('model'),
+            status: status,
+            message: message
           });
 
-          message.save();
-        }
+          eventInvitation.save();
+
+          message.set('eventInvitation', eventInvitation);
+        });
+
       });
+
     });
   }
 

@@ -31,5 +31,14 @@ export default Ember.Controller.extend({
     centerMap: function(location) {
       this.get('map_controller').centerMap(location);
     },
+    acceptEvent: function(event) {
+      event.get('attendees_accepted').pushObject(this.get('user'));
+    },
+    maybeEvent: function(event) {
+      event.get('attendees_accepted').pushObject(this.get('user'));
+    },
+    declineEvent: function(event) {
+
+    }
   }
 });
