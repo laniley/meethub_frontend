@@ -1,6 +1,6 @@
-<div class="side-nav-item-container">
+<div {{bind-attr class=":side-nav-item-container"}}>
   {{#each message in model}}
-    <div {{bind-attr class=":side-nav-item :message :no-padding message.hasBeenRead:has-been-read"}}>
+    <div {{bind-attr class=":side-nav-item :message :no-padding message.hasBeenRead:has-been-read message.eventInvitation.hasBeenAccepted:accepted message.eventInvitation.hasBeenAcceptedMaybe:maybe message.eventInvitation.hasBeenDeclined:declined"}}>
       <div class="title selectable" {{action 'toggleMessage' message}}>{{message.subject}}</div>
       {{#if message.isEventInvitation}}
       <div {{bind-attr class=":body message.isOpen:open"}}>

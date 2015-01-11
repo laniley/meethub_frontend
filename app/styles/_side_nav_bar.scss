@@ -97,8 +97,19 @@
 
       .side-nav-item {
         &.message {
+
           &:not(.has-been-read) {
             background-color: $unread-message-color;
+          }
+
+          &.accepted {
+            border: 4px solid desaturate(lighten($green, 40%), 20%);
+          }
+          &.maybe {
+            border: 4px solid desaturate(lighten($yellow, 30%), 20%);
+          }
+          &.declined {
+            border: 4px solid desaturate(lighten($orange, 40%), 20%);
           }
         }
       }
@@ -208,7 +219,6 @@
 
   .selectable {
     cursor: pointer;
-
     &:hover {
       background-color: #f7f7f7;
     }
