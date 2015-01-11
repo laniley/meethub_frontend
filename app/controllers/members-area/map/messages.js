@@ -13,6 +13,7 @@ export default Ember.Controller.extend({
         if(message.get('hasBeenRead') === false)
         {
           message.set('hasBeenRead', true);
+          message.save();
         }
       }
       else
