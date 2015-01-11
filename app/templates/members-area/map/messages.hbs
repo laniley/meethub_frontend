@@ -10,7 +10,14 @@
           <div class="button maybe" {{translateAttr  title='messages.maybe'}}>{{unbound fa-icon "fa-question"}}</div>
           <div class="button decline" {{translateAttr  title='messages.decline'}}>{{unbound fa-icon "fa-remove"}}</div>
         </div>
-        <div class="start_time">{{message.event.start_date}} {{message.event.start_time_converted}}</div>
+        <div class="start">
+          {{#if isGerman}}
+            <div class="start_date">{{message.event.start_date_converted_to_de}}</div>
+          {{else}}
+            <div class="start_date">{{message.event.start_date_converted_to_us}}</div>
+          {{/if}}
+          <div class="start_time">{{message.event.start_time_converted}}</div>
+        </div>
         <div class="location" {{action 'centerMap' message.location}}>{{message.event.location.name}}</div>
       </div>
       {{/if}}

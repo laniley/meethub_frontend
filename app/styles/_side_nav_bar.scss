@@ -155,11 +155,25 @@
       }
     }
 
-    .start_time {
+    .start {
       line-height: 50px;
+
+      .start_date {
+        width: 40%;
+        float: left;
+        text-align: right;
+      }
+
+      .start_timer {
+        width: 40%;
+        float: right;
+        text-align: left;
+      }
     }
 
     .location {
+      clear: both;
+
       &:hover {
         text-decoration: underline;
         color: $link-color-hover;
