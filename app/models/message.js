@@ -8,6 +8,7 @@ export default DS.Model.extend({
   hasBeenRead: DS.attr('boolean', {defaultValue: false}),
   user: DS.belongsTo('user'),
   eventInvitation: DS.belongsTo('eventInvitation'),
+  created_at: DS.attr('string'),
 
   isEventInvitation: function() {
     if(this.get('eventInvitation') != null)
