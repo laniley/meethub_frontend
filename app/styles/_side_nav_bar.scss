@@ -123,15 +123,9 @@
 
     .button {
 
-      @media (min-width: $screen-sm-min) {
-        width: 30%;
-        margin: 0 5px;
-        float: left;
-      }
-
-      @media (max-width: $screen-xs-max) {
-        margin: 10px;
-      }
+      width: 30%;
+      margin: 0 5px;
+      float: left;
 
       padding: 2px 5px;
       margin-bottom: 10px;
