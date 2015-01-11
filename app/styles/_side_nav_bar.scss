@@ -133,24 +133,48 @@
       &.accept {
         border-color: $green;
 
-        &:hover {
-          color: darken($green, 10%);
+        &.active {
+          background-color: darken($green, 10%);
+          color: white;
+          cursor: default;
+        }
+
+        &:not(.active) {
+          &:hover {
+            color: darken($green, 10%);
+          }
         }
       }
 
       &.maybe {
         border-color: $yellow;
 
-        &:hover {
-          color: darken($yellow, 10%);
+        &.active {
+          background-color: $yellow;
+          color: white;
+          cursor: default;
+        }
+
+        &:not(.active) {
+          &:hover {
+            color: darken($yellow, 10%);
+          }
         }
       }
 
       &.decline {
         border-color: $orange;
 
-        &:hover {
-          color: $orange;
+        &.active {
+          background-color: $orange;
+          color: white;
+          cursor: default;
+        }
+
+        &:not(.active) {
+          &:hover {
+            color: $orange;
+          }
         }
       }
     }

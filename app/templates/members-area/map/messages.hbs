@@ -6,9 +6,9 @@
       <div {{bind-attr class=":body message.isOpen:open"}}>
         <div class="question">{{t 'messages.participation-question'}}</div>
         <div>
-          <div class="button accept" {{action 'acceptEventInvitation' message.eventInvitation}} {{translateAttr  title='messages.accept'}}>{{unbound fa-icon "fa-check"}}</div>
-          <div class="button maybe" {{action 'maybeAcceptEventInvitation' message.eventInvitation}} {{translateAttr  title='messages.maybe'}}>{{unbound fa-icon "fa-question"}}</div>
-          <div class="button decline" {{action 'declineEventInvitation' message.eventInvitation}} {{translateAttr  title='messages.decline'}}>{{unbound fa-icon "fa-remove"}}</div>
+          <div {{bind-attr class=":button :accept message.eventInvitation.hasBeenAccepted:active"}} {{action 'acceptEventInvitation' message.eventInvitation}} {{translateAttr  title='messages.accept'}}>{{unbound fa-icon "fa-check"}}</div>
+          <div {{bind-attr class=":button :maybe message.eventInvitation.hasBeenAcceptedMaybe:active"}} {{action 'maybeAcceptEventInvitation' message.eventInvitation}} {{translateAttr  title='messages.maybe'}}>{{unbound fa-icon "fa-question"}}</div>
+          <div {{bind-attr class=":button :decline message.eventInvitation.hasBeenDeclined:active"}} {{action 'declineEventInvitation' message.eventInvitation}} {{translateAttr  title='messages.decline'}}>{{unbound fa-icon "fa-remove"}}</div>
         </div>
         <div class="start">
           {{#if isGerman}}
