@@ -107,6 +107,9 @@ export default AuthenticateRoute.extend({
               }
             });
 
+            var map_controller = self.controllerFor('members-area.map');
+                map_controller.getCurrentPosition();
+
             self.transitionTo('members-area.map.meethubs');
           }
         );
@@ -122,7 +125,6 @@ export default AuthenticateRoute.extend({
   handleFBEventResponse: function(response, status) {
 
     var map_controller = this.controllerFor('members-area.map');
-        map_controller.getCurrentPosition();
 
     var self = this;
 

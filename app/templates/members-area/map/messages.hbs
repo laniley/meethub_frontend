@@ -6,9 +6,9 @@
       <div {{bind-attr class=":body message.isOpen:open"}}>
         <div class="question">{{t 'messages.participation-question'}}</div>
         <div>
-          <span class="button accept">{{unbound fa-icon "fa-check"}} {{t 'messages.accept'}}</span>
-          <span class="button maybe">{{unbound fa-icon "fa-question"}} {{t 'messages.maybe'}}</span>
-          <span class="button decline">{{unbound fa-icon "fa-remove"}} {{t 'messages.decline'}}</span>
+          <div class="button accept">{{unbound fa-icon "fa-check"}} {{t 'messages.accept'}}</div>
+          <div class="button maybe">{{unbound fa-icon "fa-question"}} {{t 'messages.maybe'}}</div>
+          <div class="button decline">{{unbound fa-icon "fa-remove"}} {{t 'messages.decline'}}</div>
         <div>
         <div class="start_time">{{message.event.start_date}} {{message.event.start_time}}</div>
         <div class="location" {{action 'centerMap' message.location}}>{{message.event.location.name}}</div>
