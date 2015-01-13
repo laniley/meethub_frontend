@@ -40,6 +40,10 @@ var GoogleMapComponent = Ember.Component.extend(GoogleObjectMixin, ResizeMixin, 
     this.set('lng', this.get('lng_cache'));
   },
 
+  willDestroyElement: function() {
+    this.unbindResize();
+  },
+
   sidebarToggle: function() {
     google.maps.event.trigger(this.get('googleObject'), 'resize');
     this.resized();

@@ -61,7 +61,8 @@ layoutEvents = function(events) {
     }
     for (_j = 0, _len1 = laneEvents.length; _j < _len1; _j++) {
       de = laneEvents[_j];
-      remainingEvents = _.without(remainingEvents, de);
+      var index = remainingEvents.indexOf(de);
+      remainingEvents.splice(index, 1);
     }
     laneEvents.sort(sortFunc);
     result.push({
@@ -107,7 +108,7 @@ getEventsByWeek = function(events, startMonday, endSunday) {
   weeks = splitTimeInWeeks(startMonday.clone(), endSunday.clone());
   for (_i = 0, _len = weeks.length; _i < _len; _i++) {
     week = weeks[_i];
-    periodevents = getEventsVisibleInPeriod(events, week['start'], week['end']);
+    periodevents = getEventsVisibleInPeriod(events, week.start, week.end);
     res.push({
       start: week.start.clone(),
       end: week.end.clone(),

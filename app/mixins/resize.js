@@ -20,7 +20,7 @@ export default Ember.Mixin.create({
   },
 
   unbindResize: function ()  {
-    Ember.$( window ).unbind( 'scroll' );
+    Ember.$( window ).unbind( 'resize' );
   }
 
 });
