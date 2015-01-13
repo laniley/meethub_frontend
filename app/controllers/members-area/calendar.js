@@ -11,7 +11,6 @@ import Ember from 'ember';
 // CalendarRangeStoreMixin handles date-ranges, and determines if a range has already been fetched or not (useful for AJAX event sources)
 export default Ember.Controller.extend({
 
-    currentDate: moment().format('LL'),
     // this holds the reference to the calendar component
     // calendar: null,
 
