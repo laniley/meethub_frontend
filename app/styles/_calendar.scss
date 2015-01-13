@@ -1,0 +1,24 @@
+.calendar {
+  position: absolute;
+
+  left: 0;
+  right: $side-navbar-width;
+  bottom: 0;
+
+  &.closed {
+    right: 50px;
+  }
+
+  @media (min-width: $screen-sm-min) {
+    top: 70px;
+  }
+
+  @media (max-width: $screen-xs-max) {
+    top: 50px;
+  }
+
+  .map-canvas {
+    width: 100%;
+    height: 100%;
+  }
+}

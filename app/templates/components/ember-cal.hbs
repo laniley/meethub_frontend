@@ -1,0 +1,28 @@
+{{{calendarStyleTag}}}
+
+<div class="bk-calendar">
+
+    <div class="bk-daynames bk-clearfix">
+        <div>Mon.</div>
+        <div>Tue.</div>
+        <div>Wed.</div>
+        <div>Thu.</div>
+        <div>Fri.</div>
+        <div>Sat.</div>
+        <div>Sun.</div>
+    </div>
+
+    <div class="bk-surface bk-clearfix">
+    {{#each row in rows}}
+        {{ember-cal-week
+            row=row
+            curyear=curyear
+            curmonth=curmonth
+            color=color
+            textcolor=textcolor
+            eventClicked='eventClicked'
+            dateClicked='dateClicked'}}
+    {{/each}}
+    </div>
+
+</div>
