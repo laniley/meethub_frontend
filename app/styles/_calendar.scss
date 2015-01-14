@@ -1,5 +1,7 @@
 .calendar {
   position: absolute;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   left: 0;
   right: $side-navbar-width;
@@ -15,6 +17,27 @@
 
   @media (max-width: $screen-xs-max) {
     top: 50px;
+  }
+
+  .header {
+    padding: 5px;
+    text-align: center;
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    .controls {
+      @media (min-width: $screen-md-min) {
+        position: absolute;
+        right: -10px;
+      }
+
+      @media (max-width: $screen-sm-max) {
+        text-align: center;
+        margin: 20px 0;
+      }
+    }
   }
 
   .map-canvas {
