@@ -28,16 +28,20 @@ export default Ember.Controller.extend({
 
   actions: {
     toggleSidebar: function() {
-      Ember.$('.side-nav-bar').toggleClass('closed');
-      Ember.$('.side-nav-bar > .section-content').toggleClass('closed');
-      Ember.$('.google-map').toggleClass('closed');
-
       if(this.get('isSidebarOpen'))
       {
+        Ember.$('.side-nav-bar').addClass('closed');
+        Ember.$('.side-nav-bar > .section-content').addClass('closed');
+        Ember.$('.google-map').addClass('closed');
+        Ember.$('.calendar').addClass('closed');
         this.set('isSidebarOpen', false);
       }
       else
       {
+        Ember.$('.side-nav-bar').removeClass('closed');
+        Ember.$('.side-nav-bar > .section-content').removeClass('closed');
+        Ember.$('.google-map').removeClass('closed');
+        Ember.$('.calendar').removeClass('closed');
         this.set('isSidebarOpen', true);
       }
     }

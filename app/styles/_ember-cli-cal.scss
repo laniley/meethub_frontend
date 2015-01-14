@@ -1,5 +1,5 @@
 $bklinecolor: #E0E0E0;
-$todaybgcolor: darken(rgb(255, 242, 242), 1%);
+$todaybgcolor: $darkgrey;
 $weekendbgcolor: lighten(rgb(242, 242, 242), 1%);
 
 $eventfontsize: 12px;
@@ -22,7 +22,7 @@ $prefix: "bk-";
 @mixin ellipsis {
     text-overflow: ellipsis;
     overflow: hidden;
-    white-space: nowrap; 
+    white-space: nowrap;
 }
 
 @mixin clearfix() {

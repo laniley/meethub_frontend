@@ -103,7 +103,7 @@
           }
 
           &.accepted {
-            border: 4px solid desaturate(lighten($green, 40%), 20%);
+            border: 4px solid $lightgreen;
           }
           &.maybe {
             border: 4px solid desaturate(lighten($yellow, 30%), 20%);
