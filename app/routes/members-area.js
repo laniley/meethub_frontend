@@ -161,6 +161,8 @@ export default AuthenticateRoute.extend({
         fb_id: response.id,
         name: response.name,
         description: response.descrption,
+        start: moment(response.start_time, "YYYY-MM-DDTHH:mm:ss.SSSSZ"),
+        end: moment(response.start_time, "YYYY-MM-DDTHH:mm:ss.SSSSZ").add(1, 'hours'),
         start_time: date_time,
         start_date: date_day,
         timezone: response.timezone,

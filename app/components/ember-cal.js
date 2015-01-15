@@ -15,6 +15,7 @@ component = Ember.Component.extend({
   curyear: null,
   _selectedEvent: null,
   _selectedDate: null,
+
   _setup: (function() {
     var fadedColor, uniqid;
     this.set('component', this);
@@ -24,6 +25,7 @@ component = Ember.Component.extend({
     this.set('classNames', [uniqid]);
     return this.set('calendarStyleTag', '<style type="text/css"> .' + uniqid + ' .bk-calendar .bk-event { background-color: ' + fadedColor + '; } .' + uniqid + ' .bk-calendar .bk-event.bk-duration-0 { background-color: transparent; } .' + uniqid + ' .bk-calendar .bk-event.hover, .' + uniqid + ' .bk-calendar .bk-event.active { background-color: ' + this.get('color') + '; } .' + uniqid + ' .bk-calendar .bk-event.bk-duration-0:before { background-color: ' + fadedColor + '; } .' + uniqid + ' .bk-calendar .bk-event.active.bk-duration-0:before, .' + uniqid + ' .bk-calendar .bk-event.hover.bk-duration-0:before { background-color: white; } </style>');
   }).on('init'),
+
   firstdayofcurmonth: (function() {
     var pad;
     pad = function(n, width, z) {
@@ -37,15 +39,19 @@ component = Ember.Component.extend({
     };
     return moment(this.get('curyear') + '-' + pad(this.get('curmonth'), 2) + '-01T00:00:00.000Z').utc();
   }).property('curyear', 'curmonth'),
+
   viewstart: (function() {
     return this.get('firstdayofcurmonth').clone().isoWeekday(1);
   }).property('firstdayofcurmonth'),
+
   viewend: (function() {
     return this.get('firstdayofcurmonth').clone().endOf('month').isoWeekday(7).add(1, 'second').millisecond(0);
   }).property('firstdayofcurmonth'),
+
   title: (function() {
     return this.get('firstdayofcurmonth').format('MMMM YYYY');
   }).property('firstdayofcurmonth'),
+
   isPresentView: (function() {
     return this.get('curyear') === moment().year() && this.get('curmonth') === (moment().month() + 1);
   }).property('curyear', 'curmonth'),
@@ -66,10 +72,15 @@ component = Ember.Component.extend({
   ).property 'events.@each', 'viewstart', 'viewend'
    */
   rows: (function() {
+
     var col, date, layoutsbyweek, rows, weekdates, weeklayout, _i, _j, _len;
+
     date = this.get('viewstart').clone();
+    console.log(this.get('events'));
     layoutsbyweek = CalendarTools.getLayoutsByWeek(this.get('events'), this.get('viewstart').clone(), this.get('viewend').clone());
+
     rows = [];
+
     for (_i = 0, _len = layoutsbyweek.length; _i < _len; _i++) {
       weeklayout = layoutsbyweek[_i];
       weekdates = [];

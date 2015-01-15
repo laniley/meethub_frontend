@@ -4,8 +4,10 @@ export default DS.Model.extend({
   fb_id: DS.attr('string'),
   name: DS.attr('string'),
   description: DS.attr('string'),
+  start: DS.attr('string'),
   start_time: DS.attr('string'),
   start_date: DS.attr('string'),
+  end: DS.attr('string'),
   location: DS.belongsTo('location'),
 
   start_time_converted: function() {

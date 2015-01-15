@@ -23,6 +23,21 @@ export default Ember.Controller.extend( CalendarRangeStoreMixin, CalendarEventSt
         return 'col-sm-12';
     }).property('selectedEvent'),
 
+    showEvents: function() {
+      var events = this.get('model');
+
+      var response = events.map(function(event) {
+        return CalendarTools.DisplayedEvent.create({
+            start: event.get('start'),
+            end: event.get('end'),
+            label: event.get('name'),
+            payload: event   // If events were fetched by an API, this is where your would put your own event model
+        });
+      });
+
+      this.mergeEvents(response);
+    },
+
     actions: {
 
         // Called when a calendar event is selected
@@ -61,28 +76,7 @@ export default Ember.Controller.extend( CalendarRangeStoreMixin, CalendarEventSt
                 this.aggregateRange(range);
             }
 
-            // We have to fetch events
-            // In this demo, events are generated randomly, but you could as well fetch them asynchronously from an API
-
-            var randomEvents = [];
-            var getRandomInt = function(min, max) { return Math.floor(Math.random() * (max - min)) + min;};
-
-            for (var i = 1; i <= 5; i++) {
-                var randomstart = range.start.clone().add(getRandomInt(0, 30), 'days').hour(0).minute(0).second(0).millisecond(0);
-                var randomend = randomstart.clone().add(getRandomInt(0, 9), 'days');
-
-                // The calendar component uses a proxy Event model, defining only the property used for display in the calendar view
-                // You may associate this DisplayedEvent proxy and your own Event model using the `payload` property of the proxy (see below)
-                randomEvents.push(CalendarTools.DisplayedEvent.create({
-                    start: randomstart,
-                    end: randomend,
-                    label: 'Some random event !',
-                    payload: null   // If events were fetched by an API, this is where your would put your own event model
-                }));
-            }
-
-            // Use CalendarEventStoreMixin to merge the fetched events with the ones already fetched
-            return this.mergeEvents(randomEvents);
+            this.showEvents();
         }
     }
 });

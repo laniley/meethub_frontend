@@ -6,6 +6,7 @@ var component;
 component = Ember.Mixin.create({
   calendarevents: [],
   mergeEvents: function(occurences) {
+    console.log('mergeEvents', occurences);
     var calendarevents, filterFunc, filteredOccurences, occurence, i, len;
     calendarevents = this.get('calendarevents');
     filteredOccurences = [];

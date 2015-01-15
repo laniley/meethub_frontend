@@ -109,7 +109,7 @@
             border: 4px solid desaturate(lighten($yellow, 30%), 20%);
           }
           &.declined {
-            border: 4px solid desaturate(lighten($orange, 40%), 20%);
+            border: 4px solid $lightred;
           }
 
           .envelope {
