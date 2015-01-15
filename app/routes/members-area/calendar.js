@@ -4,6 +4,7 @@ import CalendarTools from '../../components/utilities/calendartools';
 export default Ember.Route.extend({
   setupController: function(controller) {
     controller.set('model', this.store.all('event'));
+    controller.initEvents();
   },
   renderTemplate: function() {
     this.render({

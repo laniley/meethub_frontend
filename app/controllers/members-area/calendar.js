@@ -14,16 +14,8 @@ export default Ember.Controller.extend( CalendarRangeStoreMixin, CalendarEventSt
     // this holds the reference to the calendar component
     calendar: null,
 
-    // // the selected event, if any
-    selectedEvent: null,
+    transformedEvents: function() {
 
-    // // class binding to handle the "Selected event tab" in the view
-    displayClass: (function() {
-        if (this.get('selectedEvent')) { return 'col-sm-9'; }
-        return 'col-sm-12';
-    }).property('selectedEvent'),
-
-    showEvents: function() {
       var events = this.get('model');
 
       var response = events.map(function(event) {
@@ -35,7 +27,26 @@ export default Ember.Controller.extend( CalendarRangeStoreMixin, CalendarEventSt
         });
       });
 
-      this.mergeEvents(response);
+      return response;
+
+    }.property('model.@each'),
+
+    // the selected event, if any
+    selectedEvent: null,
+
+    // class binding to handle the "Selected event tab" in the view
+    displayClass: (function() {
+        if (this.get('selectedEvent'))
+          { return 'col-sm-9'; }
+        return 'col-sm-12';
+    }).property('selectedEvent'),
+
+    eventObserver: function() {
+      this.mergeEvents(this.get('transformedEvents'));
+    }.observes('transformedEvents'),
+
+    initEvents: function() {
+      this.mergeEvents(this.get('transformedEvents'));
     },
 
     actions: {
@@ -64,7 +75,7 @@ export default Ember.Controller.extend( CalendarRangeStoreMixin, CalendarEventSt
 
         // Called when the displayed month changes
         // Our controller should fetch calendar events to respond to this
-        viewChanged: function(range, oldrange) {
+        viewChanged: function(range) {
 
             if (this.isRangeFetched(range)) {
                 // CalendarRangeStoreMixin says that this range has been fetched already
@@ -76,7 +87,7 @@ export default Ember.Controller.extend( CalendarRangeStoreMixin, CalendarEventSt
                 this.aggregateRange(range);
             }
 
-            this.showEvents();
+            this.mergeEvents(this.get('transformedEvents'));
         }
     }
 });

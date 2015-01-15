@@ -77,24 +77,34 @@ component = Ember.Component.extend({
 
     date = this.get('viewstart').clone();
 
-    layoutsbyweek = CalendarTools.getLayoutsByWeek(this.get('events'), this.get('viewstart').clone(), this.get('viewend').clone());
+    layoutsbyweek = CalendarTools.getLayoutsByWeek(
+        this.get('events'),
+        this.get('viewstart').clone(),
+        this.get('viewend').clone()
+    );
 
     rows = [];
 
-    for (_i = 0, _len = layoutsbyweek.length; _i < _len; _i++) {
+    for (_i = 0, _len = layoutsbyweek.length; _i < _len; _i++)
+    {
       weeklayout = layoutsbyweek[_i];
       weekdates = [];
+
       for (col = _j = 1; _j <= 7; col = ++_j) {
         weekdates.push(date.clone());
         date.add('1', 'day');
       }
+
       rows.push({
         dates: weekdates,
         events: weeklayout
       });
     }
+
     return rows;
+
   }).property('events.@each', 'viewstart', 'viewend'),
+
   displayMonthForYear: function(month, year) {
     var oldend, oldrange, oldstart, range;
     oldstart = this.get('viewstart').clone();
@@ -111,6 +121,7 @@ component = Ember.Component.extend({
       start: oldstart,
       end: oldend
     });
+
     return this.sendAction('viewChanged', range, oldrange);
   },
   unselectEvent: function() {
