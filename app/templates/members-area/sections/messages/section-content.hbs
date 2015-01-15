@@ -3,16 +3,27 @@
     <div {{bind-attr class=":side-nav-item :message :no-padding message.hasBeenRead:has-been-read message.eventInvitation.hasBeenAccepted:accepted message.eventInvitation.hasBeenAcceptedMaybe:maybe message.eventInvitation.hasBeenDeclined:declined"}}>
       {{!-- TITLE --}}
       <div class="title selectable" {{action 'toggleMessage' message}}>
-        <div {{bind-attr class=":envelope message.hasBeenRead"}}>
-          {{#if message.hasBeenRead}}
-            {{unbound fa-icon "fa-envelope-o"}}
-          {{else}}
-            {{unbound fa-icon "fa-envelope"}}
+        <div class="icons">
+          <div {{bind-attr class=":envelope message.hasBeenRead"}}>
+            {{#if message.hasBeenRead}}
+              {{unbound fa-icon "fa-envelope-o"}}
+            {{else}}
+              {{unbound fa-icon "fa-envelope"}}
+            {{/if}}
+          </div>
+          {{#if message.isEventInvitation}}
+            <div class="message-type">{{unbound fa-icon "fa-music"}}</div>
+            {{#if message.eventInvitation.hasBeenAccepted}}
+              <div class="eventInvitation-status accepted">{{unbound fa-icon "fa-check"}}</div>
+            {{/if}}
+            {{#if message.eventInvitation.hasBeenAcceptedMaybe}}
+              <div class="eventInvitation-status maybe">{{unbound fa-icon "fa-question"}}</div>
+            {{/if}}
+            {{#if message.eventInvitation.hasBeenDeclined}}
+              <div class="eventInvitation-status declined">{{unbound fa-icon "fa-remove"}}</div>
+            {{/if}}
           {{/if}}
         </div>
-        {{#if message.isEventInvitation}}
-          <div class="message-type">{{unbound fa-icon "fa-music"}}</div>
-        {{/if}}
         <div class="subject">{{message.subject}}</div>
       </div>
       {{!-- BODY --}}
@@ -26,11 +37,11 @@
         </div>
         <div class="start">
           {{#if isGerman}}
-            <div class="start_date">{{message.eventInvitation.event.start_date_converted_to_de}}</div>
+            {{message.eventInvitation.event.start_date_converted_to_de}}
           {{else}}
-            <div class="start_date">{{message.eventInvitation.event.start_date_converted_to_us}}</div>
+            {{message.eventInvitation.event.start_date_converted_to_us}}
           {{/if}}
-          <div class="start_time">{{message.eventInvitation.event.start_time_converted}}</div>
+           - {{message.eventInvitation.event.start_time_converted}}
         </div>
         <div class="location" {{action 'centerMap' message.location}}>{{message.eventInvitation.event.location.name}}</div>
       </div>

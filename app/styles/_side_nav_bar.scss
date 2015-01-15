@@ -102,16 +102,6 @@
             background-color: $unread-message-color;
           }
 
-          &.accepted {
-            border: 4px solid $lightgreen;
-          }
-          &.maybe {
-            border: 4px solid desaturate(lighten($yellow, 30%), 20%);
-          }
-          &.declined {
-            border: 4px solid $lightred;
-          }
-
           .envelope {
             float: left;
             font-size: 24px;
@@ -123,6 +113,22 @@
             float: left;
             margin-left: -20px;
             margin-top: 6px;
+          }
+
+          .eventInvitation-status {
+            float: left;
+            margin: 5px -40px;
+            font-size: 20px;
+
+            &.accepted {
+              color: darken($green, 10%);;
+            }
+            &.maybe {
+              color: darken($yellow, 10%);
+            }
+            &.declined {
+              color: $orange;
+            }
           }
         }
       }
