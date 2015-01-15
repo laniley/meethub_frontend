@@ -76,7 +76,7 @@ component = Ember.Component.extend({
     var col, date, layoutsbyweek, rows, weekdates, weeklayout, _i, _j, _len;
 
     date = this.get('viewstart').clone();
-    console.log(this.get('events'));
+
     layoutsbyweek = CalendarTools.getLayoutsByWeek(this.get('events'), this.get('viewstart').clone(), this.get('viewend').clone());
 
     rows = [];

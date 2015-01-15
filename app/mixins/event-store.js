@@ -4,26 +4,39 @@ import Ember from 'ember';
 var component;
 
 component = Ember.Mixin.create({
+
   calendarevents: [],
+
   mergeEvents: function(occurences) {
-    console.log('mergeEvents', occurences);
-    var calendarevents, filterFunc, filteredOccurences, occurence, i, len;
+
+    var calendarevents, filteredOccurences, occurence, i, k;
+
     calendarevents = this.get('calendarevents');
+
     filteredOccurences = [];
-    filterFunc = function(item) {
-      if ((item.payload === null) || (item.payload.id === null)) {
-        return false;
-      }
-      return item.payload.id === occurence.payload.id && item.start.isSame(occurence.start) && item.end.isSame(occurence.end);
-    };
-    for (i = 0, len = occurences.length; i < len; i++) {
+
+    for (i = 0; i < occurences.length; i++)
+    {
       occurence = occurences[i];
-      if( calendarevents.indexOf(filterFunc) === -1) {
+      var found = false;
+
+      for(k = 0; k < calendarevents.length; k++)
+      {
+        if(calendarevents[k].payload.id === occurence.payload.id)
+        {
+          found = true;
+          break;
+        }
+      }
+
+      if(!found)
+      {
         filteredOccurences.push(occurence);
       }
     }
     return this.get('calendarevents').pushObjects(filteredOccurences);
   },
+
   getEvents: function() {
     return this.get('calendarevents');
   }
