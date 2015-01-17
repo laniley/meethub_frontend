@@ -50,8 +50,15 @@ Router.map(function() {
       this.route("map");
     });
 
-    this.route("events");
-    this.route("locations");
+    this.route("events", function() {
+      this.route("map");
+      this.route("calendar");
+    });
+
+    this.route("locations", function() {
+      this.route("map");
+      this.route("calendar");
+    });
   });
 });
 
