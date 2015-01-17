@@ -1,0 +1,18 @@
+<div class="side-nav-bar">
+  <div class="side-bar-links">
+    <div {{action 'toggleSidebar'}}>{{unbound fa-icon "fa-reorder"}}</div>
+    <div>{{#link-to 'members-area.meethubs.map'}}{{unbound fa-icon "fa-fixed-with fa-map-marker"}}{{/link-to}}</div>
+    <div>{{#link-to 'members-area.meethubs.calendar'}}{{unbound fa-icon "fa-fixed-with fa-calendar"}}{{/link-to}}</div>
+  </div>
+  <div class="section-content">
+    <div class="section-title">
+      Meethubs
+      <div class="meethub-counter"></div>
+    </div>
+    {{outlet area-filter}}
+    <div class="side-nav-item-container">
+      <div class="side-nav-item">
+      </div>
+    </div>
+  </div>
+</div>

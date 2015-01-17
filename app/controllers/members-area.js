@@ -4,6 +4,8 @@ export default Ember.Controller.extend({
 
   isSidebarOpen: true,
 
+  currentSection: 'map',
+
   hasUnreadMessages: function() {
 
     var unreadMessages = [];

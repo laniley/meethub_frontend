@@ -3,7 +3,7 @@ import {
   test
 } from 'ember-qunit';
 
-moduleFor('route:members-area/calendar/meethubs', 'MembersAreaCalendarMeethubsRoute', {
+moduleFor('route:meethubs/index', 'MeethubsIndexRoute', {
   // Specify the other units that are required for this test.
   // needs: ['controller:foo']
 });

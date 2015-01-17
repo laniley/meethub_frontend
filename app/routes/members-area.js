@@ -110,7 +110,7 @@ export default AuthenticateRoute.extend({
             var map_controller = self.controllerFor('members-area.map');
                 map_controller.getCurrentPosition();
 
-            self.transitionTo('members-area.map.meethubs');
+            self.transitionTo('members-area.meethubs.map');
           }
         );
       }

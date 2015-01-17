@@ -16,7 +16,57 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      {{outlet top-nav-bar-links}}
+      {{!-- CENTER AREA / TOP-NAV-BAR --}}
+      <ul class="nav navbar-nav center-links">
+        <li>
+          {{#link-to 'members-area.meethubs'}}
+            <span>{{unbound fa-icon "fa-fixed-with  fa-share-alt"}}</span>
+            <span class="link-label hidden-sm">Meethubs</span>
+          {{/link-to}}
+        </li>
+        <li>
+          {{#link-to 'members-area.map.friends'}}
+            <span>{{unbound fa-icon "fa-fixed-with fa-group"}}</span>
+            <span class="link-label hidden-sm">{{t 'friend.title'}}</span>
+          {{/link-to}}
+        </li>
+        <li>
+          {{#link-to 'members-area.map.events'}}
+            <span>{{unbound fa-icon "fa-fixed-with fa-music"}}</span>
+            <span class="link-label hidden-sm">Events</span>
+          {{/link-to}}
+        </li>
+        <li>
+          {{#link-to 'members-area.map.locations'}}
+            <span>{{unbound fa-icon "fa-fixed-with fa-compass"}}</span>
+            <span class="link-label hidden-sm">Locations</span>
+          {{/link-to}}
+        </li>
+      </ul>
+      {{!-- RIGHT AREA --}}
+      <ul class="nav navbar-nav navbar-right">
+        <li class="custom-link">
+          {{#link-to 'members-area.messages'}}
+            {{!-- <span class="message-counter">{{model.messages.length}}</span> --}}
+            <span {{bind-attr class=":link-icon hasUnreadMessages"}}>{{unbound fa-icon "fa-fixed-with fa-envelope"}}</span>
+            <span class="link-label visible-xs">Messages</span>
+          {{/link-to}}
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            <div class="account_img_container">
+              <img {{bind-attr src=model.picture}} class="account_img" />
+            </div>
+            <div class="account_name">
+              {{model.name}}
+            </div>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li {{action "invalidateSession"}}><a href="#">{{unbound fa-icon "fa-sign-out"}} Log Out</a></li>
+          </ul>
+        </li>
+      </ul>
+
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
@@ -25,18 +75,6 @@
 
   {{outlet main-area}}
 
-  <div class="side-nav-bar">
-    <div class="side-bar-links">
-      <div {{action 'toggleSidebar'}}>{{unbound fa-icon "fa-reorder"}}</div>
-      {{outlet side-bar-links}}
-    </div>
-    <div class="section-content">
-      <div class="section-title">
-        {{outlet section-title}}
-      </div>
-      {{outlet area-filter}}
-      {{outlet side-nav-bar}}
-    </div>
-  </div>
+  {{outlet side-nav-bar}}
 
 </div>
