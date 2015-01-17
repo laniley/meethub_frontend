@@ -7,9 +7,9 @@ var Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('login', { path: '/'});
-  this.resource('members-area', { path: 'members-area' }, function() {
-    this.route('map', function() {
-      this.route('meethubs', function() {
+  this.resource('members-area', { path: '/members-area' }, function() {
+    this.route('map', { path: '/map' }, function() {
+      this.route('meethubs', { path: '/meethubs' }, function() {
         this.route('create');
         this.route('search');
       });
@@ -18,7 +18,7 @@ Router.map(function() {
       this.route('locations');
       this.route('messages');
     });
-    this.route('calendar', function() {
+    this.route('calendar', { path: '/' }, function() {
       this.route('meethubs');
       this.route('friends');
       this.route('events');

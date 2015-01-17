@@ -138,6 +138,16 @@
   .title {
     font-weight: bold;
     padding: 15px 10px;
+
+    .icons {
+      position: absolute;
+    }
+
+    .subject {
+      position: relative;
+      left: 50px;
+      width: 80%;
+    }
   }
 
   .body {
