@@ -38,14 +38,20 @@
           <div {{bind-attr class=":button :decline message.eventInvitation.hasBeenDeclined:active"}} {{action 'declineEventInvitation' message.eventInvitation}} {{translateAttr  title='messages.decline'}}>{{unbound fa-icon "fa-remove"}}</div>
         </div>
         <div class="start">
-          {{#if isGerman}}
-            {{message.eventInvitation.event.start_date_converted_to_de}}
-          {{else}}
-            {{message.eventInvitation.event.start_date_converted_to_us}}
-          {{/if}}
-           - {{message.eventInvitation.event.start_time_converted}}
+          {{#link-to 'members-area.messages.calendar'}}
+            {{#if isGerman}}
+              {{message.eventInvitation.event.start_date_converted_to_de}}
+            {{else}}
+              {{message.eventInvitation.event.start_date_converted_to_us}}
+            {{/if}}
+             - {{message.eventInvitation.event.start_time_converted}}
+          {{/link-to}}
         </div>
-        <div class="location" {{action 'centerMap' message.location}}>{{message.eventInvitation.event.location.name}}</div>
+        <div class="location">
+          {{#link-to 'members-area.messages.map'}}
+            {{message.eventInvitation.event.location.name}}
+          {{/link-to}}
+        </div>
       </div>
       {{/if}}
     </div>

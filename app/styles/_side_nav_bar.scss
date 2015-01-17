@@ -96,6 +96,7 @@
       overflow: auto;
 
       .side-nav-item {
+
         &.message {
 
           &:not(.has-been-read) {
@@ -124,7 +125,7 @@
               color: darken($green, 10%);;
             }
             &.maybe {
-              color: darken($yellow, 10%);
+              color: $yellow;
             }
             &.declined {
               color: $orange;
@@ -239,8 +240,6 @@
       clear: both;
 
       &:hover {
-        text-decoration: underline;
-        color: $link-color-hover;
         cursor: pointer;
       }
     }

@@ -31,9 +31,6 @@ export default Ember.Controller.extend({
         message.set('isOpen', false);
       }
     },
-    centerMap: function(location) {
-      this.get('map_controller').centerMap(location);
-    },
     acceptEventInvitation: function(eventInvitation) {
       eventInvitation.set('status', 'attending');
       eventInvitation.save();
