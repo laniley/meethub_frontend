@@ -5,11 +5,16 @@
     <div>{{#link-to 'members-area.meethubs.calendar'}}{{unbound fa-icon "fa-fixed-with fa-calendar"}}{{/link-to}}</div>
   </div>
   <div class="section-content">
+    {{!-- TITLE --}}
     <div class="section-title">
       Meethubs
       <div class="meethub-counter"></div>
     </div>
-    {{outlet area-filter}}
+    {{!-- FILTER --}}
+    <div class="side-nav-item selectable" {{action "centerMapOnCurrentPosition"}}>
+      Messages Filter
+    </div>
+    {{!-- LIST --}}
     <div class="side-nav-item-container">
       <div class="side-nav-item">
       </div>

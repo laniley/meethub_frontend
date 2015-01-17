@@ -5,10 +5,15 @@
     <div>{{#link-to 'members-area.messages.calendar'}}{{unbound fa-icon "fa-fixed-with fa-calendar"}}{{/link-to}}</div>
   </div>
   <div class="section-content">
+    {{!-- TITLE --}}
     <div class="section-title">
       Messages
     </div>
-    {{outlet area-filter}}
+    {{!-- FILTER --}}
+    <div class="side-nav-item selectable" {{action "centerMapOnCurrentPosition"}}>
+      Messages Filter
+    </div>
+    {{!-- LIST --}}
     <div {{bind-attr class=":side-nav-item-container"}}>
       {{#each message in sortedMessages}}
         <div {{bind-attr class=":side-nav-item :message :no-padding message.hasBeenRead:has-been-read message.eventInvitation.hasBeenAccepted:accepted message.eventInvitation.hasBeenAcceptedMaybe:maybe message.eventInvitation.hasBeenDeclined:declined"}}>

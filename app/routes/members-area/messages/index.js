@@ -5,6 +5,7 @@ export default Ember.Route.extend({
     controller.set('model', this.store.all('message'));
   },
   beforeModel: function(transition) {
+
     var currentSection = this.controllerFor('members-area').get('currentSection');
 
     if(currentSection === 'calendar')
