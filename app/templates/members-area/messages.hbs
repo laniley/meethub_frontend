@@ -22,15 +22,8 @@
           </div>
           {{#if message.isEventInvitation}}
             <div class="message-type">{{unbound fa-icon "fa-music"}}</div>
-            {{#if message.eventInvitation.hasBeenAccepted}}
-              <div class="eventInvitation-status accepted">{{unbound fa-icon "fa-check"}}</div>
-            {{/if}}
-            {{#if message.eventInvitation.hasBeenAcceptedMaybe}}
-              <div class="eventInvitation-status maybe">{{unbound fa-icon "fa-question"}}</div>
-            {{/if}}
-            {{#if message.eventInvitation.hasBeenDeclined}}
-              <div class="eventInvitation-status declined">{{unbound fa-icon "fa-remove"}}</div>
-            {{/if}}
+            <div class="eventInvitation-status accepted" {{bind-attr class=":eventInvitation-status message.eventInvitation.hasBeenAccepted:accepted message.eventInvitation.hasBeenAcceptedMaybe:maybe message.eventInvitation.hasBeenDeclined:declined"}}>
+              {{unbound fa-icon "fa-circle"}}</div>
           {{/if}}
         </div>
         <div class="subject">{{message.subject}}</div>
