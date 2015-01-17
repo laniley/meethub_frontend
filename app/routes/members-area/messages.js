@@ -17,6 +17,7 @@ export default Ember.Route.extend({
     }
   },
   renderTemplate: function() {
+    this.render('members-area.messages.side-nav-buttons', { outlet: 'side-nav-buttons' });
     this.render('members-area.messages', { outlet: 'side-nav-bar' });
   }
 });

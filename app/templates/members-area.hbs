@@ -25,19 +25,19 @@
           {{/link-to}}
         </li>
         <li>
-          {{#link-to 'members-area.map.friends'}}
+          {{#link-to 'members-area.friends'}}
             <span>{{unbound fa-icon "fa-fixed-with fa-group"}}</span>
             <span class="link-label hidden-sm">{{t 'friend.title'}}</span>
           {{/link-to}}
         </li>
         <li>
-          {{#link-to 'members-area.map.events'}}
+          {{#link-to 'members-area.events'}}
             <span>{{unbound fa-icon "fa-fixed-with fa-music"}}</span>
             <span class="link-label hidden-sm">Events</span>
           {{/link-to}}
         </li>
         <li>
-          {{#link-to 'members-area.map.locations'}}
+          {{#link-to 'members-area.locations'}}
             <span>{{unbound fa-icon "fa-fixed-with fa-compass"}}</span>
             <span class="link-label hidden-sm">Locations</span>
           {{/link-to}}
@@ -75,6 +75,14 @@
 
   {{outlet main-area}}
 
-  {{outlet side-nav-bar}}
+  <div class="side-nav-bar">
+    <div class="side-bar-links">
+      <div {{action 'toggleSidebar'}}>{{unbound fa-icon "fa-reorder"}}</div>
+      {{outlet side-nav-buttons}}
+    </div>
+    <div class="section-content">
+      {{outlet side-nav-bar}}
+    </div>
+  </div>
 
 </div>

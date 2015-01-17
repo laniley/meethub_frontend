@@ -7,15 +7,15 @@ export default Ember.Route.extend({
 
     if(currentSection === 'calendar')
     {
-      this.transitionTo('members-area.meethubs.calendar');
+      this.transitionTo('members-area.friends.calendar');
     }
     else
     {
-      this.transitionTo('members-area.meethubs.map');
+      this.transitionTo('members-area.friends.map');
     }
   },
   renderTemplate: function() {
-    this.render('members-area.meethubs.side-nav-buttons', { outlet: 'side-nav-buttons' });
-    this.render('members-area.meethubs', { outlet: 'side-nav-bar' });
+    this.render('members-area.friends.side-nav-buttons', { outlet: 'side-nav-buttons' });
+    this.render('members-area.friends', { outlet: 'side-nav-bar' });
   }
 });
