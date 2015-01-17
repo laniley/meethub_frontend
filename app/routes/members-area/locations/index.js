@@ -1,6 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+  setupController: function(controller) {
+    controller.set('model', this.store.all('location'));
+  },
   beforeModel: function(transition) {
 
     var currentSection = this.controllerFor('members-area').get('currentSection');

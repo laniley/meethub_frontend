@@ -1,1 +1,19 @@
-{{outlet}}
+{{!-- TITLE --}}
+<div class="section-title">
+  Locations
+  <div class="meethub-counter"></div>
+</div>
+{{!-- FILTER --}}
+<div class="side-nav-item selectable" {{action "centerMapOnCurrentPosition"}}>
+  Locations Filter
+</div>
+{{!-- LIST --}}
+<div class="side-nav-item-container">
+  {{#each location in model}}
+    <div class="side-nav-item selectable" {{action 'center_map' location}}>
+      <div>{{location.name}}</div>
+      <div>{{locaiton.city}}</div>
+      <div>{{location.street}}</div>
+    </div>
+  {{/each}}
+</div>
