@@ -1,5 +1,5 @@
 $bklinecolor: #E0E0E0;
-$todaybgcolor: $darkgrey;
+$todaybgcolor: $lightgreen;
 $weekendbgcolor: lighten(rgb(242, 242, 242), 1%);
 
 $eventfontsize: 12px;
@@ -141,10 +141,6 @@ $prefix: "bk-";
     .#{$prefix}daycell {
         border-top: 1px solid $bklinecolor;
 
-        &.#{$prefix}today {
-            background-color: $todaybgcolor;
-        }
-
         &.#{$prefix}day-sat,
         &.#{$prefix}day-sun {
             background-color: $weekendbgcolor;
@@ -154,6 +150,10 @@ $prefix: "bk-";
 
         &.#{$prefix}day-sun {
             width: calc(#{percentage(1/7)} - #{$cellmarginhorizontal});
+        }
+
+        &.#{$prefix}today {
+            background-color: $todaybgcolor;
         }
     }
 
