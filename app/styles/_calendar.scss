@@ -40,7 +40,17 @@
     }
   }
 
-  // .bk-today {
-  //   background-color: $todaybgcolor;
-  // }
+  .btn {
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .btn-default {
+    &:not(.btn-today) {
+      &:focus {
+        background-color: #fff;
+      }
+    }
+  }
 }
