@@ -137,17 +137,30 @@
             margin: 5px -40px;
             font-size: 16px;
             color: #ddd;
-            // text-shadow: 0px 1px 2px rgba(150, 150, 150, 1);
-             0 -1px 1px #FFFFFF, 0 1px 1px #666666;
+            text-shadow: 0 -1px 1px #FFFFFF, 0 1px 1px #666666;
 
             &.accepted {
-              color: darken($green, 10%);
+              color: $darkgreen;
             }
             &.maybe {
               color: $yellow;
             }
             &.declined {
               color: $orange;
+            }
+          }
+        }
+
+        &.friend {
+          line-height: 50px;
+          text-align: left;
+
+          .picture {
+            float: left;
+            margin-right: 20px;
+
+            img {
+              height: 50px;
             }
           }
         }

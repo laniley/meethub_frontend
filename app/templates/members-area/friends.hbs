@@ -3,13 +3,14 @@
   {{t friend.title}}
 </div>
 {{!-- FILTER --}}
-<div class="side-nav-item selectable" {{action "centerMapOnCurrentPosition"}}>
+<div class="side-nav-item selectable">
   Friends Filter
 </div>
 {{!-- LIST --}}
 <div class="side-nav-item-container">
   {{#each friend in model}}
-    <div class="side-nav-item selectable" {{action 'center_map' location}}>
+    <div class="side-nav-item selectable friend">
+      <div class="picture"><img {{bind-attr src=friend.picture }} /></div>
       <div>{{friend.name}}</div>
     </div>
   {{/each}}
