@@ -9,7 +9,7 @@
 {{!-- LIST --}}
 <div {{bind-attr class=":side-nav-item-container"}}>
   {{#each message in sortedMessages}}
-    <div {{bind-attr class=":side-nav-item :message :no-padding message.hasBeenRead:has-been-read message.eventInvitation.hasBeenAccepted:accepted message.eventInvitation.hasBeenAcceptedMaybe:maybe message.eventInvitation.hasBeenDeclined:declined"}}>
+    <div {{bind-attr class=":side-nav-item :message :no-padding message.hasBeenRead:has-been-read"}}>
       {{!-- TITLE --}}
       <div class="title selectable" {{action 'toggleMessage' message}}>
         <div class="icons">
@@ -22,7 +22,7 @@
           </div>
           {{#if message.isEventInvitation}}
             <div class="message-type">{{unbound fa-icon "fa-music"}}</div>
-            <div class="eventInvitation-status accepted" {{bind-attr class=":eventInvitation-status message.eventInvitation.hasBeenAccepted:accepted message.eventInvitation.hasBeenAcceptedMaybe:maybe message.eventInvitation.hasBeenDeclined:declined"}}>
+            <div {{bind-attr class=":eventInvitation-status message.eventInvitation.hasBeenAccepted:accepted message.eventInvitation.hasBeenAcceptedMaybe:maybe message.eventInvitation.hasBeenDeclined:declined"}}>
               {{unbound fa-icon "fa-circle"}}</div>
           {{/if}}
         </div>
