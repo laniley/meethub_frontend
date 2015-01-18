@@ -100,7 +100,23 @@
         &.message {
 
           &:not(.has-been-read) {
-            background-color: $unread-message-color;
+            .title {
+              font-weight: bold;
+            }
+          }
+
+          .title {
+            padding: 15px 10px;
+
+            .icons {
+              position: absolute;
+            }
+
+            .subject {
+              position: relative;
+              left: 50px;
+              width: 80%;
+            }
           }
 
           .envelope {
@@ -133,21 +149,6 @@
           }
         }
       }
-    }
-  }
-
-  .title {
-    font-weight: bold;
-    padding: 15px 10px;
-
-    .icons {
-      position: absolute;
-    }
-
-    .subject {
-      position: relative;
-      left: 50px;
-      width: 80%;
     }
   }
 
