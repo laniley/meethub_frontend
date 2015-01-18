@@ -33,7 +33,7 @@ export default AuthenticateRoute.extend({
 
     var self = this;
 
-    FB.api('/me', {fields: 'id,name,picture.width(120).height(120),friends'}, function(response)
+    FB.api('/me', {fields: 'id,first_name,last_name,picture.width(120).height(120),friends'}, function(response)
     {
       if( !response.error )
       {
@@ -41,7 +41,8 @@ export default AuthenticateRoute.extend({
 
         var user = self.store.createRecord('user', {
           fb_id: response.id,
-          name: response.name,
+          first_name: response.first_name,
+          last_name: response.last_name,
           picture: response.picture.data.url
         });
 
@@ -55,10 +56,7 @@ export default AuthenticateRoute.extend({
               {
                 console.log(friend_response);
 
-                // for(var i = 0; i < response.data.length; i++)
-                // {
-                //   self.handleFBEventResponse(response.data[i], 'attending');
-                // }
+                self.handleFBFriendResponse(user, friend_response);
               }
               else
               {
@@ -212,6 +210,77 @@ export default AuthenticateRoute.extend({
       });
 
     });
+  },
+
+  handleFBFriendResponse: function(user, response) {
+
+    // var img_url =   "http://graph.facebook.com/" + scores[i].id + "/picture";
+
+    // var map_controller = this.controllerFor('members-area.map');
+
+    // var self = this;
+
+    var friend = this.store.createRecord('user', {
+        fb_id: response.id,
+        first_name: response.first_name,
+        last_name: response.last_name,
+        picture: 'http://graph.facebook.com/' + response.id + '/picture',
+        gender: response.gender
+    });
+
+    user.get('friends').pushObject(friend);
+
+    //   map_controller.get('markers').addObject({title: response.location, lat: response.venue.latitude, lng: response.venue.longitude, isDraggable: false});
+    // }
+    // else
+    // {
+    //     location = this.store.createRecord('location', {
+    //     name: response.location,
+    //   });
+    // }
+
+    // location.save().then(function() {
+    //   var date_time_arr = response.start_time.split('T');
+    //   var date_time = date_time_arr[1];
+    //   var date_day = date_time_arr[0];
+
+    //   var event = self.store.createRecord('event', {
+    //     fb_id: response.id,
+    //     name: response.name,
+    //     description: response.descrption,
+    //     start: moment(response.start_time, "YYYY-MM-DDTHH:mm:ss.SSSSZ"),
+    //     end: moment(response.start_time, "YYYY-MM-DDTHH:mm:ss.SSSSZ").add(1, 'hours'),
+    //     start_time: date_time,
+    //     start_date: date_day,
+    //     timezone: response.timezone,
+    //     location: location,
+    //   });
+
+    //   event.save().then(function() {
+
+    //     var message = self.store.createRecord('message', {
+    //       fb_id: response.id,
+    //       subject: response.name,
+    //       user: self.get('controller').get('model')
+    //     });
+
+    //     message.save().then(function() {
+
+    //       var eventInvitation = self.store.createRecord('eventInvitation', {
+    //         event: event,
+    //         invited_user: self.get('controller').get('model'),
+    //         status: status,
+    //         message: message
+    //       });
+
+    //       eventInvitation.save();
+
+    //       message.set('eventInvitation', eventInvitation);
+    //     });
+
+    //   });
+
+    // });
   }
 
 });
