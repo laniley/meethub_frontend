@@ -47,7 +47,25 @@ export default AuthenticateRoute.extend({
 
         if(response.friends.data.length > 0)
         {
+          for(var i = 0; i < response.friends.data.length; i++)
+          {
+            FB.api('/' + response.friends.data[i].id, function(friend_response)
+            {
+              if( !friend_response.error )
+              {
+                console.log(friend_response);
 
+                // for(var i = 0; i < response.data.length; i++)
+                // {
+                //   self.handleFBEventResponse(response.data[i], 'attending');
+                // }
+              }
+              else
+              {
+                console.log(friend_response.error);
+              }
+            });
+          }
         }
 
         user.save().then
