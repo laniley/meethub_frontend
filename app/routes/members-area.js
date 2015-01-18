@@ -20,6 +20,7 @@ export default AuthenticateRoute.extend({
         // var UID = authorization.UID;
         // var accessToken = authorization.accessToken;
 
+        controller.set('FB', FB);
         self.controllerFor('login').set('hasFacebook', true);
 
         self.getUserInfos(controller);
@@ -37,7 +38,7 @@ export default AuthenticateRoute.extend({
     {
       if( !response.error )
       {
-        console.log('Successful login to FB for: ' + response.name, response);
+        console.log('Successful login to FB for: ' + response.first_name + ' ' + response.last_name, response);
 
         var user = self.store.createRecord('user', {
           fb_id: response.id,
@@ -54,7 +55,7 @@ export default AuthenticateRoute.extend({
             {
               if( !friend_response.error )
               {
-                console.log(friend_response);
+                console.log('friend: ', friend_response);
 
                 self.handleFBFriendResponse(user, friend_response);
               }
@@ -72,56 +73,56 @@ export default AuthenticateRoute.extend({
           {
             controller.set('model', user);
 
-            FB.api('/me/events/attending', function(response)
-            {
-              if( !response.error )
-              {
-                console.log(response);
+            // FB.api('/me/events/attending', function(response)
+            // {
+            //   if( !response.error )
+            //   {
+            //     console.log('user events - attending: ', response);
 
-                for(var i = 0; i < response.data.length; i++)
-                {
-                  self.handleFBEventResponse(response.data[i], 'attending');
-                }
-              }
-              else
-              {
-                console.log(response.error);
-              }
-            });
+            //     for(var i = 0; i < response.data.length; i++)
+            //     {
+            //       self.handleFBEventResponse(response.data[i], 'attending');
+            //     }
+            //   }
+            //   else
+            //   {
+            //     console.log(response.error);
+            //   }
+            // });
 
-            FB.api('/me/events/maybe', function(response)
-            {
-              if( !response.error )
-              {
-                console.log(response);
+            // FB.api('/me/events/maybe', function(response)
+            // {
+            //   if( !response.error )
+            //   {
+            //     console.log('user events - maybe: ', response);
 
-                for(var i = 0; i < response.data.length; i++)
-                {
-                  self.handleFBEventResponse(response.data[i], 'maybe');
-                }
-              }
-              else
-              {
-                console.log(response.error);
-              }
-            });
+            //     for(var i = 0; i < response.data.length; i++)
+            //     {
+            //       self.handleFBEventResponse(response.data[i], 'maybe');
+            //     }
+            //   }
+            //   else
+            //   {
+            //     console.log(response.error);
+            //   }
+            // });
 
-            FB.api('/me/events/not_replied', function(response)
-            {
-              if( !response.error )
-              {
-                console.log(response);
+            // FB.api('/me/events/not_replied', function(response)
+            // {
+            //   if( !response.error )
+            //   {
+            //     console.log('user events - not_replied: ', response);
 
-                for(var i = 0; i < response.data.length; i++)
-                {
-                  self.handleFBEventResponse(response.data[i], 'not_replied');
-                }
-              }
-              else
-              {
-                console.log(response.error);
-              }
-            });
+            //     for(var i = 0; i < response.data.length; i++)
+            //     {
+            //       self.handleFBEventResponse(response.data[i], 'not_replied');
+            //     }
+            //   }
+            //   else
+            //   {
+            //     console.log(response.error);
+            //   }
+            // });
 
             var map_controller = self.controllerFor('members-area.map');
                 map_controller.getCurrentPosition();
@@ -214,11 +215,7 @@ export default AuthenticateRoute.extend({
 
   handleFBFriendResponse: function(user, response) {
 
-    // var img_url =   "http://graph.facebook.com/" + scores[i].id + "/picture";
-
-    // var map_controller = this.controllerFor('members-area.map');
-
-    // var self = this;
+    var self = this;
 
     var friend = this.store.createRecord('user', {
         fb_id: response.id,
@@ -230,57 +227,56 @@ export default AuthenticateRoute.extend({
 
     user.get('friends').pushObject(friend);
 
-    //   map_controller.get('markers').addObject({title: response.location, lat: response.venue.latitude, lng: response.venue.longitude, isDraggable: false});
-    // }
-    // else
-    // {
-    //     location = this.store.createRecord('location', {
-    //     name: response.location,
-    //   });
-    // }
+    FB.api('/' + response.id + '/events/attending', function(response)
+    {
+      if( !response.error )
+      {
+        console.log('friend events - attending: ', response);
 
-    // location.save().then(function() {
-    //   var date_time_arr = response.start_time.split('T');
-    //   var date_time = date_time_arr[1];
-    //   var date_day = date_time_arr[0];
+        for(var i = 0; i < response.data.length; i++)
+        {
+          self.handleFBEventResponse(response.data[i], 'attending');
+        }
+      }
+      else
+      {
+        console.log(response.error);
+      }
+    });
 
-    //   var event = self.store.createRecord('event', {
-    //     fb_id: response.id,
-    //     name: response.name,
-    //     description: response.descrption,
-    //     start: moment(response.start_time, "YYYY-MM-DDTHH:mm:ss.SSSSZ"),
-    //     end: moment(response.start_time, "YYYY-MM-DDTHH:mm:ss.SSSSZ").add(1, 'hours'),
-    //     start_time: date_time,
-    //     start_date: date_day,
-    //     timezone: response.timezone,
-    //     location: location,
-    //   });
+    FB.api('/' + response.id + '/events/maybe', function(response)
+    {
+      if( !response.error )
+      {
+        console.log('friend events - maybe: ', response);
 
-    //   event.save().then(function() {
+        for(var i = 0; i < response.data.length; i++)
+        {
+          self.handleFBEventResponse(response.data[i], 'maybe');
+        }
+      }
+      else
+      {
+        console.log(response.error);
+      }
+    });
 
-    //     var message = self.store.createRecord('message', {
-    //       fb_id: response.id,
-    //       subject: response.name,
-    //       user: self.get('controller').get('model')
-    //     });
+    FB.api('/' + response.id + '/events/not_replied', function(response)
+    {
+      if( !response.error )
+      {
+        console.log('friend events - not_replied: ', response);
 
-    //     message.save().then(function() {
-
-    //       var eventInvitation = self.store.createRecord('eventInvitation', {
-    //         event: event,
-    //         invited_user: self.get('controller').get('model'),
-    //         status: status,
-    //         message: message
-    //       });
-
-    //       eventInvitation.save();
-
-    //       message.set('eventInvitation', eventInvitation);
-    //     });
-
-    //   });
-
-    // });
+        for(var i = 0; i < response.data.length; i++)
+        {
+          self.handleFBEventResponse(response.data[i], 'not_replied');
+        }
+      }
+      else
+      {
+        console.log(response.error);
+      }
+    });
   }
 
 });

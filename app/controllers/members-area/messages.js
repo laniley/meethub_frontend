@@ -1,17 +1,21 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  needs: 'members-area/map',
+  needs: ['members-area/map'],
   map_controller: Ember.computed.alias("controllers.members-area/map"),
 
   sortProperties: ['created_at:desc'],
   sortedMessages: Ember.computed.sort('model', 'sortProperties'),
 
   isGerman: function() {
-    if(Ember.I18n.locale == 'de')
+    if(Ember.I18n.locale === 'de')
+    {
       return true;
+    }
     else
+    {
       return false;
+    }
   }.property('Ember.I18n.locale'),
 
   actions: {
