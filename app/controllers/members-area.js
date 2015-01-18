@@ -123,18 +123,15 @@ export default Ember.Controller.extend({
     }
     else
     {
-      var found_location = self.store.find('location', { name: response.location });
-      // console.log(found_location);
+      self.store.find('location', { name: response.location }).then(function(location) {
 
-      // if(found_location.length <= 0)
-      // {
-      //   location = this.store.createRecord('location', {
-      //     name: response.location
-      //   });
-      // }
-    }
+        if(Ember.isEmpty(location))
+        {
+          location = self.store.createRecord('location', {
+            name: response.location
+          });
 
-    // location.save().then(function() {
+          location.save().then(function() {
     //   var date_time_arr = response.start_time.split('T');
     //   var date_time = date_time_arr[1];
     //   var date_day = date_time_arr[0];
@@ -175,7 +172,10 @@ export default Ember.Controller.extend({
 
     //   });
 
-    // });
+          });
+        }
+      });
+    }
   },
 
   actions: {
