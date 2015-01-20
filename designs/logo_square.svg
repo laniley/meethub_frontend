@@ -14,10 +14,40 @@
    height="297mm"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.4 r9939"
+   inkscape:version="0.48.3.1 r9886"
    sodipodi:docname="logo_square.svg">
   <defs
      id="defs4">
+    <linearGradient
+       id="linearGradient3862">
+      <stop
+         id="stop3864"
+         offset="0"
+         style="stop-color:#4db7dd;stop-opacity:1;" />
+      <stop
+         id="stop3866"
+         offset="1"
+         style="stop-color:#4db7dd;stop-opacity:0;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3084">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop3086" />
+      <stop
+         id="stop3868"
+         offset="0.52580237"
+         style="stop-color:#4db7dd;stop-opacity:0.49803922;" />
+      <stop
+         style="stop-color:#4db7dd;stop-opacity:1;"
+         offset="0.83795005"
+         id="stop3870" />
+      <stop
+         style="stop-color:#469fbe;stop-opacity:1;"
+         offset="1"
+         id="stop3088" />
+    </linearGradient>
     <linearGradient
        id="linearGradient4180">
       <stop
@@ -40,6 +70,58 @@
        r="512"
        gradientUnits="userSpaceOnUse"
        gradientTransform="matrix(0.02731829,1.7397943,-1.8599874,0.02920765,497.60881,-588.12369)" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3084"
+       id="radialGradient3860"
+       cx="360"
+       cy="1780.9336"
+       fx="360"
+       fy="1780.9336"
+       r="512"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.5911614,0.01152405,-0.01136735,1.5695263,-192.57362,-1018.437)" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3084-7"
+       id="radialGradient3860-1"
+       cx="360"
+       cy="1780.9336"
+       fx="360"
+       fy="1780.9336"
+       r="512"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.5911614,0.01152405,-0.01136735,1.5695263,-192.57362,-1018.437)" />
+    <linearGradient
+       id="linearGradient3084-7">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop3086-4" />
+      <stop
+         id="stop3868-0"
+         offset="0.52580237"
+         style="stop-color:#4db7dd;stop-opacity:0.49803922;" />
+      <stop
+         style="stop-color:#4db7dd;stop-opacity:1;"
+         offset="0.83795005"
+         id="stop3870-9" />
+      <stop
+         style="stop-color:#469fbe;stop-opacity:1;"
+         offset="1"
+         id="stop3088-4" />
+    </linearGradient>
+    <radialGradient
+       r="512"
+       fy="1780.9336"
+       fx="360"
+       cy="1780.9336"
+       cx="360"
+       gradientTransform="matrix(0.18646423,0.00135047,-0.00133211,0.18392886,-779.6119,1399.1681)"
+       gradientUnits="userSpaceOnUse"
+       id="radialGradient3123"
+       xlink:href="#linearGradient3084-7"
+       inkscape:collect="always" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -48,17 +130,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.175"
-     inkscape:cx="707.36653"
-     inkscape:cy="-18.344256"
+     inkscape:zoom="0.24748737"
+     inkscape:cx="382.7759"
+     inkscape:cy="-1005.7778"
      inkscape:document-units="px"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="layer1"
      showgrid="false"
      showborder="false"
-     inkscape:window-width="1481"
-     inkscape:window-height="938"
-     inkscape:window-x="350"
-     inkscape:window-y="4"
+     inkscape:window-width="1048"
+     inkscape:window-height="742"
+     inkscape:window-x="1259"
+     inkscape:window-y="1183"
      inkscape:window-maximized="0" />
   <metadata
      id="metadata7">
@@ -89,13 +171,16 @@
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <rect
-       style="fill:#4db7dd;fill-opacity:1;stroke:none;display:inline"
+       style="fill:url(#radialGradient3860);fill-opacity:1;stroke:none;display:inline"
        id="rect2985-5"
        width="1024"
        height="1024"
        x="-152"
        y="1268.9336"
-       ry="0" />
+       ry="131.42857"
+       inkscape:export-filename="C:\Users\Melanie\Desktop\logo_square_120x120.png.png"
+       inkscape:export-xdpi="10.546875"
+       inkscape:export-ydpi="10.546875" />
     <path
        sodipodi:type="arc"
        style="fill:#de2c14;fill-opacity:1;stroke:none;display:inline"
@@ -108,7 +193,10 @@
        sodipodi:start="3.1169541"
        sodipodi:end="9.3988651"
        sodipodi:open="true"
-       transform="translate(672.85714,1350)" />
+       transform="translate(672.85714,1350)"
+       inkscape:export-filename="C:\Users\Melanie\Desktop\logo_square_120x120.png.png"
+       inkscape:export-xdpi="10.546875"
+       inkscape:export-ydpi="10.546875" />
     <path
        sodipodi:type="arc"
        style="fill:#de2c14;fill-opacity:1;stroke:none;display:inline"
@@ -121,7 +209,10 @@
        sodipodi:start="3.1169541"
        sodipodi:end="9.3988651"
        sodipodi:open="true"
-       transform="matrix(0.35802861,0,0,0.35802861,662.86898,1447.2185)" />
+       transform="matrix(0.35802861,0,0,0.35802861,662.86898,1447.2185)"
+       inkscape:export-filename="C:\Users\Melanie\Desktop\logo_square_120x120.png.png"
+       inkscape:export-xdpi="10.546875"
+       inkscape:export-ydpi="10.546875" />
     <path
        sodipodi:type="arc"
        style="fill:#de2c14;fill-opacity:1;stroke:none;display:inline"
@@ -134,7 +225,10 @@
        sodipodi:start="3.1169541"
        sodipodi:end="9.3988651"
        sodipodi:open="true"
-       transform="matrix(0.50617585,0,0,0.50617585,794.93217,1906.234)" />
+       transform="matrix(0.50617585,0,0,0.50617585,794.93217,1906.234)"
+       inkscape:export-filename="C:\Users\Melanie\Desktop\logo_square_120x120.png.png"
+       inkscape:export-xdpi="10.546875"
+       inkscape:export-ydpi="10.546875" />
     <path
        sodipodi:type="arc"
        style="fill:#de2c14;fill-opacity:1;stroke:none;display:inline"
@@ -147,7 +241,10 @@
        sodipodi:start="3.1169541"
        sodipodi:end="9.3988651"
        sodipodi:open="true"
-       transform="matrix(0.82716155,0,0,0.82716155,346.7834,1716.4819)" />
+       transform="matrix(0.82716155,0,0,0.82716155,346.7834,1716.4819)"
+       inkscape:export-filename="C:\Users\Melanie\Desktop\logo_square_120x120.png.png"
+       inkscape:export-xdpi="10.546875"
+       inkscape:export-ydpi="10.546875" />
     <path
        sodipodi:type="arc"
        style="fill:#de2c14;fill-opacity:1;stroke:none;display:inline"
@@ -160,7 +257,10 @@
        sodipodi:start="3.1169541"
        sodipodi:end="9.3988651"
        sodipodi:open="true"
-       transform="matrix(0.70370551,0,0,0.70370551,236.73073,1312.5404)" />
+       transform="matrix(0.70370551,0,0,0.70370551,236.73073,1312.5404)"
+       inkscape:export-filename="C:\Users\Melanie\Desktop\logo_square_120x120.png.png"
+       inkscape:export-xdpi="10.546875"
+       inkscape:export-ydpi="10.546875" />
     <rect
        style="fill:#de2c14;fill-opacity:1;stroke:none;display:inline"
        id="rect3841-7"
@@ -169,7 +269,10 @@
        x="-1366.6246"
        y="1464.2102"
        ry="0"
-       transform="matrix(0.68597864,-0.72762167,0.72762167,0.68597864,0,0)" />
+       transform="matrix(0.68597864,-0.72762167,0.72762167,0.68597864,0,0)"
+       inkscape:export-filename="C:\Users\Melanie\Desktop\logo_square_120x120.png.png"
+       inkscape:export-xdpi="10.546875"
+       inkscape:export-ydpi="10.546875" />
     <rect
        style="fill:#de2c14;fill-opacity:1;stroke:none;display:inline"
        id="rect3841-9-6"
@@ -178,7 +281,10 @@
        x="-1995.208"
        y="-943.25641"
        ry="0"
-       transform="matrix(-0.65667099,-0.75417717,0.75417717,-0.65667099,0,0)" />
+       transform="matrix(-0.65667099,-0.75417717,0.75417717,-0.65667099,0,0)"
+       inkscape:export-filename="C:\Users\Melanie\Desktop\logo_square_120x120.png.png"
+       inkscape:export-xdpi="10.546875"
+       inkscape:export-ydpi="10.546875" />
     <rect
        style="fill:#de2c14;fill-opacity:1;stroke:none;display:inline"
        id="rect3841-9-4-1"
@@ -187,7 +293,10 @@
        x="-925.41882"
        y="1538.0233"
        ry="0"
-       transform="matrix(0.73542424,-0.67760696,0.67760696,0.73542424,0,0)" />
+       transform="matrix(0.73542424,-0.67760696,0.67760696,0.73542424,0,0)"
+       inkscape:export-filename="C:\Users\Melanie\Desktop\logo_square_120x120.png.png"
+       inkscape:export-xdpi="10.546875"
+       inkscape:export-ydpi="10.546875" />
     <rect
        style="fill:#de2c14;fill-opacity:1;stroke:none;display:inline"
        id="rect3841-9-8-4"
@@ -196,7 +305,10 @@
        x="-1021.3333"
        y="-1487.8438"
        ry="0"
-       transform="matrix(-0.90864475,-0.41757001,0.41757001,-0.90864475,0,0)" />
+       transform="matrix(-0.90864475,-0.41757001,0.41757001,-0.90864475,0,0)"
+       inkscape:export-filename="C:\Users\Melanie\Desktop\logo_square_120x120.png.png"
+       inkscape:export-xdpi="10.546875"
+       inkscape:export-ydpi="10.546875" />
     <path
        sodipodi:type="arc"
        style="fill:#de2c14;fill-opacity:1;stroke:none;display:inline"
@@ -209,7 +321,10 @@
        sodipodi:start="3.1169541"
        sodipodi:end="9.3988651"
        sodipodi:open="true"
-       transform="matrix(0.50617585,0,0,0.50617585,609.21788,1166.234)" />
+       transform="matrix(0.50617585,0,0,0.50617585,609.21788,1166.234)"
+       inkscape:export-filename="C:\Users\Melanie\Desktop\logo_square_120x120.png.png"
+       inkscape:export-xdpi="10.546875"
+       inkscape:export-ydpi="10.546875" />
     <rect
        style="fill:#de2c14;fill-opacity:1;stroke:none;display:inline"
        id="rect3841-9-4-2-3"
@@ -218,7 +333,10 @@
        x="-1606.9957"
        y="764.67004"
        ry="0"
-       transform="matrix(0.25488187,-0.9669722,0.9669722,0.25488187,0,0)" />
+       transform="matrix(0.25488187,-0.9669722,0.9669722,0.25488187,0,0)"
+       inkscape:export-filename="C:\Users\Melanie\Desktop\logo_square_120x120.png.png"
+       inkscape:export-xdpi="10.546875"
+       inkscape:export-ydpi="10.546875" />
     <path
        sodipodi:type="arc"
        style="fill:#de2c14;fill-opacity:1;stroke:none;display:inline"
@@ -231,7 +349,10 @@
        sodipodi:start="3.1169541"
        sodipodi:end="9.3988651"
        sodipodi:open="true"
-       transform="matrix(-0.63040926,0.31270691,-0.31270691,-0.63040926,683.76579,2147.672)" />
+       transform="matrix(-0.63040926,0.31270691,-0.31270691,-0.63040926,683.76579,2147.672)"
+       inkscape:export-filename="C:\Users\Melanie\Desktop\logo_square_120x120.png.png"
+       inkscape:export-xdpi="10.546875"
+       inkscape:export-ydpi="10.546875" />
     <rect
        style="fill:#de2c14;fill-opacity:1;stroke:none;display:inline"
        id="rect3841-9-8-5-2"
@@ -240,7 +361,10 @@
        x="361.5285"
        y="1772.9696"
        ry="0"
-       transform="matrix(0.99955888,-0.02969919,0.02969919,0.99955888,0,0)" />
+       transform="matrix(0.99955888,-0.02969919,0.02969919,0.99955888,0,0)"
+       inkscape:export-filename="C:\Users\Melanie\Desktop\logo_square_120x120.png.png"
+       inkscape:export-xdpi="10.546875"
+       inkscape:export-ydpi="10.546875" />
     <rect
        style="fill:#4b1d46;fill-opacity:1;stroke:none;display:inline"
        id="rect2985-5-1"
@@ -853,6 +977,201 @@
        y="2936.3511"
        ry="0"
        transform="matrix(0.99955888,-0.02969919,0.02969919,0.99955888,0,0)" />
+    <rect
+       style="fill:url(#radialGradient3123);fill-opacity:1;stroke:none;display:inline"
+       id="rect2985-5-8"
+       width="120"
+       height="120"
+       x="-774.85718"
+       y="1667.2194"
+       ry="15.401786"
+       inkscape:export-filename="C:\Developement\meethub_frontend\public\assets\images\logo_square_120x120.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#de2c14;fill-opacity:1;stroke:none;display:inline"
+       id="path3757-17-8"
+       sodipodi:cx="-312.85715"
+       sodipodi:cy="430.93362"
+       sodipodi:rx="115.71429"
+       sodipodi:ry="115.71429"
+       d="m -428.53631,433.78437 a 115.71429,115.71429 0 1 1 0.004,0.14741"
+       sodipodi:start="3.1169541"
+       sodipodi:end="9.3988651"
+       sodipodi:open="true"
+       transform="matrix(0.1171875,0,0,0.1171875,-678.1942,1676.7193)"
+       inkscape:export-filename="C:\Developement\meethub_frontend\public\assets\images\logo_square_120x120.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#de2c14;fill-opacity:1;stroke:none;display:inline"
+       id="path3757-1-1-24"
+       sodipodi:cx="-312.85715"
+       sodipodi:cy="430.93362"
+       sodipodi:rx="115.71429"
+       sodipodi:ry="115.71429"
+       d="m -428.53631,433.78437 a 115.71429,115.71429 0 1 1 0.004,0.14741"
+       sodipodi:start="3.1169541"
+       sodipodi:end="9.3988651"
+       sodipodi:open="true"
+       transform="matrix(0.04195648,0,0,0.04195648,-679.3647,1688.1121)"
+       inkscape:export-filename="C:\Developement\meethub_frontend\public\assets\images\logo_square_120x120.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#de2c14;fill-opacity:1;stroke:none;display:inline"
+       id="path3757-1-7-1-55"
+       sodipodi:cx="-312.85715"
+       sodipodi:cy="430.93362"
+       sodipodi:rx="115.71429"
+       sodipodi:ry="115.71429"
+       d="m -428.53631,433.78437 a 115.71429,115.71429 0 1 1 0.004,0.14741"
+       sodipodi:start="3.1169541"
+       sodipodi:end="9.3988651"
+       sodipodi:open="true"
+       transform="matrix(0.05931748,0,0,0.05931748,-663.8886,1741.903)"
+       inkscape:export-filename="C:\Developement\meethub_frontend\public\assets\images\logo_square_120x120.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#de2c14;fill-opacity:1;stroke:none;display:inline"
+       id="path3757-1-4-5-1"
+       sodipodi:cx="-312.85715"
+       sodipodi:cy="430.93362"
+       sodipodi:rx="115.71429"
+       sodipodi:ry="115.71429"
+       d="m -428.53631,433.78437 a 115.71429,115.71429 0 1 1 0.004,0.14741"
+       sodipodi:start="3.1169541"
+       sodipodi:end="9.3988651"
+       sodipodi:open="true"
+       transform="matrix(0.09693299,0,0,0.09693299,-716.406,1719.6664)"
+       inkscape:export-filename="C:\Developement\meethub_frontend\public\assets\images\logo_square_120x120.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#de2c14;fill-opacity:1;stroke:none;display:inline"
+       id="path3757-1-0-2-7"
+       sodipodi:cx="-312.85715"
+       sodipodi:cy="430.93362"
+       sodipodi:rx="115.71429"
+       sodipodi:ry="115.71429"
+       d="m -428.53631,433.78437 a 115.71429,115.71429 0 1 1 0.004,0.14741"
+       sodipodi:start="3.1169541"
+       sodipodi:end="9.3988651"
+       sodipodi:open="true"
+       transform="matrix(0.08246549,0,0,0.08246549,-729.3028,1672.3295)"
+       inkscape:export-filename="C:\Developement\meethub_frontend\public\assets\images\logo_square_120x120.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#de2c14;fill-opacity:1;stroke:none;display:inline"
+       id="rect3841-7-115"
+       width="40.848217"
+       height="5.6919646"
+       x="-1784.373"
+       y="662.41473"
+       ry="0"
+       transform="matrix(0.68597864,-0.72762167,0.72762167,0.68597864,0,0)"
+       inkscape:export-filename="C:\Developement\meethub_frontend\public\assets\images\logo_square_120x120.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#de2c14;fill-opacity:1;stroke:none;display:inline"
+       id="rect3841-9-6-2"
+       width="42.962032"
+       height="5.9865131"
+       x="-881.91437"
+       y="-1678.6492"
+       ry="0"
+       transform="matrix(-0.65667099,-0.75417717,0.75417717,-0.65667099,0,0)"
+       inkscape:export-filename="C:\Developement\meethub_frontend\public\assets\images\logo_square_120x120.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#de2c14;fill-opacity:1;stroke:none;display:inline"
+       id="rect3841-9-4-1-7"
+       width="26.84046"
+       height="3.7400641"
+       x="-1694.1537"
+       y="784.01202"
+       ry="0"
+       transform="matrix(0.73542424,-0.67760696,0.67760696,0.73542424,0,0)"
+       inkscape:export-filename="C:\Developement\meethub_frontend\public\assets\images\logo_square_120x120.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#de2c14;fill-opacity:1;stroke:none;display:inline"
+       id="rect3841-9-8-4-6"
+       width="42.962032"
+       height="5.9865131"
+       x="-65.889641"
+       y="-1870.2676"
+       ry="0"
+       transform="matrix(-0.90864475,-0.41757001,0.41757001,-0.90864475,0,0)"
+       inkscape:export-filename="C:\Developement\meethub_frontend\public\assets\images\logo_square_120x120.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#de2c14;fill-opacity:1;stroke:none;display:inline"
+       id="path3757-1-8-2-1"
+       sodipodi:cx="-312.85715"
+       sodipodi:cy="430.93362"
+       sodipodi:rx="115.71429"
+       sodipodi:ry="115.71429"
+       d="m -428.53631,433.78437 a 115.71429,115.71429 0 1 1 0.004,0.14741"
+       sodipodi:start="3.1169541"
+       sodipodi:end="9.3988651"
+       sodipodi:open="true"
+       transform="matrix(0.05931748,0,0,0.05931748,-685.652,1655.1843)"
+       inkscape:export-filename="C:\Developement\meethub_frontend\public\assets\images\logo_square_120x120.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#de2c14;fill-opacity:1;stroke:none;display:inline"
+       id="rect3841-9-4-2-3-4"
+       width="40.1534"
+       height="5.5951462"
+       x="-1849.6398"
+       y="-255.38913"
+       ry="0"
+       transform="matrix(0.25488187,-0.9669722,0.9669722,0.25488187,0,0)"
+       inkscape:export-filename="C:\Developement\meethub_frontend\public\assets\images\logo_square_120x120.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#de2c14;fill-opacity:1;stroke:none;display:inline"
+       id="path3757-1-0-4-2-2"
+       sodipodi:cx="-312.85715"
+       sodipodi:cy="430.93362"
+       sodipodi:rx="115.71429"
+       sodipodi:ry="115.71429"
+       d="m -428.53631,433.78437 a 115.71429,115.71429 0 1 1 0.004,0.14741"
+       sodipodi:start="3.1169541"
+       sodipodi:end="9.3988651"
+       sodipodi:open="true"
+       transform="matrix(-0.07387609,0.03664534,-0.03664534,-0.07387609,-676.9159,1770.1965)"
+       inkscape:export-filename="C:\Developement\meethub_frontend\public\assets\images\logo_square_120x120.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#de2c14;fill-opacity:1;stroke:none;display:inline"
+       id="rect3841-9-8-5-2-3"
+       width="42.962032"
+       height="5.9865131"
+       x="-759.44287"
+       y="1703.1326"
+       ry="0"
+       transform="matrix(0.99955888,-0.02969919,0.02969919,0.99955888,0,0)"
+       inkscape:export-filename="C:\Developement\meethub_frontend\public\assets\images\logo_square_120x120.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
   </g>
   <g
      inkscape:groupmode="layer"
