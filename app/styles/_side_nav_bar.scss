@@ -140,7 +140,7 @@
             text-shadow: 0 -1px 1px #FFFFFF, 0 1px 1px #666666;
 
             &.accepted {
-              color: $darkgreen;
+              color: $blue;
             }
             &.maybe {
               color: $yellow;
@@ -189,17 +189,17 @@
       margin-bottom: 10px;
 
       &.accept {
-        border-color: $green;
+        border-color: $blue;
 
         &.active {
-          background-color: darken($green, 10%);
+          background-color: $blue;
           color: white;
           cursor: default;
         }
 
         &:not(.active) {
           &:hover {
-            color: darken($green, 10%);
+            color: $blue;
           }
         }
       }
