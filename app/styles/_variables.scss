@@ -8,7 +8,8 @@ $green: #2BBD41;
 $lightgreen: #B9E7BA;
 $darkgreen: darken($green, 10%);
 
-$lightblue: #DEF0F7;
+$lightblue: #99C4D5;
+$blue: #2588AB;
 $darkblue: #2A2C4C;
 
 $lightgrey: #e7e7e7;
@@ -18,11 +19,12 @@ $header-text-color: $orange;
 $text-color: $darkblue;
 $border-color: $lightgrey;
 
+$active-item-color: $blue;
 $active-item-background-color: $lightgrey;
 
 $link-color: #777;
 $link-color-hover: #000;
-$link-color-active: #000;
+$link-color-active: $active-item-color;
 
 $unread-message-color: $darkgrey;
 

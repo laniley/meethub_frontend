@@ -6,7 +6,7 @@
       a {
 
         &.active {
-          color: black;
+          color: $active-item-color;
           background-color: $active-item-background-color;
         }
 
