@@ -53,7 +53,7 @@
           {{/link-to}}
         </div>
         <div class="participants">
-          {{#if 'hasConnectedFriends'}}
+          {{#if 'message.eventInvitation.event.hasConnectedFriends'}}
             {{t 'messages.participants.title'}}
             {{#each friend in message.eventInvitation.event.friends_attending}}
               {{friend.name}}
