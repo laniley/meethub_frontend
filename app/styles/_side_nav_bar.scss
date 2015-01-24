@@ -88,19 +88,20 @@
     }
 
     .section-buttons {
-      color: $link-color;
-
       .section-button {
-        cursor: pointer;
-        padding: 10px;
+        a {
+          cursor: pointer;
+          padding: 10px;
+          color: $link-color;
 
-        &:hover {
-          color: $link-color-hover;
-        }
+          &:hover {
+            color: $link-color-hover;
+          }
 
-        &:active {
-          color: $link-color-active;
-          background-color: $active-item-background-color;
+          &.active {
+            color: $link-color-active;
+            background-color: $active-item-background-color;
+          }
         }
       }
     }
