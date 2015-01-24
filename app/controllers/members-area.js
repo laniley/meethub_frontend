@@ -173,15 +173,16 @@ export default Ember.Controller.extend({
 
     var unfiltered_events = this.store.all('event');
     var events = unfiltered_events.filterBy('fb_id', response.id);
+    var event = undefined;
 
+    // if event not already in the store, create it
     if(Ember.isEmpty(events))
     {
-      // console.log('empty', response.id);
       var date_time_arr = response.start_time.split('T');
       var date_time = date_time_arr[1];
       var date_day = date_time_arr[0];
 
-      var event = this.store.createRecord('event', {
+      event = this.store.createRecord('event', {
         fb_id: response.id,
         name: response.name,
         description: response.descrption,
@@ -192,33 +193,32 @@ export default Ember.Controller.extend({
         timezone: response.timezone,
         location: location
       });
-
-      var me = this.get('model');
-      // if the user is not me
-      if(user_fb_id !== me.get('fb_id'))
-      {
-        var unfiltered_users = this.store.all('user');
-        var user = unfiltered_users.filterBy('fb_id', user_fb_id);
-
-        if(status === 'attending')
-        {
-          event.get('friends_attending').pushObject(user);
-        }
-        else if(status === 'maybe')
-        {
-          event.get('friends_attending_maybe').pushObject(user);
-        }
-      }
-
-      event.save().then(function() {
-        self.handleFBMessage(response, event);
-      });
     }
     else
     {
-      var event = events.get('firstObject');
-      self.handleFBMessage(response, event);
+      event = events.get('firstObject');
     }
+
+    // if the user is not me
+    if(user_fb_id !== 'me')
+    {
+      var unfiltered_users = this.store.all('user');
+      var user = unfiltered_users.findBy('fb_id', user_fb_id);
+
+      if(status === 'attending')
+      {
+        event.get('friends_attending').pushObject(user);
+        console.log('friend is attending');
+      }
+      else if(status === 'maybe')
+      {
+        event.get('friends_attending_maybe').pushObject(user);
+      }
+    }
+
+    event.save().then(function() {
+      self.handleFBMessage(response, event);
+    });
   },
 
   handleFBMessage: function(response, event) {
