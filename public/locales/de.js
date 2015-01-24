@@ -13,6 +13,9 @@ Em.I18n.translations = {
   },
   "messages": {
     "participation-question": "Nimmst du teil?",
+    "participants": {
+      "title": "Deine Freunde:"
+    },
     "accept": "Ja",
     "maybe": "Vielleicht",
     "decline": "Nein"

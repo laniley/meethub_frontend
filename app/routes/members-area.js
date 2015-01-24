@@ -104,56 +104,7 @@ export default AuthenticateRoute.extend({
 
     user.get('friends').pushObject(friend);
 
-    FB.api('/' + response.id + '/events/attending', function(response)
-    {
-      if( !response.error )
-      {
-        console.log('friend events - attending: ', response);
-
-        for(var i = 0; i < response.data.length; i++)
-        {
-          self.handleFBEventResponse(response.data[i], 'attending');
-        }
-      }
-      else
-      {
-        console.log(response.error);
-      }
-    });
-
-    FB.api('/' + response.id + '/events/maybe', function(response)
-    {
-      if( !response.error )
-      {
-        console.log('friend events - maybe: ', response);
-
-        for(var i = 0; i < response.data.length; i++)
-        {
-          self.handleFBEventResponse(response.data[i], 'maybe');
-        }
-      }
-      else
-      {
-        console.log(response.error);
-      }
-    });
-
-    FB.api('/' + response.id + '/events/not_replied', function(response)
-    {
-      if( !response.error )
-      {
-        console.log('friend events - not_replied: ', response);
-
-        for(var i = 0; i < response.data.length; i++)
-        {
-          self.handleFBEventResponse(response.data[i], 'not_replied');
-        }
-      }
-      else
-      {
-        console.log(response.error);
-      }
-    });
+    self.controllerFor('members-area').loadFriendEventsFromFB(response.id);
   }
 
 });

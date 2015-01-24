@@ -52,6 +52,14 @@
             {{message.eventInvitation.event.location.name}}
           {{/link-to}}
         </div>
+        <div class="participants">
+          {{#if 'hasConnectedFriends'}}
+            {{t 'messages.participants.title'}}
+            {{#each friend in message.eventInvitation.event.friends_attending}}
+              {{friend.name}}
+            {{/each}}
+          {{/if}}
+        </div>
       </div>
       {{/if}}
     </div>

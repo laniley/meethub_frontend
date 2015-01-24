@@ -42,6 +42,14 @@ export default Ember.Controller.extend({
       },
       10000
     );
+
+    // setInterval
+    // (
+    //   function() {
+    //     self.loadFriendEventsFromFB();
+    //   },
+    //   10000
+    // );
   },
 
   loadUserEventsFromFB: function () {
@@ -56,7 +64,7 @@ export default Ember.Controller.extend({
 
         for(var i = 0; i < response.data.length; i++)
         {
-          self.handleFBEventResponse(response.data[i], 'attending');
+          self.handleFBEventResponse(response.data[i], 'attending', 'me');
         }
       }
       else
@@ -73,7 +81,7 @@ export default Ember.Controller.extend({
 
         for(var i = 0; i < response.data.length; i++)
         {
-          self.handleFBEventResponse(response.data[i], 'maybe');
+          self.handleFBEventResponse(response.data[i], 'maybe', 'me');
         }
       }
       else
@@ -90,7 +98,7 @@ export default Ember.Controller.extend({
 
         for(var i = 0; i < response.data.length; i++)
         {
-          self.handleFBEventResponse(response.data[i], 'not_replied');
+          self.handleFBEventResponse(response.data[i], 'not_replied', 'me');
         }
       }
       else
@@ -100,7 +108,7 @@ export default Ember.Controller.extend({
     });
   },
 
-  handleFBEventResponse: function(response, status) {
+  handleFBEventResponse: function(response, status, user_fb_id) {
 
     var self = this;
 
@@ -128,13 +136,13 @@ export default Ember.Controller.extend({
         self.get('map_controller').get('markers').addObject({title: response.location, lat: response.venue.latitude, lng: response.venue.longitude, isDraggable: false});
 
         location.save().then(function() {
-          self.handleFBEvent(response, location, status);
+          self.handleFBEvent(response, location, status, user_fb_id);
         });
       }
       else
       {
         location = locations.get('firstObject');
-        self.handleFBEvent(response, location, status);
+        self.handleFBEvent(response, location, status, user_fb_id);
       }
     }
     else
@@ -148,23 +156,22 @@ export default Ember.Controller.extend({
         });
 
         location.save().then(function() {
-          self.handleFBEvent(response, location, status);
+          self.handleFBEvent(response, location, status, user_fb_id);
         });
       }
       else
       {
         location = locations.get('firstObject');
-        self.handleFBEvent(response, location, status);
+        self.handleFBEvent(response, location, status, user_fb_id);
       }
     }
   },
 
-  handleFBEvent: function(response, location, status) {
+  handleFBEvent: function(response, location, status, user_fb_id) {
 
     var self = this;
 
     var unfiltered_events = this.store.all('event');
-
     var events = unfiltered_events.filterBy('fb_id', response.id);
 
     if(Ember.isEmpty(events))
@@ -185,6 +192,23 @@ export default Ember.Controller.extend({
         timezone: response.timezone,
         location: location
       });
+
+      var me = this.get('model');
+      // if the user is not me
+      if(user_fb_id !== me.get('fb_id'))
+      {
+        var unfiltered_users = this.store.all('user');
+        var user = unfiltered_users.filterBy('fb_id', user_fb_id);
+
+        if(status === 'attending')
+        {
+          event.get('friends_attending').pushObject(user);
+        }
+        else if(status === 'maybe')
+        {
+          event.get('friends_attending_maybe').pushObject(user);
+        }
+      }
 
       event.save().then(function() {
         self.handleFBMessage(response, event);
@@ -227,6 +251,62 @@ export default Ember.Controller.extend({
         message.set('eventInvitation', eventInvitation);
       });
     }
+  },
+
+  loadFriendEventsFromFB: function (fb_id) {
+
+    var self = this;
+
+    FB.api('/' + fb_id + '/events/attending', function(response)
+    {
+      if( !response.error )
+      {
+        console.log('friend events - attending: ', response);
+
+        for(var i = 0; i < response.data.length; i++)
+        {
+          self.handleFBEventResponse(response.data[i], 'attending', fb_id);
+        }
+      }
+      else
+      {
+        console.log(response.error);
+      }
+    });
+
+    FB.api('/' + fb_id + '/events/maybe', function(response)
+    {
+      if( !response.error )
+      {
+        console.log('friend events - maybe: ', response);
+
+        for(var i = 0; i < response.data.length; i++)
+        {
+          self.handleFBEventResponse(response.data[i], 'maybe', fb_id);
+        }
+      }
+      else
+      {
+        console.log(response.error);
+      }
+    });
+
+    FB.api('/' + fb_id + '/events/not_replied', function(response)
+    {
+      if( !response.error )
+      {
+        console.log('friend events - not_replied: ', response);
+
+        for(var i = 0; i < response.data.length; i++)
+        {
+          self.handleFBEventResponse(response.data[i], 'not_replied', fb_id);
+        }
+      }
+      else
+      {
+        console.log(response.error);
+      }
+    });
   },
 
   actions: {

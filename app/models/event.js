@@ -9,6 +9,26 @@ export default DS.Model.extend({
   start_date: DS.attr('string'),
   end: DS.attr('string'),
   location: DS.belongsTo('location'),
+  eventInvitations: DS.hasMany('eventInvitation'),
+
+  friends_attending: DS.hasMany('user'),
+  friends_attending_maybe: DS.hasMany('user'),
+  friends_declined: DS.hasMany('user'),
+
+  hasConnectedFriends: function() {
+    if(this.get('connected_friends_length') > 0)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }.property('connected_friends_length'),
+
+  connected_friends_length: function() {
+    return this.get('friends_attending').get('length') + this.get('friends_attending_maybe').get('length') + this.get('friends_declined').get('length');
+  }.property('friends_attending.length', 'friends_attending_maybe.length', 'friends_declined.length'),
 
   start_time_converted: function() {
     return this.get('start_time').substr(0,5);
