@@ -10,5 +10,10 @@
 {{!-- LIST --}}
 <div class="side-nav-item-container">
   {{outlet form}}
+  {{#each meethub in model}}
+    <div class="side-nav-item selectable meethub">
+      <div>{{meethub.name}}</div>
+    </div>
+  {{/each}}
 </div>
 
