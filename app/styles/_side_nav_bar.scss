@@ -87,21 +87,19 @@
       color: $header-text-color;
     }
 
-    .section-buttons {
-      .section-button {
-        a {
-          cursor: pointer;
-          padding: 10px;
-          color: $link-color;
+    .section-button {
+      a {
+        padding: 10px;
+        cursor: pointer;
+        color: $link-color;
 
-          &:hover {
-            color: $link-color-hover;
-          }
+        &:hover {
+          color: $link-color-hover;
+        }
 
-          &.active {
-            color: $link-color-active;
-            background-color: $active-item-background-color;
-          }
+        &.active {
+          color: $link-color-active;
+          background-color: $active-item-background-color;
         }
       }
     }
@@ -113,6 +111,21 @@
       right: 0;
       bottom: 0;
       overflow: auto;
+
+      .side-nav-button {
+        cursor: pointer;
+        color: $link-color;
+        padding: 0 0 0 13%;
+
+        &:hover {
+          color: $link-color-hover;
+        }
+
+        &.active {
+          color: $link-color-active;
+          background-color: $active-item-background-color;
+        }
+      }
 
       .side-nav-item {
 
@@ -183,6 +196,23 @@
             }
           }
         }
+
+        .new-elem-title, .short-description {
+          text-align: left;
+        }
+
+        .new-elem-title-input {
+          width: 70%;
+        }
+
+        .short-description {
+          margin-top: 10px;
+        }
+      }
+
+      textarea {
+        width: 100%;
+        resize: none;
       }
     }
   }

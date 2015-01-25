@@ -7,6 +7,7 @@ Em.I18n.translations = {
   "meethub": {
     "not-in-a-meethub": "Du bist noch nicht in einem Meethub.<br/> M&ouml;chtest du einen erstellen?",
     "button": {
+      "cancel": "Abbrechen",
       "create": "Meethub erstellen",
       "search": "Meethub suchen"
     }
