@@ -18,8 +18,8 @@
      	</div>
      	{{!-- BODY --}}
       <div {{bind-attr class=":body meethub.isOpen:open"}}>
-      	{{meethub.short_description}}
-      	{{meethub.founder.name}}
+      	<div>{{meethub.short_description}}</div>
+      	<div>founder: {{meethub.founder.name}}</div>
       </div>
     </div>
   {{/each}}
