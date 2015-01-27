@@ -180,8 +180,8 @@ export default Ember.Controller.extend({
     if(Ember.isEmpty(events))
     {
       var date_time_arr = response.start_time.split('T');
-      var date_time = date_time_arr[1];
-      var date_day = date_time_arr[0];
+      var date_time = date_time_arr[1].trim();
+      var date_day = date_time_arr[0].trim();
 
       event = this.store.createRecord('event', {
         fb_id: response.id,
