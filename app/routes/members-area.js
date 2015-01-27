@@ -75,6 +75,8 @@ export default AuthenticateRoute.extend({
 
             // load Meethubs from BE
             self.store.pushMany('meethub', self.store.find('meethub', { member: user.get('id') }));
+            // load Messages from BE
+            self.store.pushMany('message', self.store.find('message', { user: user.get('id') }));
 
             self.controllerFor('members-area').loadUserEventsFromFB();
 
