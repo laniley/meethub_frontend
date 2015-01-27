@@ -2,13 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   setupController: function(controller) {
-    var membersAreaController = this.controllerFor('members-area');
-    var user = membersAreaController.get('model');
-
-    if(user !== null)
-    {
-      controller.set('model', this.store.find('meethub', { member: user.get('id') }));
-    }
+    controller.set('model', this.store.all('meethub'));
   },
   beforeModel: function(transition) {
 

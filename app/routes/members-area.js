@@ -73,6 +73,9 @@ export default AuthenticateRoute.extend({
           {
             controller.set('model', user);
 
+            // load Meethubs from BE
+            self.store.pushMany(self.store.find('meethub', { member: user.get('id') }));
+
             self.controllerFor('members-area').loadUserEventsFromFB();
 
             var map_controller = self.controllerFor('members-area.map');
