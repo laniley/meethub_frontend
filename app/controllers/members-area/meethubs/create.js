@@ -38,6 +38,12 @@ export default Ember.Controller.extend({
       meethub.get('members').pushObject(user);
 
       meethub.save();
+
+      this.set('name', '');
+      this.set('short_description', '');
+
+      this.controllerFor('members-area/meethubs').set('currentSection', null);
+      this.transitionTo('members-area.meethubs');
     }
   }
 });
