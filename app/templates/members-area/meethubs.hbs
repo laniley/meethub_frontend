@@ -11,8 +11,15 @@
 <div class="side-nav-item-container">
   {{outlet form}}
   {{#each meethub in model}}
-    <div class="side-nav-item selectable meethub">
-      <div>{{meethub.name}}</div>
+    <div class="side-nav-item meethub no-padding">
+    	{{!-- TITLE --}}
+      <div class="title selectable" {{action 'toggleMeethub' meethub}}>
+      	{{meethub.name}}
+     	</div>
+     	{{!-- BODY --}}
+      <div {{bind-attr class=":body meethub.isOpen:open"}}>
+      	Test
+      </div>
     </div>
   {{/each}}
 </div>
