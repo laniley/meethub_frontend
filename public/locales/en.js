@@ -14,9 +14,6 @@ Em.I18n.translations = {
   },
   "messages": {
     "participation-question": "Will you participate?",
-    "participants": {
-      "title": "Your friends:"
-    },
     "accept": "accept",
     "maybe": "maybe",
     "decline": "decline"

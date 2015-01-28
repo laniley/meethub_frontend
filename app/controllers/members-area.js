@@ -39,8 +39,9 @@ export default Ember.Controller.extend({
     (
       function() {
         self.loadUserEventsFromFB();
-        self.store.pushMany('meethub', self.store.find('meethub', { member: self.get('model').get('id') }));
-        self.store.pushMany('message', self.store.find('message', { user: self.get('model').get('id') }));
+        self.store.find('meethub', { member: self.get('model').get('id') });
+        // self.store.find('message', { user: self.get('model').get('id') });
+        // self.store.find('eventInvitation', { invited_user: self.get('model').get('id') });
       },
       10000
     );
@@ -188,8 +189,6 @@ export default Ember.Controller.extend({
         fb_id: response.id,
         name: response.name,
         description: response.descrption,
-        start: moment(response.start_time, "YYYY-MM-DDTHH:mm:ss.SSSSZ"),
-        end: moment(response.start_time, "YYYY-MM-DDTHH:mm:ss.SSSSZ").add(1, 'hours'),
         start_time: date_time,
         start_date: date_day,
         timezone: response.timezone,
