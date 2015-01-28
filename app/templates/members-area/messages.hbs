@@ -54,9 +54,15 @@
         </div>
         <div class="participants">
           {{#if 'message.eventInvitation.event.hasConnectedFriends'}}
-            {{t 'messages.participants.title'}}
+            <div class="row participants-title">{{t 'participants.title'}}</div>
             {{#each friend in message.eventInvitation.event.friends_attending}}
-              {{friend.name}}
+              <img class="attending" {{bind-attr src=friend.picture}} {{bind-attr title=friend.name}} />
+            {{/each}}
+            {{#each friend in message.eventInvitation.event.friends_attending_maybe}}
+              <img class="attending-maybe" {{bind-attr src=friend.picture}} {{bind-attr title=friend.name}} />
+            {{/each}}
+            {{#each friend in message.eventInvitation.event.friends_declined}}
+              <img class="declined" {{bind-attr src=friend.picture}} {{bind-attr title=friend.name}} />
             {{/each}}
           {{/if}}
         </div>

@@ -20,5 +20,11 @@ Em.I18n.translations = {
     "accept": "Ja",
     "maybe": "Vielleicht",
     "decline": "Nein"
+  },
+  "participants": {
+    "title": "Deine Freunde:",
+    "attending": "{{participant}} nimmt teil!",
+    "attending_maybe": "{{participant}} nimmt vielleicht teil!",
+    "declined": "{{participant}} nimmt nicht teil!"
   }
 };
