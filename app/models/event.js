@@ -4,10 +4,8 @@ export default DS.Model.extend({
   fb_id: DS.attr('string'),
   name: DS.attr('string'),
   description: DS.attr('string'),
-  start: DS.attr('string'),
   start_time: DS.attr('string'),
   start_date: DS.attr('string'),
-  end: DS.attr('string'),
   location: DS.belongsTo('location'),
   eventInvitations: DS.hasMany('eventInvitation'),
 
@@ -29,6 +27,14 @@ export default DS.Model.extend({
   connected_friends_length: function() {
     return this.get('friends_attending').get('length') + this.get('friends_attending_maybe').get('length') + this.get('friends_declined').get('length');
   }.property('friends_attending.length', 'friends_attending_maybe.length', 'friends_declined.length'),
+
+  start: function() {
+    return moment(this.get('start_time'), "YYYY-MM-DDTHH:mm:ss.SSSSZ");
+  }.property('start_time'),
+
+  end: function() {
+    return moment(this.get('start_time'), "YYYY-MM-DDTHH:mm:ss.SSSSZ").add(1, 'hours');
+  },
 
   start_time_converted: function() {
     return this.get('start_time').substr(0,5);
