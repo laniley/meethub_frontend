@@ -38,8 +38,8 @@ export default Ember.Controller.extend({
     setInterval
     (
       function() {
-        self.loadUserEventsFromFB();
-        self.store.find('meethub', { member: self.get('model').get('id') });
+        // self.loadUserEventsFromFB();
+        // self.store.find('meethub', { member: self.get('model').get('id') });
         // self.store.find('message', { user: self.get('model').get('id') });
         // self.store.find('eventInvitation', { invited_user: self.get('model').get('id') });
       },
