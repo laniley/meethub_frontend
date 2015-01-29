@@ -44,28 +44,8 @@ export default AuthenticateRoute.extend({
           fb_id: response.id,
           first_name: response.first_name,
           last_name: response.last_name,
-          picture: response.picture.data.url
+          picture: 'http://graph.facebook.com/' + response.id + '/picture'
         });
-
-        if(response.friends.data.length > 0)
-        {
-          for(var i = 0; i < response.friends.data.length; i++)
-          {
-            FB.api('/' + response.friends.data[i].id, function(friend_response)
-            {
-              if( !friend_response.error )
-              {
-                console.log('friend: ', friend_response);
-
-                self.handleFBFriendResponse(user, friend_response);
-              }
-              else
-              {
-                console.log(friend_response.error);
-              }
-            });
-          }
-        }
 
         user.save().then
         (
@@ -73,8 +53,28 @@ export default AuthenticateRoute.extend({
           {
             controller.set('model', user);
 
+            if(response.friends.data.length > 0)
+            {
+              for(var i = 0; i < response.friends.data.length; i++)
+              {
+                FB.api('/' + response.friends.data[i].id, function(friend_response)
+                {
+                  if( !friend_response.error )
+                  {
+                    console.log('friend: ', friend_response);
+
+                    self.handleFBFriendResponse(user, friend_response);
+                  }
+                  else
+                  {
+                    console.log(friend_response.error);
+                  }
+                });
+              }
+            }
+
             // load Meethubs from BE
-            self.store.find('meethub', { member: user.get('id') });
+            // self.store.find('meethub', { member: user.get('id') });
             // load Messages from BE
             // self.store.find('message', { user: user.get('id') });
             // load EventInvitations from BE
@@ -99,19 +99,24 @@ export default AuthenticateRoute.extend({
 
   handleFBFriendResponse: function(user, response) {
 
-    var self = this;
+    // var self = this;
 
-    var friend = this.store.createRecord('user', {
-        fb_id: response.id,
-        first_name: response.first_name,
-        last_name: response.last_name,
-        picture: 'http://graph.facebook.com/' + response.id + '/picture',
-        gender: response.gender
-    });
+    // // self.store.find('friend', { user: user.get('id') });
 
-    user.get('friends').pushObject(friend);
+    // var friend = this.store.createRecord('user', {
+    //     fb_id: response.id,
+    //     first_name: response.first_name,
+    //     last_name: response.last_name,
+    //     picture: 'http://graph.facebook.com/' + response.id + '/picture',
+    //     gender: response.gender
+    // });
 
-    self.controllerFor('members-area').loadFriendEventsFromFB(response.id);
+    // friend.save().then(function() {
+    //   user.get('friends').pushObject(friend);
+    //   user.save();
+    // });
+
+    // self.controllerFor('members-area').loadFriendEventsFromFB(response.id);
   }
 
 });
