@@ -7,6 +7,8 @@ export default DS.Model.extend({
   picture: DS.attr(),
   locale: DS.attr('string'),
   gender: DS.attr('string'),
+  created_at: DS.attr('date'),
+  updated_at: DS.attr('date'),
   friends: DS.hasMany('user', { async: true }),
   messages: DS.hasMany('message'),
 
