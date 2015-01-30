@@ -1,12 +1,10 @@
 <div {{bind-attr class=":side-nav-item"}}>
   <div class="new-elem-title">
     {{input class="new-elem-title-input" placeholder="Name" value=name}}
-    <span class="side-nav-button" {{action 'cancelActivity'}} {{translateAttr  title='meethub.button.cancel'}}>{{unbound fa-icon "fa-ban"}}</span>
-    {{#if 'nameIsNotEmpty'}}
-      <span class="side-nav-button" {{action 'createMeethub'}} {{translateAttr  title='meethub.button.create'}}>{{unbound fa-icon "fa-check"}}</span>
-    {{/if}}
   </div>
   <div class="short-description">
     {{textarea placeholder="Short description" cols="50" rows="3" maxlength="250" value=short_description}}
   </div>
+  <span {{bind-attr class=":side-nav-button :save nameIsEmpty:disabled:enabled" }} {{action 'createMeethub'}} {{translateAttr  title='meethub.button.create'}}>{{unbound fa-icon "fa-check"}}</span>
+  <span class="side-nav-button cancel" {{action 'cancelActivity'}} {{translateAttr  title='meethub.button.cancel'}}>{{unbound fa-icon "fa-ban"}}</span>
 </div>
