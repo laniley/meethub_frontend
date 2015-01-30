@@ -65,8 +65,6 @@ export default AuthenticateRoute.extend({
             self.prepareController(controller, user, response);
           }
         });
-
-
       }
       else
       {
@@ -81,6 +79,13 @@ export default AuthenticateRoute.extend({
     var self = this;
 
     controller.set('model', user);
+
+    // load Meethubs from BE
+    self.store.find('meethub', { member: user.get('id') });
+    // load Messages from BE
+    // self.store.find('message', { user: user.get('id') });
+    // load EventInvitations from BE
+    // self.store.find('eventInvitation', { invited_user: user.get('id') });
 
     // if(response.friends.data.length > 0)
     // {
@@ -101,13 +106,6 @@ export default AuthenticateRoute.extend({
     //     });
     //   }
     // }
-
-    // load Meethubs from BE
-    // self.store.find('meethub', { member: user.get('id') });
-    // load Messages from BE
-    // self.store.find('message', { user: user.get('id') });
-    // load EventInvitations from BE
-    // self.store.find('eventInvitation', { invited_user: user.get('id') });
 
     // self.controllerFor('members-area').loadUserEventsFromFB();
 

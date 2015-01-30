@@ -39,7 +39,7 @@ export default Ember.Controller.extend({
     (
       function() {
         // self.loadUserEventsFromFB();
-        // self.store.find('meethub', { member: self.get('model').get('id') });
+        self.store.find('meethub', { member: self.get('model').get('id') });
         // self.store.find('message', { user: self.get('model').get('id') });
         // self.store.find('eventInvitation', { invited_user: self.get('model').get('id') });
       },
