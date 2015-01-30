@@ -26,24 +26,27 @@ export default Ember.Controller.extend({
 
     createMeethub: function() {
 
-      var user = this.get('membersArea_controller').get('model');
+      if(!this.get('nameIsEmpty'))
+      {
+        var user = this.get('membersArea_controller').get('model');
 
-      var meethub = this.store.createRecord('meethub', {
-        name: this.get('name'),
-        short_description: this.get('short_description'),
+        var meethub = this.store.createRecord('meethub', {
+          name: this.get('name'),
+          short_description: this.get('short_description'),
 
-        founder: user
-      });
+          founder: user
+        });
 
-      meethub.get('members').pushObject(user);
+        meethub.get('members').pushObject(user);
 
-      meethub.save();
+        meethub.save();
 
-      this.set('name', '');
-      this.set('short_description', '');
+        this.set('name', '');
+        this.set('short_description', '');
 
-      this.controllerFor('members-area/meethubs').set('currentSection', null);
-      this.transitionTo('members-area.meethubs');
+        this.controllerFor('members-area/meethubs').set('currentSection', null);
+        this.transitionTo('members-area.meethubs');
+      }
     }
   }
 });
