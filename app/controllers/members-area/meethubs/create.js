@@ -7,14 +7,14 @@ export default Ember.Controller.extend({
   name: '',
   short_description: '',
 
-  nameIsNotEmpty: function() {
+  nameIsEmpty: function() {
     if(this.get('name.length') > 0)
     {
-      return true;
+      return false;
     }
     else
     {
-      return false;
+      return true;
     }
   }.property('name.length'),
 

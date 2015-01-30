@@ -117,13 +117,28 @@
         color: $link-color;
         padding: 0 0 0 6%;
 
-        &:hover {
-          color: $link-color-hover;
+        &.cancel {
+          color: $orange;
         }
 
-        &.active {
-          color: $link-color-active;
-          background-color: $active-item-background-color;
+        &.disabled {
+          cursor: default;
+          color: $active-item-background-color;
+        }
+
+        &:not(.disabled){
+          &.save {
+            color: $darkgreen;
+          }
+
+          &:hover {
+            color: $link-color-hover;
+          }
+
+          &.active {
+            color: $link-color-active;
+            background-color: $active-item-background-color;
+          }
         }
       }
 
@@ -202,7 +217,8 @@
         }
 
         .new-elem-title-input {
-          width: 70%;
+          width: 100%;
+          padding: 0 5px;
         }
 
         .short-description {
@@ -213,6 +229,7 @@
       textarea {
         width: 100%;
         resize: none;
+        padding: 0 5px;
       }
     }
   }
