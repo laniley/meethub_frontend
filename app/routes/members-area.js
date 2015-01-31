@@ -87,25 +87,54 @@ export default AuthenticateRoute.extend({
     // load EventInvitations from BE
     // self.store.find('eventInvitation', { invited_user: user.get('id') });
 
-    // if(response.friends.data.length > 0)
-    // {
-    //   for(var i = 0; i < response.friends.data.length; i++)
-    //   {
-    //     FB.api('/' + response.friends.data[i].id, function(friend_response)
-    //     {
-    //       if( !friend_response.error )
-    //       {
-    //         console.log('friend: ', friend_response);
+    if(response.friends.data.length > 0)
+    {
+      for(var i = 0; i < response.friends.data.length; i++)
+      {
+        var friend_id = response.friends.data[i].id;
 
-    //         self.handleFBFriendResponse(user, friend_response);
-    //       }
-    //       else
-    //       {
-    //         console.log(friend_response.error);
-    //       }
-    //     });
-    //   }
-    // }
+        self.store.find('user', { fb_id: friend_id }).then(function(users)
+        {
+          if(Ember.isEmpty(users))
+          {
+            FB.api('/' + friend_id, function(friend_response)
+            {
+              if( !friend_response.error )
+              {
+                console.log('friend: ', friend_response);
+
+                var friend = self.store.createRecord('user', {
+                    fb_id: friend_response.id,
+                    first_name: friend_response.first_name,
+                    last_name: friend_response.last_name,
+                    picture: 'http://graph.facebook.com/' + friend_response.id + '/picture',
+                    gender: friend_response.gender
+                });
+
+                friend.save().then(function() {
+                  user.get('friends').then(function(friends) {
+                    friends.pushObject(friend);
+                    user.save();
+                  });
+                });
+              }
+              else
+              {
+                console.log(friend_response.error);
+              }
+            });
+          }
+          else
+          {
+            var friend = users.get('firstObject');
+            user.get('friends').then(function(friends) {
+              friends.pushObject(friend);
+              user.save();
+            });
+          }
+        });
+      }
+    }
 
     // self.controllerFor('members-area').loadUserEventsFromFB();
 
@@ -113,28 +142,6 @@ export default AuthenticateRoute.extend({
         map_controller.getCurrentPosition();
 
     self.transitionTo('members-area.meethubs.map');
-  },
-
-  handleFBFriendResponse: function(user, response) {
-
-    // var self = this;
-
-    // // self.store.find('friend', { user: user.get('id') });
-
-    // var friend = this.store.createRecord('user', {
-    //     fb_id: response.id,
-    //     first_name: response.first_name,
-    //     last_name: response.last_name,
-    //     picture: 'http://graph.facebook.com/' + response.id + '/picture',
-    //     gender: response.gender
-    // });
-
-    // friend.save().then(function() {
-    //   user.get('friends').pushObject(friend);
-    //   user.save();
-    // });
-
-    // self.controllerFor('members-area').loadFriendEventsFromFB(response.id);
   }
 
 });
