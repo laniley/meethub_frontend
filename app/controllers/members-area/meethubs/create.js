@@ -38,9 +38,12 @@ export default Ember.Controller.extend({
           founder: user
         });
 
-        meethub.get('members').pushObject(user);
-
-        meethub.save();
+        meethub.save().then(function() {
+          meethub.get('members').then(function(members) {
+            members.pushObject(user);
+            meethub.save();
+          });
+        });
 
         this.set('name', '');
         this.set('short_description', '');

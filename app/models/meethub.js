@@ -8,5 +8,5 @@ export default DS.Model.extend({
   updated_at: DS.attr('date'),
 
   founder: DS.belongsTo('user', { async: true }),
-  members: DS.hasMany('user')
+  members: DS.hasMany('user', { async: true })
 });
