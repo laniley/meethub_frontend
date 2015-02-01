@@ -23,7 +23,7 @@ export default Ember.Controller.extend( CalendarRangeStoreMixin, CalendarEventSt
             start: event.get('start'),
             end: event.get('end'),
             label: event.get('name'),
-            payload: event   // If events were fetched by an API, this is where your would put your own event model
+            payload: event   // If events were fetched by an API, this is where you would put your own event model
         });
       });
 

@@ -38,21 +38,18 @@ export default Ember.Controller.extend({
     setInterval
     (
       function() {
-        // self.loadUserEventsFromFB();
-        self.store.find('meethub', { member: self.get('model').get('id') });
-        // self.store.find('message', { user: self.get('model').get('id') });
-        // self.store.find('eventInvitation', { invited_user: self.get('model').get('id') });
+        self.update();
       },
       10000
     );
+  },
 
-    // setInterval
-    // (
-    //   function() {
-    //     self.loadFriendEventsFromFB();
-    //   },
-    //   10000
-    // );
+  update: function() {
+    var self = this;
+    self.loadUserEventsFromFB();
+    self.loadFriendEventsFromFB();
+    // load Meethubs from BE
+    self.store.find('meethub', { member: self.get('model').get('id') });
   },
 
   loadUserEventsFromFB: function () {
@@ -254,59 +251,73 @@ export default Ember.Controller.extend({
     }
   },
 
-  loadFriendEventsFromFB: function (fb_id) {
+  loadFriendEventsFromFB: function () {
 
     var self = this;
 
-    FB.api('/' + fb_id + '/events/attending', function(response)
-    {
-      if( !response.error )
-      {
-        console.log('friend events - attending: ', response);
+    var user = self.get('model');
 
-        for(var i = 0; i < response.data.length; i++)
-        {
-          self.handleFBEventResponse(response.data[i], 'attending', fb_id);
-        }
-      }
-      else
-      {
-        console.log(response.error);
-      }
-    });
+    user.get('friends').then(function(friends) {
 
-    FB.api('/' + fb_id + '/events/maybe', function(response)
-    {
-      if( !response.error )
-      {
-        console.log('friend events - maybe: ', response);
+      friends.forEach(function(friend, index) {
 
-        for(var i = 0; i < response.data.length; i++)
-        {
-          self.handleFBEventResponse(response.data[i], 'maybe', fb_id);
-        }
-      }
-      else
-      {
-        console.log(response.error);
-      }
-    });
+        self.store.find('user', friend.get('id')).then(function(user) {
 
-    FB.api('/' + fb_id + '/events/not_replied', function(response)
-    {
-      if( !response.error )
-      {
-        console.log('friend events - not_replied: ', response);
+          FB.api('/' + user.get('fb_id') + '/events/attending', function(response)
+          {
+            if( !response.error )
+            {
+              console.log('friend events - attending: ', response);
 
-        for(var i = 0; i < response.data.length; i++)
-        {
-          self.handleFBEventResponse(response.data[i], 'not_replied', fb_id);
-        }
-      }
-      else
-      {
-        console.log(response.error);
-      }
+              for(var i = 0; i < response.data.length; i++)
+              {
+                self.handleFBEventResponse(response.data[i], 'attending', user.get('fb_id'));
+              }
+            }
+            else
+            {
+              console.log(response.error);
+            }
+          });
+
+          FB.api('/' + user.get('fb_id') + '/events/maybe', function(response)
+          {
+            if( !response.error )
+            {
+              console.log('friend events - maybe: ', response);
+
+              for(var i = 0; i < response.data.length; i++)
+              {
+                self.handleFBEventResponse(response.data[i], 'maybe', user.get('fb_id'));
+              }
+            }
+            else
+            {
+              console.log(response.error);
+            }
+          });
+
+          FB.api('/' + user.get('fb_id') + '/events/not_replied', function(response)
+          {
+            if( !response.error )
+            {
+              console.log('friend events - not_replied: ', response);
+
+              for(var i = 0; i < response.data.length; i++)
+              {
+                self.handleFBEventResponse(response.data[i], 'not_replied', user.get('fb_id'));
+              }
+            }
+            else
+            {
+              console.log(response.error);
+            }
+          });
+
+        });
+
+      });
+
     });
   },
 
