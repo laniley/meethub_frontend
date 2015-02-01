@@ -29,12 +29,12 @@ export default DS.Model.extend({
   }.property('friends_attending.length', 'friends_attending_maybe.length', 'friends_declined.length'),
 
   start: function() {
-    return moment(this.get('start_time'), "YYYY-MM-DDTHH:mm:ss.SSSSZ");
+    return moment(this.get('start_date'), "YYYY-MM-DDTHH:mm:ss.SSSSZ");
   }.property('start_time'),
 
   end: function() {
-    return moment(this.get('start_time'), "YYYY-MM-DDTHH:mm:ss.SSSSZ").add(1, 'hours');
-  },
+    return moment(this.get('start_date'), "YYYY-MM-DDTHH:mm:ss.SSSSZ").add(1, 'hours');
+  }.property('start_time'),
 
   start_time_converted: function() {
     return this.get('start_time').substr(0,5);

@@ -200,6 +200,7 @@ DisplayedEvent = (function() {
     this.end = moment(hash.end ||  null);
     this.label = hash.label || '?';
     this.payload = hash.payload || null;
+    console.log('DisplayedEvent', this);
   }
 
   DisplayedEvent.prototype.getLength = function() {
@@ -234,6 +235,12 @@ DisplayedEvent = (function() {
   };
 
   DisplayedEvent.prototype.isVisible = function(viewstart, viewend) {
+
+    if(this.end.isBefore(viewstart))
+    {
+      console.error('DisplayedEvent - visibility check - endIsBeforeStart!!!', viewstart, viewend);
+    }
+
     return !this.end.isBefore(viewstart) && !this.end.isSame(viewstart) && !this.start.isSame(viewend) && !this.start.isAfter(viewend);
   };
 

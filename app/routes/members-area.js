@@ -55,6 +55,8 @@ export default AuthenticateRoute.extend({
             (
               function()
               {
+                controller.set('model', user);
+                controller.update();
                 self.prepareController(controller, user, response);
               }
             );
@@ -62,6 +64,8 @@ export default AuthenticateRoute.extend({
           else
           {
             var user = users.get('firstObject');
+            controller.set('model', user);
+            controller.update();
             self.prepareController(controller, user, response);
           }
         });
@@ -77,15 +81,6 @@ export default AuthenticateRoute.extend({
   prepareController: function(controller, user, response) {
 
     var self = this;
-
-    controller.set('model', user);
-
-    // load Meethubs from BE
-    self.store.find('meethub', { member: user.get('id') });
-    // load Messages from BE
-    // self.store.find('message', { user: user.get('id') });
-    // load EventInvitations from BE
-    // self.store.find('eventInvitation', { invited_user: user.get('id') });
 
     if(response.friends.data.length > 0)
     {
@@ -124,19 +119,9 @@ export default AuthenticateRoute.extend({
               }
             });
           }
-          else
-          {
-            var friend = users.get('firstObject');
-            user.get('friends').then(function(friends) {
-              friends.pushObject(friend);
-              user.save();
-            });
-          }
         });
       }
     }
-
-    // self.controllerFor('members-area').loadUserEventsFromFB();
 
     var map_controller = self.controllerFor('members-area.map');
         map_controller.getCurrentPosition();
