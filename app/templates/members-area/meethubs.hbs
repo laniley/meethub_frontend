@@ -19,7 +19,11 @@
      	{{!-- BODY --}}
       <div {{bind-attr class=":body meethub.isOpen:open"}}>
       	<div>{{meethub.short_description}}</div>
-      	<div>founder: {{meethub.founder.name}}</div>
+      	<div>members:</div>
+        <div>
+          {{#each member in meethub.members}}
+            {{member.name}}</div>
+          {{/each}}
       </div>
     </div>
   {{/each}}
