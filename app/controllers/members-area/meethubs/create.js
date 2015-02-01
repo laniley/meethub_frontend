@@ -18,6 +18,17 @@ export default Ember.Controller.extend({
     }
   }.property('name.length'),
 
+  isGerman: function() {
+    if(Ember.I18n.locale === 'de')
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }.property('Ember.I18n.locale'),
+
   actions: {
     cancelActivity: function() {
       this.controllerFor('members-area/meethubs').set('currentSection', null);

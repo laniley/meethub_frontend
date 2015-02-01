@@ -6,6 +6,7 @@ Em.I18n.translations = {
   },
   "meethub": {
     "not-in-a-meethub": "You are not in a meethub yet.<br /> Do you want to create one?",
+    "members": "members",
     "button": {
       "cancel": "cancel",
       "create": "create a Meethub",
@@ -23,5 +24,6 @@ Em.I18n.translations = {
     "attending": "{{participant}} is attending!",
     "attending_maybe": "{{participant}} is attending maybe!",
     "declined": "{{participant}} declined!"
-  }
+  },
+  "short-description": "Short description"
 };

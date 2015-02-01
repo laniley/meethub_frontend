@@ -19,11 +19,15 @@
      	{{!-- BODY --}}
       <div {{bind-attr class=":body meethub.isOpen:open"}}>
       	<div>{{meethub.short_description}}</div>
-      	<div>members:</div>
-        <div>
+      	<div>{{t 'meethub.members'}}:</div>
+        <div class="members">
           {{#each member in meethub.members}}
-            <div class="picture"><img {{bind-attr src=member.picture }} {{bind-attr title=member.name}} /></div>
+            <img {{bind-attr src=member.picture }} {{bind-attr title=member.name}} />
           {{/each}}
+          <div class="add-new-member">
+            {{unbound fa-icon "fa-user-plus"}}
+          </div>
+        </div>
       </div>
     </div>
   {{/each}}
