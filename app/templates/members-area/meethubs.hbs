@@ -10,7 +10,7 @@
 {{!-- LIST --}}
 <div class="side-nav-item-container">
   {{outlet form}}
-  {{#each meethub in model}}
+  {{#each meethub in sortedMeethubs}}
     <div class="side-nav-item meethub no-padding">
     	{{!-- TITLE --}}
       <div class="title selectable" {{action 'toggleMeethub' meethub}}>

@@ -33,6 +33,7 @@ export default Ember.Controller.extend({
         var meethub = this.store.createRecord('meethub', {
           name: this.get('name'),
           short_description: this.get('short_description'),
+          isOpen: true,
 
           founder: user
         });
