@@ -144,20 +144,6 @@
 
       .side-nav-item {
 
-        .title {
-          padding: 15px 10px;
-
-          .icons {
-            position: absolute;
-          }
-
-          .subject {
-            position: relative;
-            left: 50px;
-            width: 80%;
-          }
-        }
-
         &.message {
 
           &:not(.has-been-read) {
@@ -209,6 +195,29 @@
             img {
               height: 50px;
             }
+          }
+        }
+
+        &.meethub {
+          .picture {
+            img {
+              width: 40px;
+              border-radius: 5px;
+            }
+          }
+        }
+
+        .title {
+          padding: 15px 10px;
+
+          .icons {
+            position: absolute;
+          }
+
+          .subject {
+            position: relative;
+            left: 50px;
+            width: 80%;
           }
         }
 
