@@ -22,7 +22,7 @@
       	<div>members:</div>
         <div>
           {{#each member in meethub.members}}
-            {{member.name}}</div>
+            <div class="picture"><img {{bind-attr src=member.picture }} {{bind-attr title=member.name}} /></div>
           {{/each}}
       </div>
     </div>
