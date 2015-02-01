@@ -207,11 +207,21 @@
 
           .add-new-member {
             display: inline-block;
+            line-height: 40px;
+            font-size: 22px;
+            cursor: pointer;
             vertical-align: middle;
             width: 40px;
             height: 40px;
             border-radius: 5px;
             border: 1px solid $border-color;
+
+            color: $link-color;
+
+            &:hover {
+              color: $link-color-hover;
+              border: 1px solid $link-color-hover;
+            }
           }
         }
 

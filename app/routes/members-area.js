@@ -34,7 +34,7 @@ export default AuthenticateRoute.extend({
 
     var self = this;
 
-    FB.api('/me', {fields: 'id,first_name,last_name,picture.width(120).height(120),friends'}, function(response)
+    FB.api('/me', {fields: 'id,email,first_name,last_name,picture.width(120).height(120),friends'}, function(response)
     {
       if( !response.error )
       {
