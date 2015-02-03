@@ -205,6 +205,10 @@
             border-radius: 5px;
           }
 
+          .members-title {
+            margin-bottom: 10px;
+          }
+
           .add-new-member {
             display: inline-block;
             line-height: 40px;
@@ -223,10 +227,19 @@
               border: 1px solid $link-color-hover;
             }
           }
+
+          .add-new-members-form {
+            margin-top: 10px;
+          }
         }
 
         .title {
           padding: 15px 10px;
+
+          &.open {
+            color: $blue;
+            font-weight: bold;
+          }
 
           .icons {
             position: absolute;
