@@ -92,6 +92,7 @@
         padding: 10px;
         cursor: pointer;
         color: $link-color;
+        border: 1px solid white;
 
         &:hover {
           color: $link-color-hover;
@@ -99,7 +100,10 @@
 
         &.active {
           color: $link-color-active;
+          border: 1px solid $link-color-active;
+          border-radius: 5px;
           background-color: $active-item-background-color;
+          // box-shadow: #BFC8CB 0px 0px 10px inset;
         }
       }
     }
@@ -130,7 +134,7 @@
 
         &.disabled {
           cursor: default;
-          color: $active-item-background-color;
+          color: #e6e6e6;
         }
 
         &:not(.disabled){
