@@ -1,5 +1,6 @@
-<div {{bind-attr class=":side-nav-item"}}>
-  <div class="new-elem-title">
-    {{input class="new-elem-title-input" placeholder="Search..."}}
+<div {{bind-attr class=":side-nav-item :align-left"}}>
+  <div class="search">
+    {{input class="search-input" placeholder="Search..."}}
   </div>
+  <span class="side-nav-button inline cancel" {{action 'cancelActivity'}} {{translateAttr  title='meethub.button.cancel'}}>{{unbound fa-icon "fa-ban"}}</span>
 </div>
