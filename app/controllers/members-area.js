@@ -173,7 +173,7 @@ export default Ember.Controller.extend({
 
     var unfiltered_events = this.store.all('event');
     var events = unfiltered_events.filterBy('fb_id', response.id);
-    var event = undefined;
+    var event = null;
 
     // if event not already in the store, create it
     if(Ember.isEmpty(events))
