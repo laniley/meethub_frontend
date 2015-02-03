@@ -164,12 +164,19 @@
             font-size: 24px;
             margin-top: -10px;
             margin-right: 10px;
+
+            color: black;
+
+            &:not(.has-been-read) {
+              color: $orange;
+            }
           }
 
           .message-type {
             float: left;
             margin-left: -20px;
             margin-top: 6px;
+            color: black;
           }
 
           .eventInvitation-status {
