@@ -24,7 +24,7 @@
           {{#each member in meethub.members}}
             <img {{bind-attr src=member.picture }} {{bind-attr title=member.name}} />
           {{/each}}
-          <div class="add-new-member">
+          <div class="add-new-member" {{action 'open_new_member_form'}}>
             {{unbound fa-icon "fa-user-plus"}}
           </div>
         </div>

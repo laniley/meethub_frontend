@@ -23,6 +23,10 @@ export default Ember.Controller.extend({
       {
         meethub.set('isOpen', false);
       }
+    },
+
+    open_new_member_form: function() {
+      
     }
  }
 });
