@@ -24,13 +24,13 @@
           {{#each member in meethub.members}}
             <img {{bind-attr src=member.picture }} {{bind-attr title=member.name}} />
           {{/each}}
-          <div class="add-new-member" {{action 'toggle_add_members_form' meethub}}>
+          <div {{bind-attr class=":add-new-member meethub.showAddMembersForm:open"}} {{action 'toggle_add_members_form' meethub}}>
             {{unbound fa-icon "fa-user-plus"}}
           </div>
         </div>
         {{#if 'meethub.showAddMembersForm'}}
           <div class="add-new-members-form">
-            {{input class="new-elem-title-input" placeholder="Search..."}}
+            {{input class="new-elem-title-input" placeholder="Name / Mail ..."}}
           </div>
         {{/if}}
       </div>

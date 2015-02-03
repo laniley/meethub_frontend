@@ -8,6 +8,7 @@
         &.active {
           color: $active-item-color;
           background-color: $active-item-background-color;
+          box-shadow: #BFC8CB 0px 0px 10px inset;
         }
 
         &:not(.active) {
@@ -47,7 +48,7 @@
               padding: 20px 10px;
 
               &.active {
-                background-color: #e7e7e7;
+                background-color: $active-item-background-color;
               }
             }
           }

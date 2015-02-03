@@ -240,6 +240,11 @@
               color: $link-color-hover;
               border: 1px solid $link-color-hover;
             }
+
+            &.open {
+              border: 1px solid $blue;
+              color: $blue;
+            }
           }
 
           .add-new-members-form {
