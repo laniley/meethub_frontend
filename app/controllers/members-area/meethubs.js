@@ -25,8 +25,16 @@ export default Ember.Controller.extend({
       }
     },
 
-    open_new_member_form: function() {
-      
+    toggle_add_members_form: function(meethub) {
+
+      if(meethub.get('showAddMembersForm') === false)
+      {
+        meethub.set('showAddMembersForm', true);
+      }
+      else
+      {
+        meethub.set('showAddMembersForm', false);
+      }
     }
  }
 });
