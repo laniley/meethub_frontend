@@ -49,12 +49,12 @@ export default Ember.Controller.extend({
           founder: user
         });
 
-        meethub.save().then(function() {
+        // meethub.save().then(function() {
           meethub.get('members').then(function(members) {
             members.pushObject(user);
             meethub.save();
           });
-        });
+        // });
 
         this.set('name', '');
         this.set('short_description', '');

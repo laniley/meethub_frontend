@@ -13,21 +13,26 @@
   {{#each meethub in sortedMeethubs}}
     <div class="side-nav-item meethub no-padding">
     	{{!-- TITLE --}}
-      <div class="title selectable" {{action 'toggleMeethub' meethub}}>
+      <div {{bind-attr class=":title :selectable meethub.isOpen:open"}} {{action 'toggleMeethub' meethub}}>
       	{{meethub.name}}
      	</div>
      	{{!-- BODY --}}
       <div {{bind-attr class=":body meethub.isOpen:open"}}>
       	<div>{{meethub.short_description}}</div>
-      	<div>{{t 'meethub.members'}}:</div>
+      	<div class="members-title">{{t 'meethub.members'}}:</div>
         <div class="members">
           {{#each member in meethub.members}}
             <img {{bind-attr src=member.picture }} {{bind-attr title=member.name}} />
           {{/each}}
-          <div class="add-new-member">
+          <div {{bind-attr class=":add-new-member meethub.showAddMembersForm:open"}} {{action 'toggle_add_members_form' meethub}}>
             {{unbound fa-icon "fa-user-plus"}}
           </div>
         </div>
+        {{#if 'meethub.showAddMembersForm'}}
+          <div class="add-new-members-form">
+            {{input class="new-elem-title-input" placeholder="Name / Mail ..."}}
+          </div>
+        {{/if}}
       </div>
     </div>
   {{/each}}

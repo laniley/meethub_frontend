@@ -92,6 +92,7 @@
         padding: 10px;
         cursor: pointer;
         color: $link-color;
+        border: 1px solid white;
 
         &:hover {
           color: $link-color-hover;
@@ -99,7 +100,10 @@
 
         &.active {
           color: $link-color-active;
+          border: 1px solid $link-color-active;
+          border-radius: 5px;
           background-color: $active-item-background-color;
+          // box-shadow: #BFC8CB 0px 0px 10px inset;
         }
       }
     }
@@ -115,7 +119,14 @@
       .side-nav-button {
         cursor: pointer;
         color: $link-color;
-        padding: 0 6%;
+
+        &:not(.inline) {
+          padding: 0 6%;
+        }
+
+        &.inline {
+          margin-left: 25px;
+        }
 
         &.cancel {
           color: $orange;
@@ -123,7 +134,7 @@
 
         &.disabled {
           cursor: default;
-          color: $active-item-background-color;
+          color: #e6e6e6;
         }
 
         &:not(.disabled){
@@ -157,12 +168,19 @@
             font-size: 24px;
             margin-top: -10px;
             margin-right: 10px;
+
+            color: black;
+
+            &:not(.has-been-read) {
+              color: $orange;
+            }
           }
 
           .message-type {
             float: left;
             margin-left: -20px;
             margin-top: 6px;
+            color: black;
           }
 
           .eventInvitation-status {
@@ -205,6 +223,10 @@
             border-radius: 5px;
           }
 
+          .members-title {
+            margin-bottom: 10px;
+          }
+
           .add-new-member {
             display: inline-block;
             line-height: 40px;
@@ -222,11 +244,25 @@
               color: $link-color-hover;
               border: 1px solid $link-color-hover;
             }
+
+            &.open {
+              border: 1px solid $blue;
+              color: $blue;
+            }
+          }
+
+          .add-new-members-form {
+            margin-top: 10px;
           }
         }
 
         .title {
           padding: 15px 10px;
+
+          &.open {
+            color: $blue;
+            font-weight: bold;
+          }
 
           .icons {
             position: absolute;
@@ -239,18 +275,30 @@
           }
         }
 
+        .search {
+          width: 85%;
+          float: left;
+
+          input {
+            width: 100%;
+          }
+        }
+
         .new-elem-title, .short-description {
           text-align: left;
         }
 
         .new-elem-title-input {
           width: 100%;
-          padding: 0 5px;
         }
 
         .short-description {
           margin-top: 10px;
         }
+      }
+
+      input {
+        padding: 0 5px;
       }
 
       textarea {

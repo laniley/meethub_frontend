@@ -9,6 +9,7 @@ $lightgreen: #B9E7BA;
 $darkgreen: darken($green, 10%);
 
 $lightblue: #99C4D5;
+$babyblue: #E4F4F9;
 $blue: #2588AB;
 $darkblue: #2A2C4C;
 
@@ -20,7 +21,7 @@ $text-color: $darkblue;
 $border-color: $lightgrey;
 
 $active-item-color: $blue;
-$active-item-background-color: $lightgrey;
+$active-item-background-color: white;
 
 $link-color: #777;
 $link-color-hover: #000;
@@ -56,6 +57,14 @@ $side-navbar-width: 400px;
 
 .align-center {
   text-align: center;
+}
+
+.align-left {
+  text-align: left;
+}
+
+.align-right {
+  text-align: right;
 }
 
 .no-padding {

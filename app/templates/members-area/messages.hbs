@@ -11,7 +11,7 @@
   {{#each message in sortedMessages}}
     <div {{bind-attr class=":side-nav-item :message :no-padding message.hasBeenRead:has-been-read"}}>
       {{!-- TITLE --}}
-      <div class="title selectable" {{action 'toggleMessage' message}}>
+      <div {{bind-attr class=":title :selectable message.isOpen:open"}} {{action 'toggleMessage' message}}>
         <div class="icons">
           <div {{bind-attr class=":envelope message.hasBeenRead"}}>
             {{#if message.hasBeenRead}}
