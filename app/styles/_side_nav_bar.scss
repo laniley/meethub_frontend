@@ -115,7 +115,14 @@
       .side-nav-button {
         cursor: pointer;
         color: $link-color;
-        padding: 0 6%;
+
+        &:not(.inline) {
+          padding: 0 6%;
+        }
+
+        &.inline {
+          margin-left: 25px;
+        }
 
         &.cancel {
           color: $orange;
@@ -252,18 +259,30 @@
           }
         }
 
+        .search {
+          width: 85%;
+          float: left;
+
+          input {
+            width: 100%;
+          }
+        }
+
         .new-elem-title, .short-description {
           text-align: left;
         }
 
         .new-elem-title-input {
           width: 100%;
-          padding: 0 5px;
         }
 
         .short-description {
           margin-top: 10px;
         }
+      }
+
+      input {
+        padding: 0 5px;
       }
 
       textarea {
