@@ -9,19 +9,28 @@ export default Ember.Controller.extend({
   search_results: function() {
     var self = this;
 
-    var unreadMessages = this.get('meethubs_controller').get('model').filter(function(meethub) {
+    var meethubs = this.store.all('meethub');
+
+    var filteredMeethubs = meethubs.filter(function(meethub) {
       return meethub.get('name').indexOf(self.get('search_term')) !== -1;
     });
 
-    return unreadMessages;
+    this.get('meethubs_controller').set('model', filteredMeethubs);
+
+    return filteredMeethubs;
 
   }.property('search_term','meethubs_controller.@each'),
 
 	actions: {
-	   cancelActivity: function() {
-	      this.controllerFor('members-area/meethubs').set('currentSection', null);
-	      this.transitionTo('members-area.meethubs');
-	   }
+    cancelActivity: function() {
+      var meethubs = this.store.all('meethub');
+
+      this.set('search_term', '');
+      this.get('meethubs_controller').set('model', meethubs);
+
+      this.get('meethubs_controller').set('currentSection', null);
+      this.transitionTo('members-area.meethubs');
+    }
  	}
 
 });
