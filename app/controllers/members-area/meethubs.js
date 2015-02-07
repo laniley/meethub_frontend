@@ -63,9 +63,19 @@ export default Ember.Controller.extend({
       }
     },
 
-    cancelSearch: function() {
+    resetSearch: function() {
       this.set('search_term', '');
-      this.set('searchIsOpen', false);
+    },
+
+    toggleSearch: function() {
+      if(this.get('searchIsOpen') === true)
+      {
+        this.set('searchIsOpen', false);
+      }
+      else
+      {
+        this.set('searchIsOpen', true);
+      }
     }
  }
 });
