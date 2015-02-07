@@ -2,7 +2,11 @@ Em.I18n.translations = {
   "friend": {
     "title": "Friends",
     "one": "friend",
-    "other": "friends"
+    "other": "friends",
+    "button": {
+      "cancel": "cancel",
+      "search": "search for a friend"
+    }
   },
   "meethub": {
     "not-in-a-meethub": "You are not in a meethub yet.<br /> Do you want to create one?",
