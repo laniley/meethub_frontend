@@ -15,7 +15,7 @@ export default Ember.Controller.extend({
     var self = this;
 
     var filteredMeethubs = self.get('model').filter(function(meethub) {
-      return meethub.get('name').indexOf(self.get('search_term')) !== -1;
+      return meethub.get('name').toLowerCase().indexOf(self.get('search_term')) !== -1;
     });
 
     return filteredMeethubs;
