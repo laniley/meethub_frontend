@@ -76,16 +76,7 @@
       display: none;
     }
 
-    .section-title, .side-nav-item {
-      padding: 15px 10px;
-      border-bottom: 1px solid $border-color;
-    }
 
-    .section-title {
-      font-family: Ethno_regular, Arial, sans-serif;
-      font-size: 20px;
-      color: $header-text-color;
-    }
 
     .section-button {
       a {
@@ -154,6 +145,10 @@
       }
 
       .side-nav-item {
+
+        float: left;
+
+        width: 100%;
 
         &.message {
 
@@ -276,7 +271,7 @@
         }
 
         .search {
-          width: 85%;
+          width: 100%;
           float: left;
 
           input {
@@ -284,8 +279,10 @@
           }
         }
 
-        .search-results {
-          display: none;
+        .reset-search-button {
+          position: absolute;
+          margin-left: -45px;
+          line-height: 30px;
         }
 
         .new-elem-title, .short-description {
@@ -312,6 +309,17 @@
       }
     }
   }
+
+  .section-title, .side-nav-item {
+      padding: 15px 10px;
+      border-bottom: 1px solid $border-color;
+    }
+
+    .section-title {
+      font-family: Ethno_regular, Arial, sans-serif;
+      font-size: 20px;
+      color: $header-text-color;
+    }
 
   .body {
     padding: 10px;

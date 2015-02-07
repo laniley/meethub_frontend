@@ -3,9 +3,35 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
 
   sortProperties: ['created_at:desc'],
-  sortedMeethubs: Ember.computed.sort('model', 'sortProperties'),
+  sortedMeethubs: Ember.computed.sort('search_results', 'sortProperties'),
 
   currentSection: null,
+
+  searchIsOpen: false,
+
+  search_term: '',
+
+  search_results: function() {
+    var self = this;
+
+    var filteredMeethubs = self.get('model').filter(function(meethub) {
+      return meethub.get('name').indexOf(self.get('search_term')) !== -1;
+    });
+
+    return filteredMeethubs;
+
+  }.property('search_term','model.@each'),
+
+  searchIsEmpty: function() {
+    if(this.get('search_term') !== '')
+    {
+      return false;
+    }
+    else
+    {
+      return true;
+    }
+  }.property('search_term'),
 
   actions: {
     toggleMeethub: function(meethub) {
@@ -35,6 +61,11 @@ export default Ember.Controller.extend({
       {
         meethub.set('showAddMembersForm', false);
       }
+    },
+
+    cancelSearch: function() {
+      this.set('search_term', '');
+      this.set('searchIsOpen', false);
     }
  }
 });
