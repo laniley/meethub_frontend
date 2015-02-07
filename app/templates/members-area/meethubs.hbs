@@ -6,6 +6,7 @@
 {{!-- FILTER BUTTONS --}}
 <div class="side-nav-item section-buttons">
   {{outlet section-buttons}}
+  {{!-- SEARCH --}}
   <span {{bind-attr class=":section-button searchIsOpen:active"}} {{translateAttr  title='meethub.button.search'}} {{action 'toggleSearch'}}>
     {{unbound fa-icon "fa-search"}}
   </span>
