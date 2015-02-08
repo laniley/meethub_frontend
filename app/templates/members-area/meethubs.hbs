@@ -18,27 +18,31 @@
 {{!-- LIST --}}
 <div class="side-nav-item-container">
   {{!-- CREATE --}}
-  <div {{bind-attr class=":side-nav-item createIsOpen:open:do-not-display"}}>
-    <div class="new-elem-title">
-      {{input class="new-elem-title-input" placeholder="Name" value=name}}
+  {{#if 'createIsOpen'}}
+    <div {{bind-attr class=":side-nav-item"}}>
+      <div class="new-elem-title">
+        {{focused-input class="new-elem-title-input" placeholder="Name" value=name}}
+      </div>
+      <div class="short-description">
+        {{#if isGerman}}
+          {{textarea placeholder="Kurzbeschreibung" cols="50" rows="3" maxlength="250" value=short_description}}
+        {{else}}
+          {{textarea placeholder="Short description" cols="50" rows="3" maxlength="250" value=short_description}}
+        {{/if}}
+      </div>
+      <span {{bind-attr class=":side-nav-button :save nameIsEmpty:disabled:enabled"}} {{action 'createMeethub'}} {{translateAttr  title='meethub.button.create'}}>{{unbound fa-icon "fa-check"}}</span>
+      <span {{bind-attr class=":side-nav-button :cancel nameIsEmpty:disabled:enabled"}} {{action 'cancelMeethubCreation'}} {{translateAttr  title='meethub.button.cancel'}}>{{unbound fa-icon "fa-remove"}}</span>
     </div>
-    <div class="short-description">
-      {{#if isGerman}}
-        {{textarea placeholder="Kurzbeschreibung" cols="50" rows="3" maxlength="250" value=short_description}}
-      {{else}}
-        {{textarea placeholder="Short description" cols="50" rows="3" maxlength="250" value=short_description}}
-      {{/if}}
-    </div>
-    <span {{bind-attr class=":side-nav-button :save nameIsEmpty:disabled:enabled"}} {{action 'createMeethub'}} {{translateAttr  title='meethub.button.create'}}>{{unbound fa-icon "fa-check"}}</span>
-    <span {{bind-attr class=":side-nav-button :cancel nameIsEmpty:disabled:enabled"}} {{action 'cancelMeethubCreation'}} {{translateAttr  title='meethub.button.cancel'}}>{{unbound fa-icon "fa-ban"}}</span>
-  </div>
+  {{/if}}
   {{!-- SEARCH --}}
-  <div {{bind-attr class=":side-nav-item :align-left searchIsOpen:open:do-not-display"}}>
-    <div class="search">
-      {{input class="search-input" placeholder="Search..." value=search_term}}
+  {{#if 'searchIsOpen'}}
+    <div {{bind-attr class=":side-nav-item :align-left"}}>
+      <div class="search">
+        {{focused-input class="search-input" placeholder="Search..." value=search_term}}
+      </div>
+      <span {{bind-attr class=":side-nav-button :reset-search-button searchIsEmpty:do-not-display"}} {{action 'resetSearch'}} {{translateAttr  title='meethub.button.cancel'}}>{{unbound fa-icon "fa-remove"}}</span>
     </div>
-    <span {{bind-attr class=":side-nav-button :reset-search-button searchIsEmpty:do-not-display"}} {{action 'resetSearch'}} {{translateAttr  title='meethub.button.cancel'}}>{{unbound fa-icon "fa-remove"}}</span>
-  </div>
+  {{/if}}
   {{#each meethub in sortedMeethubs}}
     <div {{bind-attr class=":side-nav-item :meethub :no-padding meethub.isOpen:open"}}>
     	{{!-- TITLE --}}
