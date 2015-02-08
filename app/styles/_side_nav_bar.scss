@@ -114,6 +114,11 @@
       }
     }
 
+    .side-nav-filter-buttons {
+      padding: 5px 2px;
+      border-bottom: 1px solid $border-color;
+    }
+
     .side-nav-item-container {
       position: absolute;
       top: 115px;
@@ -330,15 +335,15 @@
   }
 
   .section-title, .side-nav-item {
-      padding: 15px 10px;
-      border-bottom: 1px solid $border-color;
-    }
+    padding: 15px 10px;
+    border-bottom: 1px solid $border-color;
+  }
 
-    .section-title {
-      font-family: Ethno_regular, Arial, sans-serif;
-      font-size: 20px;
-      color: $header-text-color;
-    }
+  .section-title {
+    font-family: Ethno_regular, Arial, sans-serif;
+    font-size: 20px;
+    color: $header-text-color;
+  }
 
   .body {
     padding: 10px;

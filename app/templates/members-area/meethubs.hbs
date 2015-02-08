@@ -4,16 +4,34 @@
   <div class="meethub-counter"></div>
 </div>
 {{!-- FILTER BUTTONS --}}
-<div class="side-nav-item section-buttons">
-  {{outlet section-buttons}}
-  {{!-- SEARCH --}}
-  <span {{bind-attr class=":section-button searchIsOpen:active"}} {{translateAttr  title='meethub.button.search'}} {{action 'toggleSearch'}}>
-    {{unbound fa-icon "fa-search"}}
-  </span>
+<div class="side-nav-filter-buttons section-buttons">
+  <ul>
+    <li {{bind-attr class=":section-button createIsOpen:active"}} {{translateAttr  title='meethub.button.create'}} {{action 'toggleCreate'}}>
+      {{unbound fa-icon "fa-plus"}}
+    </li>
+    {{!-- SEARCH --}}
+    <li {{bind-attr class=":section-button searchIsOpen:active"}} {{translateAttr  title='meethub.button.search'}} {{action 'toggleSearch'}}>
+      {{unbound fa-icon "fa-search"}}
+    </li>
+  </ul>
 </div>
 {{!-- LIST --}}
 <div class="side-nav-item-container">
-  {{outlet form}}
+  {{!-- CREATE --}}
+  <div {{bind-attr class=":side-nav-item createIsOpen:open:do-not-display"}}>
+    <div class="new-elem-title">
+      {{input class="new-elem-title-input" placeholder="Name" value=name}}
+    </div>
+    <div class="short-description">
+      {{#if isGerman}}
+        {{textarea placeholder="Kurzbeschreibung" cols="50" rows="3" maxlength="250" value=short_description}}
+      {{else}}
+        {{textarea placeholder="Short description" cols="50" rows="3" maxlength="250" value=short_description}}
+      {{/if}}
+    </div>
+    <span {{bind-attr class=":side-nav-button :save nameIsEmpty:disabled:enabled" }} {{action 'createMeethub'}} {{translateAttr  title='meethub.button.create'}}>{{unbound fa-icon "fa-check"}}</span>
+    <span class="side-nav-button cancel" {{action 'cancelActivity'}} {{translateAttr  title='meethub.button.cancel'}}>{{unbound fa-icon "fa-ban"}}</span>
+  </div>
   {{!-- SEARCH --}}
   <div {{bind-attr class=":side-nav-item :align-left searchIsOpen:open:do-not-display"}}>
     <div class="search">
