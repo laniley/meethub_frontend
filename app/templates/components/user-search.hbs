@@ -1,0 +1,8 @@
+<div class="add-new-members-form">
+  {{input class="new-elem-title-input" placeholder="Name / Mail ..." value=search_term}}
+</div>
+<div class="friends_search_results">
+  {{#each friend in friends}}
+    {{friend.name}}
+  {{/each}}
+</div>
