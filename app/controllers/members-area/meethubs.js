@@ -11,12 +11,28 @@ export default Ember.Controller.extend({
   searchIsOpen: false,
   createIsOpen: false,
 
+  // CREATE
+  name: '',
+  short_description: '',
+  // SEARCH
   search_term: '',
+
+  isGerman: function() {
+    if(Ember.I18n.locale === 'de')
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }.property('Ember.I18n.locale'),
 
   friends: function() {
     return this.get('membersArea_controller').get('model').get('friends');
   }.property('membersArea_controller.model.friends.@each'),
 
+  // SEARCH
   search_results: function() {
     var self = this;
 
@@ -38,7 +54,47 @@ export default Ember.Controller.extend({
     }
   }.property('search_term'),
 
+  // CREATE
+  nameIsEmpty: function() {
+    if(this.get('name.length') > 0)
+    {
+      return false;
+    }
+    else
+    {
+      return true;
+    }
+  }.property('name.length'),
+
   actions: {
+    createMeethub: function() {
+      if(!this.get('nameIsEmpty'))
+      {
+        var user = this.get('membersArea_controller').get('model');
+
+        var meethub = this.store.createRecord('meethub', {
+          name: this.get('name'),
+          short_description: this.get('short_description'),
+          isOpen: true,
+
+          founder: user
+        });
+
+        meethub.get('members').then(function(members) {
+          members.pushObject(user);
+          meethub.save();
+        });
+
+        this.set('name', '');
+        this.set('short_description', '');
+      }
+    },
+
+    cancelMeethubCreation: function() {
+      this.set('name', '');
+      this.set('short_description', '');
+    },
+
     toggleMeethub: function(meethub) {
       if(meethub.get('isOpen') === false)
       {
