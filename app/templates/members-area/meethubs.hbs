@@ -23,7 +23,7 @@
       <div class="new-elem-title">
         {{focused-input class="new-elem-title-input" placeholder="Name" value=name}}
       </div>
-      <div class="short-description">
+      <div class="new-elem-short-description">
         {{#if isGerman}}
           {{textarea placeholder="Kurzbeschreibung" cols="50" rows="3" maxlength="250" value=short_description}}
         {{else}}
@@ -51,8 +51,10 @@
      	</div>
      	{{!-- BODY --}}
       <div {{bind-attr class=":body meethub.isOpen:open"}}>
-      	<div>{{meethub.short_description}}</div>
-      	<div class="members-title">{{t 'meethub.members'}}:</div>
+        {{#if 'meethub.hasShortDescription'}}
+          <div class="short-description">{{meethub.short_description}}</div>
+        {{/if}}
+      	<div class="members-title">{{t 'meethub.members'}}</div>
         <div class="members">
           {{#each member in meethub.members}}
             <img {{bind-attr src=member.picture }} {{bind-attr title=member.name}} />

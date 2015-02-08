@@ -244,6 +244,7 @@
 
           .members-title {
             margin-bottom: 10px;
+            color: #000;
           }
 
           .add-new-member {
@@ -279,8 +280,8 @@
           padding: 15px 10px;
 
           &.open {
-            color: $blue;
-            font-weight: bold;
+            background-color: $blue;
+            color: #fff;
           }
 
           .icons {
@@ -309,8 +310,12 @@
           line-height: 30px;
         }
 
-        .new-elem-title, .short-description {
+        .new-elem-title {
           text-align: left;
+        }
+
+        .new-elem-short-description {
+          margin-top: 10px;
         }
 
         .new-elem-title-input {
@@ -318,7 +323,10 @@
         }
 
         .short-description {
-          margin-top: 10px;
+          margin-bottom: 20px;
+          padding-bottom: 10px;
+          color: #000;
+          border-bottom: 1px solid $blue;
         }
       }
 
@@ -350,6 +358,10 @@
 
     &:not(.open) {
       display: none;
+    }
+
+    &.open {
+      border: 1px solid $blue;
     }
 
     .question {
