@@ -34,13 +34,8 @@ Router.map(function() {
     this.route("meethubs", {
       path: "/meethubs"
     }, function() {
-      this.route("map", function() {
-        this.route("create");
-      });
-
-      this.route("calendar", function() {
-        this.route("create");
-      });
+      this.route("map", function() {});
+      this.route("calendar", function() {});
     });
 
     this.route("messages", {

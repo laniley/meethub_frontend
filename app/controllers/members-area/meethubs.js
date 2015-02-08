@@ -9,6 +9,7 @@ export default Ember.Controller.extend({
   sortedMeethubs: Ember.computed.sort('search_results', 'sortProperties'),
 
   searchIsOpen: false,
+  createIsOpen: false,
 
   search_term: '',
 
@@ -78,7 +79,20 @@ export default Ember.Controller.extend({
       }
       else
       {
+        this.set('createIsOpen', false);
         this.set('searchIsOpen', true);
+      }
+    },
+
+    toggleCreate: function() {
+      if(this.get('createIsOpen') === true)
+      {
+        this.set('createIsOpen', false);
+      }
+      else
+      {
+        this.set('searchIsOpen', false);
+        this.set('createIsOpen', true);
       }
     }
  }

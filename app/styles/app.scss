@@ -33,3 +33,13 @@ body {
   @include all_browser(border-radius, 5px);
   border: 1px solid $border-color;
 }
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    display: inline-block;
+  }
+}
