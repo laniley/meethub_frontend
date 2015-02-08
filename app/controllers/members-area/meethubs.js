@@ -2,14 +2,19 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
+  needs: ['members-area'],
+  membersArea_controller: Ember.computed.alias("controllers.members-area"),
+
   sortProperties: ['created_at:desc'],
   sortedMeethubs: Ember.computed.sort('search_results', 'sortProperties'),
-
-  // currentSection: null,
 
   searchIsOpen: false,
 
   search_term: '',
+
+  friends: function() {
+    return this.get('membersArea_controller').get('model').get('friends');
+  }.property('membersArea_controller.model.friends.@each'),
 
   search_results: function() {
     var self = this;
@@ -19,7 +24,6 @@ export default Ember.Controller.extend({
     });
 
     return filteredMeethubs;
-
   }.property('search_term','model.@each'),
 
   searchIsEmpty: function() {

@@ -22,7 +22,7 @@
     <span {{bind-attr class=":side-nav-button :reset-search-button searchIsEmpty:do-not-display"}} {{action 'resetSearch'}} {{translateAttr  title='meethub.button.cancel'}}>{{unbound fa-icon "fa-remove"}}</span>
   </div>
   {{#each meethub in sortedMeethubs}}
-    <div class="side-nav-item meethub no-padding">
+    <div {{bind-attr class=":side-nav-item :meethub :no-padding meethub.isOpen:open"}}>
     	{{!-- TITLE --}}
       <div {{bind-attr class=":title :selectable meethub.isOpen:open"}} {{action 'toggleMeethub' meethub}}>
       	{{meethub.name}}
@@ -40,9 +40,7 @@
           </div>
         </div>
         {{#if 'meethub.showAddMembersForm'}}
-          <div class="add-new-members-form">
-            {{input class="new-elem-title-input" placeholder="Name / Mail ..."}}
-          </div>
+          {{user-search friends=friends}}
         {{/if}}
       </div>
     </div>

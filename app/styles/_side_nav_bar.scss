@@ -76,8 +76,6 @@
       display: none;
     }
 
-
-
     .section-button {
       a {
         padding: 10px;
@@ -166,6 +164,10 @@
         float: left;
 
         width: 100%;
+
+        &.open {
+          // box-shadow: #BFC8CB 0px 0px 10px inset;
+        }
 
         &.message {
 

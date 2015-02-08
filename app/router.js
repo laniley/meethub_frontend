@@ -36,12 +36,10 @@ Router.map(function() {
     }, function() {
       this.route("map", function() {
         this.route("create");
-        this.route("search");
       });
 
       this.route("calendar", function() {
         this.route("create");
-        this.route("search");
       });
     });
 
