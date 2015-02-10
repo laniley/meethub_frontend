@@ -1,8 +1,14 @@
 <div class="add-new-members-form">
-  {{focused-input class="new-elem-title-input" placeholder="Name / Mail ..." value=search_term}}
+  {{#if setAutofocus}}
+    {{focused-input class="new-elem-title-input" placeholder="Name..." value=search_term}}
+  {{else}}
+    {{input class="new-elem-title-input" placeholder="Name..." value=search_term}}
+  {{/if}}
 </div>
 <div class="friends_search_results">
-  {{#each friend in friends}}
-    {{friend.name}}
+  {{#each friend in search_results}}
+    <div class="friends_search_result">
+      <img {{bind-attr src=friend.picture }} /> {{friend.name}} <div class="invite-button">Invite</div>
+    </div>
   {{/each}}
 </div>

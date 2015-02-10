@@ -482,4 +482,18 @@
       border-color: $orange;
     }
   }
+
+  .friends_search_results {
+    text-align: left;
+
+    .friends_search_result {
+      padding: 10px 0;
+      line-height: 40px;
+
+      .invite-button {
+        display: inline-block;
+        float: right;
+      }
+    }
+  }
 }

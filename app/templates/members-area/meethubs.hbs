@@ -64,7 +64,9 @@
           </div>
         </div>
         {{#if 'meethub.showAddMembersForm'}}
-          {{user-search friends=friends}}
+          {{user-search
+              friends=friends
+              setAutofocus=setAutofocus}}
         {{/if}}
       </div>
     </div>

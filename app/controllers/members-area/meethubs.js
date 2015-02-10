@@ -11,6 +11,17 @@ export default Ember.Controller.extend({
   searchIsOpen: false,
   createIsOpen: false,
 
+  setAutofocus: function() {
+    if(this.get('searchIsOpen') === true)
+    {
+      return false;
+    }
+    else
+    {
+      return true;
+    }
+  }.property('searchIsOpen'),
+
   // CREATE
   name: '',
   short_description: '',
