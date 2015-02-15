@@ -10,7 +10,9 @@ export default DS.Model.extend({
   created_at: DS.attr('date'),
   updated_at: DS.attr('date'),
   friends: DS.hasMany('user', { async: true }),
-  messages: DS.hasMany('message'),
+  messages: DS.hasMany('message', {
+    inverse: 'to_user'
+  }),
 
   name: function() {
     return this.get('first_name') + ' ' + this.get('last_name');

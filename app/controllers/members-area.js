@@ -232,7 +232,7 @@ export default Ember.Controller.extend({
       var message = self.store.createRecord('message', {
         fb_id: response.id,
         subject: response.name,
-        user: self.get('model')
+        to_user: self.get('model')
       });
 
       message.save().then(function() {
