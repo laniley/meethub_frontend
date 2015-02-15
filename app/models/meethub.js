@@ -9,6 +9,7 @@ export default DS.Model.extend({
 
   founder: DS.belongsTo('user', { async: true }),
   members: DS.hasMany('user', { async: true }),
+  invitations: DS.hasMany('meethub-invitation', { async: true }),
 
   isOpen: DS.attr('boolean', {defaultValue: false}),
   showAddMembersForm: DS.attr('boolean', {defaultValue: false}),

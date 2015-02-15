@@ -8,7 +8,7 @@
 <div class="friends_search_results">
   {{#each friend in search_results}}
     <div class="friends_search_result">
-      <img {{bind-attr src=friend.picture }} /> {{friend.name}} <div class="invite-button">Invite</div>
+      <img {{bind-attr src=friend.picture }} /> {{friend.name}} {{meethub-invite-button user=user meethub=parent friend=friend}}
     </div>
   {{/each}}
 </div>

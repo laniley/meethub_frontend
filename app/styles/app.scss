@@ -33,6 +33,8 @@ body {
   cursor: pointer;
   @include all_browser(border-radius, 5px);
   border: 1px solid $border-color;
+  float: left;
+  padding: 2px 5px;
 }
 
 ul {

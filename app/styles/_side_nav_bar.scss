@@ -182,6 +182,15 @@
             }
           }
 
+          .button {
+
+            width: 30%;
+            margin: 0 1.66666%;
+
+            padding: 2px 5px;
+            margin-bottom: 10px;
+          }
+
           .envelope {
             float: left;
             font-size: 24px;
@@ -370,13 +379,6 @@
 
     .button {
 
-      width: 30%;
-      margin: 0 1.66666%;
-      float: left;
-
-      padding: 2px 5px;
-      margin-bottom: 10px;
-
       &.accept {
         border-color: $blue;
 
@@ -487,12 +489,17 @@
     text-align: left;
 
     .friends_search_result {
-      padding: 10px 0;
-      line-height: 40px;
+      line-height: 55px;
 
       .invite-button {
         display: inline-block;
         float: right;
+
+        .button {
+          margin-top: 15px;
+          line-height: 20px;
+          padding: 3px;
+        }
       }
     }
   }

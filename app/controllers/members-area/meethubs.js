@@ -22,6 +22,10 @@ export default Ember.Controller.extend({
     }
   }.property('searchIsOpen'),
 
+  user: function() {
+    return this.get('membersArea_controller').get('model');
+  }.property(),
+
   // CREATE
   name: '',
   short_description: '',
