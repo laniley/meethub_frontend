@@ -51,6 +51,12 @@
      	</div>
      	{{!-- BODY --}}
       <div {{bind-attr class=":body meethub.isOpen:open"}}>
+        <div class="item-options">
+          {{edit-button
+              user=user
+              parent=meethub}}
+          <div class="item-option leave-button">{{unbound fa-icon "fa-trash"}} Leave</div>
+        </div>
         {{#if 'meethub.hasShortDescription'}}
           <div class="short-description">{{meethub.short_description}}</div>
         {{/if}}

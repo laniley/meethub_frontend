@@ -124,12 +124,6 @@ export default Ember.Controller.extend({
       if(meethub.get('isOpen') === false)
       {
         meethub.set('isOpen', true);
-
-        if(meethub.get('hasBeenRead') === false)
-        {
-          meethub.set('hasBeenRead', true);
-          meethub.save();
-        }
       }
       else
       {

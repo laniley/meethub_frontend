@@ -500,7 +500,7 @@
           line-height: 20px;
           padding: 3px 9px;
 
-          &.invite {
+          &.invite, &.isMember {
             color: white;
             background-color: $link-color-active;
           }
@@ -509,6 +509,29 @@
             cursor: default;
           }
         }
+      }
+    }
+  }
+
+  .item-options {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #2588AB;
+  }
+
+  .item-option {
+    &:not(.do-not-display)
+    {
+      display: inline-block;
+      margin: 0 10px;
+      cursor: pointer;
+
+      &:hover {
+        color: $link-color-hover;
+      }
+
+      &:active {
+        color: $link-color-active;
       }
     }
   }
