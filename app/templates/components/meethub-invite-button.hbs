@@ -1,11 +1,11 @@
 <span {{bind-attr class=":button cssClass"}} {{action 'handleButtonClick'}}>
   {{#if 'isMember'}}
-    is Member
+    {{unbound fa-icon "fa-check" title="Already a member"}}
   {{else}}
     {{#if 'isPending'}}
-      Pending...
+      {{unbound fa-icon "fa-circle-o-notch fa-spin" title="Pending..."}}
     {{else}}
-      {{unbound fa-icon "fa-envelope-o"}} Invite
+      {{unbound fa-icon "fa-envelope" title="Invite"}}
     {{/if}}
   {{/if}}
 </span>

@@ -4,17 +4,19 @@ export default Ember.Component.extend({
 
   classNames: ['invite-button'],
   meethub: null,
-  friend: null,
+  friend_id: null,
   user: null,
   status: '',
   cssClass: '',
 
   isMember: function() {
 
-    var members = this.get('meethub').get('members');
+    var friend_id = this.get('friend_id');
+    var accepted_invitations = this.get('meethub').get('acceptedInvitations');
 
-    var isInMeethub = members.every(function(member, index, self) {
-      if(member === self.get('friend'))
+    var isInMeethub = accepted_invitations.some(function(invitation, index, self) {
+
+      if(invitation.get('invited_user').get('id') === friend_id)
       {
         return true;
       }
@@ -27,52 +29,58 @@ export default Ember.Component.extend({
     if(isInMeethub === true)
     {
       this.set('status', 'isMember');
-    }
-    else
-    {
-      this.set('cssClass', 'accept');
+      this.set('cssClass', 'isMember');
     }
 
     return isInMeethub;
 
-  }.property('meethub.members.@each'),
+  }.property('meethub.acceptedInvitations.@each'),
 
-  // notInMeethub: function() {
-  //   var members = this.get('meethub').get('members');
+  isPending: function() {
 
-  //   var isNotInMeethub = members.every(function(member, index, self) {
-  //     if(member === self.get('friend'))
-  //     {
-  //       return false;
-  //     }
-  //     else
-  //     {
-  //       return true;
-  //     }
-  //   });
+    var friend_id = this.get('friend_id');
+    var pending_invitations = this.get('meethub').get('pendingInvitations');
 
-  //   if(isNotInMeethub === true && this.get('status') === '')
-  //   {
-  //     this.set('status', 'notInMeethub');
-  //   }
+    var isPending = pending_invitations.some(function(invitation, index, self) {
 
-  //   return isNotInMeethub;
+      if(invitation.get('invited_user').get('id') === friend_id)
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
 
-  // }.property('meethub.members.@each'),
+    });
 
-  // isPending: function() {
+    if(isPending === true)
+    {
+      this.set('status', 'isPending');
+      this.set('cssClass', 'pending');
+    }
+    else
+    {
+      this.set('cssClass', 'invite');
+    }
 
-  // },
+    return isPending;
+
+  }.property('meethub.pendingInvitations.@each'),
 
   actions: {
     handleButtonClick: function() {
-      if(this.get('status') !== 'isMember')
+      if(this.get('status') !== 'isMember' && this.get('status') !== 'isPending')
       {
         var self = this;
 
+        var friends = self.get('parentView.targetObject.store').all('user');
+        var filtered_friends = friends.filterBy('id', this.get('friend_id'));
+        var friend = filtered_friends.get('firstObject');
+
         var message = self.get('parentView.targetObject.store').createRecord('message', {
           from_user: self.get('user'),
-          to_user: self.get('friend'),
+          to_user: friend,
           subject: 'Meethub Invitation',
           text: 'Du wurdest von ' + self.get('user').get('name') + ' zu einem Meethub eingeladen.'
         });
@@ -80,9 +88,10 @@ export default Ember.Component.extend({
         message.save().then(function() {
 
           var meethubInvitation = self.get('parentView.targetObject.store').createRecord('meethubInvitation', {
-            invited_user: self.get('friend'),
+            invited_user: friend,
             meethub: self.get('meethub'),
-            message: message
+            message: message,
+            status: 'pending'
           });
 
           meethubInvitation.save();

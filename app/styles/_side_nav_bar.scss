@@ -498,7 +498,16 @@
         .button {
           margin-top: 15px;
           line-height: 20px;
-          padding: 3px;
+          padding: 3px 9px;
+
+          &.invite {
+            color: white;
+            background-color: $link-color-active;
+          }
+
+          &.pending, &.isMember {
+            cursor: default;
+          }
         }
       }
     }
