@@ -8,11 +8,20 @@ export default DS.Model.extend({
   updated_at: DS.attr('date'),
 
   founder: DS.belongsTo('user', { async: true }),
-  members: DS.hasMany('user', { async: true }),
   invitations: DS.hasMany('meethub-invitation', { async: true }),
 
   isOpen: DS.attr('boolean', {defaultValue: false}),
   showAddMembersForm: DS.attr('boolean', {defaultValue: false}),
+
+  acceptedInvitations: function() {
+    var invitations = this.get('invitations');
+    return invitations.filterBy('status', 'accepted');
+  }.property('invitations.@each.status'),
+
+  pendingInvitations: function() {
+    var invitations = this.get('invitations');
+    return invitations.filterBy('status', 'pending');
+  }.property('invitations.@each.status'),
 
   hasShortDescription: function() {
     if(this.get('short_description.length') > 0)

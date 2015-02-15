@@ -37,6 +37,13 @@ body {
   padding: 2px 5px;
 }
 
+img {
+  &.pending {
+      opacity: 0.4;
+      filter: alpha(opacity=40); /* For IE8 and earlier */
+  }
+}
+
 ul {
   list-style: none;
   margin: 0;

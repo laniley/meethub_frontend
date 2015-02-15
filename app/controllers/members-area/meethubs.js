@@ -83,8 +83,10 @@ export default Ember.Controller.extend({
 
   actions: {
     createMeethub: function() {
+
       if(!this.get('nameIsEmpty'))
       {
+        var self = this;
         var user = this.get('membersArea_controller').get('model');
 
         var meethub = this.store.createRecord('meethub', {
@@ -95,13 +97,21 @@ export default Ember.Controller.extend({
           founder: user
         });
 
-        meethub.get('members').then(function(members) {
-          members.pushObject(user);
-          meethub.save();
+        meethub.save().then(function() {
+          var meethubInvitation = self.store.createRecord('meethubInvitation', {
+            invited_user: user,
+            meethub: meethub,
+            status: 'accepted'
+          });
+
+          meethubInvitation.save();
+
+          meethub.set('showAddMembersForm', true);
         });
 
         this.set('name', '');
         this.set('short_description', '');
+        this.set('createIsOpen', false);
       }
     },
 

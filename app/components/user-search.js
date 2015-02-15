@@ -4,6 +4,7 @@ export default Ember.Component.extend({
   parent: null,
   user: null,
   search_term: '',
+
   search_results: function() {
     var self = this;
 

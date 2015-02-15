@@ -56,8 +56,11 @@
         {{/if}}
       	<div class="members-title">{{t 'meethub.members'}}</div>
         <div class="members">
-          {{#each member in meethub.members}}
-            <img {{bind-attr src=member.picture }} {{bind-attr title=member.name}} />
+          {{#each invitation in meethub.acceptedInvitations}}
+            <img class="accepted" {{bind-attr src=invitation.invited_user.picture }} {{bind-attr title=invitation.invited_user.name}} />
+          {{/each}}
+          {{#each invitation in meethub.pendingInvitations}}
+            <img class="pending" {{bind-attr src=invitation.invited_user.picture }} {{bind-attr title=invitation.invited_user.name}} />
           {{/each}}
           <div {{bind-attr class=":add-new-member meethub.showAddMembersForm:open"}} {{action 'toggle_add_members_form' meethub}}>
             {{unbound fa-icon "fa-user-plus"}}
