@@ -29,5 +29,6 @@ Em.I18n.translations = {
     "attending_maybe": "{{participant}} is attending maybe!",
     "declined": "{{participant}} declined!"
   },
-  "short-description": "Short description"
+  "short-description": "Short description",
+  "save": "Save"
 };

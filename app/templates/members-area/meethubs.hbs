@@ -46,19 +46,40 @@
   {{#each meethub in sortedMeethubs}}
     <div {{bind-attr class=":side-nav-item :meethub :no-padding meethub.isOpen:open"}}>
     	{{!-- TITLE --}}
-      <div {{bind-attr class=":title :selectable meethub.isOpen:open"}} {{action 'toggleMeethub' meethub}}>
-      	{{meethub.name}}
+      <div {{bind-attr class=":title meethub.isInEditMode:editMode:selectable meethub.isOpen:open"}} {{action 'toggleMeethub' meethub}}>
+        {{#if 'meethub.isInEditMode'}}
+          {{input value=meethub.name}}
+        {{else}}
+          {{meethub.name}}
+        {{/if}}
      	</div>
      	{{!-- BODY --}}
       <div {{bind-attr class=":body meethub.isOpen:open"}}>
         <div class="item-options">
-          {{edit-button
-              user=user
-              parent=meethub}}
-          <div class="item-option leave-button">{{unbound fa-icon "fa-trash"}} Leave</div>
+          {{#if 'meethub.isInEditMode'}}
+            <div class="item-option save-button" {{action 'save' meethub}}>{{unbound fa-icon "fa-check"}} {{t 'save'}}</div>
+            <div class="item-option cancel-button" {{action 'cancelEditing' meethub}}>{{unbound fa-icon "fa-remove"}} {{t 'meethub.button.cancel'}}</div>
+          {{else}}
+            {{edit-button
+                user=user
+                parent=meethub}}
+            {{leave-button
+                user=user
+                parent=meethub}}
+            {{/if}}
         </div>
-        {{#if 'meethub.hasShortDescription'}}
-          <div class="short-description">{{meethub.short_description}}</div>
+        {{#if 'meethub.isInEditMode'}}
+          <div class="short-description">
+            {{#if isGerman}}
+              {{textarea placeholder="Kurzbeschreibung" cols="50" rows="3" maxlength="250" value=meethub.short_description}}
+            {{else}}
+              {{textarea placeholder="Short description" cols="50" rows="3" maxlength="250" value=meetub.short_description}}
+            {{/if}}
+          </div>
+        {{else}}
+          {{#if 'meethub.hasShortDescription'}}
+            <div class="short-description">{{meethub.short_description}}</div>
+          {{/if}}
         {{/if}}
       	<div class="members-title">{{t 'meethub.members'}}</div>
         <div class="members">

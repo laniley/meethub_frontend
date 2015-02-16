@@ -19,8 +19,8 @@ export default Ember.Component.extend({
   }.property('parent.founder'),
 
   actions: {
-    openEditView: function() {
-      console.log('edit');
+    toggleEditView: function() {
+      this.get('parent').toggleProperty('isInEditMode');
     }
   }
 });

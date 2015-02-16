@@ -17,6 +17,27 @@ body {
   color: $text-color;
 }
 
+img {
+  &.pending {
+      opacity: 0.4;
+      filter: alpha(opacity=40); /* For IE8 and earlier */
+  }
+}
+
+input, textarea {
+  color: $input-color;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    display: inline-block;
+  }
+}
+
 .main-row {
   margin: 0;
 
@@ -35,21 +56,4 @@ body {
   border: 1px solid $border-color;
   float: left;
   padding: 2px 5px;
-}
-
-img {
-  &.pending {
-      opacity: 0.4;
-      filter: alpha(opacity=40); /* For IE8 and earlier */
-  }
-}
-
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-
-  li {
-    display: inline-block;
-  }
 }

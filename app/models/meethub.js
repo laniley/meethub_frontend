@@ -11,6 +11,7 @@ export default DS.Model.extend({
   invitations: DS.hasMany('meethub-invitation', { async: true }),
 
   isOpen: DS.attr('boolean', {defaultValue: false}),
+  isInEditMode: DS.attr('boolean', {defaultValue: false}),
   showAddMembersForm: DS.attr('boolean', {defaultValue: false}),
 
   acceptedInvitations: function() {
