@@ -30,5 +30,7 @@ Em.I18n.translations = {
     "declined": "{{participant}} declined!"
   },
   "short-description": "Short description",
+  "edit": "Edit",
+  "leave": "Leave",
   "save": "Save"
 };
