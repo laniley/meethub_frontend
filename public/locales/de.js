@@ -30,5 +30,7 @@ Em.I18n.translations = {
     "declined": "{{participant}} nimmt nicht teil!"
   },
   "short-description": "Kurzbeschreibung",
+  "edit": "Bearbeiten",
+  "leave": "Verlassen",
   "save": "Speichern"
 };
