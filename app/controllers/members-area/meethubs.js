@@ -82,6 +82,11 @@ export default Ember.Controller.extend({
   }.property('name.length'),
 
   actions: {
+    save: function(meethub) {
+      meethub.save();
+      meethub.set('isInEditMode', false);
+    },
+
     createMeethub: function() {
 
       if(!this.get('nameIsEmpty'))
@@ -120,14 +125,14 @@ export default Ember.Controller.extend({
       this.set('short_description', '');
     },
 
+    cancelEditing: function(meethub) {
+      meethub.rollback();
+    },
+
     toggleMeethub: function(meethub) {
-      if(meethub.get('isOpen') === false)
+      if(!meethub.get('isInEditMode'))
       {
-        meethub.set('isOpen', true);
-      }
-      else
-      {
-        meethub.set('isOpen', false);
+        meethub.toggleProperty('isOpen');
       }
     },
 

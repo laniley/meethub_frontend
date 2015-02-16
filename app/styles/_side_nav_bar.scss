@@ -534,5 +534,17 @@
         color: $link-color-active;
       }
     }
+
+    &.save-button {
+      i {
+        color: $active-item-color;
+      }
+    }
+
+    &.cancel-button {
+      i {
+        color: $cancel-color;
+      }
+    }
   }
 }
