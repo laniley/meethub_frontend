@@ -127,6 +127,7 @@ export default Ember.Controller.extend({
 
     cancelEditing: function(meethub) {
       meethub.rollback();
+      meethub.set('isOpen', true);
     },
 
     toggleMeethub: function(meethub) {
