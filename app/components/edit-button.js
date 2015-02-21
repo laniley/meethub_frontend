@@ -8,6 +8,7 @@ export default Ember.Component.extend({
   parent: null,
 
   isAdmin: function() {
+    // console.log(this.get('user').get('id') , this.get('parent').get('founder').get('id'));
     if(this.get('user').get('id') === this.get('parent').get('founder').get('id'))
     {
       return true;

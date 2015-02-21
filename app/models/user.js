@@ -10,6 +10,7 @@ export default DS.Model.extend({
   created_at: DS.attr('date'),
   updated_at: DS.attr('date'),
   friends: DS.hasMany('user', { async: true }),
+  meethubInvitations: DS.hasMany('meethub-invitation', { async: true }),
   messages: DS.hasMany('message', {
     inverse: 'to_user'
   }),

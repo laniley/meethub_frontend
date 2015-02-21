@@ -10,7 +10,8 @@ export default Ember.Component.extend({
     leave: function() {
       var parent = this.get('parent');
       var user = this.get('user');
-      var founder = parent.get('founder');
+      var founder = parent.get('meethub').get('founder');
+      var store = this.get('targetObject.store');
 
       if(founder.get('id') === user.get('id'))
       {
@@ -18,7 +19,8 @@ export default Ember.Component.extend({
       }
       else
       {
-        alert('no');
+        parent.set('status', 'declined');
+        parent.save();
       }
     }
   }
