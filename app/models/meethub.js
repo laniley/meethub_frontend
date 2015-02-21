@@ -12,7 +12,14 @@ export default DS.Model.extend({
 
   isOpen: DS.attr('boolean', {defaultValue: false}),
   isInEditMode: DS.attr('boolean', {defaultValue: false}),
+  selectNewAdmin: DS.attr('boolean', {defaultValue: false}),
   showAddMembersForm: DS.attr('boolean', {defaultValue: false}),
+
+  invitedUser: function() {
+    var invitations = this.get('invitations');
+    var user = invitations.mapBy('invited_user');
+    return user;
+  }.property('invitations.@each'),
 
   acceptedInvitations: function() {
     var invitations = this.get('invitations');

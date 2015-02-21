@@ -4,6 +4,18 @@ export default Ember.Component.extend({
   parent: null,
   user: null,
   search_term: '',
+  type: '',
+
+  isAMeethubInvite: function() {
+    if(this.get('type') === 'meethubInvite')
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }.property(),
 
   search_results: function() {
     var self = this;
@@ -13,5 +25,13 @@ export default Ember.Component.extend({
     });
 
     return filteredItems;
-  }.property('friends.@each', 'search_term')
+  }.property('friends.@each', 'search_term'),
+
+  actions: {
+    makeAdmin: function(friend) {
+      var meethubInvitation = this.get('parent');
+      meethubInvitation.set('role', 'admin');
+      // meethubInvitation.save();
+    }
+  }
 });

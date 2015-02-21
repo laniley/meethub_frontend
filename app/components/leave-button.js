@@ -13,14 +13,14 @@ export default Ember.Component.extend({
       var founder = parent.get('meethub').get('founder');
       var store = this.get('targetObject.store');
 
-      if(founder.get('id') === user.get('id'))
+      if(founder.get('id') === user.get('id') && parent.get('meethub').get('invitations.length') > 1)
       {
-        alert('yes');
+        parent.get('meethub').set('selectNewAdmin', true);
       }
       else
       {
-        parent.set('status', 'declined');
-        parent.save();
+        // parent.set('status', 'declined');
+        // parent.save();
       }
     }
   }
