@@ -8,8 +8,7 @@ export default Ember.Component.extend({
   parent: null,
 
   isAdmin: function() {
-    // console.log(this.get('user').get('id') , this.get('parent').get('founder').get('id'));
-    if(this.get('user').get('id') === this.get('parent').get('founder').get('id'))
+    if(this.get('parent').get('role') === 'admin')
     {
       return true;
     }
@@ -17,11 +16,11 @@ export default Ember.Component.extend({
     {
       return false;
     }
-  }.property('parent.founder'),
+  }.property('parent.role'),
 
   actions: {
     toggleEditView: function() {
-      this.get('parent').toggleProperty('isInEditMode');
+      this.get('parent').get('meethub').toggleProperty('isInEditMode');
     }
   }
 });

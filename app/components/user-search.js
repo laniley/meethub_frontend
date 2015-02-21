@@ -30,9 +30,15 @@ export default Ember.Component.extend({
   actions: {
     makeAdmin: function(friend) {
       var meethubInvitation = this.get('parent');
-      meethubInvitation.set('role', 'admin');
+      var meethub = meethubInvitation.get('meethub');
+      var meethubInvitations = meethub.get('invitations');
+      var friendInvitations = meethubInvitations.filterBy('invited_user', friend);
+      var friendInvitation = friendInvitations.get('firstObject');
+      friendInvitation.set('role', 'admin');
+      friendInvitation.save();
+      meethub.set('selectNewAdmin', false);
+      meethubInvitation.set('status', 'declined');
       meethubInvitation.save();
-      meethubInvitation.get('meethub').set('selectNewAdmin', false);
     }
   }
 });
