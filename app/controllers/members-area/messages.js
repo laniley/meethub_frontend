@@ -33,17 +33,23 @@ export default Ember.Controller.extend({
         message.set('isOpen', false);
       }
     },
-    acceptEventInvitation: function(eventInvitation) {
-      eventInvitation.set('status', 'attending');
-      eventInvitation.save();
+    acceptEventInvitation: function(eventInvitation_id) {
+      this.store.find('eventInvitation', eventInvitation_id).then(function(eventInvitation) {
+        eventInvitation.set('status', 'attending');
+        eventInvitation.save();
+      });
     },
-    maybeAcceptEventInvitation: function(eventInvitation) {
-      eventInvitation.set('status', 'maybe');
-      eventInvitation.save();
+    maybeAcceptEventInvitation: function(eventInvitation_id) {
+      this.store.find('eventInvitation', eventInvitation_id).then(function(eventInvitation) {
+        eventInvitation.set('status', 'maybe');
+        eventInvitation.save();
+      });
     },
-    declineEventInvitation: function(eventInvitation) {
-      eventInvitation.set('status', 'declined');
-      eventInvitation.save();
+    declineEventInvitation: function(eventInvitation_id) {
+      this.store.find('eventInvitation', eventInvitation_id).then(function(eventInvitation) {
+        eventInvitation.set('status', 'declined');
+        eventInvitation.save();
+      });
     }
   }
 });

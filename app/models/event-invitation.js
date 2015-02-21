@@ -1,10 +1,12 @@
 import DS from 'ember-data';
 
 export default DS.Model.extend({
-  event: DS.belongsTo('event'),
-  invited_user: DS.belongsTo('user'),
-  message: DS.belongsTo('message'),
+  event: DS.belongsTo('event', { async: true }),
+  invited_user: DS.belongsTo('user', { async: true }),
+  message: DS.belongsTo('message', { async: true }),
   status: DS.attr('string'),
+  created_at: DS.attr('date'),
+  updated_at: DS.attr('date'),
 
   hasBeenAccepted: function() {
     if(this.get('status') === 'attending')

@@ -8,30 +8,30 @@ export default DS.Model.extend({
   text: DS.attr('string'),
   isOpen: DS.attr('boolean', {defaultValue: false}),
   hasBeenRead: DS.attr('boolean', {defaultValue: true}),
-  eventInvitation: DS.belongsTo('eventInvitation'),
-  meethubInvitation: DS.belongsTo('meethubInvitation'),
+  eventInvitation: DS.belongsTo('eventInvitation', { async: true }),
+  meethubInvitation: DS.belongsTo('meethubInvitation', { async: true }),
   created_at: DS.attr('date'),
   updated_at: DS.attr('date'),
 
   isEventInvitation: function() {
-    if(this.get('eventInvitation') !== null)
+    if(Ember.isEmpty(this.get('eventInvitation.id')))
     {
-      return true;
+      return false;
     }
     else
     {
-      return false;
+      return true;
     }
   }.property('eventInvitation'),
 
   isMeethubInvitation: function() {
-    if(this.get('meethubInvitation') !== null)
+    if(Ember.isEmpty(this.get('meethubInvitation.id')))
     {
-      return true;
+      return false;
     }
     else
     {
-      return false;
+      return true;
     }
   }.property('meethubInvitation')
 });
