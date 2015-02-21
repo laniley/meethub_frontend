@@ -4,6 +4,7 @@ export default DS.Model.extend({
   invited_user: DS.belongsTo('user'),
   message: DS.belongsTo('message'),
   meethub: DS.belongsTo('meethub'),
+  role: DS.attr('string'),
   status: DS.attr('string'),
 
   hasBeenAccepted: function() {

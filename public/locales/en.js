@@ -11,6 +11,7 @@ Em.I18n.translations = {
   "meethub": {
     "not-in-a-meethub": "You are not in a meethub yet.<br /> Do you want to create one?",
     "members": "members",
+    "select-new-admin-advice": "When you leave the Meethub, no one will be admin. Please select a new admin for the Meethub first.",
     "button": {
       "cancel": "cancel",
       "create": "create a Meethub",

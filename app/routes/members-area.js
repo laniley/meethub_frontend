@@ -55,6 +55,7 @@ export default AuthenticateRoute.extend({
             (
               function()
               {
+                user.set('isMe', true);
                 controller.set('model', user);
                 controller.update();
                 self.prepareController(controller, user, response);
@@ -64,6 +65,7 @@ export default AuthenticateRoute.extend({
           else
           {
             var user = users.get('firstObject');
+            user.set('isMe', true);
             controller.set('model', user);
             controller.update();
             self.prepareController(controller, user, response);

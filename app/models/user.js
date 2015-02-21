@@ -9,6 +9,7 @@ export default DS.Model.extend({
   gender: DS.attr('string'),
   created_at: DS.attr('date'),
   updated_at: DS.attr('date'),
+  isMe: DS.attr('boolean', {defaultValue: false}),
   friends: DS.hasMany('user', { async: true }),
   meethubInvitations: DS.hasMany('meethub-invitation', { async: true }),
   messages: DS.hasMany('message', {

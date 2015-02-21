@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
 
-  classNames: ['invite-button'],
+  classNames: ['friend_search_button'],
   meethub: null,
   friend_id: null,
   user: null,

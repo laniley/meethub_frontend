@@ -9,7 +9,16 @@
   {{#each friend in search_results}}
     <div class="friends_search_result">
       <img {{bind-attr src=friend.picture }} />
-      {{friend.name}} {{meethub-invite-button user=user meethub=parent friend_id=friend.id}}
+      {{friend.name}}
+      {{#if 'isAMeethubInvite'}}
+        {{meethub-invite-button user=user meethub=parent friend_id=friend.id}}
+      {{else}}
+        <div class="friend_search_button">
+          <span {{bind-attr class=":button :accept"}} {{action 'makeAdmin' friend}}>
+            {{unbound fa-icon "fa-check"}}
+          </span>
+        </div>
+      {{/if}}
     </div>
   {{/each}}
 </div>
