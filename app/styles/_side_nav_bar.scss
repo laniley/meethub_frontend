@@ -197,8 +197,6 @@
             margin-top: -10px;
             margin-right: 10px;
 
-            color: black;
-
             &:not(.has-been-read) {
               color: $orange;
             }
@@ -208,7 +206,6 @@
             float: left;
             margin-left: -20px;
             margin-top: 6px;
-            color: black;
           }
 
           .eventInvitation-status {
@@ -216,7 +213,7 @@
             margin: 5px -40px;
             font-size: 16px;
             color: #ddd;
-            text-shadow: 0 -1px 1px #FFFFFF, 0 1px 1px #666666;
+            text-shadow: 0 -1px 1px #FFFFFF, 0 1px 1px #000000;
 
             &.accepted {
               color: $blue;
@@ -289,8 +286,10 @@
           padding: 15px 10px;
 
           &.open {
-            background-color: $blue;
-            color: #fff;
+            background-color: #efefef;
+            color: #000;
+            border: 1px solid #B9BFC2;
+            border-bottom: none;
           }
 
           .icons {
@@ -370,7 +369,8 @@
     }
 
     &.open {
-      border: 1px solid $blue;
+      box-shadow: #BFC8CB 0px 0px 10px inset;
+      border: 1px solid #B9BFC2;
     }
 
     .question {
