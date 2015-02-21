@@ -82,7 +82,7 @@ export default Ember.Component.extend({
           from_user: self.get('user'),
           to_user: friend,
           subject: 'Meethub Invitation',
-          text: 'Du wurdest von ' + self.get('user').get('name') + ' zu einem Meethub eingeladen.'
+          text: 'Du wurdest von ' + self.get('user').get('name') + ' in den Meethub ' + self.get('meethub').get('name') + ' eingeladen.'
         });
 
         message.save().then(function() {
