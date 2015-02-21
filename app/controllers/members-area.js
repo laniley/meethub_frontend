@@ -48,8 +48,8 @@ export default Ember.Controller.extend({
     var self = this;
     self.loadUserEventsFromFB();
     self.loadFriendEventsFromFB();
-    // load Meethubs from BE
-    self.store.find('meethub', { member: self.get('model').get('id') });
+    // load MeethubInvitations from BE
+    self.store.find('meethubInvitation', { invited_user: self.get('model').get('id') });
   },
 
   loadUserEventsFromFB: function () {

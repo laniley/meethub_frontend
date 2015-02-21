@@ -6,10 +6,21 @@ export default Ember.Controller.extend({
   membersArea_controller: Ember.computed.alias("controllers.members-area"),
 
   sortProperties: ['created_at:desc'],
-  sortedMeethubs: Ember.computed.sort('search_results', 'sortProperties'),
+  sortedMeethubInvitations: Ember.computed.sort('search_results', 'sortProperties'),
 
   searchIsOpen: false,
   createIsOpen: false,
+  status: 'accepted',
+
+  myMeethubInvitations: function() {
+    var self = this;
+
+    var filteredMeethubInvitations = self.get('model').filter(function(meethubInvitation) {
+      return meethubInvitation.get('invited_user') !== null && meethubInvitation.get('invited_user').get('id') === self.get('user').get('id') && meethubInvitation.get('status') === self.get('status');
+    });
+
+    return filteredMeethubInvitations;
+  }.property('model.@each', 'model.@each.status'),
 
   setAutofocus: function() {
     if(this.get('searchIsOpen') === true)
@@ -51,12 +62,12 @@ export default Ember.Controller.extend({
   search_results: function() {
     var self = this;
 
-    var filteredMeethubs = self.get('model').filter(function(meethub) {
-      return meethub.get('name').toLowerCase().indexOf(self.get('search_term').toLowerCase()) !== -1;
+    var filteredMeethubInvitations = self.get('myMeethubInvitations').filter(function(meethubInvitation) {
+      return meethubInvitation.get('meethub').get('name').toLowerCase().indexOf(self.get('search_term').toLowerCase()) !== -1;
     });
 
-    return filteredMeethubs;
-  }.property('search_term','model.@each'),
+    return filteredMeethubInvitations;
+  }.property('search_term','myMeethubInvitations.@each'),
 
   searchIsEmpty: function() {
     if(this.get('search_term') !== '')
