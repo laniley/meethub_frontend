@@ -8,6 +8,8 @@ export default DS.Model.extend({
   start_date: DS.attr('string'),
   location: DS.belongsTo('location'),
   eventInvitations: DS.hasMany('eventInvitation'),
+  created_at: DS.attr('date'),
+  updated_at: DS.attr('date'),
 
   friends_attending: DS.hasMany('user'),
   friends_attending_maybe: DS.hasMany('user'),
