@@ -31,7 +31,8 @@ export default Ember.Component.extend({
     makeAdmin: function(friend) {
       var meethubInvitation = this.get('parent');
       meethubInvitation.set('role', 'admin');
-      // meethubInvitation.save();
+      meethubInvitation.save();
+      meethubInvitation.get('meethub').set('selectNewAdmin', false);
     }
   }
 });

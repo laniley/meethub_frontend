@@ -117,6 +117,7 @@ export default Ember.Controller.extend({
           var meethubInvitation = self.store.createRecord('meethubInvitation', {
             invited_user: user,
             meethub: meethub,
+            role: 'admin',
             status: 'accepted'
           });
 
