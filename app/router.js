@@ -36,6 +36,12 @@ Router.map(function() {
     }, function() {
       this.route("map", function() {});
       this.route("calendar", function() {});
+
+      this.route("news", function() {
+        this.route("meethub", {
+          path: "/:meethub_id"
+        });
+      });
     });
 
     this.route("messages", {
