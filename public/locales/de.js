@@ -33,5 +33,6 @@ Em.I18n.translations = {
   "short-description": "Kurzbeschreibung",
   "edit": "Bearbeiten",
   "leave": "Verlassen",
-  "save": "Speichern"
+  "save": "Speichern",
+  "comments": "Kommentare"
 };

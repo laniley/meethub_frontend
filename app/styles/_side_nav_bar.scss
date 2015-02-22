@@ -287,7 +287,7 @@
 
           &.open {
             background-color: #efefef;
-            color: $blue;
+            color: #000;
             border: 1px solid #B9BFC2;
             border-bottom: none;
           }
@@ -331,7 +331,6 @@
         }
 
         .short-description {
-          margin-bottom: 20px;
           color: #000;
           border-bottom: 1px solid $divider-color;
 
@@ -558,5 +557,10 @@
     color: #000;
     border-bottom: 1px solid $divider-color;
     padding: 5px 0;
+  }
+
+  .summary {
+    line-height: 40px;
+    border-bottom: 1px solid $divider-color;
   }
 }
