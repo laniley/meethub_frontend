@@ -13,30 +13,30 @@ Router.map(function() {
   this.route("members-area", {
     path: "/"
   }, function() {
-    this.route("map", {
-      path: "/map"
-    }, function() {
-      this.route("friends");
-      this.route("events");
-      this.route("locations");
-      this.route("messages");
-    });
 
-    this.route("calendar", {
-      path: "/"
-    }, function() {
-      this.route("friends");
-      this.route("events");
-      this.route("locations");
-      this.route("messages");
-    });
+    this.route("welcome");
 
-    this.route("meethubs", {
-      path: "/meethubs"
-    }, function() {
+    // this.route("map", {
+    //   path: "/map"
+    // }, function() {
+    //   this.route("friends");
+    //   this.route("events");
+    //   this.route("locations");
+    //   this.route("messages");
+    // });
+
+    // this.route("calendar", {
+    //   path: "/"
+    // }, function() {
+    //   this.route("friends");
+    //   this.route("events");
+    //   this.route("locations");
+    //   this.route("messages");
+    // });
+
+    this.route("meethubs", { path: "/meethubs" }, function() {
       this.route("map", function() {});
       this.route("calendar", function() {});
-
       this.route("news", function() {
         this.route("meethub", {
           path: "/:meethub_id"
@@ -44,9 +44,7 @@ Router.map(function() {
       });
     });
 
-    this.route("messages", {
-      path: "/messages"
-    }, function() {
+    this.route("messages", { path: "/messages" }, function() {
       this.route("map");
       this.route("calendar");
     });
@@ -65,8 +63,6 @@ Router.map(function() {
       this.route("map");
       this.route("calendar");
     });
-
-    this.route("welcome");
   });
 });
 
