@@ -8,10 +8,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <div class="navbar-brand">
-        <img alt="Brand" src="assets/images/logo_square_120x120.png">
-        <div class="brand-name">MEETHUB</div>
-      </div>
+      {{#link-to 'members-area.welcome'}}
+        <div class="navbar-brand">
+          <img alt="Brand" src="assets/images/logo_square_120x120.png">
+          <div class="brand-name">MEETHUB</div>
+        </div>
+      {{/link-to}}
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -75,14 +77,6 @@
 
   {{outlet main-area}}
 
-  <div class="side-nav-bar">
-    <div class="side-bar-links">
-      <div {{action 'toggleSidebar'}}>{{unbound fa-icon "fa-reorder"}}</div>
-      {{outlet side-nav-buttons}}
-    </div>
-    <div class="section-content">
-      {{outlet side-nav-bar}}
-    </div>
-  </div>
+  {{outlet side-nav-bar-container}}
 
 </div>

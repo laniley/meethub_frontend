@@ -5,6 +5,8 @@ export default Ember.Controller.extend({
   map_controller: Ember.computed.alias("controllers.members-area/map"),
 
   FB: null,
+
+  showSidebar: false,
   isSidebarOpen: true,
 
   currentSection: 'map',
