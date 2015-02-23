@@ -18,7 +18,17 @@ export default Ember.Route.extend({
     }
   },
   renderTemplate: function() {
-    this.render('members-area.messages.side-nav-buttons', { outlet: 'side-nav-buttons' });
-    this.render('members-area.messages', { outlet: 'side-nav-bar' });
+    this.render('members-area.side-nav-bar', {
+      into: 'members-area',
+      outlet: 'side-nav-bar-container'
+    });
+    this.render('members-area.messages.side-nav-buttons', {
+      into: 'members-area.side-nav-bar',
+      outlet: 'side-nav-buttons'
+    });
+    this.render('members-area.messages', {
+      into: 'members-area.side-nav-bar',
+      outlet: 'side-nav-bar'
+    });
   }
 });
