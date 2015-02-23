@@ -91,21 +91,29 @@
         background-color: $active-item-background-color;
       }
       .dropdown-menu {
+
+        padding: 0;
+
         li {
-          a {
 
-            &.active {
-              color: black;
-              background-color: $active-item-background-color;
-            }
+          width: 100%;
+        }
 
-            &:not(.active) {
-              @media (max-width: $screen-xs-max) {
-                color: #ddd;
+        a {
 
-                &:hover, &:focus {
-                  color: white;
-                }
+          line-height: 2em;
+
+          &.active {
+            color: black;
+            background-color: $active-item-background-color;
+          }
+
+          &:not(.active) {
+            @media (max-width: $screen-xs-max) {
+              color: #ddd;
+
+              &:hover, &:focus {
+                color: white;
               }
             }
           }

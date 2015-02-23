@@ -65,6 +65,8 @@ Router.map(function() {
       this.route("map");
       this.route("calendar");
     });
+
+    this.route("welcome");
   });
 });
 
