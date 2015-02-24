@@ -1,1 +1,14 @@
-<h1>Hallo {{model.first_name}}</h1>
+<div class="row">
+  <h1>Hallo {{model.first_name}}</h1>
+  {{#if 'model.first_login'}}
+    <h3>Willkommen bei Meethub.</h3>
+  {{else}}
+    <h3>Willkommen zurück.</h3>
+  {{/if}}
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    0 neue Nachrichten
+  </div>
+</div>

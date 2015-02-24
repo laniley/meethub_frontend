@@ -131,6 +131,10 @@
   font-family: Ethno_regular;
   color: $header-text-color !important;
 
+  @media (max-width: $screen-xs-max) {
+    padding: 10px;
+  }
+
   @media (min-width: $screen-sm-min) {
     line-height: 40px;
   }
@@ -144,12 +148,16 @@
     }
 
     @media (max-width: $screen-xs-max) {
-      width: 20px;
+      width: 30px;
     }
   }
 
   .brand-name {
     float: left;
+
+    @media (max-width: $screen-xs-max) {
+      display: none;
+    }
   }
 }
 
