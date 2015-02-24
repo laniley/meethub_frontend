@@ -5,8 +5,6 @@ export default Ember.Route.extend({
     var membersAreaController = this.controllerFor('members-area');
     var user = membersAreaController.get('model');
     controller.set('model', user.get('friends'));
-  },
-  beforeModel: function() {
 
     var currentSection = this.controllerFor('members-area').get('currentSection');
 
@@ -18,18 +16,16 @@ export default Ember.Route.extend({
     {
       this.transitionTo('members-area.friends.map');
     }
+
+    this.controllerFor('members-area').set('showSidebar', true);
   },
   renderTemplate: function() {
-    this.render('members-area.side-nav-bar', {
-      into: 'members-area',
-      outlet: 'side-nav-bar-container'
-    });
     this.render('members-area.friends.side-nav-buttons', {
-      into: 'members-area.side-nav-bar',
+      into: 'members-area',
       outlet: 'side-nav-buttons'
     });
     this.render('members-area.friends', {
-      into: 'members-area.side-nav-bar',
+      into: 'members-area',
       outlet: 'side-nav-bar'
     });
   }

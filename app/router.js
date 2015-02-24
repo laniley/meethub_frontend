@@ -16,24 +16,6 @@ Router.map(function() {
 
     this.route("welcome");
 
-    // this.route("map", {
-    //   path: "/map"
-    // }, function() {
-    //   this.route("friends");
-    //   this.route("events");
-    //   this.route("locations");
-    //   this.route("messages");
-    // });
-
-    // this.route("calendar", {
-    //   path: "/"
-    // }, function() {
-    //   this.route("friends");
-    //   this.route("events");
-    //   this.route("locations");
-    //   this.route("messages");
-    // });
-
     this.route("meethubs", { path: "/meethubs" }, function() {
       this.route("map", function() {});
       this.route("calendar", function() {});

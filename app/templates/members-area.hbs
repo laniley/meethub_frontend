@@ -77,6 +77,16 @@
 
   {{outlet main-area}}
 
-  {{outlet side-nav-bar-container}}
+  {{#if 'showSidebar'}}
+    <div class="side-nav-bar">
+      <div class="side-bar-links">
+        <div {{action 'toggleSidebar'}}>{{unbound fa-icon "fa-reorder"}}</div>
+        {{outlet side-nav-buttons}}
+      </div>
+      <div class="section-content">
+        {{outlet side-nav-bar}}
+      </div>
+    </div>
+  {{/if}}
 
 </div>
