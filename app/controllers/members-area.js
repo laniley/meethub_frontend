@@ -13,6 +13,18 @@ export default Ember.Controller.extend({
 
   hasUnreadMessages: function() {
 
+    if(this.get('unreadMessages').get('length') > 0)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+
+  }.property('unreadMessages.@each'),
+
+  unreadMessages: function() {
     var unreadMessages = [];
 
     if(this.get('model.messages.length') > 0)
@@ -22,15 +34,7 @@ export default Ember.Controller.extend({
       });
     }
 
-    if(unreadMessages.get('length') > 0)
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
-
+    return unreadMessages;
   }.property('model.messages.@each.hasBeenRead'),
 
   init: function() {

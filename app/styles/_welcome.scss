@@ -1,0 +1,11 @@
+.summary {
+  margin-top: 50px;
+
+  @media (max-width: $screen-xs-max) {
+    font-size: 2em;
+  }
+
+  @media (min-width: $screen-sm-min) {
+    font-size: 3em;
+  }
+}
