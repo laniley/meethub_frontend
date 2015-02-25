@@ -2,8 +2,17 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
-  number_of_new_messages: function() {
-    return this.get('unreadMessages.length');
+  number_of_new_event_invitations: function() {
+    var unreadEventInvitations = [];
+
+    if(this.get('unreadMessages.length') > 0)
+    {
+      unreadEventInvitations = this.get('unreadMessages').filter(function(message) {
+        return message.get('isEventInvitation') === true;
+      });
+    }
+
+    return unreadEventInvitations.get('length');
   }.property('unreadMessages.@each'),
 
   hasUnreadMessages: function() {
