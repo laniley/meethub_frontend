@@ -14,17 +14,21 @@ $blue: #2588AB;
 $darkblue: #2A2C4C;
 
 $lightgrey: #e7e7e7;
-// $darkgrey: #d9d9d9;
+$mediumgrey: #777;
 $darkgrey: #4D5D62;
 
 $header-text-color: $orange;
-$text-color: #777;
+$text-color: $mediumgrey;
 $border-color: $lightgrey;
+$border-color-hover: $mediumgrey;
+
+$summery-border-color: #bcbcbc;
+$summery-border-color-hover: $mediumgrey;
 
 $active-item-color: $blue;
 $active-item-background-color: white;
 
-$link-color: #777;
+$link-color: $mediumgrey;
 $link-color-hover: #000;
 $link-color-active: $active-item-color;
 

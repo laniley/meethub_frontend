@@ -8,8 +8,26 @@
 </div>
 
 <div class="row summary">
-  <div class="col-xs-12">
-    <div>0 neue Meethub-Einladungen</div>
-    <div>{{number_of_new_event_invitations}} neue Event-Einladungen</div>
+  <div class="col-xs-5 col-xs-offset-1 col-sm-3 col-sm-offset-3">
+    <div {{bind-attr class=":summary-item hasUnreadMeethubInvitations:highlight"}}>
+      {{#if 'hasUnreadMeethubInvitations'}}
+        <div {{bind-attr class=":envelope hasUnreadMeethubInvitations:has-unread-messages"}}>{{unbound fa-icon "fa-envelope"}}</div>
+      {{else}}
+        <div class="envelope">{{unbound fa-icon "fa-envelope-o"}}</div>
+      {{/if}}
+      <div class="type">{{unbound fa-icon "fa-share-alt"}}</div>
+      <div class="number">{{number_of_new_meethub_invitations}}</div>
+    </div>
+  </div>
+  <div class="col-xs-5 col-sm-3">
+    <div {{bind-attr class=":summary-item hasUnreadEventInvitations:highlight"}}>
+      {{#if 'hasUnreadEventInvitations'}}
+        <div {{bind-attr class=":envelope hasUnreadEventInvitations:has-unread-messages"}}>{{unbound fa-icon "fa-envelope"}}</div>
+      {{else}}
+        <div class="envelope">{{unbound fa-icon "fa-envelope-o"}}</div>
+      {{/if}}
+      <div class="type">{{unbound fa-icon "fa-music"}}</div>
+      <div class="number">{{number_of_new_event_invitations}}</div>
+    </div>
   </div>
 </div>

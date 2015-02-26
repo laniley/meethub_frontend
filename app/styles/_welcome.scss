@@ -9,3 +9,48 @@
     font-size: 3em;
   }
 }
+
+.summary-item {
+  border: 1px solid $summery-border-color;
+  border-radius: 5px;
+  cursor: pointer;
+
+  @media (max-width: $screen-xs-max) {
+    padding: 10px 10px 15px 10px;
+  }
+
+  @media (min-width: $screen-sm-min) {
+    padding: 20px 20px 25px 20px;
+  }
+
+  &:hover {
+    border-color: $summery-border-color-hover;
+  }
+
+  &.highlight {
+    color: #4d4d4d;
+  }
+
+  .envelope {
+    display: inline-block;
+  }
+
+  .type {
+    display: inline-block;
+    position: relative;
+    top: 15px;
+    font-size: smaller;
+
+    @media (max-width: $screen-xs-max) {
+      left: -20px;
+    }
+
+    @media (min-width: $screen-sm-min) {
+      left: -25px;
+    }
+  }
+
+  .number {
+    display: inline-block;
+  }
+}

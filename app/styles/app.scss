@@ -79,3 +79,13 @@ ul {
   float: left;
   padding: 2px 5px;
 }
+
+.has-unread-messages {
+  i {
+    color: $header-text-color;
+
+    &:hover {
+      color: lighten($header-text-color, 10%);
+    }
+  }
+}
