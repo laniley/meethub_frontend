@@ -115,152 +115,6 @@ export default Ember.Controller.extend({
     });
   },
 
-  handleFBEventResponse: function(response, status, user_fb_id) {
-
-    var self = this;
-
-    var unfiltered_locations = self.store.all('location');
-    var location = null;
-    var locations = [];
-
-    if(response.venue)
-    {
-      locations = unfiltered_locations.filterBy('fb_id', response.venue.id);
-
-      if(Ember.isEmpty(locations))
-      {
-        location = this.store.createRecord('location', {
-          fb_id: response.venue.id,
-          name: response.location,
-          country: response.venue.country,
-          city: response.venue.city,
-          zip: response.venue.zip,
-          street: response.venue.street,
-          latitude: response.venue.latitude,
-          longitude: response.venue.longitude
-        });
-
-        self.get('map_controller').get('markers').addObject({title: response.location, lat: response.venue.latitude, lng: response.venue.longitude, isDraggable: false});
-
-        location.save().then(function() {
-          self.handleFBEvent(response, location, status, user_fb_id);
-        });
-      }
-      else
-      {
-        location = locations.get('firstObject');
-        self.handleFBEvent(response, location, status, user_fb_id);
-      }
-    }
-    else
-    {
-      locations = unfiltered_locations.filterBy('name', response.location);
-
-      if(Ember.isEmpty(locations))
-      {
-        location = self.store.createRecord('location', {
-          name: response.location
-        });
-
-        location.save().then(function() {
-          self.handleFBEvent(response, location, status, user_fb_id);
-        });
-      }
-      else
-      {
-        location = locations.get('firstObject');
-        self.handleFBEvent(response, location, status, user_fb_id);
-      }
-    }
-  },
-
-  handleFBEvent: function(response, location, status, user_fb_id) {
-
-    var self = this;
-
-    self.store.find('event').then(function(unfiltered_events) {
-
-      var events = unfiltered_events.filterBy('fb_id', response.id);
-
-      var event = null;
-
-      // if event not already in the store, create it
-      if(Ember.isEmpty(events))
-      {
-        var date_time_arr = response.start_time.split('T');
-        var date_time = date_time_arr[1].trim();
-        var date_day = date_time_arr[0].trim();
-
-        event = self.store.createRecord('event', {
-          fb_id: response.id,
-          name: response.name,
-          description: response.descrption,
-          start_time: date_time,
-          start_date: date_day,
-          timezone: response.timezone,
-          location: location
-        });
-      }
-      else
-      {
-        event = events.get('firstObject');
-      }
-
-      // if the user is not me
-      if(user_fb_id !== 'me')
-      {
-        var unfiltered_users = self.store.all('user');
-        var user = unfiltered_users.findBy('fb_id', user_fb_id);
-
-        if(status === 'attending')
-        {
-          event.get('friends_attending').pushObject(user);
-          console.log('friend is attending');
-        }
-        else if(status === 'maybe')
-        {
-          event.get('friends_attending_maybe').pushObject(user);
-        }
-      }
-
-      event.save().then(function() {
-        self.handleFBMessage(response, event);
-      });
-    });
-  },
-
-  handleFBMessage: function(response, event) {
-
-    var self = this;
-
-    var unfiltered_messages = this.store.all('message');
-
-    var messages = unfiltered_messages.filterBy('fb_id', response.id);
-
-    if(Ember.isEmpty(messages))
-    {
-      var message = self.store.createRecord('message', {
-        fb_id: response.id,
-        subject: response.name,
-        to_user: self.get('model')
-      });
-
-      message.save().then(function() {
-
-        var eventInvitation = self.store.createRecord('eventInvitation', {
-          event: event,
-          invited_user: self.get('model'),
-          status: status,
-          message: message
-        });
-
-        eventInvitation.save();
-
-        message.set('eventInvitation', eventInvitation);
-      });
-    }
-  },
-
   loadFriendEventsFromFB: function () {
 
     var self = this;
@@ -329,6 +183,195 @@ export default Ember.Controller.extend({
       });
 
     });
+  },
+
+  handleFBEventResponse: function(response, status, user_fb_id) {
+
+    var self = this;
+
+    var unfiltered_locations = self.store.all('location');
+    var location = null;
+    var locations = [];
+
+    if(response.venue)
+    {
+      locations = unfiltered_locations.filterBy('fb_id', response.venue.id);
+
+      if(Ember.isEmpty(locations))
+      {
+        location = this.store.createRecord('location', {
+          fb_id: response.venue.id,
+          name: response.location,
+          country: response.venue.country,
+          city: response.venue.city,
+          zip: response.venue.zip,
+          street: response.venue.street,
+          latitude: response.venue.latitude,
+          longitude: response.venue.longitude
+        });
+
+        self.get('map_controller').get('markers').addObject({title: response.location, lat: response.venue.latitude, lng: response.venue.longitude, isDraggable: false});
+
+        location.save().then(function() {
+          self.handleFBEvent(response, location, status, user_fb_id);
+        });
+      }
+      else
+      {
+        location = locations.get('firstObject');
+        self.handleFBEvent(response, location, status, user_fb_id);
+      }
+    }
+    else
+    {
+      locations = unfiltered_locations.filterBy('name', response.location);
+
+      if(Ember.isEmpty(locations))
+      {
+        location = self.store.createRecord('location', {
+          name: response.location
+        });
+
+        location.save().then(function() {
+          self.handleFBEvent(response, location, status, user_fb_id);
+        });
+      }
+      else
+      {
+        location = locations.get('firstObject');
+        self.handleFBEvent(response, location, status, user_fb_id);
+      }
+    }
+  },
+
+  handleFBEvent: function(response, location, status, user_fb_id) {
+
+    var self = this;
+    var unfiltered_events = [];
+    var events = [];
+    var event = null;
+
+    unfiltered_events = self.store.all('event');
+
+    events = unfiltered_events.filterBy('fb_id', response.id);
+
+    // event befindet sich noch nicht im store
+    if(Ember.isEmpty(events))
+    {
+      console.log('event not yet in store', response.name);
+
+      self.store.find('event').then(function(unfiltered_events) {
+
+        events = unfiltered_events.filterBy('fb_id', response.id);
+
+        // if event not already in the DB, create it
+        if(Ember.isEmpty(events))
+        {
+          console.log('event not yet in DB - create new', response.name);
+
+          var date_time_arr = response.start_time.split('T');
+          var date_time = date_time_arr[1].trim();
+          var date_day = date_time_arr[0].trim();
+
+          event = self.store.createRecord('event', {
+            fb_id: response.id,
+            name: response.name,
+            description: response.descrption,
+            start_time: date_time,
+            start_date: date_day,
+            timezone: response.timezone,
+            location: location
+          });
+        }
+        else
+        {
+          console.log('event in DB', response.name);
+
+          event = events.get('firstObject');
+
+          // console.log('event received', event.get('name'));
+        }
+
+        // if the user is not me
+        if(user_fb_id !== 'me')
+        {
+          self.addFriendsToEvent(user_fb_id, event, status);
+        }
+
+        event.save().then(function() {
+          self.handleFBMessage(response, event);
+        });
+      });
+    }
+    // event befindet sich im store
+    else
+    {
+      console.log('event in store already', response.name);
+
+      event = events.get('firstObject');
+
+      // console.log('event received', event.get('name'));
+
+      // if the user is not me
+      if(user_fb_id !== 'me')
+      {
+        self.addFriendsToEvent(user_fb_id, event, status);
+      }
+
+      event.save().then(function() {
+        self.handleFBMessage(response, event);
+      });
+    }
+
+  },
+
+  addFriendsToEvent: function(user_fb_id, event, status) {
+    var self = this;
+    var unfiltered_users = self.store.all('user');
+    var user = unfiltered_users.findBy('fb_id', user_fb_id);
+
+    if(status === 'attending')
+    {
+      event.get('friends_attending').pushObject(user);
+      console.log('friend is attending');
+    }
+    else if(status === 'maybe')
+    {
+      event.get('friends_attending_maybe').pushObject(user);
+      console.log('friend is attending maybe');
+    }
+  },
+
+  handleFBMessage: function(response, event) {
+
+    var self = this;
+
+    var unfiltered_messages = this.store.all('message');
+
+    var messages = unfiltered_messages.filterBy('fb_id', response.id);
+
+    if(Ember.isEmpty(messages))
+    {
+      var message = self.store.createRecord('message', {
+        fb_id: response.id,
+        subject: response.name,
+        to_user: self.get('model')
+      });
+
+      message.save().then(function() {
+
+        var eventInvitation = self.store.createRecord('eventInvitation', {
+          event: event,
+          invited_user: self.get('model'),
+          status: status,
+          message: message
+        });
+
+        eventInvitation.save().then(function() {
+          message.set('eventInvitation', eventInvitation);
+        });
+      });
+    }
   },
 
   actions: {

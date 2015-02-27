@@ -3,30 +3,52 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
 
   number_of_new_meethub_invitations: function() {
+
+    var unreadMessages = [];
+
+    if(this.get('model.messages.length') > 0)
+    {
+      unreadMessages = this.get('model.messages').filter(function(message) {
+        return message.get('hasBeenRead') === false;
+      });
+    }
+
     var unreadMeethubInvitations = [];
 
-    if(this.get('unreadMessages.length') > 0)
+    if(unreadMessages.get('length') > 0)
     {
-      unreadMeethubInvitations = this.get('unreadMessages').filter(function(message) {
+      unreadMeethubInvitations = unreadMessages.filter(function(message) {
         return message.get('isMeethubInvitation') === true;
       });
     }
 
     return unreadMeethubInvitations.get('length');
-  }.property('unreadMessages.@each'),
+
+  }.property('model.messages.@each.hasBeenRead', 'model.messages.@each.isMeethubInvitation'),
 
   number_of_new_event_invitations: function() {
+
+    var unreadMessages = [];
+
+    if(this.get('model.messages.length') > 0)
+    {
+      unreadMessages = this.get('model.messages').filter(function(message) {
+        return message.get('hasBeenRead') === false;
+      });
+    }
+
     var unreadEventInvitations = [];
 
-    if(this.get('unreadMessages.length') > 0)
+    if(unreadMessages.get('length') > 0)
     {
-      unreadEventInvitations = this.get('unreadMessages').filter(function(message) {
+      unreadEventInvitations = unreadMessages.filter(function(message) {
         return message.get('isEventInvitation') === true;
       });
     }
 
     return unreadEventInvitations.get('length');
-  }.property('unreadMessages.@each'),
+
+  }.property('model.messages.@each.hasBeenRead', 'model.messages.@each.isEventInvitation'),
 
   hasUnreadMeethubInvitations: function() {
 
