@@ -178,51 +178,54 @@ export default Ember.Controller.extend({
 
     var self = this;
 
-    var unfiltered_events = this.store.all('event');
-    var events = unfiltered_events.filterBy('fb_id', response.id);
-    var event = null;
+    self.store.find('event').then(function(unfiltered_events) {
 
-    // if event not already in the store, create it
-    if(Ember.isEmpty(events))
-    {
-      var date_time_arr = response.start_time.split('T');
-      var date_time = date_time_arr[1].trim();
-      var date_day = date_time_arr[0].trim();
+      var events = unfiltered_events.filterBy('fb_id', response.id);
 
-      event = this.store.createRecord('event', {
-        fb_id: response.id,
-        name: response.name,
-        description: response.descrption,
-        start_time: date_time,
-        start_date: date_day,
-        timezone: response.timezone,
-        location: location
+      var event = null;
+
+      // if event not already in the store, create it
+      if(Ember.isEmpty(events))
+      {
+        var date_time_arr = response.start_time.split('T');
+        var date_time = date_time_arr[1].trim();
+        var date_day = date_time_arr[0].trim();
+
+        event = self.store.createRecord('event', {
+          fb_id: response.id,
+          name: response.name,
+          description: response.descrption,
+          start_time: date_time,
+          start_date: date_day,
+          timezone: response.timezone,
+          location: location
+        });
+      }
+      else
+      {
+        event = events.get('firstObject');
+      }
+
+      // if the user is not me
+      if(user_fb_id !== 'me')
+      {
+        var unfiltered_users = self.store.all('user');
+        var user = unfiltered_users.findBy('fb_id', user_fb_id);
+
+        if(status === 'attending')
+        {
+          event.get('friends_attending').pushObject(user);
+          console.log('friend is attending');
+        }
+        else if(status === 'maybe')
+        {
+          event.get('friends_attending_maybe').pushObject(user);
+        }
+      }
+
+      event.save().then(function() {
+        self.handleFBMessage(response, event);
       });
-    }
-    else
-    {
-      event = events.get('firstObject');
-    }
-
-    // if the user is not me
-    if(user_fb_id !== 'me')
-    {
-      var unfiltered_users = this.store.all('user');
-      var user = unfiltered_users.findBy('fb_id', user_fb_id);
-
-      if(status === 'attending')
-      {
-        event.get('friends_attending').pushObject(user);
-        console.log('friend is attending');
-      }
-      else if(status === 'maybe')
-      {
-        event.get('friends_attending_maybe').pushObject(user);
-      }
-    }
-
-    event.save().then(function() {
-      self.handleFBMessage(response, event);
     });
   },
 
