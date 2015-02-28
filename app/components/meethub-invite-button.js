@@ -91,6 +91,7 @@ export default Ember.Component.extend({
             invited_user: friend,
             meethub: self.get('meethub'),
             message: message,
+            role: 'standard',
             status: 'pending'
           });
 

@@ -267,18 +267,18 @@
             color: $link-color;
 
             &:hover {
-              color: $link-color-hover;
-              border: 1px solid $link-color-hover;
+              &:not(.open) {
+                color: $link-color-hover;
+                border: 1px solid $link-color-hover;
+              }
             }
 
             &.open {
-              border: 1px solid $blue;
-              color: $blue;
+              // border: 1px solid $blue;
+              background-color: $blue;
+              color: #fff;
+              // color: $blue;
             }
-          }
-
-          .add-new-members-form {
-            margin-top: 10px;
           }
         }
 
@@ -488,34 +488,6 @@
 
     .declined {
       border-color: $orange;
-    }
-  }
-
-  .friends_search_results {
-    text-align: left;
-
-    .friends_search_result {
-      line-height: 55px;
-
-      .friend_search_button {
-        display: inline-block;
-        float: right;
-
-        .button {
-          margin-top: 15px;
-          line-height: 20px;
-          padding: 3px 9px;
-
-          &.invite, &.isMember {
-            color: white;
-            background-color: $link-color-active;
-          }
-
-          &.pending, &.isMember {
-            cursor: default;
-          }
-        }
-      }
     }
   }
 

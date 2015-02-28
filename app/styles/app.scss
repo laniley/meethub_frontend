@@ -7,6 +7,7 @@
 @import "map";
 @import "ember-cli-cal";
 @import "calendar";
+@import "user-search";
 
 html, body {
   margin: 0;
@@ -45,9 +46,7 @@ input[type="search"]:focus,
 input[type="tel"]:focus,
 input[type="color"]:focus,
 .uneditable-input:focus {
-  border-color: #9AB9C3;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 4px rgba(100, 177, 203, 1);
-  outline: 0 none;
+  border: 1px solid $blue;
 }
 
 ul {
