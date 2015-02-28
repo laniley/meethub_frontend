@@ -3,7 +3,37 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
 
   sortProperties: ['created_at:desc'],
-  sortedMessages: Ember.computed.sort('model', 'sortProperties'),
+  sortedMessages: Ember.computed.sort('filteredMessages', 'sortProperties'),
+
+  queryParams: ['event_inv', 'meethub_inv'],
+  event_inv: null,
+  meethub_inv: null,
+
+  filteredMessages: function() {
+
+    var self = this;
+    var messages = this.get('model');
+    var event_inv = this.get('event_inv');
+    var meethub_inv = this.get('meethub_inv');
+    var filteredMessages = messages;
+
+    if(event_inv === 'true') {
+      console.log('event');
+      filteredMessages = filteredMessages.filter(function(message) {
+        return message.get('isEventInvitation') === true;
+      });
+    }
+
+    if(meethub_inv === 'true')
+    {
+      filteredMessages = filteredMessages.filter(function(message) {
+        return message.get('isMeethubInvitation') === true;
+      });
+    }
+
+    return filteredMessages;
+
+  }.property('model.@each', 'event_inv', 'meethub_inv'),
 
   isGerman: function() {
     if(Ember.I18n.locale === 'de')
