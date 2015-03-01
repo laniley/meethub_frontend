@@ -1,4 +1,14 @@
 Em.I18n.translations = {
+  "welcome": {
+    "first-login": {
+      "greeting": "Willkommen bei Meethub."
+    },
+    "not-first-login": {
+      "greeting": "Willkommen zurück."
+    },
+    "meethub-invitations": "neue Meethub-Einladungen",
+    "event-invitations": "neue Event-Einladungen"
+  },
   "friend": {
     "title": "Freunde",
     "one": "Freund",

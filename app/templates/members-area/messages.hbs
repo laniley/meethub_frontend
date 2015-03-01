@@ -2,9 +2,17 @@
 <div class="section-title">
   Messages
 </div>
-{{!-- FILTER --}}
-<div class="side-nav-item selectable" {{action "centerMapOnCurrentPosition"}}>
-  Messages Filter
+{{!-- FILTER BUTTONS --}}
+<div class="side-nav-filter-buttons section-buttons">
+  <ul>
+    <li {{bind-attr class=":section-button createIsOpen:active"}} {{translateAttr  title='meethub.button.create'}} {{action 'toggleCreate'}}>
+      {{unbound fa-icon "fa-plus"}}
+    </li>
+    {{!-- SEARCH --}}
+    <li {{bind-attr class=":section-button searchIsOpen:active"}} {{translateAttr  title='meethub.button.search'}} {{action 'toggleSearch'}}>
+      {{unbound fa-icon "fa-search"}}
+    </li>
+  </ul>
 </div>
 {{!-- LIST --}}
 <div {{bind-attr class=":side-nav-item-container"}}>
