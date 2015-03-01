@@ -10,6 +10,7 @@ export default DS.Model.extend({
   first_login: DS.attr('boolean', { defaultValue: true }),
   created_at: DS.attr('date'),
   updated_at: DS.attr('date'),
+  last_login: DS.attr('date'),
   isMe: DS.attr('boolean', { defaultValue: false }),
   friends: DS.hasMany('user', { async: true }),
   meethubInvitations: DS.hasMany('meethub-invitation', { async: true }),

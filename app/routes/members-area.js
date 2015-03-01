@@ -42,13 +42,17 @@ export default AuthenticateRoute.extend({
 
         self.store.find('user', { fb_id: response.id }).then(function(users)
         {
+          var last_login = new Date();
+
           if(Ember.isEmpty(users))
           {
             var user = self.store.createRecord('user', {
               fb_id: response.id,
               first_name: response.first_name,
               last_name: response.last_name,
-              picture: 'http://graph.facebook.com/' + response.id + '/picture'
+              picture: 'http://graph.facebook.com/' + response.id + '/picture',
+              first_login: true,
+              last_login: last_login
             });
 
             user.save().then
@@ -66,6 +70,7 @@ export default AuthenticateRoute.extend({
           {
             var user = users.get('firstObject');
             user.set('isMe', true);
+            user.set('last_login', last_login);
             controller.set('model', user);
             controller.update();
             self.prepareController(controller, user, response);
@@ -105,7 +110,8 @@ export default AuthenticateRoute.extend({
                     first_name: friend_response.first_name,
                     last_name: friend_response.last_name,
                     picture: 'http://graph.facebook.com/' + friend_response.id + '/picture',
-                    gender: friend_response.gender
+                    gender: friend_response.gender,
+                    first_login: true
                 });
 
                 friend.save().then(function() {
@@ -119,6 +125,13 @@ export default AuthenticateRoute.extend({
               {
                 console.log(friend_response.error);
               }
+            });
+          }
+          else
+          {
+            user.get('friends').then(function(friends) {
+              friends.pushObject(users.get('firstObject'));
+              user.save();
             });
           }
         });

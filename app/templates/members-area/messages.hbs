@@ -36,8 +36,10 @@
           </div>
           {{#if message.isEventInvitation}}
             <div class="message-type">{{unbound fa-icon "fa-music"}}</div>
-            <div {{bind-attr class=":eventInvitation-status message.eventInvitation.hasBeenAccepted:accepted message.eventInvitation.hasBeenAcceptedMaybe:maybe message.eventInvitation.hasBeenDeclined:declined"}}>
+            {{#if message.hasBeenRead}}
+              <div {{bind-attr class=":eventInvitation-status message.eventInvitation.hasBeenAccepted:accepted message.eventInvitation.hasBeenAcceptedMaybe:maybe message.eventInvitation.hasBeenDeclined:declined"}}>
               {{unbound fa-icon "fa-circle"}}</div>
+            {{/if}}
           {{/if}}
           {{#if message.isMeethubInvitation}}
             <div class="message-type">{{unbound fa-icon "fa-share-alt"}}</div>
