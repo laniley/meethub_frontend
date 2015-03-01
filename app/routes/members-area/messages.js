@@ -7,14 +7,14 @@ export default Ember.Route.extend({
       this.controllerFor('members-area/messages').set('event_inv', transition.queryParams["event_inv"]);
     }
     else {
-      this.controllerFor('members-area/messages').set('event_inv', false);
+      this.controllerFor('members-area/messages').set('event_inv', true);
     }
 
     if(transition.queryParams["meethub_inv"] !== undefined) {
       this.controllerFor('members-area/messages').set('meethub_inv', transition.queryParams["meethub_inv"]);
     }
     else {
-      this.controllerFor('members-area/messages').set('meethub_inv', false);
+      this.controllerFor('members-area/messages').set('meethub_inv', true);
     }
 
     var currentSection = this.controllerFor('members-area').get('currentSection');

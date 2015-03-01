@@ -6,8 +6,8 @@ export default Ember.Controller.extend({
   sortedMessages: Ember.computed.sort('filteredMessages', 'sortProperties'),
 
   queryParams: ['event_inv', 'meethub_inv'],
-  event_inv: null,
-  meethub_inv: null,
+  event_inv: true,
+  meethub_inv: true,
 
   filteredMessages: function() {
 
@@ -17,17 +17,16 @@ export default Ember.Controller.extend({
     var meethub_inv = this.get('meethub_inv');
     var filteredMessages = messages;
 
-    if(event_inv === 'true') {
-      console.log('event');
+    if(event_inv === false || event_inv === 'false') {
       filteredMessages = filteredMessages.filter(function(message) {
-        return message.get('isEventInvitation') === true;
+        return message.get('isEventInvitation') === false;
       });
     }
 
-    if(meethub_inv === 'true')
+    if(meethub_inv === false || meethub_inv === 'false')
     {
       filteredMessages = filteredMessages.filter(function(message) {
-        return message.get('isMeethubInvitation') === true;
+        return message.get('isMeethubInvitation') === false;
       });
     }
 
@@ -62,6 +61,12 @@ export default Ember.Controller.extend({
       {
         message.set('isOpen', false);
       }
+    },
+    toggleMeethubInvFilter: function() {
+      this.toggleProperty('meethub_inv');
+    },
+    toggleEventInvFilter: function() {
+      this.toggleProperty('event_inv');
     },
     acceptEventInvitation: function(eventInvitation_id) {
       this.store.find('eventInvitation', eventInvitation_id).then(function(eventInvitation) {

@@ -32,7 +32,13 @@ Em.I18n.translations = {
     "participation-question": "Will you participate?",
     "accept": "accept",
     "maybe": "maybe",
-    "decline": "decline"
+    "decline": "decline",
+    "button": {
+      "create": "create new message",
+      "search": "search for a message",
+      "meethub-inv-filter": "meethub-invitations",
+      "event-inv-filter": "event-invitations"
+    }
   },
   "participants": {
     "title": "Your friends:",
