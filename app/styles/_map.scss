@@ -2,6 +2,7 @@ $side-navbar-width: 400px;
 
 .google-map {
   position: absolute;
+  height: 100%;
 
   left: 0;
   right: $side-navbar-width;
@@ -9,14 +10,6 @@ $side-navbar-width: 400px;
 
   &.closed {
     right: 50px;
-  }
-
-  @media (min-width: $screen-sm-min) {
-    top: 70px;
-  }
-
-  @media (max-width: $screen-xs-max) {
-    top: 50px;
   }
 
   .map-canvas {

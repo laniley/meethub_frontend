@@ -4,10 +4,12 @@
 @import "welcome";
 @import "top_nav_bar";
 @import "side_nav_bar";
+@import "bottom_nav_bar";
 @import "map";
 @import "ember-cli-cal";
 @import "calendar";
 @import "user-search";
+@import "news";
 
 html, body {
   margin: 0;
@@ -19,7 +21,14 @@ body {
   color: $text-color;
 }
 
+h2 {
+  margin-bottom: 20px;
+}
+
 img {
+
+  border-radius: 5px;
+
   &.pending {
       opacity: 0.4;
       filter: alpha(opacity=40); /* For IE8 and earlier */
@@ -32,6 +41,12 @@ a {
 
 input, textarea {
   color: $input-color;
+}
+
+textarea {
+  width: 100%;
+  resize: none;
+  padding: 0 5px;
 }
 
 textarea:focus,
@@ -64,6 +79,12 @@ ul {
 }
 
 .main-row {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
   margin: 0;
 
   @media (min-width: $screen-sm-min) {
@@ -73,6 +94,8 @@ ul {
   @media (max-width: $screen-xs-max) {
     margin-top: 50px;
   }
+
+  margin-bottom: 50px;
 }
 
 .button {

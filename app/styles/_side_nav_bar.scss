@@ -2,15 +2,7 @@
   position: absolute;
   overflow: hidden;
   font-size: 18px;
-
-  @media (min-width: $screen-sm-min) {
-    top: 70px;
-  }
-
-  @media (max-width: $screen-xs-max) {
-    top: 50px;
-  }
-
+  height: 100%;
   right: 0;
   bottom: 0;
   width: $side-navbar-width;
@@ -349,12 +341,6 @@
       }
 
       input {
-        padding: 0 5px;
-      }
-
-      textarea {
-        width: 100%;
-        resize: none;
         padding: 0 5px;
       }
     }

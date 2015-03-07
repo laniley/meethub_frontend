@@ -11,14 +11,6 @@
     right: 50px;
   }
 
-  @media (min-width: $screen-sm-min) {
-    top: 70px;
-  }
-
-  @media (max-width: $screen-xs-max) {
-    top: 50px;
-  }
-
   .header {
     padding: 5px;
     text-align: center;
