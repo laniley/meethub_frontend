@@ -148,6 +148,14 @@
     @media (max-width: $screen-xs-max) {
       display: none;
     }
+
+    .beta-label {
+      position: absolute;
+      top: 30px;
+      left: 140px;
+      font-size: 0.6em;
+      color: $blue;
+    }
   }
 }
 
