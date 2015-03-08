@@ -72,6 +72,7 @@ export default AuthenticateRoute.extend({
             user.set('isMe', true);
             user.set('last_login', last_login);
             controller.set('model', user);
+            self.controllerFor('members-area.index').set('model', user);
             controller.update();
             self.prepareController(controller, user, response);
           }

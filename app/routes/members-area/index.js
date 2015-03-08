@@ -6,7 +6,7 @@ export default Ember.Route.extend({
 
     this.controllerFor('membersArea').set('showSidebar', false);
 
-    controller.set('model', this.controllerFor('membersArea').get('model'));
+    // controller.set('model', this.controllerFor('membersArea').get('model'));
 
   }
 
