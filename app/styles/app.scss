@@ -96,6 +96,18 @@ ul {
   }
 
   margin-bottom: 50px;
+
+  .main-container {
+    position: absolute;
+    left: 0;
+    right: 400px;
+    top: 0px;
+    bottom: 0px;
+
+    &.closed {
+      right: 50px;
+    }
+  }
 }
 
 .button {

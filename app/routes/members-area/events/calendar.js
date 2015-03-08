@@ -9,6 +9,6 @@ export default Ember.Route.extend({
     controller.set('model', this.store.all('event'));
   },
   renderTemplate: function() {
-    this.render('members-area.calendar', { outlet: 'main-area' });
+    this.render('members-area.calendar');
   }
 });

@@ -11,32 +11,6 @@ export default Ember.Controller.extend({
 
   currentSection: 'map',
 
-  hasUnreadMessages: function() {
-
-    if(this.get('unreadMessages').get('length') > 0)
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
-
-  }.property('unreadMessages.@each'),
-
-  unreadMessages: function() {
-    var unreadMessages = [];
-
-    if(this.get('model.messages.length') > 0)
-    {
-      unreadMessages = this.get('model.messages').filter(function(message) {
-        return message.get('hasBeenRead') === false;
-      });
-    }
-
-    return unreadMessages;
-  }.property('model.messages.@each.hasBeenRead'),
-
   init: function() {
 
     var self = this;
@@ -58,6 +32,106 @@ export default Ember.Controller.extend({
     self.store.find('meethubInvitation', { invited_user: self.get('model').get('id') });
     self.store.find('message', { user: self.get('model').get('id') });
   },
+
+  hasUnreadMessages: function() {
+
+    if(this.get('unreadMessages').get('length') > 0)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+
+  }.property('unreadMessages.@each'),
+
+  number_of_new_meethub_invitations: function() {
+
+    var unreadMessages = [];
+
+    if(this.get('model.messages.length') > 0)
+    {
+      unreadMessages = this.get('model.messages').filter(function(message) {
+        return message.get('hasBeenRead') === false;
+      });
+    }
+
+    var unreadMeethubInvitations = [];
+
+    if(unreadMessages.get('length') > 0)
+    {
+      unreadMeethubInvitations = unreadMessages.filter(function(message) {
+        return message.get('isMeethubInvitation') === true;
+      });
+    }
+
+    return unreadMeethubInvitations.get('length');
+
+  }.property('model.messages.@each.hasBeenRead', 'model.messages.@each.isMeethubInvitation'),
+
+  number_of_new_event_invitations: function() {
+
+    var unreadMessages = [];
+
+    if(this.get('model.messages.length') > 0)
+    {
+      unreadMessages = this.get('model.messages').filter(function(message) {
+        return message.get('hasBeenRead') === false;
+      });
+    }
+
+    var unreadEventInvitations = [];
+
+    if(unreadMessages.get('length') > 0)
+    {
+      unreadEventInvitations = unreadMessages.filter(function(message) {
+        return message.get('isEventInvitation') === true;
+      });
+    }
+
+    return unreadEventInvitations.get('length');
+
+  }.property('model.messages.@each.hasBeenRead', 'model.messages.@each.isEventInvitation'),
+
+  hasUnreadMeethubInvitations: function() {
+
+    if(this.get('number_of_new_meethub_invitations') > 0)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+
+  }.property('number_of_new_meethub_invitations'),
+
+  hasUnreadEventInvitations: function() {
+
+    if(this.get('number_of_new_event_invitations') > 0)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+
+  }.property('number_of_new_event_invitations'),
+
+  unreadMessages: function() {
+    var unreadMessages = [];
+
+    if(this.get('model.messages.length') > 0)
+    {
+      unreadMessages = this.get('model.messages').filter(function(message) {
+        return message.get('hasBeenRead') === false;
+      });
+    }
+
+    return unreadMessages;
+  }.property('model.messages.@each.hasBeenRead'),
 
   loadUserEventsFromFB: function () {
 
@@ -380,6 +454,7 @@ export default Ember.Controller.extend({
       {
         Ember.$('.side-nav-bar').addClass('closed');
         Ember.$('.side-nav-bar > .section-content').addClass('closed');
+        Ember.$('.main-container').addClass('closed');
         Ember.$('.google-map').addClass('closed');
         Ember.$('.calendar').addClass('closed');
         this.set('isSidebarOpen', false);
@@ -388,6 +463,7 @@ export default Ember.Controller.extend({
       {
         Ember.$('.side-nav-bar').removeClass('closed');
         Ember.$('.side-nav-bar > .section-content').removeClass('closed');
+        Ember.$('.main-container').removeClass('closed');
         Ember.$('.google-map').removeClass('closed');
         Ember.$('.calendar').removeClass('closed');
         this.set('isSidebarOpen', true);

@@ -141,10 +141,7 @@ export default AuthenticateRoute.extend({
     var map_controller = self.controllerFor('members-area.map');
         map_controller.getCurrentPosition();
 
-    var welcome_controller = self.controllerFor('members-area.welcome');
-        welcome_controller.set('model', user);
-
-    self.transitionTo('members-area.welcome');
+    // self.transitionTo('members-area.welcome');
   }
 
 });

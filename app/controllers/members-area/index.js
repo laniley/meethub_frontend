@@ -2,6 +2,19 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
+  hasUnreadMessages: function() {
+
+    if(this.get('unreadMessages').get('length') > 0)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+
+  }.property('unreadMessages.@each'),
+
   number_of_new_meethub_invitations: function() {
 
     var unreadMessages = [];
@@ -77,6 +90,7 @@ export default Ember.Controller.extend({
   }.property('number_of_new_event_invitations'),
 
   unreadMessages: function() {
+
     var unreadMessages = [];
 
     if(this.get('model.messages.length') > 0)
@@ -87,5 +101,7 @@ export default Ember.Controller.extend({
     }
 
     return unreadMessages;
+
   }.property('model.messages.@each.hasBeenRead')
+
 });

@@ -6,19 +6,15 @@ var Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route("login", {
-    path: "/login"
-  });
 
-  this.route("members-area", {
-    path: "/"
-  }, function() {
+  this.route("login", { path: "/login" });
 
-    this.route("welcome");
+  this.route("members-area", { path: "/"}, function() {
 
     this.route("meethubs", { path: "/meethubs" }, function() {
       this.route("map", function() {});
       this.route("calendar", function() {});
+
       this.route("news", function() {
         this.route("meethub", {
           path: "/:meethub_id"
@@ -45,7 +41,9 @@ Router.map(function() {
       this.route("map");
       this.route("calendar");
     });
+
   });
+
 });
 
 export default Router;

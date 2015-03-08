@@ -1,0 +1,12 @@
+<div class="new_comment">
+  <div class="col-xs-1">
+    <img {{bind-attr src=picture}} class="account_img" />
+  </div>
+  <div class="col-xs-9 no-padding">
+    {{textarea placeholder="Write a new comment..." cols="250" rows="2" maxlength="1000" value=comment}}
+  </div>
+  <div class="col-xs-2">
+    <span {{bind-attr class=":side-nav-button :save nameIsEmpty:disabled:enabled"}} {{action 'createMeethub'}} {{translateAttr  title='meethub.button.create'}}>{{unbound fa-icon "fa-check"}}</span>
+    <span {{bind-attr class=":side-nav-button :cancel nameIsEmpty:disabled:enabled"}} {{action 'cancelMeethubCreation'}} {{translateAttr  title='meethub.button.cancel'}}>{{unbound fa-icon "fa-remove"}}</span>
+  </div>
+</div>
