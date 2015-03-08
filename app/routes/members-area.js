@@ -72,10 +72,16 @@ export default AuthenticateRoute.extend({
             var user = users.get('firstObject');
             user.set('isMe', true);
             user.set('last_login', last_login);
-            controller.set('model', user);
-            self.controllerFor('members-area.index').set('model', user);
-            controller.update();
-            self.prepareController(controller, user, response);
+            user.set('first_login', false);
+            user.save().then
+            (
+              function() {
+                controller.set('model', user);
+                self.controllerFor('members-area.index').set('model', user);
+                controller.update();
+                self.prepareController(controller, user, response);
+              }
+            );
           }
         });
       }
@@ -143,7 +149,6 @@ export default AuthenticateRoute.extend({
     var map_controller = self.controllerFor('members-area.map');
         map_controller.getCurrentPosition();
 
-    // self.transitionTo('members-area.welcome');
   }
 
 });
