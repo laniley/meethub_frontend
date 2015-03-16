@@ -26,7 +26,7 @@ module.exports = function(environment) {
       'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net facebook.com graph.facebook.com maps.googleapis.com maps.gstatic.com mt0.googleapis.com mt1.googleapis.com",
       'font-src': "'self' data: use.typekit.net fonts.gstatic.com",
       'connect-src': "'self' localhost:8000",
-      'img-src': "'self' graph.facebook.com www.facebook.com p.typekit.net fbcdn-profile-a.akamaihd.net maps.gstatic.com mt0.googleapis.com mt1.googleapis.com maps.googleapis.com csi.gstatic.com mt.googleapis.com",
+      'img-src': "'self' www.paypalobjects.com graph.facebook.com www.facebook.com p.typekit.net fbcdn-profile-a.akamaihd.net maps.gstatic.com mt0.googleapis.com mt1.googleapis.com maps.googleapis.com csi.gstatic.com mt.googleapis.com",
       'style-src': "'self' 'unsafe-inline' use.typekit.net fonts.googleapis.com",
       'frame-src': "s-static.ak.facebook.com static.ak.facebook.com www.facebook.com",
       'report-uri': '/_/csp-reports'
