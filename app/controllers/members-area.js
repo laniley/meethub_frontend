@@ -322,24 +322,25 @@ export default Ember.Controller.extend({
 
     var self = this;
     var unfiltered_events = [];
+    var filtered_events = [];
     var events = [];
     var event = null;
 
     unfiltered_events = self.store.all('event');
 
-    events = unfiltered_events.filterBy('fb_id', response.id);
+    filtered_events = unfiltered_events.filterBy('fb_id', response.id);
 
     // event befindet sich noch nicht im store
-    if(Ember.isEmpty(events))
+    if(Ember.isEmpty(filtered_events))
     {
       console.log('event not yet in store', response.name);
 
-      self.store.find('event').then(function(unfiltered_events) {
+      self.store.find('event', { fb_id: response.id}).then(function(store_response) {
 
-        events = unfiltered_events.filterBy('fb_id', response.id);
+        event = store_response.get('firstObject');
 
         // if event not already in the DB, create it
-        if(Ember.isEmpty(events))
+        if(Ember.isEmpty(event))
         {
           console.log('event not yet in DB - create new', response.name);
 
@@ -360,10 +361,6 @@ export default Ember.Controller.extend({
         else
         {
           console.log('event in DB', response.name);
-
-          event = events.get('firstObject');
-
-          // console.log('event received', event.get('name'));
         }
 
         // if the user is not me
@@ -382,7 +379,7 @@ export default Ember.Controller.extend({
     {
       console.log('event in store already', response.name);
 
-      event = events.get('firstObject');
+      event = filtered_events.get('firstObject');
 
       // console.log('event received', event.get('name'));
 
