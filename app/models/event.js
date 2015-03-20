@@ -6,7 +6,7 @@ export default DS.Model.extend({
   description: DS.attr('string'),
   start_time: DS.attr('string'),
   start_date: DS.attr('string'),
-  location: DS.belongsTo('location'),
+  location: DS.belongsTo('location', {async: true}),
   eventInvitations: DS.hasMany('eventInvitation'),
   created_at: DS.attr('date'),
   updated_at: DS.attr('date'),
