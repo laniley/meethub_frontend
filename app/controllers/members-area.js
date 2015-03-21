@@ -300,18 +300,38 @@ export default Ember.Controller.extend({
     {
       locations = unfiltered_locations.filterBy('name', response.location);
 
-      if(Ember.isEmpty(locations))
+      if(Ember.isEmpty(locations)) // location befindet sich noch nicht im store
       {
-        location = self.store.createRecord('location', {
-          name: response.location
-        });
+        self.store.find('location', { name: response.location }).then(function(store_response) {
 
-        location.save().then(function() {
-          self.handleFBEvent(response, location, status, user_fb_id);
+          location = store_response.get('firstObject');
+
+          // location not already in the DB, create it
+          if(Ember.isEmpty(location))
+          {
+            console.log('location not yet in DB');
+
+            location = self.store.createRecord('location', {
+              name: response.location
+            });
+
+            location.save().then(function() {
+              self.handleFBEvent(response, location, status, user_fb_id);
+            });
+          }
+          // location already in the DB
+          else
+          {
+            console.log('location already in DB');
+
+            self.handleFBEvent(response, location, status, user_fb_id);
+          }
         });
       }
-      else
+      else // location befindet sich bereits im store
       {
+        console.log('location already in store');
+
         location = locations.get('firstObject');
         self.handleFBEvent(response, location, status, user_fb_id);
       }
@@ -333,8 +353,7 @@ export default Ember.Controller.extend({
     // event befindet sich noch nicht im store
     if(Ember.isEmpty(filtered_events))
     {
-      console.log('event not yet in store', response.name);
-
+      // console.log('event not yet in store', response.name);
       self.store.find('event', { fb_id: response.id}).then(function(store_response) {
 
         event = store_response.get('firstObject');
@@ -342,8 +361,7 @@ export default Ember.Controller.extend({
         // if event not already in the DB, create it
         if(Ember.isEmpty(event))
         {
-          console.log('event not yet in DB - create new', response.name);
-
+          // console.log('event not yet in DB - create new', response.name);
           var date_time_arr = response.start_time.split('T');
           var date_time = date_time_arr[1].trim();
           var date_day = date_time_arr[0].trim();
@@ -360,7 +378,7 @@ export default Ember.Controller.extend({
         }
         else
         {
-          console.log('event in DB', response.name);
+          // console.log('event in DB', response.name);
         }
 
         // if the user is not me
@@ -377,11 +395,8 @@ export default Ember.Controller.extend({
     // event befindet sich im store
     else
     {
-      console.log('event in store already', response.name);
-
+      // console.log('event in store already', response.name);
       event = filtered_events.get('firstObject');
-
-      // console.log('event received', event.get('name'));
 
       // if the user is not me
       if(user_fb_id !== 'me')
