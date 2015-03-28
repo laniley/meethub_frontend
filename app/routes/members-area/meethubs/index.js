@@ -9,9 +9,13 @@ export default Ember.Route.extend({
     {
       this.transitionTo('members-area.meethubs.calendar');
     }
-    else
+    else if(currentSection === 'map')
     {
       this.transitionTo('members-area.meethubs.map');
+    }
+    else
+    {
+      this.transitionTo('members-area.meethubs.news');
     }
 
     this.controllerFor('members-area').set('showSidebar', true);

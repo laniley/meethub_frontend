@@ -9,7 +9,7 @@ export default Ember.Controller.extend({
   showSidebar: false,
   isSidebarOpen: true,
 
-  currentSection: 'map',
+  currentSection: 'news',
 
   init: function() {
 
