@@ -12,7 +12,7 @@ export default Ember.Route.extend({
 
     this.render('members-area.meethubs.news.meethub', {
       into: 'members-area.meethubs.news',
-      outlet: 'main'
+      outlet: 'create-comment'
     });
   }
 });

@@ -1,5 +1,9 @@
 <div class="main-container">
   <h2>{{t 'comments'}} {{outlet 'title'}}</h2>
   {{outlet 'create-comment'}}
-  {{outlet 'main'}}
+  <div class="comment-list">
+    {{#each comment in model}}
+      {{comment.text}}
+    {{/each}}
+  </div>
 </div>

@@ -1,6 +1,12 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+
+  needs: ['members-area'],
+  membersArea_controller: Ember.computed.alias("controllers.members-area"),
+
+  user: null,
+  store: null,
   comment: '',
 
   commentIsEmpty: function() {
@@ -17,35 +23,17 @@ export default Ember.Component.extend({
   actions: {
     createComment: function() {
 
-      if(!this.get('nameIsEmpty'))
+      if(!this.get('commentIsEmpty'))
       {
-        var self = this;
-        var user = this.get('membersArea_controller').get('model');
-
-        var meethub = this.store.createRecord('meethub', {
-          name: this.get('name'),
-          short_description: this.get('short_description'),
-          isOpen: true,
-
-          founder: user
+        var meethubComment = this.get('store').createRecord('meethubComment', {
+          author: this.get('user'),
+          text: this.get('comment'),
+          meethub: this.get('origContext').get('model')
         });
 
-        meethub.save().then(function() {
-          var meethubInvitation = self.store.createRecord('meethubInvitation', {
-            invited_user: user,
-            meethub: meethub,
-            role: 'admin',
-            status: 'accepted'
-          });
+        meethubComment.save();
 
-          meethubInvitation.save();
-
-          meethub.set('showAddMembersForm', true);
-        });
-
-        this.set('name', '');
-        this.set('short_description', '');
-        this.set('createIsOpen', false);
+        this.set('comment', '');
       }
     },
 
