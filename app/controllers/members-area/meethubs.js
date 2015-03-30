@@ -12,6 +12,12 @@ export default Ember.Controller.extend({
   createIsOpen: false,
   status: 'accepted',
 
+  // CREATE
+  name: '',
+  short_description: '',
+  // SEARCH
+  search_term: '',
+
   myMeethubInvitations: function() {
     var self = this;
 
@@ -36,12 +42,6 @@ export default Ember.Controller.extend({
   user: function() {
     return this.get('membersArea_controller').get('model');
   }.property(),
-
-  // CREATE
-  name: '',
-  short_description: '',
-  // SEARCH
-  search_term: '',
 
   isGerman: function() {
     if(Ember.I18n.locale === 'de')

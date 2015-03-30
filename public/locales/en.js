@@ -46,6 +46,12 @@ Em.I18n.translations = {
     "attending_maybe": "{{participant}} is attending maybe!",
     "declined": "{{participant}} declined!"
   },
+  "comment" : {
+    "button" : {
+      "create" : "Create",
+      "cancel" : "Cancel"
+    }
+  },
   "short-description": "Short description",
   "edit": "Edit",
   "leave": "Leave",

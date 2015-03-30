@@ -46,6 +46,12 @@ Em.I18n.translations = {
     "attending_maybe": "{{participant}} nimmt vielleicht teil!",
     "declined": "{{participant}} nimmt nicht teil!"
   },
+  "comment" : {
+    "button" : {
+      "create" : "Senden",
+      "cancel" : "Abbrechen"
+    }
+  },
   "short-description": "Kurzbeschreibung",
   "edit": "Bearbeiten",
   "leave": "Verlassen",
