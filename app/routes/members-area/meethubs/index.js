@@ -1,7 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  beforeModel: function(transition) {
+  setupController: function(controller) {
+
+    controller.set('model', this.store.all('meethubInvitation'));
 
     var currentSection = this.controllerFor('members-area').get('currentSection');
 
@@ -15,7 +17,7 @@ export default Ember.Route.extend({
     }
     else
     {
-      this.transitionTo('members-area.meethubs.news');
+      this.transitionTo('members-area.meethubs.news.index');
     }
 
     this.controllerFor('members-area').set('showSidebar', true);

@@ -14,6 +14,7 @@ export default DS.Model.extend({
   isMe: DS.attr('boolean', { defaultValue: false }),
   friends: DS.hasMany('user', { async: true }),
   meethubInvitations: DS.hasMany('meethub-invitation', { async: true }),
+  meethubComments: DS.hasMany('meethub-comment', { async: true }),
   messages: DS.hasMany('message', { inverse: 'to_user' }),
 
   name: function() {

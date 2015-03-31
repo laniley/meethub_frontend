@@ -1,9 +1,17 @@
 <div class="main-container">
   <h2>{{t 'comments'}} {{outlet 'title'}}</h2>
-  {{outlet 'create-comment'}}
+  {{outlet 'create_comment'}}
   <div class="comment-list">
     {{#each comment in model}}
-      {{comment.text}}
+      <div class="comment">
+        <div class="col-xs-1">
+          <img {{bind-attr src=user.picture}} class="account_img" />
+        </div>
+        <div class="col-xs-11 no-padding">
+          {{comment.text}}
+        </div>
+      </div>
     {{/each}}
   </div>
+  {{outlet}}
 </div>

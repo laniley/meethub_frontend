@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   model: function(params) {
-    return this.get('store').find('meethub', params.meethub_id);
+    return this.store.find('meethub', params.meethub_id);
   },
   renderTemplate: function() {
     this.render('members-area.meethubs.news.title', {
@@ -10,9 +10,9 @@ export default Ember.Route.extend({
       outlet: 'title'
     });
 
-    this.render('members-area.meethubs.news.meethub', {
+    this.render('members-area.meethubs.news.create-comment', {
       into: 'members-area.meethubs.news',
-      outlet: 'create-comment'
+      outlet: 'create_comment'
     });
   }
 });

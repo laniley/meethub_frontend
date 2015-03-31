@@ -31,6 +31,7 @@ export default Ember.Controller.extend({
     // load MeethubInvitations from BE
     self.store.find('meethubInvitation', { invited_user: self.get('model').get('id') });
     self.store.find('message', { user: self.get('model').get('id') });
+    self.store.find('meethubComment', { user: self.get('model').get('id') });
   },
 
   hasUnreadMessages: function() {
@@ -363,8 +364,18 @@ export default Ember.Controller.extend({
         {
           // console.log('event not yet in DB - create new', response.name);
           var date_time_arr = response.start_time.split('T');
-          var date_time = date_time_arr[1].trim();
-          var date_day = date_time_arr[0].trim();
+          var date_time = '';
+          var date_day = '';
+
+          if(date_time_arr[1])
+          {
+            date_time = date_time_arr[1].trim();
+          }
+
+          if(date_time_arr[0])
+          {
+            date_day = date_time_arr[0].trim();
+          }
 
           event = self.store.createRecord('event', {
             fb_id: response.id,

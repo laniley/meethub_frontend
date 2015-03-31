@@ -16,7 +16,7 @@ export default Ember.Route.extend({
     }
     else
     {
-      this.transitionTo('members-area.meethubs.news');
+      this.transitionTo('members-area.meethubs.news.index');
     }
 
     this.controllerFor('members-area').set('showSidebar', true);

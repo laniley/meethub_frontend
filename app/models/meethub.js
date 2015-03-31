@@ -9,6 +9,7 @@ export default DS.Model.extend({
 
   founder: DS.belongsTo('user', { async: true }),
   invitations: DS.hasMany('meethub-invitation', { async: true }),
+  comments: DS.hasMany('meethub-comment', { async: true }),
 
   isOpen: DS.attr('boolean', {defaultValue: false}),
   isInEditMode: DS.attr('boolean', {defaultValue: false}),
