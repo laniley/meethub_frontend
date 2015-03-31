@@ -8,6 +8,8 @@ export default Ember.Route.extend({
     this.controllerFor('members-area').set('currentSection', 'news');
   },
   renderTemplate: function() {
-    this.render('members-area.meethubs.news');
+    this.render('members-area.meethubs.news', {
+      into: 'members-area'
+    });
   }
 });

@@ -1,17 +1,16 @@
-<div class="main-container">
+<div class="main-container container-fluid">
   <h2>{{t 'comments'}} {{outlet 'title'}}</h2>
   {{outlet 'create_comment'}}
-  <div class="comment-list">
+  <div class="container-fluid comment-list no-padding">
     {{#each comment in model}}
-      <div class="comment">
+      <div class="row comment">
         <div class="col-xs-1">
-          <img {{bind-attr src=user.picture}} class="account_img" />
+          <img {{bind-attr src=comment.author.picture}} class="account_img" />
         </div>
-        <div class="col-xs-11 no-padding">
+        <div class="col-xs-11 align-left">
           {{comment.text}}
         </div>
       </div>
     {{/each}}
   </div>
-  {{outlet}}
 </div>
