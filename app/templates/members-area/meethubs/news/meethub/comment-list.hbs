@@ -1,0 +1,12 @@
+<div class="container-fluid comment-list no-padding">
+  {{#each comment in model.comments}}
+    <div class="row comment">
+      <div class="col-xs-1">
+        <img {{bind-attr src=comment.author.picture}} class="account_img" />
+      </div>
+      <div class="col-xs-11 align-left">
+        {{comment.text}}
+      </div>
+    </div>
+  {{/each}}
+</div>
