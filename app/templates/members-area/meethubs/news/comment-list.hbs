@@ -1,10 +1,15 @@
-<div class="container-fluid comment-list no-padding">
-  {{#each comment in model}}
+<div class="container-fluid comment-list">
+  {{#each comment in sortedComments}}
     <div class="row comment">
       <div class="col-xs-1">
         <img {{bind-attr src=comment.author.picture}} class="account_img" />
       </div>
-      <div class="col-xs-11 align-left">
+      <div class="comment-infos col-xs-2  align-left no-padding">
+        <div class="author">{{comment.author.name}}</div>
+        <div class="meethub">Meethub: {{comment.meethub.name}}</div>
+        <div>{{formatted-date comment.created_at 'L'}} - {{formatted-date comment.created_at 'LT'}}</div>
+      </div>
+      <div class="col-xs-9 align-left">
         {{comment.text}}
       </div>
     </div>

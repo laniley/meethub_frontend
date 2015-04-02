@@ -7,7 +7,8 @@ Em.I18n.translations = {
       "greeting": "Welcome back."
     },
     "meethub-invitations": "new meethub-invitations",
-    "event-invitations": "new event-invitations"
+    "event-invitations": "new event-invitations",
+    "meethub-comments": "new meethub-comments"
   },
   "friend": {
     "title": "Friends",

@@ -1,0 +1,27 @@
+.comment {
+  padding: 5px 0;
+  border-top: 1px solid $border-color;
+
+  img {
+    width: 50px;
+    margin-top: 7px;
+  }
+
+  textarea {
+    margin-top: 7px;
+  }
+
+  .buttons {
+    margin-top: 7px;
+  }
+
+  .comment-infos {
+    .author {
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .meethub {
+      font-weight: bold;
+    }
+  }
+}

@@ -9,7 +9,7 @@
 @import "ember-cli-cal";
 @import "calendar";
 @import "user-search";
-@import "news";
+@import "comments";
 @import "new_comment";
 
 html, body {
@@ -109,6 +109,13 @@ ul {
       right: 50px;
     }
   }
+
+  .main-area {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+  }
 }
 
 .button {
@@ -127,4 +134,14 @@ ul {
       color: lighten($header-text-color, 10%);
     }
   }
+}
+
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* inline-block space fix */
+    margin-right:-4px;
 }

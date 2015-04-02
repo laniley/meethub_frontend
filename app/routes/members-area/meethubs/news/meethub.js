@@ -1,9 +1,11 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  model: function(params) {
-    return this.store.find('meethub', params.meethub_id);
-  },
+  // model: function(params) {
+  //   var meethub = this.store.all('meethub', params.meethub_id);
+  //   return meethub.comments;
+  //   // return this.store.all('meethubComment', { meethub_id: params.meethub_id });
+  // },
   renderTemplate: function() {
     this.render('members-area.meethubs.news.title', {
       into: 'members-area.meethubs.news',
@@ -15,7 +17,7 @@ export default Ember.Route.extend({
       outlet: 'create_comment'
     });
 
-    this.render('members-area.meethubs.news.meethub.comment-list', {
+    this.render('members-area.meethubs.news.comment-list', {
       into: 'members-area.meethubs.news',
       outlet: 'comment_list'
     });

@@ -60,11 +60,7 @@
           </div>
           <div class="start">
             {{#link-to 'members-area.messages.calendar'}}
-              {{#if isGerman}}
-                {{message.eventInvitation.event.start_date_converted_to_de}}
-              {{else}}
-                {{message.eventInvitation.event.start_date_converted_to_us}}
-              {{/if}}
+              {{formatted-date message.eventInvitation.event.start_date 'L'}}
                - {{message.eventInvitation.event.start_time_converted}}
             {{/link-to}}
           </div>

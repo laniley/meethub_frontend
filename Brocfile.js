@@ -25,6 +25,8 @@ var app = new EmberApp({
 app.import( 'bower_components/ember-i18n/lib/i18n.js' );
 app.import( 'bower_components/ember-i18n/lib/i18n-plurals.js' );
 
+app.import( 'bower_components/momentjs/min/moment-with-locales.min.js' );
+
 app.import( 'bower_components/jquery-cookie/jquery.cookie.js' );
 
 module.exports = app.toTree();
