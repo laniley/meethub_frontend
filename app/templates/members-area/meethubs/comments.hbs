@@ -1,1 +1,7 @@
-{{outlet}}
+<div class="main-area">
+  <div class="main-container container-fluid">
+    <h2>{{t 'comments'}} {{outlet 'title'}}</h2>
+    {{outlet 'create_comment'}}
+    {{outlet 'comment_list'}}
+  </div>
+</div>
