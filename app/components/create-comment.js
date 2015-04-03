@@ -24,6 +24,17 @@ export default Ember.Component.extend({
     }
   }.property('comment.length'),
 
+  placeholder: function() {
+    if(Ember.I18n.locale === 'de')
+    {
+      return "Schreib einen neuen Kommentar...";
+    }
+    else
+    {
+      return "Write a new comment...";
+    }
+  }.property('Ember.I18n.locale'),
+
   actions: {
     createComment: function() {
 

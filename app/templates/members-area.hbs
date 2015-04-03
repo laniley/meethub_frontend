@@ -24,6 +24,9 @@
           {{#link-to 'members-area.meethubs'}}
             <span>{{unbound fa-icon "fa-fixed-with  fa-share-alt"}}</span>
             <span class="link-label hidden-sm">Meethubs</span>
+            {{#if 'hasNewMeethubComments'}}
+              <span class="info-counter">{{newMeethubComments.length}}</span>
+            {{/if}}
           {{/link-to}}
         </li>
         {{!-- <li>

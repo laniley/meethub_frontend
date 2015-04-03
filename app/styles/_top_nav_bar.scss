@@ -202,3 +202,14 @@
     display: inline-block;
   }
 }
+
+.info-counter {
+  background-color: $orange;
+  color: white;
+  padding: 0px 7px;
+  border-radius: 25px;
+  font-size: 14px;
+  left: 25px;
+  top: 40px;
+  position: absolute;
+}
