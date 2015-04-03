@@ -5,8 +5,15 @@
   height: 100%;
   right: 0;
   bottom: 0;
-  width: $side-navbar-width;
   max-width: 100%;
+
+  @media (max-width: $screen-xs-max) {
+    width: 100%;
+  }
+
+  @media (min-width: $screen-sm-min) {
+    width: $side-navbar-width;
+  }
 
   &.closed {
     width: 50px;

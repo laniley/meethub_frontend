@@ -1,42 +1,111 @@
 .new_comment {
 
+  // img {
+  //   float: left;
+  //   margin-right: 20px;
+  // }
+
+  .comment-infos {
+    margin-top: 7px;
+
+    .bold {
+      font-size: 16px;
+    }
+  }
+
+  .text-and-buttons {
+    @media (max-width: $screen-sm-max) {
+      text-align: center;
+    }
+  }
+
   textarea {
     height: 50px;
+    margin-top: 7px;
+
+    @media (max-width: $screen-sm-max) {
+      width: 100%;
+      margin: 20px 0 0 0;
+    }
+
+    @media (min-width: $screen-md-min) {
+      width: 80%;
+    }
+
+    @media (min-width: 1211px) {
+      width: 85%;
+    }
+
+    @media (min-width: 1636px) {
+      width: 90%;
+    }
   }
 
   .buttons {
+    margin-top: 7px;
 
-    .button {
-      line-height: 30px;
-      margin-top: 7px;
-      width: 30px;
-      margin-right: 10px;
+    @media (max-width: $screen-sm-max) {
+      display: inline-block;
+      width: 80px;
+      margin-bottom: 10px;
+    }
 
-      &.save {
-        border-color: $blue;
+    @media (min-width: $screen-md-min) {
+      width: 20%;
+      float: right;
+    }
 
-        &:not(.disabled) {
-          &:hover {
-            color: $blue;
-          }
+    // @media (min-width: 992px) {
+    //   width: 20%;
+    // }
+
+    @media (min-width: 1211px) {
+      width: 14%;
+      float: right;
+    }
+
+    @media (min-width: 1341px) {
+      width: 12%;
+      float: right;
+    }
+
+    @media (min-width: 1636px) {
+      width: 9%;
+      float: right;
+    }
+  }
+
+  .button {
+    line-height: 30px;
+    margin-top: 7px;
+    width: 30px;
+    margin-left: 10px;
+    text-align: center;
+
+    &.save {
+      border-color: $blue;
+
+      &:not(.disabled) {
+        &:hover {
+          color: $blue;
         }
       }
+    }
 
-      &.cancel {
-        border-color: $orange;
+    &.cancel {
+      border-color: $orange;
 
-        &:not(.disabled) {
-          &:hover {
-            color: $orange;
-          }
+      &:not(.disabled) {
+        &:hover {
+          color: $orange;
         }
       }
+    }
 
-      &.disabled {
-        cursor: default;
-        border-color: #e6e6e6;
-        color: #e6e6e6;
-      }
+    &.disabled {
+      cursor: default;
+      border-color: #e6e6e6;
+      color: #e6e6e6;
     }
   }
 

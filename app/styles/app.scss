@@ -118,6 +118,10 @@ ul {
   }
 }
 
+.bold {
+  font-weight: bold;
+}
+
 .button {
   cursor: pointer;
   @include all_browser(border-radius, 5px);
