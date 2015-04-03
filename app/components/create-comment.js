@@ -7,7 +7,11 @@ export default Ember.Component.extend({
 
   user: null,
   store: null,
+  meethubs: null,
   comment: '',
+
+  selected: null,
+  disabled: false,
 
   commentIsEmpty: function() {
     if(this.get('comment.length') > 0)
@@ -28,7 +32,7 @@ export default Ember.Component.extend({
         var meethubComment = this.get('store').createRecord('meethubComment', {
           author: this.get('user'),
           text: this.get('comment'),
-          meethub: this.get('origContext').get('model')
+          meethub: this.get('selected')
         });
 
         meethubComment.save();

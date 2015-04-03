@@ -8,7 +8,7 @@ export default DS.Model.extend({
   status: DS.attr('string'),
 
   hasBeenAccepted: function() {
-    if(this.get('status') === 'attending')
+    if(this.get('status') === 'accepted')
     {
       return true;
     }

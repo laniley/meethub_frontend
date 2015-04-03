@@ -38,20 +38,12 @@
     padding: 20px 20px 25px 20px;
   }
 
-  @media (min-width: 1190px) {
-    padding: 10px 10px 15px 10px;
-  }
-
-  @media (min-width: 1245px) {
-    padding: 20px 20px 25px 20px;
-  }
-
   &:hover {
     border-color: $summery-border-color-hover;
   }
 
   &.highlight {
-    color: #4d4d4d;
+    color: $blue;
   }
 
   .envelope {

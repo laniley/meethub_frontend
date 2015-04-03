@@ -6,7 +6,7 @@
       </div>
       <div class="comment-infos col-xs-2  align-left no-padding">
         <div class="author">{{comment.author.name}}</div>
-        <div class="meethub">Meethub: {{comment.meethub.name}}</div>
+        <div class="meethub">Meethub: {{#link-to 'members-area.meethubs.comments.meethub' comment.meethub.id}}{{comment.meethub.name}}{{/link-to}}</div>
         <div>{{formatted-date comment.created_at 'L'}} - {{formatted-date comment.created_at 'LT'}}</div>
       </div>
       <div class="col-xs-9 align-left">

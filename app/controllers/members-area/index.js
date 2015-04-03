@@ -26,7 +26,6 @@ export default Ember.Controller.extend({
       var self = this;
 
       newMeethubComments = this.get('model.meethubComments').filter(function(comment) {
-        console.log(comment.get('new_comment'), comment.get('author').get('id'));
         return comment.get('new_comment') === true && comment.get('author').get('id') !== self.get('model').get('id');
       });
     }
