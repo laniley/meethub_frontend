@@ -26,7 +26,7 @@
     {{#if 'comment.author.isMe'}}
       {{#if 'inEditMode'}}
         <div class="buttons">
-          <div {{bind-attr class=":button :save commentIsEmpty:disabled:enabled"}} {{action 'createComment'}} {{translateAttr  title='comment.button.create'}}>{{unbound fa-icon "fa-check"}}</div>
+          <div {{bind-attr class=":button :save commentIsEmpty:disabled:enabled"}} {{action 'updateComment' comment}} {{translateAttr  title='comment.button.create'}}>{{unbound fa-icon "fa-check"}}</div>
           <div {{bind-attr class=":button :cancel"}} {{action 'cancelEditing' comment}} {{translateAttr  title='comment.button.cancel'}}>{{unbound fa-icon "fa-remove"}}</div>
         </div>
       {{else}}
