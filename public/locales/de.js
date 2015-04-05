@@ -53,9 +53,10 @@ Em.I18n.translations = {
       "cancel" : "Abbrechen"
     }
   },
-  "short-description": "Kurzbeschreibung",
+  "comments": "Kommentare",
+  "delete": "Löschen",
   "edit": "Bearbeiten",
   "leave": "Verlassen",
   "save": "Speichern",
-  "comments": "Kommentare"
+  "short-description": "Kurzbeschreibung"
 };
