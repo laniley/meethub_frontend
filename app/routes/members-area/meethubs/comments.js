@@ -16,5 +16,17 @@ export default Ember.Route.extend({
       into: 'members-area.meethubs.comments',
       outlet: 'comment_list'
     });
+  },
+  actions: {
+    willTransition: function(transition) {
+      if(transition.targetName.indexOf('members-area.meethubs.comments') === -1)
+      {
+        var comments = this.controllerFor('members-area.meethubs.comments').get('model');
+
+        comments.forEach(function(comment) {
+          comment.set('new_comment', false);
+        });
+      }
+    }
   }
 });
