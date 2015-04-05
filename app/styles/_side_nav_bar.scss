@@ -545,3 +545,14 @@
     border-bottom: 1px solid $divider-color;
   }
 }
+
+.side-nav-info-counter {
+  background-color: #de2c14;
+  color: white;
+  padding: 0px 7px;
+  border-radius: 25px;
+  font-size: 14px;
+  left: 25px;
+  margin-top: 3px;
+  position: absolute;
+}

@@ -47,6 +47,11 @@
     <div {{bind-attr class=":side-nav-item :meethub :no-padding meethub.isOpen:open"}}>
     	{{!-- TITLE --}}
       <div {{bind-attr class=":title meethubInvitation.meethub.isInEditMode:editMode:selectable meethubInvitation.meethub.isOpen:open"}} {{action 'toggleMeethub' meethubInvitation.meethub}}>
+        {{#if 'meethubInvitation.meethub.hasNewComments'}}
+          <span {{bind-attr class=":side-nav-info-counter meethubInvitation.meethub.hasNewComments:highlight"}}>
+            {{meethubInvitation.meethub.newComments.length}}
+          </span>
+        {{/if}}
         {{#if 'meethubInvitation.meethub.isInEditMode'}}
           {{input value=meethubInvitation.meethub.name}}
         {{else}}
@@ -96,7 +101,7 @@
           {{/if}}
         {{/if}}
         <div class="summary">
-          <div {{bind-attr class="meethubInvitation.meethub.hasNewComments:highlight"}}>{{#link-to 'members-area.meethubs.comments.meethub' meethubInvitation.meethub}}{{meethubInvitation.meethub.newComments.length}} neue Kommentare{{/link-to}}</div>
+          <div {{bind-attr class="meethubInvitation.meethub.hasNewComments:highlight"}}>{{#link-to 'members-area.meethubs.comments.meethub' meethubInvitation.meethub}}{{meethubInvitation.meethub.newComments.length}} {{t 'comment.new_comments'}}{{/link-to}}</div>
           {{!-- <div>0 neue Events</div>
           <div>0 neue Mitgleider</div> --}}
         </div>

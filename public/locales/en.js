@@ -51,7 +51,8 @@ Em.I18n.translations = {
     "button" : {
       "create" : "Create",
       "cancel" : "Cancel"
-    }
+    },
+    "new_comments": "new comments"
   },
   "comments": "Comments",
   "delete": "Delete",

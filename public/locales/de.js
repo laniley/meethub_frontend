@@ -51,7 +51,8 @@ Em.I18n.translations = {
     "button" : {
       "create" : "Senden",
       "cancel" : "Abbrechen"
-    }
+    },
+    "new_comments": "neue Kommentare"
   },
   "comments": "Kommentare",
   "delete": "Löschen",
