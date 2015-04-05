@@ -41,5 +41,21 @@ export default DS.Model.extend({
     {
       return false;
     }
-  }.property('short_description')
+  }.property('short_description'),
+
+  newComments: function() {
+    var comments = this.get('comments');
+    return comments.filterBy('new_comment', true);
+  }.property('comments.@each.new_comment'),
+
+  hasNewComments: function() {
+    if(this.get('newComments.length') > 0)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }.property('newComments.length')
 });
