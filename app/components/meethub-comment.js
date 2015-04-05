@@ -5,6 +5,8 @@ export default Ember.Component.extend({
   store: null,
   inEditMode: false,
 
+  isConfirmVisible: false,
+
   commentIsEmpty: function() {
     if(this.get('comment.text.length') > 0)
     {
@@ -33,8 +35,14 @@ export default Ember.Component.extend({
         this.set('comment', '');
       }
     },
+    showDeleteDialog: function() {
+      this.set('isConfirmVisible', true);
+    },
     deleteComment: function(comment) {
-      console.log('delete');
-    }
+      comment.destroyRecord();
+    },
+    cancelDeleting: function() {
+      this.set('isConfirmVisible', false);
+    },
   }
 });

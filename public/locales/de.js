@@ -52,9 +52,11 @@ Em.I18n.translations = {
       "create" : "Senden",
       "cancel" : "Abbrechen"
     },
-    "new_comments": "neue Kommentare"
+    "new_comments": "neue Kommentare",
+    "confirm_delete": "Bist du sicher, dass du den Kommentar löschen möchtest?"
   },
   "comments": "Kommentare",
+  "confirm": "Bestätigen",
   "delete": "Löschen",
   "edit": "Bearbeiten",
   "leave": "Verlassen",

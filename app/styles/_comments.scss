@@ -21,7 +21,7 @@
     margin-right: 20px;
   }
 
-  textarea, .comment-text {
+  textarea, .comment-text, .confirm-text {
     height: 50px;
     margin-top: 7px;
 
@@ -56,9 +56,14 @@
     }
   }
 
-  .comment-text {
+  .comment-text, .confirm-text {
     float: left;
     text-align: left;
+  }
+
+  .confirm-text {
+    color: $orange;
+    font-size: 18px;
   }
 
   .text-and-buttons {

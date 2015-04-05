@@ -11,29 +11,39 @@
     </div>
   </div>
   <div class="text-and-buttons col-xs-12 col-md-9 align-left no-padding">
-    {{#if 'inEditMode'}}
-      {{textarea
-            placeholder=placeholder
-            cols="250"
-            rows="2"
-            maxlength="1000"
-            value=comment.text}}
-    {{else}}
-      <div class="comment-text">
-        {{comment.text}}
+    {{#if 'isConfirmVisible'}}
+      <div class="confirm-text">
+        {{t 'comment.confirm_delete'}}
       </div>
-    {{/if}}
-    {{#if 'comment.author.isMe'}}
+      <div class="buttons">
+        <div {{bind-attr class=":button :save commentIsEmpty:disabled:enabled"}} {{action 'deleteComment' comment}} {{translateAttr  title='confirm'}}>{{unbound fa-icon "fa-check"}}</div>
+        <div {{bind-attr class=":button :cancel"}} {{action 'cancelDeleting'}} {{translateAttr  title='comment.button.cancel'}}>{{unbound fa-icon "fa-remove"}}</div>
+      </div>
+    {{else}}
       {{#if 'inEditMode'}}
-        <div class="buttons">
-          <div {{bind-attr class=":button :save commentIsEmpty:disabled:enabled"}} {{action 'updateComment' comment}} {{translateAttr  title='comment.button.create'}}>{{unbound fa-icon "fa-check"}}</div>
-          <div {{bind-attr class=":button :cancel"}} {{action 'cancelEditing' comment}} {{translateAttr  title='comment.button.cancel'}}>{{unbound fa-icon "fa-remove"}}</div>
-        </div>
+        {{textarea
+              placeholder=placeholder
+              cols="250"
+              rows="2"
+              maxlength="1000"
+              value=comment.text}}
       {{else}}
-        <div class="buttons">
-          <div {{bind-attr class=":button :save commentIsEmpty:disabled:enabled"}} {{action 'editComment' comment}} {{translateAttr  title='edit'}}>{{unbound fa-icon "fa-pencil"}}</div>
-          <div {{bind-attr class=":button :cancel commentIsEmpty:disabled:enabled"}} {{action 'deleteComment' comment}} {{translateAttr  title='delete'}}>{{unbound fa-icon "fa-trash"}}</div>
+        <div class="comment-text">
+          {{comment.text}}
         </div>
+      {{/if}}
+      {{#if 'comment.author.isMe'}}
+        {{#if 'inEditMode'}}
+          <div class="buttons">
+            <div {{bind-attr class=":button :save commentIsEmpty:disabled:enabled"}} {{action 'updateComment' comment}} {{translateAttr  title='comment.button.create'}}>{{unbound fa-icon "fa-check"}}</div>
+            <div {{bind-attr class=":button :cancel"}} {{action 'cancelEditing' comment}} {{translateAttr  title='comment.button.cancel'}}>{{unbound fa-icon "fa-remove"}}</div>
+          </div>
+        {{else}}
+          <div class="buttons">
+            <div {{bind-attr class=":button :save commentIsEmpty:disabled:enabled"}} {{action 'editComment' comment}} {{translateAttr  title='edit'}}>{{unbound fa-icon "fa-pencil"}}</div>
+            <div {{bind-attr class=":button :cancel"}} {{action 'showDeleteDialog'}} {{translateAttr  title='delete'}}>{{unbound fa-icon "fa-trash"}}</div>
+          </div>
+        {{/if}}
       {{/if}}
     {{/if}}
   </div>
