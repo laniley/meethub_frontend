@@ -102,8 +102,8 @@
         {{/if}}
         <div class="summary">
           <div {{bind-attr class="meethubInvitation.meethub.hasNewComments:highlight"}}>{{#link-to 'members-area.meethubs.comments.meethub' meethubInvitation.meethub}}{{meethubInvitation.meethub.newComments.length}} {{t 'comment.new_comments'}}{{/link-to}}</div>
-          {{!-- <div>0 neue Events</div>
-          <div>0 neue Mitgleider</div> --}}
+          <div>{{#link-to 'members-area.meethubs.calendar.list'}}0 neue Events{{/link-to}}</div>
+          {{!-- <div>0 neue Mitgleider</div> --}}
         </div>
       	<div class="members-title">{{t 'meethub.members'}}</div>
         <div class="members">

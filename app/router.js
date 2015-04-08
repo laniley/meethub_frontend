@@ -17,7 +17,10 @@ Router.map(function() {
       path: "/meethubs"
     }, function() {
       this.route("map", function() {});
-      this.route("calendar", function() {});
+
+      this.route("calendar", function() {
+        this.route("list");
+      });
 
       this.route("comments", function() {
         this.route("meethub", {

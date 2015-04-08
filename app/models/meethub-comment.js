@@ -6,5 +6,15 @@ export default DS.Model.extend({
   text: DS.attr('string'),
   meethub: DS.belongsTo('meethub', { async: true }),
   created_at: DS.attr('date'),
-  new_comment: DS.attr('boolean', { defaultValue: false })
+
+  new_comment: function() {
+    if(this.get('created_at') > this.get('user.last_login'))
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }.property('created_at', 'user.last_login')
 });

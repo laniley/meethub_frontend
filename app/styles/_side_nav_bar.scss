@@ -541,8 +541,10 @@
   }
 
   .summary {
-    line-height: 40px;
+    line-height: 30px;
+    padding: 5px;
     border-bottom: 1px solid $divider-color;
+    margin-bottom: 10px;
   }
 }
 
