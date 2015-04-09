@@ -39,11 +39,39 @@
     }
   }
 
+  .btn {
+    &.active {
+      z-index: 0;
+    }
+  }
+
   .btn-default {
     &:not(.btn-today) {
       &:focus {
         background-color: #fff;
       }
+    }
+  }
+}
+
+.view-toggle {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+
+  button {
+    padding: 3px 7px;
+  }
+
+  a {
+    font-size: 16px;
+
+    &.active {
+      color: $active-item-color;
+    }
+
+    &:not(.active) {
+      color: #ddd;
     }
   }
 }
