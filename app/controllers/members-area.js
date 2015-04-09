@@ -504,20 +504,10 @@ export default Ember.Controller.extend({
     toggleSidebar: function() {
       if(this.get('isSidebarOpen'))
       {
-        Ember.$('.side-nav-bar').addClass('closed');
-        Ember.$('.side-nav-bar > .section-content').addClass('closed');
-        Ember.$('.main-container').addClass('closed');
-        Ember.$('.google-map').addClass('closed');
-        Ember.$('.calendar').addClass('closed');
         this.set('isSidebarOpen', false);
       }
       else
       {
-        Ember.$('.side-nav-bar').removeClass('closed');
-        Ember.$('.side-nav-bar > .section-content').removeClass('closed');
-        Ember.$('.main-container').removeClass('closed');
-        Ember.$('.google-map').removeClass('closed');
-        Ember.$('.calendar').removeClass('closed');
         this.set('isSidebarOpen', true);
       }
     }
