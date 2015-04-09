@@ -1,6 +1,12 @@
-{{outlet}}
+<div class="main-area">
+  <div {{bind-attr class=":main-container :container-fluid isSidebarOpen:open:closed"}}>
 
-<div class="btn-group view-toggle">
-  <button class="btn btn-sm btn-default">{{#link-to 'members-area.meethubs.calendar.index'}}{{unbound fa-icon "fa-fixed-with fa-calendar"}}{{/link-to}}</button>
-  <button class="btn btn-sm btn-default">{{#link-to 'members-area.meethubs.calendar.list'}}{{unbound fa-icon "fa-fixed-with fa-align-justify"}}{{/link-to}}</button>
+    {{outlet}}
+
+    <div class="btn-group view-toggle">
+      <button class="btn btn-sm btn-default">{{#link-to 'members-area.meethubs.calendar.index'}}{{unbound fa-icon "fa-fixed-with fa-calendar"}}{{/link-to}}</button>
+      <button class="btn btn-sm btn-default">{{#link-to 'members-area.meethubs.calendar.list'}}{{unbound fa-icon "fa-fixed-with fa-align-justify"}}{{/link-to}}</button>
+    </div>
+
+  </div>
 </div>

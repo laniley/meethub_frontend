@@ -22,9 +22,19 @@
         }
       }
 
+      .link-label {
+        @media (max-width: $screen-xs-max) {
+          margin-left: 30px;
+        }
+      }
+
       .link-icon {
         float: left;
         margin-right: 3px;
+
+        @media (max-width: $screen-xs-max) {
+          margin-right: 30px;
+        }
       }
     }
 
@@ -208,7 +218,16 @@
   padding: 0px 7px;
   border-radius: 25px;
   font-size: 14px;
-  left: 25px;
-  top: 40px;
+
   position: absolute;
+
+  @media (max-width: $screen-xs-max) {
+    left: 40px;
+    top: 10px;
+  }
+
+  @media (min-width: $screen-sm-min) {
+    left: 25px;
+    top: 40px;
+  }
 }

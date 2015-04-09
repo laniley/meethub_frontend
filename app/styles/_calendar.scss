@@ -5,12 +5,8 @@
 
   top: 0;
   left: 0;
-  right: $side-navbar-width;
+  right: 0;
   bottom: 0;
-
-  &.closed {
-    right: 50px;
-  }
 
   .header {
     padding: 5px;

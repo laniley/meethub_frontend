@@ -1,5 +1,5 @@
 <div class="main-area">
-  <div class="main-container container-fluid">
+  <div {{bind-attr class=":main-container :container-fluid isSidebarOpen:open:closed"}}>
     <h2>{{t 'comments'}} {{outlet 'title'}}</h2>
     {{outlet 'create_comment'}}
     {{outlet 'comment_list'}}

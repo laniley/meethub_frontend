@@ -1,5 +1,5 @@
 <div class="main-area">
-  <div class="main-container container-fluid welcome-container">
+  <div {{bind-attr class=":main-container :container-fluid :welcome-container isSidebarOpen:open:closed"}}>
 
     <div class="row greeting">
       <h1>Hi {{model.first_name}}</h1>
