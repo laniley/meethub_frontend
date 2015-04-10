@@ -55,19 +55,37 @@
   left: 5px;
   top: 5px;
 
-  button {
-    padding: 3px 7px;
-  }
-
   a {
-    font-size: 16px;
-
     &.active {
-      color: $active-item-color;
+      .btn {
+        color: $active-item-color;
+      }
     }
 
     &:not(.active) {
-      color: #ddd;
+      .btn {
+        color: #aaa;
+      }
+    }
+
+    .btn {
+      padding: 3px 7px;
+      font-size: 16px;
+    }
+  }
+
+  :not(:first-child) {
+    .btn {
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+      margin-left: -4px;
+    }
+  }
+
+  :not(:last-child) {
+    .btn {
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
     }
   }
 }

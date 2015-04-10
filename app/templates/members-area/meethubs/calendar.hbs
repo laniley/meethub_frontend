@@ -4,8 +4,8 @@
     {{outlet}}
 
     <div class="btn-group view-toggle">
-      <button class="btn btn-sm btn-default">{{#link-to 'members-area.meethubs.calendar.index'}}{{unbound fa-icon "fa-fixed-with fa-calendar"}}{{/link-to}}</button>
-      <button class="btn btn-sm btn-default">{{#link-to 'members-area.meethubs.calendar.list'}}{{unbound fa-icon "fa-fixed-with fa-align-justify"}}{{/link-to}}</button>
+      {{#link-to 'members-area.meethubs.calendar.index'}}<div class="btn btn-sm btn-default">{{unbound fa-icon "fa-fixed-with fa-calendar"}}</div>{{/link-to}}
+      {{#link-to 'members-area.meethubs.calendar.list'}}<div class="btn btn-sm btn-default">{{unbound fa-icon "fa-fixed-with fa-align-justify"}}</div>{{/link-to}}
     </div>
 
   </div>
