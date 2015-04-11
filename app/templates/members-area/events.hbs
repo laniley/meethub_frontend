@@ -13,7 +13,7 @@
       <div>{{event.name}}</div>
       <div>{{event.location.name}}</div>
       <div class="participants">
-        {{#if 'event.hasConnectedFriends'}}
+        {{#if event.hasConnectedFriends}}
           <div class="row participants-title">{{t 'participants.title'}}</div>
           {{#each friend in event.friends_attending}}
             <img class="attending" {{bind-attr src=friend.picture}} {{bind-attr title=friend.name}} />

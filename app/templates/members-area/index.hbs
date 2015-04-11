@@ -3,7 +3,7 @@
 
     <div class="row greeting">
       <h1>Hi {{model.first_name}}</h1>
-      {{#if 'model.first_login'}}
+      {{#if model.first_login}}
         <h3>{{t 'welcome.first-login.greeting'}}</h3>
       {{else}}
         <h3>{{t 'welcome.not-first-login.greeting'}}</h3>
@@ -14,7 +14,7 @@
       <div class="col-centered">
         {{#link-to 'members-area.messages' (query-params meethub_inv=true event_inv=false)}}
           <div {{bind-attr class=":summary-item hasUnreadMeethubInvitations:highlight"}} {{translateAttr  title='welcome.meethub-invitations'}}>
-            {{#if 'hasUnreadMeethubInvitations'}}
+            {{#if hasUnreadMeethubInvitations}}
               <div {{bind-attr class=":envelope hasUnreadMeethubInvitations:has-unread-messages"}}>{{unbound fa-icon "fa-envelope"}}</div>
             {{else}}
               <div class="envelope">{{unbound fa-icon "fa-envelope-o"}}</div>
@@ -27,7 +27,7 @@
       <div class="col-centered">
         {{#link-to 'members-area.messages' (query-params meethub_inv=false event_inv=true)}}
           <div {{bind-attr class=":summary-item hasUnreadEventInvitations:highlight"}} {{translateAttr  title='welcome.event-invitations'}}>
-            {{#if 'hasUnreadEventInvitations'}}
+            {{#if hasUnreadEventInvitations}}
               <div {{bind-attr class=":envelope hasUnreadEventInvitations:has-unread-messages"}}>{{unbound fa-icon "fa-envelope"}}</div>
             {{else}}
               <div class="envelope">{{unbound fa-icon "fa-envelope-o"}}</div>
@@ -43,7 +43,7 @@
       <div class="col-centered">
         {{#link-to 'members-area.meethubs.comments'}}
           <div {{bind-attr class=":summary-item hasNewMeethubComments:highlight"}} {{translateAttr  title='welcome.meethub-comments'}}>
-            {{#if 'hasNewMeethubComments'}}
+            {{#if hasNewMeethubComments}}
               <div {{bind-attr class=":envelope hasNewMeethubComments:has-unread-messages"}}>{{unbound fa-icon "fa-list"}}</div>
             {{else}}
               <div class="envelope">{{unbound fa-icon "fa-list"}}</div>

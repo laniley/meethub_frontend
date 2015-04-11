@@ -18,7 +18,7 @@
 {{!-- LIST --}}
 <div class="side-nav-item-container">
   {{!-- CREATE --}}
-  {{#if 'createIsOpen'}}
+  {{#if createIsOpen}}
     <div {{bind-attr class=":side-nav-item"}}>
       <div class="new-elem-title">
         {{focused-input class="new-elem-title-input" placeholder="Name" value=name}}
@@ -35,7 +35,7 @@
     </div>
   {{/if}}
   {{!-- SEARCH --}}
-  {{#if 'searchIsOpen'}}
+  {{#if searchIsOpen}}
     <div {{bind-attr class=":side-nav-item :align-left"}}>
       <div class="search">
         {{focused-input class="search-input" placeholder="Search..." value=search_term}}
@@ -47,12 +47,12 @@
     <div {{bind-attr class=":side-nav-item :meethub :no-padding meethub.isOpen:open"}}>
     	{{!-- TITLE --}}
       <div {{bind-attr class=":title meethubInvitation.meethub.isInEditMode:editMode:selectable meethubInvitation.meethub.isOpen:open"}} {{action 'toggleMeethub' meethubInvitation.meethub}}>
-        {{#if 'meethubInvitation.meethub.hasNewComments'}}
+        {{#if meethubInvitation.meethub.hasNewComments}}
           <span {{bind-attr class=":side-nav-info-counter meethubInvitation.meethub.hasNewComments:highlight"}}>
             {{meethubInvitation.meethub.newComments.length}}
           </span>
         {{/if}}
-        {{#if 'meethubInvitation.meethub.isInEditMode'}}
+        {{#if meethubInvitation.meethub.isInEditMode}}
           {{input value=meethubInvitation.meethub.name}}
         {{else}}
           {{meethubInvitation.meethub.name}}
@@ -61,11 +61,11 @@
      	{{!-- BODY --}}
       <div {{bind-attr class=":body meethubInvitation.meethub.isOpen:open"}}>
         <div class="item-options">
-          {{#if 'meethubInvitation.meethub.isInEditMode'}}
+          {{#if meethubInvitation.meethub.isInEditMode}}
             <div class="item-option save-button" {{action 'save' meethubInvitation.meethub}}>{{unbound fa-icon "fa-check"}} {{t 'save'}}</div>
             <div class="item-option cancel-button" {{action 'cancelEditing' meethubInvitation.meethub}}>{{unbound fa-icon "fa-remove"}} {{t 'meethub.button.cancel'}}</div>
           {{else}}
-            {{#if 'meethubInvitation.meethub.selectNewAdmin'}}
+            {{#if meethubInvitation.meethub.selectNewAdmin}}
               <div class="item-option cancel-button" {{action 'cancelEditing' meethubInvitation.meethub}}>{{unbound fa-icon "fa-remove"}} {{t 'meethub.button.cancel'}}</div>
             {{else}}
               {{edit-button
@@ -76,7 +76,7 @@
             {{/if}}
           {{/if}}
         </div>
-        {{#if 'meethubInvitation.meethub.selectNewAdmin'}}
+        {{#if meethubInvitation.meethub.selectNewAdmin}}
           <div class="new-admin-selection">
             {{t 'meethub.select-new-admin-advice'}}
             {{user-search
@@ -87,7 +87,7 @@
               type='makeAdmin'}}
           </div>
         {{/if}}
-        {{#if 'meethubInvitation.meethub.isInEditMode'}}
+        {{#if meethubInvitation.meethub.isInEditMode}}
           <div class="short-description edit">
             {{#if isGerman}}
               {{textarea placeholder="Kurzbeschreibung" cols="50" rows="3" maxlength="250" value=meethubInvitation.meethub.short_description}}
@@ -96,7 +96,7 @@
             {{/if}}
           </div>
         {{else}}
-          {{#if 'meethubInvitation.meethub.hasShortDescription'}}
+          {{#if meethubInvitation.meethub.hasShortDescription}}
             <div class="short-description">{{meethubInvitation.meethub.short_description}}</div>
           {{/if}}
         {{/if}}
@@ -117,7 +117,7 @@
             {{unbound fa-icon "fa-user-plus"}}
           </div>
         </div>
-        {{#if 'meethubInvitation.meethub.showAddMembersForm'}}
+        {{#if meethubInvitation.meethub.showAddMembersForm}}
           {{user-search
               user=user
               friends=friends

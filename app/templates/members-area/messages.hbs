@@ -70,7 +70,7 @@
             {{/link-to}}
           </div>
           <div class="participants">
-            {{#if 'message.eventInvitation.event.hasConnectedFriends'}}
+            {{#if message.eventInvitation.event.hasConnectedFriends}}
               <div class="row participants-title">{{t 'participants.title'}}</div>
               {{#each friend in message.eventInvitation.event.friends_attending}}
                 <img class="attending" {{bind-attr src=friend.picture}} {{bind-attr title=friend.name}} />

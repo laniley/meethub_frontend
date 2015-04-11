@@ -11,7 +11,7 @@
       <div class="friends_search_result">
         <img {{bind-attr src=friend.picture }} />
         {{friend.name}}
-        {{#if 'isAMeethubInvite'}}
+        {{#if isAMeethubInvite}}
           {{meethub-invite-button user=user meethub=parent friend_id=friend.id}}
         {{else}}
           <div class="friend_search_button">
