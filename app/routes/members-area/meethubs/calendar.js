@@ -8,7 +8,9 @@ export default Ember.Route.extend({
   //   controller = this.controllerFor('members-area/calendar');
   //   controller.set('model', this.store.all('event'));
   // },
-  // renderTemplate: function() {
-  //   this.render('members-area.calendar');
-  // }
+  renderTemplate: function() {
+    this.render('members-area.meethubs.calendar', {
+      into: 'members-area'
+    });
+  }
 });
