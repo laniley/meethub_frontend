@@ -2,16 +2,30 @@
 <div class="section-title">
   Messages
 </div>
-{{!-- FILTER --}}
-<div class="side-nav-item selectable" {{action "centerMapOnCurrentPosition"}}>
-  Messages Filter
+{{!-- FILTER BUTTONS --}}
+<div class="side-nav-filter-buttons section-buttons">
+  <ul>
+    <li {{bind-attr class=":section-button createIsOpen:active"}} {{translateAttr  title='messages.button.create'}} {{action 'toggleCreate'}}>
+      {{unbound fa-icon "fa-plus"}}
+    </li>
+    {{!-- SEARCH --}}
+    <li {{bind-attr class=":section-button searchIsOpen:active"}} {{translateAttr  title='messages.button.search'}} {{action 'toggleSearch'}}>
+      {{unbound fa-icon "fa-search"}}
+    </li>
+    <li {{bind-attr class=":section-button meethub_inv:active"}} {{translateAttr  title='messages.button.meethub-inv-filter'}} {{action 'toggleMeethubInvFilter'}}>
+      {{unbound fa-icon "fa-share-alt"}}
+    </li>
+    <li {{bind-attr class=":section-button event_inv:active"}} {{translateAttr  title='messages.button.event-inv-filter'}} {{action 'toggleEventInvFilter'}}>
+      {{unbound fa-icon "fa-music"}}
+    </li>
+  </ul>
 </div>
 {{!-- LIST --}}
 <div {{bind-attr class=":side-nav-item-container"}}>
   {{#each message in sortedMessages}}
     <div {{bind-attr class=":side-nav-item :message :no-padding message.hasBeenRead:has-been-read"}}>
       {{!-- TITLE --}}
-      <div class="title selectable" {{action 'toggleMessage' message}}>
+      <div {{bind-attr class=":title :selectable message.isOpen:open"}} {{action 'toggleMessage' message}}>
         <div class="icons">
           <div {{bind-attr class=":envelope message.hasBeenRead"}}>
             {{#if message.hasBeenRead}}
@@ -22,46 +36,61 @@
           </div>
           {{#if message.isEventInvitation}}
             <div class="message-type">{{unbound fa-icon "fa-music"}}</div>
-            <div {{bind-attr class=":eventInvitation-status message.eventInvitation.hasBeenAccepted:accepted message.eventInvitation.hasBeenAcceptedMaybe:maybe message.eventInvitation.hasBeenDeclined:declined"}}>
+            {{#if message.hasBeenRead}}
+              <div {{bind-attr class=":eventInvitation-status message.eventInvitation.hasBeenAccepted:accepted message.eventInvitation.hasBeenAcceptedMaybe:maybe message.eventInvitation.hasBeenDeclined:declined"}}>
+              {{unbound fa-icon "fa-circle"}}</div>
+            {{/if}}
+          {{/if}}
+          {{#if message.isMeethubInvitation}}
+            <div class="message-type">{{unbound fa-icon "fa-share-alt"}}</div>
+            <div {{bind-attr class=":methubInvitation-status message.meethubInvitation.hasBeenAccepted:accepted message.meethubInvitation.hasBeenDeclined:declined"}}>
               {{unbound fa-icon "fa-circle"}}</div>
           {{/if}}
         </div>
         <div class="subject">{{message.subject}}</div>
       </div>
       {{!-- BODY --}}
-      {{#if message.isEventInvitation}}
       <div {{bind-attr class=":body message.isOpen:open"}}>
-        <div class="question">{{t 'messages.participation-question'}}</div>
-        <div>
-          <div {{bind-attr class=":button :accept message.eventInvitation.hasBeenAccepted:active"}} {{action 'acceptEventInvitation' message.eventInvitation}} {{translateAttr  title='messages.accept'}}>{{unbound fa-icon "fa-check"}}</div>
-          <div {{bind-attr class=":button :maybe message.eventInvitation.hasBeenAcceptedMaybe:active"}} {{action 'maybeAcceptEventInvitation' message.eventInvitation}} {{translateAttr  title='messages.maybe'}}>{{unbound fa-icon "fa-question"}}</div>
-          <div {{bind-attr class=":button :decline message.eventInvitation.hasBeenDeclined:active"}} {{action 'declineEventInvitation' message.eventInvitation}} {{translateAttr  title='messages.decline'}}>{{unbound fa-icon "fa-remove"}}</div>
-        </div>
-        <div class="start">
-          {{#link-to 'members-area.messages.calendar'}}
-            {{#if isGerman}}
-              {{message.eventInvitation.event.start_date_converted_to_de}}
-            {{else}}
-              {{message.eventInvitation.event.start_date_converted_to_us}}
+        {{#if message.isEventInvitation}}
+          <div class="question">{{t 'messages.participation-question'}}</div>
+          <div>
+            <div {{bind-attr class=":button :accept message.eventInvitation.hasBeenAccepted:active"}} {{action 'acceptEventInvitation' message.eventInvitation.id}} {{translateAttr  title='messages.accept'}}>{{unbound fa-icon "fa-check"}}</div>
+            <div {{bind-attr class=":button :maybe message.eventInvitation.hasBeenAcceptedMaybe:active"}} {{action 'maybeAcceptEventInvitation' message.eventInvitation.id}} {{translateAttr  title='messages.maybe'}}>{{unbound fa-icon "fa-question"}}</div>
+            <div {{bind-attr class=":button :decline message.eventInvitation.hasBeenDeclined:active"}} {{action 'declineEventInvitation' message.eventInvitation.id}} {{translateAttr  title='messages.decline'}}>{{unbound fa-icon "fa-remove"}}</div>
+          </div>
+          <div class="start">
+            {{#link-to 'members-area.messages.calendar'}}
+              {{formatted-date message.eventInvitation.event.start_date 'L'}}
+               - {{message.eventInvitation.event.start_time_converted}}
+            {{/link-to}}
+          </div>
+          <div class="location">
+            {{#link-to 'members-area.messages.map'}}
+              {{message.eventInvitation.event.location.name}}
+            {{/link-to}}
+          </div>
+          <div class="participants">
+            {{#if message.eventInvitation.event.hasConnectedFriends}}
+              <div class="row participants-title">{{t 'participants.title'}}</div>
+              {{#each friend in message.eventInvitation.event.friends_attending}}
+                <img class="attending" {{bind-attr src=friend.picture}} {{bind-attr title=friend.name}} />
+              {{/each}}
+              {{#each friend in message.eventInvitation.event.friends_attending_maybe}}
+                <img class="attending-maybe" {{bind-attr src=friend.picture}} {{bind-attr title=friend.name}} />
+              {{/each}}
+              {{#each friend in message.eventInvitation.event.friends_declined}}
+                <img class="declined" {{bind-attr src=friend.picture}} {{bind-attr title=friend.name}} />
+              {{/each}}
             {{/if}}
-             - {{message.eventInvitation.event.start_time_converted}}
-          {{/link-to}}
-        </div>
-        <div class="location">
-          {{#link-to 'members-area.messages.map'}}
-            {{message.eventInvitation.event.location.name}}
-          {{/link-to}}
-        </div>
-        <div class="participants">
-          {{#if 'hasConnectedFriends'}}
-            {{t 'messages.participants.title'}}
-            {{#each friend in message.eventInvitation.event.friends_attending}}
-              {{friend.name}}
-            {{/each}}
+          </div>
+        {{else}}
+          {{#if message.isEventInvitation}}
+            <div class="text">{{message.text}} {{message.from_user.name}}</div>
+          {{else}}
+            <div class="text">{{message.text}}</div>
           {{/if}}
-        </div>
+        {{/if}}
       </div>
-      {{/if}}
     </div>
   {{/each}}
 </div>

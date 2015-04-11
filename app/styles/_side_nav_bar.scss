@@ -2,19 +2,18 @@
   position: absolute;
   overflow: hidden;
   font-size: 18px;
-
-  @media (min-width: $screen-sm-min) {
-    top: 70px;
-  }
-
-  @media (max-width: $screen-xs-max) {
-    top: 50px;
-  }
-
+  height: 100%;
   right: 0;
   bottom: 0;
-  width: $side-navbar-width;
   max-width: 100%;
+
+  @media (max-width: $screen-xs-max) {
+    width: 100%;
+  }
+
+  @media (min-width: $screen-sm-min) {
+    width: $side-navbar-width;
+  }
 
   &.closed {
     width: 50px;
@@ -62,6 +61,11 @@
         }
       }
     }
+
+    .toggle-button {
+      border-bottom: 1px solid $border-color;
+      margin-bottom: 10px;
+    }
   }
 
   .section-content {
@@ -76,33 +80,47 @@
       display: none;
     }
 
-    .section-title, .side-nav-item {
-      padding: 15px 10px;
-      border-bottom: 1px solid $border-color;
-    }
-
-    .section-title {
-      font-family: Ethno_regular, Arial, sans-serif;
-      font-size: 20px;
-      color: $header-text-color;
-    }
-
-    .section-buttons {
-      color: $link-color;
-
-      .section-button {
-        cursor: pointer;
+    .section-button {
+      a {
         padding: 10px;
+        cursor: pointer;
+        color: $link-color;
+        border: 1px solid white;
 
         &:hover {
           color: $link-color-hover;
         }
 
-        &:active {
+        &.active {
           color: $link-color-active;
+          border: 1px solid $link-color-active;
+          border-radius: 5px;
           background-color: $active-item-background-color;
+          // box-shadow: #BFC8CB 0px 0px 10px inset;
         }
       }
+
+      padding: 10px;
+      cursor: pointer;
+      color: $link-color;
+      border: 1px solid white;
+
+      &:hover {
+        color: $link-color-hover;
+      }
+
+      &.active {
+        color: $link-color-active;
+        // border: 1px solid $link-color-active;
+        border-radius: 5px;
+        background-color: $active-item-background-color;
+        box-shadow: #BFC8CB 0px 0px 10px inset;
+      }
+    }
+
+    .side-nav-filter-buttons {
+      padding: 5px 2px;
+      border-bottom: 1px solid $border-color;
     }
 
     .side-nav-item-container {
@@ -113,7 +131,52 @@
       bottom: 0;
       overflow: auto;
 
+      .side-nav-button {
+        cursor: pointer;
+        color: $link-color;
+
+        &:not(.inline) {
+          padding: 0 6%;
+        }
+
+        &.inline {
+          margin-left: 25px;
+        }
+
+        &.cancel {
+          color: $orange;
+        }
+
+        &.disabled {
+          cursor: default;
+          color: #e6e6e6;
+        }
+
+        &:not(.disabled){
+          &.save {
+            color: $link-color-active;
+          }
+
+          &:hover {
+            color: $link-color-hover;
+          }
+
+          &.active {
+            color: $link-color-active;
+            background-color: $active-item-background-color;
+          }
+        }
+      }
+
       .side-nav-item {
+
+        float: left;
+
+        width: 100%;
+
+        &.open {
+          // box-shadow: #BFC8CB 0px 0px 10px inset;
+        }
 
         &.message {
 
@@ -123,18 +186,13 @@
             }
           }
 
-          .title {
-            padding: 15px 10px;
+          .button {
 
-            .icons {
-              position: absolute;
-            }
+            width: 30%;
+            margin: 0 1.66666%;
 
-            .subject {
-              position: relative;
-              left: 50px;
-              width: 80%;
-            }
+            padding: 2px 5px;
+            margin-bottom: 10px;
           }
 
           .envelope {
@@ -142,6 +200,10 @@
             font-size: 24px;
             margin-top: -10px;
             margin-right: 10px;
+
+            &:not(.has-been-read) {
+              color: $orange;
+            }
           }
 
           .message-type {
@@ -155,7 +217,7 @@
             margin: 5px -40px;
             font-size: 16px;
             color: #ddd;
-            text-shadow: 0 -1px 1px #FFFFFF, 0 1px 1px #666666;
+            text-shadow: 0 -1px 1px #FFFFFF, 0 1px 1px #000000;
 
             &.accepted {
               color: $blue;
@@ -182,8 +244,136 @@
             }
           }
         }
+
+        &.meethub {
+
+          img {
+            width: 40px;
+            border-radius: 5px;
+          }
+
+          .members-title {
+            margin-bottom: 10px;
+            color: #000;
+          }
+
+          .add-new-member {
+            display: inline-block;
+            line-height: 40px;
+            font-size: 22px;
+            cursor: pointer;
+            vertical-align: middle;
+            width: 40px;
+            height: 40px;
+            border-radius: 5px;
+            border: 1px solid $border-color;
+
+            color: $link-color;
+
+            &:hover {
+              &:not(.open) {
+                color: $link-color-hover;
+                border: 1px solid $link-color-hover;
+              }
+            }
+
+            &.open {
+              // border: 1px solid $blue;
+              background-color: $blue;
+              color: #fff;
+              // color: $blue;
+            }
+          }
+        }
+
+        .title {
+          padding: 15px 10px;
+
+          &.open {
+            background-color: #efefef;
+            color: #000;
+            border: 1px solid #B9BFC2;
+            border-bottom: none;
+          }
+
+          .icons {
+            position: absolute;
+          }
+
+          .subject {
+            position: relative;
+            left: 50px;
+            width: 80%;
+          }
+        }
+
+        .search {
+          width: 100%;
+          float: left;
+
+          input {
+            width: 100%;
+          }
+        }
+
+        .reset-search-button {
+          position: absolute;
+          margin-left: -45px;
+          line-height: 30px;
+        }
+
+        .new-elem-title {
+          text-align: left;
+        }
+
+        .new-elem-short-description {
+          margin-top: 10px;
+        }
+
+        .new-elem-title-input {
+          width: 100%;
+        }
+
+        .short-description {
+          color: #000;
+          border-bottom: 1px solid $divider-color;
+
+          &.edit {
+            height: 98px;
+          }
+
+          &:not(.edit) {
+            line-height: 40px;
+          }
+
+          textarea {
+            margin: 10px 0 5px 0;
+          }
+        }
+
+        .highlight {
+          a {
+            color: $orange;
+          }
+
+        }
+      }
+
+      input {
+        padding: 0 5px;
       }
     }
+  }
+
+  .section-title, .side-nav-item {
+    padding: 15px 10px;
+    border-bottom: 1px solid $border-color;
+  }
+
+  .section-title {
+    font-family: Ethno_regular, Arial, sans-serif;
+    font-size: 20px;
+    color: $header-text-color;
   }
 
   .body {
@@ -193,18 +383,16 @@
       display: none;
     }
 
+    &.open {
+      box-shadow: #BFC8CB 0px 0px 10px inset;
+      border: 1px solid #B9BFC2;
+    }
+
     .question {
       padding: 0 15px 15px 15px;
     }
 
     .button {
-
-      width: 30%;
-      margin: 0 1.66666%;
-      float: left;
-
-      padding: 2px 5px;
-      margin-bottom: 10px;
 
       &.accept {
         border-color: $blue;
@@ -286,4 +474,87 @@
       background-color: #f7f7f7;
     }
   }
+
+  .participants {
+
+    .participants-title {
+      line-height: 40px;
+    }
+
+    img {
+      width: 40px;
+      border-radius: 5px;
+      border: 3px solid;
+    }
+
+    .attending {
+      border-color: $blue;
+    }
+
+    .attending-maybe {
+      border-color: $yellow;
+    }
+
+    .declined {
+      border-color: $orange;
+    }
+  }
+
+  .item-options {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #2588AB;
+  }
+
+  .item-option {
+    &:not(.do-not-display)
+    {
+      display: inline-block;
+      margin: 0 10px;
+      cursor: pointer;
+
+      &:hover {
+        color: $link-color-hover;
+      }
+
+      &:active {
+        color: $link-color-active;
+      }
+    }
+
+    &.save-button {
+      i {
+        color: $active-item-color;
+      }
+    }
+
+    &.cancel-button {
+      i {
+        color: $cancel-color;
+      }
+    }
+  }
+
+  .new-admin-selection {
+    color: #000;
+    border-bottom: 1px solid $divider-color;
+    padding: 5px 0;
+  }
+
+  .summary {
+    line-height: 30px;
+    padding: 5px;
+    border-bottom: 1px solid $divider-color;
+    margin-bottom: 10px;
+  }
+}
+
+.side-nav-info-counter {
+  background-color: #de2c14;
+  color: white;
+  padding: 0px 7px;
+  border-radius: 25px;
+  font-size: 14px;
+  left: 25px;
+  margin-top: 3px;
+  position: absolute;
 }

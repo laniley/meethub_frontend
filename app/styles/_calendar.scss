@@ -3,21 +3,10 @@
   overflow-x: hidden;
   overflow-y: auto;
 
+  top: 0;
   left: 0;
-  right: $side-navbar-width;
+  right: 0;
   bottom: 0;
-
-  &.closed {
-    right: 50px;
-  }
-
-  @media (min-width: $screen-sm-min) {
-    top: 70px;
-  }
-
-  @media (max-width: $screen-xs-max) {
-    top: 50px;
-  }
 
   .header {
     padding: 5px;
@@ -46,11 +35,57 @@
     }
   }
 
+  .btn {
+    &.active {
+      z-index: 0;
+    }
+  }
+
   .btn-default {
     &:not(.btn-today) {
       &:focus {
         background-color: #fff;
       }
+    }
+  }
+}
+
+.view-toggle {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+
+  a {
+    &.active {
+      .btn {
+        color: $active-item-color;
+      }
+    }
+
+    &:not(.active) {
+      .btn {
+        color: #aaa;
+      }
+    }
+
+    .btn {
+      padding: 3px 7px;
+      font-size: 16px;
+    }
+  }
+
+  :not(:first-child) {
+    .btn {
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+      margin-left: -4px;
+    }
+  }
+
+  :not(:last-child) {
+    .btn {
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
     }
   }
 }

@@ -1,5 +1,5 @@
 $bklinecolor: #E0E0E0;
-$todaybgcolor: $lightblue;
+$todaybgcolor: $babyblue;
 $weekendbgcolor: lighten(rgb(242, 242, 242), 1%);
 
 $eventfontsize: 12px;
@@ -90,7 +90,7 @@ $prefix: "bk-";
         background-color: #DDD;
         color: #333;
         position: absolute;
-        z-index: 999;
+        z-index: 0;
         border-radius: 5px;
         padding-left: 10px;
         padding-right: 5px;

@@ -34,53 +34,54 @@ export default AuthenticateRoute.extend({
 
     var self = this;
 
-    FB.api('/me', {fields: 'id,first_name,last_name,picture.width(120).height(120),friends'}, function(response)
+    FB.api('/me', {fields: 'id,email,first_name,last_name,picture.width(120).height(120),friends'}, function(response)
     {
       if( !response.error )
       {
         console.log('Successful login to FB for: ' + response.first_name + ' ' + response.last_name, response);
 
-        var user = self.store.createRecord('user', {
-          fb_id: response.id,
-          first_name: response.first_name,
-          last_name: response.last_name,
-          picture: response.picture.data.url
-        });
-
-        if(response.friends.data.length > 0)
+        self.store.find('user', { fb_id: response.id }).then(function(users)
         {
-          for(var i = 0; i < response.friends.data.length; i++)
-          {
-            FB.api('/' + response.friends.data[i].id, function(friend_response)
-            {
-              if( !friend_response.error )
-              {
-                console.log('friend: ', friend_response);
+          var last_login = new Date();
 
-                self.handleFBFriendResponse(user, friend_response);
-              }
-              else
-              {
-                console.log(friend_response.error);
-              }
+          if(Ember.isEmpty(users))
+          {
+            var user = self.store.createRecord('user', {
+              fb_id: response.id,
+              first_name: response.first_name,
+              last_name: response.last_name,
+              picture: 'http://graph.facebook.com/' + response.id + '/picture',
+              first_login: true,
+              last_login: last_login
             });
-          }
-        }
 
-        user.save().then
-        (
-          function()
+            user.save().then
+            (
+              function()
+              {
+                user.set('isMe', true);
+                controller.set('model', user);
+                controller.update();
+                self.prepareController(controller, user, response);
+              }
+            );
+          }
+          else
           {
-            controller.set('model', user);
-
-            self.controllerFor('members-area').loadUserEventsFromFB();
-
-            var map_controller = self.controllerFor('members-area.map');
-                map_controller.getCurrentPosition();
-
-            self.transitionTo('members-area.meethubs.map');
+            var user = users.get('firstObject');
+            user.set('isMe', true);
+            user.set('last_login', last_login);
+            user.set('first_login', false);
+            user.save().then
+            (
+              function() {
+                controller.set('model', user);
+                controller.update();
+                self.prepareController(controller, user, response);
+              }
+            );
           }
-        );
+        });
       }
       else
       {
@@ -90,21 +91,65 @@ export default AuthenticateRoute.extend({
     });
   },
 
-  handleFBFriendResponse: function(user, response) {
+  prepareController: function(controller, user, response) {
 
     var self = this;
 
-    var friend = this.store.createRecord('user', {
-        fb_id: response.id,
-        first_name: response.first_name,
-        last_name: response.last_name,
-        picture: 'http://graph.facebook.com/' + response.id + '/picture',
-        gender: response.gender
-    });
+    if(response.friends.data.length > 0)
+    {
+      for(var i = 0; i < response.friends.data.length; i++)
+      {
+        var friend_id = response.friends.data[i].id;
 
-    user.get('friends').pushObject(friend);
+        self.store.find('user', { fb_id: friend_id }).then(function(users)
+        {
+          if(Ember.isEmpty(users))
+          {
+            FB.api('/' + friend_id, function(friend_response)
+            {
+              if( !friend_response.error )
+              {
+                console.log('friend: ', friend_response);
 
-    self.controllerFor('members-area').loadFriendEventsFromFB(response.id);
+                var friend = self.store.createRecord('user', {
+                    fb_id: friend_response.id,
+                    first_name: friend_response.first_name,
+                    last_name: friend_response.last_name,
+                    picture: 'http://graph.facebook.com/' + friend_response.id + '/picture',
+                    gender: friend_response.gender,
+                    first_login: true
+                });
+
+                friend.save().then(function() {
+                  user.get('friends').then(function(friends) {
+                    friends.pushObject(friend);
+                    user.save();
+                  });
+                });
+              }
+              else
+              {
+                console.log(friend_response.error);
+              }
+            });
+          }
+          else
+          {
+            user.get('friends').then(function(friends) {
+              friends.pushObject(users.get('firstObject'));
+              user.save();
+            });
+          }
+        });
+      }
+    }
+
+    self.controllerFor('members-area.index').set('model', user);
+    self.controllerFor('members-area.meethubs.index').set('model', user);
+
+    var map_controller = self.controllerFor('members-area.map');
+        map_controller.getCurrentPosition();
+
   }
 
 });

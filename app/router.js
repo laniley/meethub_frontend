@@ -5,7 +5,7 @@ var Router = Ember.Router.extend({
   location: config.locationType
 });
 
-Router.map(function() {
+export default Router.map(function() {
   this.route("login", {
     path: "/login"
   });
@@ -13,35 +13,19 @@ Router.map(function() {
   this.route("members-area", {
     path: "/"
   }, function() {
-    this.route("map", {
-      path: "/map"
-    }, function() {
-      this.route("friends");
-      this.route("events");
-      this.route("locations");
-      this.route("messages");
-    });
-
-    this.route("calendar", {
-      path: "/"
-    }, function() {
-      this.route("friends");
-      this.route("events");
-      this.route("locations");
-      this.route("messages");
-    });
-
     this.route("meethubs", {
       path: "/meethubs"
     }, function() {
-      this.route("map", function() {
-        this.route("create");
-        this.route("search");
-      });
+      this.route("map", function() {});
 
       this.route("calendar", function() {
-        this.route("create");
-        this.route("search");
+        this.route("list");
+      });
+
+      this.route("comments", function() {
+        this.route("meethub", {
+          path: "/:meethub_id"
+        });
       });
     });
 
@@ -68,5 +52,3 @@ Router.map(function() {
     });
   });
 });
-
-export default Router;

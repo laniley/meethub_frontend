@@ -5,11 +5,78 @@ export default Ember.Controller.extend({
   map_controller: Ember.computed.alias("controllers.members-area/map"),
 
   FB: null,
+
+  showSidebar: false,
   isSidebarOpen: true,
 
-  currentSection: 'map',
+  currentSection: 'news',
+
+  init: function() {
+
+    var self = this;
+
+    setInterval
+    (
+      function() {
+        // self.update();
+      },
+      10000
+    );
+  },
+
+  update: function() {
+    var self = this;
+    self.loadUserEventsFromFB();
+    self.loadFriendEventsFromFB();
+    self.store.find('meethubInvitation', { invited_user: self.get('model').get('id') });
+    self.store.find('message', { user: self.get('model').get('id') });
+    self.store.find('meethubComment', { user: self.get('model').get('id') });
+  },
+
+  newMeethubComments: function() {
+
+    var newMeethubComments = [];
+
+    if(this.get('model.meethubComments.length') > 0)
+    {
+      var self = this;
+
+      newMeethubComments = this.get('model.meethubComments').filter(function(comment) {
+        return comment.get('new_comment') === true && comment.get('author').get('id') !== self.get('model').get('id');
+      });
+    }
+
+    return newMeethubComments;
+
+  }.property('model.meethubComments.@each.new_comment'),
+
+  hasNewMeethubComments: function() {
+
+    if(this.get('newMeethubComments').get('length') > 0)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+
+  }.property('newMeethubComments.@each'),
 
   hasUnreadMessages: function() {
+
+    if(this.get('unreadMessages').get('length') > 0)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+
+  }.property('unreadMessages.@each'),
+
+  number_of_new_meethub_invitations: function() {
 
     var unreadMessages = [];
 
@@ -20,7 +87,46 @@ export default Ember.Controller.extend({
       });
     }
 
+    var unreadMeethubInvitations = [];
+
     if(unreadMessages.get('length') > 0)
+    {
+      unreadMeethubInvitations = unreadMessages.filter(function(message) {
+        return message.get('isMeethubInvitation') === true;
+      });
+    }
+
+    return unreadMeethubInvitations.get('length');
+
+  }.property('model.messages.@each.hasBeenRead', 'model.messages.@each.isMeethubInvitation'),
+
+  number_of_new_event_invitations: function() {
+
+    var unreadMessages = [];
+
+    if(this.get('model.messages.length') > 0)
+    {
+      unreadMessages = this.get('model.messages').filter(function(message) {
+        return message.get('hasBeenRead') === false;
+      });
+    }
+
+    var unreadEventInvitations = [];
+
+    if(unreadMessages.get('length') > 0)
+    {
+      unreadEventInvitations = unreadMessages.filter(function(message) {
+        return message.get('isEventInvitation') === true;
+      });
+    }
+
+    return unreadEventInvitations.get('length');
+
+  }.property('model.messages.@each.hasBeenRead', 'model.messages.@each.isEventInvitation'),
+
+  hasUnreadMeethubInvitations: function() {
+
+    if(this.get('number_of_new_meethub_invitations') > 0)
     {
       return true;
     }
@@ -29,28 +135,33 @@ export default Ember.Controller.extend({
       return false;
     }
 
+  }.property('number_of_new_meethub_invitations'),
+
+  hasUnreadEventInvitations: function() {
+
+    if(this.get('number_of_new_event_invitations') > 0)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+
+  }.property('number_of_new_event_invitations'),
+
+  unreadMessages: function() {
+    var unreadMessages = [];
+
+    if(this.get('model.messages.length') > 0)
+    {
+      unreadMessages = this.get('model.messages').filter(function(message) {
+        return message.get('hasBeenRead') === false;
+      });
+    }
+
+    return unreadMessages;
   }.property('model.messages.@each.hasBeenRead'),
-
-  init: function() {
-
-    var self = this;
-
-    setInterval
-    (
-      function() {
-        self.loadUserEventsFromFB();
-      },
-      10000
-    );
-
-    // setInterval
-    // (
-    //   function() {
-    //     self.loadFriendEventsFromFB();
-    //   },
-    //   10000
-    // );
-  },
 
   loadUserEventsFromFB: function () {
 
@@ -108,6 +219,76 @@ export default Ember.Controller.extend({
     });
   },
 
+  loadFriendEventsFromFB: function () {
+
+    var self = this;
+
+    var user = self.get('model');
+
+    user.get('friends').then(function(friends) {
+
+      friends.forEach(function(friend, index) {
+
+        self.store.find('user', friend.get('id')).then(function(user) {
+
+          FB.api('/' + user.get('fb_id') + '/events/attending', function(response)
+          {
+            if( !response.error )
+            {
+              console.log('friend events - attending: ', response);
+
+              for(var i = 0; i < response.data.length; i++)
+              {
+                self.handleFBEventResponse(response.data[i], 'attending', user.get('fb_id'));
+              }
+            }
+            else
+            {
+              console.log(response.error);
+            }
+          });
+
+          FB.api('/' + user.get('fb_id') + '/events/maybe', function(response)
+          {
+            if( !response.error )
+            {
+              console.log('friend events - maybe: ', response);
+
+              for(var i = 0; i < response.data.length; i++)
+              {
+                self.handleFBEventResponse(response.data[i], 'maybe', user.get('fb_id'));
+              }
+            }
+            else
+            {
+              console.log(response.error);
+            }
+          });
+
+          FB.api('/' + user.get('fb_id') + '/events/not_replied', function(response)
+          {
+            if( !response.error )
+            {
+              console.log('friend events - not_replied: ', response);
+
+              for(var i = 0; i < response.data.length; i++)
+              {
+                self.handleFBEventResponse(response.data[i], 'not_replied', user.get('fb_id'));
+              }
+            }
+            else
+            {
+              console.log(response.error);
+            }
+          });
+
+        });
+
+      });
+
+    });
+  },
+
   handleFBEventResponse: function(response, status, user_fb_id) {
 
     var self = this;
@@ -149,18 +330,38 @@ export default Ember.Controller.extend({
     {
       locations = unfiltered_locations.filterBy('name', response.location);
 
-      if(Ember.isEmpty(locations))
+      if(Ember.isEmpty(locations)) // location befindet sich noch nicht im store
       {
-        location = self.store.createRecord('location', {
-          name: response.location
-        });
+        self.store.find('location', { name: response.location }).then(function(store_response) {
 
-        location.save().then(function() {
-          self.handleFBEvent(response, location, status, user_fb_id);
+          location = store_response.get('firstObject');
+
+          // location not already in the DB, create it
+          if(Ember.isEmpty(location))
+          {
+            console.log('location not yet in DB');
+
+            location = self.store.createRecord('location', {
+              name: response.location
+            });
+
+            location.save().then(function() {
+              self.handleFBEvent(response, location, status, user_fb_id);
+            });
+          }
+          // location already in the DB
+          else
+          {
+            console.log('location already in DB');
+
+            self.handleFBEvent(response, location, status, user_fb_id);
+          }
         });
       }
-      else
+      else // location befindet sich bereits im store
       {
+        console.log('location already in store');
+
         location = locations.get('firstObject');
         self.handleFBEvent(response, location, status, user_fb_id);
       }
@@ -170,54 +371,100 @@ export default Ember.Controller.extend({
   handleFBEvent: function(response, location, status, user_fb_id) {
 
     var self = this;
+    var unfiltered_events = [];
+    var filtered_events = [];
+    var events = [];
+    var event = null;
 
-    var unfiltered_events = this.store.all('event');
-    var events = unfiltered_events.filterBy('fb_id', response.id);
+    unfiltered_events = self.store.all('event');
 
-    if(Ember.isEmpty(events))
+    filtered_events = unfiltered_events.filterBy('fb_id', response.id);
+
+    // event befindet sich noch nicht im store
+    if(Ember.isEmpty(filtered_events))
     {
-      // console.log('empty', response.id);
-      var date_time_arr = response.start_time.split('T');
-      var date_time = date_time_arr[1];
-      var date_day = date_time_arr[0];
+      // console.log('event not yet in store', response.name);
+      self.store.find('event', { fb_id: response.id}).then(function(store_response) {
 
-      var event = this.store.createRecord('event', {
-        fb_id: response.id,
-        name: response.name,
-        description: response.descrption,
-        start: moment(response.start_time, "YYYY-MM-DDTHH:mm:ss.SSSSZ"),
-        end: moment(response.start_time, "YYYY-MM-DDTHH:mm:ss.SSSSZ").add(1, 'hours'),
-        start_time: date_time,
-        start_date: date_day,
-        timezone: response.timezone,
-        location: location
+        event = store_response.get('firstObject');
+
+        // if event not already in the DB, create it
+        if(Ember.isEmpty(event))
+        {
+          // console.log('event not yet in DB - create new', response.name);
+          var date_time_arr = response.start_time.split('T');
+          var date_time = '';
+          var date_day = '';
+
+          if(date_time_arr[1])
+          {
+            date_time = date_time_arr[1].trim();
+          }
+
+          if(date_time_arr[0])
+          {
+            date_day = date_time_arr[0].trim();
+          }
+
+          event = self.store.createRecord('event', {
+            fb_id: response.id,
+            name: response.name,
+            description: response.descrption,
+            start_time: date_time,
+            start_date: date_day,
+            timezone: response.timezone,
+            location: location
+          });
+        }
+        else
+        {
+          // console.log('event in DB', response.name);
+        }
+
+        // if the user is not me
+        if(user_fb_id !== 'me')
+        {
+          self.addFriendsToEvent(user_fb_id, event, status);
+        }
+
+        event.save().then(function() {
+          self.handleFBMessage(response, event);
+        });
       });
+    }
+    // event befindet sich im store
+    else
+    {
+      // console.log('event in store already', response.name);
+      event = filtered_events.get('firstObject');
 
-      var me = this.get('model');
       // if the user is not me
-      if(user_fb_id !== me.get('fb_id'))
+      if(user_fb_id !== 'me')
       {
-        var unfiltered_users = this.store.all('user');
-        var user = unfiltered_users.filterBy('fb_id', user_fb_id);
-
-        if(status === 'attending')
-        {
-          event.get('friends_attending').pushObject(user);
-        }
-        else if(status === 'maybe')
-        {
-          event.get('friends_attending_maybe').pushObject(user);
-        }
+        self.addFriendsToEvent(user_fb_id, event, status);
       }
 
       event.save().then(function() {
         self.handleFBMessage(response, event);
       });
     }
-    else
+
+  },
+
+  addFriendsToEvent: function(user_fb_id, event, status) {
+    var self = this;
+    var unfiltered_users = self.store.all('user');
+    var user = unfiltered_users.findBy('fb_id', user_fb_id);
+
+    if(status === 'attending')
     {
-      var event = events.get('firstObject');
-      self.handleFBMessage(response, event);
+      event.get('friends_attending').pushObject(user);
+      console.log('friend is attending');
+    }
+    else if(status === 'maybe')
+    {
+      event.get('friends_attending_maybe').pushObject(user);
+      console.log('friend is attending maybe');
     }
   },
 
@@ -234,7 +481,7 @@ export default Ember.Controller.extend({
       var message = self.store.createRecord('message', {
         fb_id: response.id,
         subject: response.name,
-        user: self.get('model')
+        to_user: self.get('model')
       });
 
       message.save().then(function() {
@@ -246,85 +493,21 @@ export default Ember.Controller.extend({
           message: message
         });
 
-        eventInvitation.save();
-
-        message.set('eventInvitation', eventInvitation);
+        eventInvitation.save().then(function() {
+          message.set('eventInvitation', eventInvitation);
+        });
       });
     }
-  },
-
-  loadFriendEventsFromFB: function (fb_id) {
-
-    var self = this;
-
-    FB.api('/' + fb_id + '/events/attending', function(response)
-    {
-      if( !response.error )
-      {
-        console.log('friend events - attending: ', response);
-
-        for(var i = 0; i < response.data.length; i++)
-        {
-          self.handleFBEventResponse(response.data[i], 'attending', fb_id);
-        }
-      }
-      else
-      {
-        console.log(response.error);
-      }
-    });
-
-    FB.api('/' + fb_id + '/events/maybe', function(response)
-    {
-      if( !response.error )
-      {
-        console.log('friend events - maybe: ', response);
-
-        for(var i = 0; i < response.data.length; i++)
-        {
-          self.handleFBEventResponse(response.data[i], 'maybe', fb_id);
-        }
-      }
-      else
-      {
-        console.log(response.error);
-      }
-    });
-
-    FB.api('/' + fb_id + '/events/not_replied', function(response)
-    {
-      if( !response.error )
-      {
-        console.log('friend events - not_replied: ', response);
-
-        for(var i = 0; i < response.data.length; i++)
-        {
-          self.handleFBEventResponse(response.data[i], 'not_replied', fb_id);
-        }
-      }
-      else
-      {
-        console.log(response.error);
-      }
-    });
   },
 
   actions: {
     toggleSidebar: function() {
       if(this.get('isSidebarOpen'))
       {
-        Ember.$('.side-nav-bar').addClass('closed');
-        Ember.$('.side-nav-bar > .section-content').addClass('closed');
-        Ember.$('.google-map').addClass('closed');
-        Ember.$('.calendar').addClass('closed');
         this.set('isSidebarOpen', false);
       }
       else
       {
-        Ember.$('.side-nav-bar').removeClass('closed');
-        Ember.$('.side-nav-bar > .section-content').removeClass('closed');
-        Ember.$('.google-map').removeClass('closed');
-        Ember.$('.calendar').removeClass('closed');
         this.set('isSidebarOpen', true);
       }
     }

@@ -12,6 +12,20 @@
     <div class="side-nav-item selectable" {{action 'center_map' event}}>
       <div>{{event.name}}</div>
       <div>{{event.location.name}}</div>
+      <div class="participants">
+        {{#if event.hasConnectedFriends}}
+          <div class="row participants-title">{{t 'participants.title'}}</div>
+          {{#each friend in event.friends_attending}}
+            <img class="attending" {{bind-attr src=friend.picture}} {{bind-attr title=friend.name}} />
+          {{/each}}
+          {{#each friend in event.friends_attending_maybe}}
+            <img class="attending-maybe" {{bind-attr src=friend.picture}} {{bind-attr title=friend.name}} />
+          {{/each}}
+          {{#each friend in event.friends_declined}}
+            <img class="declined" {{bind-attr src=friend.picture}} {{bind-attr title=friend.name}} />
+          {{/each}}
+        {{/if}}
+      </div>
     </div>
   {{/each}}
 </div>

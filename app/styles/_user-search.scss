@@ -1,0 +1,32 @@
+.friend-search-form {
+  margin-top: 10px;
+  height: 40px;
+}
+
+.friends_search_results {
+  text-align: left;
+}
+
+.friends_search_result {
+  line-height: 55px;
+}
+
+.friend_search_button {
+  display: inline-block;
+  float: right;
+
+  .button {
+    margin-top: 13px;
+    line-height: 1px;
+    padding: 6px 9px;
+
+    &.invite, &.isMember {
+      color: white;
+      background-color: $link-color-active;
+    }
+
+    &.pending, &.isMember {
+      cursor: default;
+    }
+  }
+}

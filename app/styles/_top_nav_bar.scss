@@ -1,5 +1,5 @@
 .navbar-default {
-  background: none;
+  background: #fff;
 
   .navbar-nav {
     li {
@@ -22,9 +22,19 @@
         }
       }
 
+      .link-label {
+        @media (max-width: $screen-xs-max) {
+          margin-left: 30px;
+        }
+      }
+
       .link-icon {
         float: left;
         margin-right: 3px;
+
+        @media (max-width: $screen-xs-max) {
+          margin-right: 30px;
+        }
       }
     }
 
@@ -47,7 +57,7 @@
               padding: 20px 10px;
 
               &.active {
-                background-color: #e7e7e7;
+                background-color: $active-item-background-color;
               }
             }
           }
@@ -72,16 +82,6 @@
           }
         }
       }
-
-      .has-unread-messages {
-        i {
-          color: $header-text-color;
-
-          &:hover {
-            color: lighten($header-text-color, 10%);
-          }
-        }
-      }
     }
 
     .open {
@@ -90,21 +90,29 @@
         background-color: $active-item-background-color;
       }
       .dropdown-menu {
+
+        padding: 0;
+
         li {
-          a {
 
-            &.active {
-              color: black;
-              background-color: $active-item-background-color;
-            }
+          width: 100%;
+        }
 
-            &:not(.active) {
-              @media (max-width: $screen-xs-max) {
-                color: #ddd;
+        a {
 
-                &:hover, &:focus {
-                  color: white;
-                }
+          line-height: 2em;
+
+          &.active {
+            color: black;
+            background-color: $active-item-background-color;
+          }
+
+          &:not(.active) {
+            @media (max-width: $screen-xs-max) {
+              color: #ddd;
+
+              &:hover, &:focus {
+                color: white;
               }
             }
           }
@@ -122,6 +130,10 @@
   font-family: Ethno_regular;
   color: $header-text-color !important;
 
+  @media (max-width: $screen-xs-max) {
+    padding: 10px;
+  }
+
   @media (min-width: $screen-sm-min) {
     line-height: 40px;
   }
@@ -135,12 +147,24 @@
     }
 
     @media (max-width: $screen-xs-max) {
-      width: 20px;
+      width: 30px;
     }
   }
 
   .brand-name {
     float: left;
+
+    @media (max-width: $screen-xs-max) {
+      display: none;
+    }
+
+    .beta-label {
+      position: absolute;
+      top: 30px;
+      left: 140px;
+      font-size: 0.6em;
+      color: $blue;
+    }
   }
 }
 
@@ -185,5 +209,25 @@
   }
   .account_name {
     display: inline-block;
+  }
+}
+
+.info-counter {
+  background-color: $orange;
+  color: white;
+  padding: 0px 7px;
+  border-radius: 25px;
+  font-size: 14px;
+
+  position: absolute;
+
+  @media (max-width: $screen-xs-max) {
+    left: 40px;
+    top: 10px;
+  }
+
+  @media (min-width: $screen-sm-min) {
+    left: 25px;
+    top: 40px;
   }
 }

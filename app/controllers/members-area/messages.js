@@ -1,11 +1,38 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  needs: ['members-area/map'],
-  map_controller: Ember.computed.alias("controllers.members-area/map"),
 
   sortProperties: ['created_at:desc'],
-  sortedMessages: Ember.computed.sort('model', 'sortProperties'),
+  sortedMessages: Ember.computed.sort('filteredMessages', 'sortProperties'),
+
+  queryParams: ['event_inv', 'meethub_inv'],
+  event_inv: true,
+  meethub_inv: true,
+
+  filteredMessages: function() {
+
+    var self = this;
+    var messages = this.get('model');
+    var event_inv = this.get('event_inv');
+    var meethub_inv = this.get('meethub_inv');
+    var filteredMessages = messages;
+
+    if(event_inv === false || event_inv === 'false') {
+      filteredMessages = filteredMessages.filter(function(message) {
+        return message.get('isEventInvitation') === false;
+      });
+    }
+
+    if(meethub_inv === false || meethub_inv === 'false')
+    {
+      filteredMessages = filteredMessages.filter(function(message) {
+        return message.get('isMeethubInvitation') === false;
+      });
+    }
+
+    return filteredMessages;
+
+  }.property('model.@each', 'event_inv', 'meethub_inv'),
 
   isGerman: function() {
     if(Ember.I18n.locale === 'de')
@@ -35,17 +62,29 @@ export default Ember.Controller.extend({
         message.set('isOpen', false);
       }
     },
-    acceptEventInvitation: function(eventInvitation) {
-      eventInvitation.set('status', 'attending');
-      eventInvitation.save();
+    toggleMeethubInvFilter: function() {
+      this.toggleProperty('meethub_inv');
     },
-    maybeAcceptEventInvitation: function(eventInvitation) {
-      eventInvitation.set('status', 'maybe');
-      eventInvitation.save();
+    toggleEventInvFilter: function() {
+      this.toggleProperty('event_inv');
     },
-    declineEventInvitation: function(eventInvitation) {
-      eventInvitation.set('status', 'declined');
-      eventInvitation.save();
+    acceptEventInvitation: function(eventInvitation_id) {
+      this.store.find('eventInvitation', eventInvitation_id).then(function(eventInvitation) {
+        eventInvitation.set('status', 'attending');
+        eventInvitation.save();
+      });
+    },
+    maybeAcceptEventInvitation: function(eventInvitation_id) {
+      this.store.find('eventInvitation', eventInvitation_id).then(function(eventInvitation) {
+        eventInvitation.set('status', 'maybe');
+        eventInvitation.save();
+      });
+    },
+    declineEventInvitation: function(eventInvitation_id) {
+      this.store.find('eventInvitation', eventInvitation_id).then(function(eventInvitation) {
+        eventInvitation.set('status', 'declined');
+        eventInvitation.save();
+      });
     }
   }
 });

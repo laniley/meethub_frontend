@@ -8,10 +8,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <div class="navbar-brand">
-        <img alt="Brand" src="assets/images/logo_square_120x120.png">
-        <div class="brand-name">MEETHUB</div>
-      </div>
+      {{#link-to 'members-area'}}
+        <div class="navbar-brand">
+          <img alt="Brand" src="assets/images/logo_square_120x120.png">
+          <div class="brand-name">MEETHUB <span class="beta-label">BETA</span></div>
+        </div>
+      {{/link-to}}
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -22,26 +24,29 @@
           {{#link-to 'members-area.meethubs'}}
             <span>{{unbound fa-icon "fa-fixed-with  fa-share-alt"}}</span>
             <span class="link-label hidden-sm">Meethubs</span>
+            {{#if hasNewMeethubComments}}
+              <span class="info-counter">{{newMeethubComments.length}}</span>
+            {{/if}}
           {{/link-to}}
         </li>
-        <li>
+        {{!-- <li>
           {{#link-to 'members-area.friends'}}
             <span>{{unbound fa-icon "fa-fixed-with fa-group"}}</span>
             <span class="link-label hidden-sm">{{t 'friend.title'}}</span>
           {{/link-to}}
-        </li>
-        <li>
+        </li>--}}
+        {{!-- <li>
           {{#link-to 'members-area.events'}}
             <span>{{unbound fa-icon "fa-fixed-with fa-music"}}</span>
             <span class="link-label hidden-sm">Events</span>
           {{/link-to}}
-        </li>
-        <li>
+        </li> --}}
+        {{!-- <li>
           {{#link-to 'members-area.locations'}}
             <span>{{unbound fa-icon "fa-fixed-with fa-compass"}}</span>
             <span class="link-label hidden-sm">Locations</span>
           {{/link-to}}
-        </li>
+        </li> --}}
       </ul>
       {{!-- RIGHT AREA --}}
       <ul class="nav navbar-nav navbar-right">
@@ -73,16 +78,52 @@
 
 <div class="row main-row align-center">
 
-  {{outlet main-area}}
+  {{outlet}}
 
-  <div class="side-nav-bar">
-    <div class="side-bar-links">
-      <div {{action 'toggleSidebar'}}>{{unbound fa-icon "fa-reorder"}}</div>
-      {{outlet side-nav-buttons}}
+  {{#if showSidebar}}
+    <div {{bind-attr class=":side-nav-bar isSidebarOpen:open:closed"}}>
+      <div class="side-bar-links">
+        <div class="toggle-button" {{action "toggleSidebar"}}>{{unbound fa-icon "fa-reorder"}}</div>
+        {{outlet "side-nav-buttons"}}
+      </div>
+      <div class="section-content">
+        {{outlet "side-nav-bar"}}
+      </div>
     </div>
-    <div class="section-content">
-      {{outlet side-nav-bar}}
-    </div>
-  </div>
+  {{/if}}
 
 </div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          {{#link-to 'members-area.meethubs'}}
+            <span>{{unbound fa-icon "fa-fixed-with  fa-bug"}}</span>
+            <span class="link-label">Report a bug</span>
+          {{/link-to}}
+        </li>
+        <li class="fb-like-button">
+          <iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fmeethubonline&amp;width=200&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=21&amp;appId=560142730797423" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:155px; height:21px;" allowTransparency="true"></iframe>
+        </li>
+        <li>
+          <form class="donate-button" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+            <input type="hidden" name="cmd" value="_s-xclick">
+            <input type="hidden" name="hosted_button_id" value="66QU24UCS86M6">
+            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+            <img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
+          </form>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,11 +1,18 @@
-@import "bootstrap-custom";
+// @import "bootstrap-custom";
+@import "bootstrap";
 @import "variables";
 @import "login";
+@import "welcome";
 @import "top_nav_bar";
 @import "side_nav_bar";
+@import "bottom_nav_bar";
 @import "map";
 @import "ember-cli-cal";
 @import "calendar";
+@import "user-search";
+@import "comments";
+@import "new_comment";
+@import "main-area-list";
 
 html, body {
   margin: 0;
@@ -14,9 +21,73 @@ html, body {
 
 body {
   font-family: Calibri, Arial, sans-serif;
+  color: $text-color;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+img {
+
+  border-radius: 5px;
+
+  &.pending {
+      opacity: 0.4;
+      filter: alpha(opacity=40); /* For IE8 and earlier */
+  }
+}
+
+a {
+  color: $blue;
+}
+
+input, textarea {
+  color: $input-color;
+}
+
+textarea {
+  width: 100%;
+  resize: none;
+  padding: 0 5px;
+}
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {
+  border: 1px solid $blue;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    display: inline-block;
+  }
 }
 
 .main-row {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
   margin: 0;
 
   @media (min-width: $screen-sm-min) {
@@ -26,10 +97,53 @@ body {
   @media (max-width: $screen-xs-max) {
     margin-top: 50px;
   }
+
+  margin-bottom: 50px;
+
+  .main-container {
+    position: absolute;
+    left: 0;
+    right: 400px;
+    top: 0px;
+    bottom: 0px;
+
+    &.closed {
+      right: 50px;
+    }
+  }
+
+  .main-area {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+  }
+}
+
+.bold {
+  font-weight: bold;
 }
 
 .button {
   cursor: pointer;
   @include all_browser(border-radius, 5px);
   border: 1px solid $border-color;
+  float: left;
+  padding: 2px 5px;
+}
+
+.has-unread-messages {
+  i {
+    color: $header-text-color;
+  }
+}
+
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* inline-block space fix */
+    margin-right:-4px;
 }

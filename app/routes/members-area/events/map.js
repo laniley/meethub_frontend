@@ -5,6 +5,6 @@ export default Ember.Route.extend({
     this.controllerFor('members-area').set('currentSection', 'map');
   },
   renderTemplate: function() {
-    this.render('members-area.map', { outlet: 'main-area' });
+    this.render('members-area.map');
   }
 });
