@@ -22,7 +22,8 @@ var app = new EmberApp({
 // please specify an object with the list of modules as keys
 // along with the exports of each module as its value.
 
-// import i18n
+app.import( 'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.min.js' );
+
 app.import( 'bower_components/ember-i18n/lib/i18n.js' );
 app.import( 'bower_components/ember-i18n/lib/i18n-plurals.js' );
 
