@@ -55,6 +55,7 @@ Em.I18n.translations = {
     "new_comments": "new comments",
     "confirm_delete": "Are you sure you want to delete this comment?"
   },
+  "calendar": "Calendar",
   "comments": "Comments",
   "confirm": "Confirm",
   "delete": "Delete",

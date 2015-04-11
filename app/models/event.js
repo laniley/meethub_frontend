@@ -30,6 +30,10 @@ export default DS.Model.extend({
     return this.get('friends_attending').get('length') + this.get('friends_attending_maybe').get('length') + this.get('friends_declined').get('length');
   }.property('friends_attending.length', 'friends_attending_maybe.length', 'friends_declined.length'),
 
+  social_points: function() {
+    return this.get('friends_attending').get('length') * 3 + this.get('friends_attending_maybe').get('length') * 2 + this.get('friends_declined').get('length');
+  }.property('friends_attending.length', 'friends_attending_maybe.length', 'friends_declined.length'),
+
   start: function() {
     return moment(this.get('start_date'), "YYYY-MM-DDTHH:mm:ss.SSSSZ");
   }.property('start_time'),

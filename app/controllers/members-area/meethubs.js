@@ -28,6 +28,43 @@ export default Ember.Controller.extend({
     return filteredMeethubInvitations;
   }.property('model.@each', 'model.@each.status'),
 
+  myAcceptedMeethubInvitations: function() {
+    var self = this;
+
+    var filteredMeethubInvitations = self.get('model').filter(function(meethubInvitation) {
+      return meethubInvitation.get('invited_user') !== null && meethubInvitation.get('invited_user').get('id') === self.get('user').get('id') && meethubInvitation.get('status') === 'accepted';
+    });
+
+    return filteredMeethubInvitations;
+  }.property('model.@each', 'model.@each.status'),
+
+  myAcceptedMeethubs: function() {
+    return this.get('myAcceptedMeethubInvitations').mapBy('meethub');
+  }.property('myAcceptedMeethubInvitations.@each.meethub'),
+
+  membersOfmyAcceptedMeethubs: function() {
+    var self = this;
+
+    var members = [];
+
+    self.get('myAcceptedMeethubs').forEach(function(meethub) {
+      var acceptedInvs = meethub.get('acceptedInvitations');
+
+      acceptedInvs.forEach(function(acceptedInv) {
+        var member = acceptedInv.get('invited_user');
+
+        if(members.indexOf(member) === -1)
+        {
+          members.push(member);
+        }
+      });
+
+    });
+
+    return members;
+
+  }.property('myAcceptedMeethubs.@each.acceptedInvitations'),
+
   setAutofocus: function() {
     if(this.get('searchIsOpen') === true)
     {

@@ -1,1 +1,10 @@
-TEST
+<h2>{{t 'calendar'}}</h2>
+<div class="container-fluid main-area-list">
+  {{#each event in sortedEvents}}
+  <div {{bind-attr class=":row :main-area-list-item"}}>
+    {{formatted-date event.start_date 'L'}}
+    {{event.social_points}}
+    {{event.name}}
+  </div>
+  {{/each}}
+</div>

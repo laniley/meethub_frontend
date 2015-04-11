@@ -55,6 +55,7 @@ Em.I18n.translations = {
     "new_comments": "neue Kommentare",
     "confirm_delete": "Bist du sicher, dass du den Kommentar löschen möchtest?"
   },
+  "calendar": "Kalender",
   "comments": "Kommentare",
   "confirm": "Bestätigen",
   "delete": "Löschen",
