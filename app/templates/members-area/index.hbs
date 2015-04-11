@@ -39,7 +39,7 @@
       </div>
     </div>
 
-    <div class="row comments row-centered">
+    <div class="row meethubs row-centered">
       <div class="col-centered">
         {{#link-to 'members-area.meethubs.comments'}}
           <div {{bind-attr class=":summary-item hasNewMeethubComments:highlight"}} {{translateAttr  title='welcome.meethub-comments'}}>
@@ -49,6 +49,19 @@
               <div class="envelope">{{unbound fa-icon "fa-list"}}</div>
             {{/if}}
             <div class="type">{{unbound fa-icon "fa-share-alt"}}</div>
+            <div class="number">{{newMeethubComments.length}}</div>
+          </div>
+        {{/link-to}}
+      </div>
+      <div class="col-centered">
+        {{#link-to 'members-area.meethubs.calendar.list'}}
+          <div {{bind-attr class=":summary-item hasNewMeethubComments:highlight"}} {{translateAttr  title='welcome.meethub-comments'}}>
+            {{#if hasNewMeethubComments}}
+              <div {{bind-attr class=":envelope hasNewMeethubComments:has-unread-messages"}}>{{unbound fa-icon "fa-share-alt"}}</div>
+            {{else}}
+              <div class="envelope">{{unbound fa-icon "fa-share-alt"}}</div>
+            {{/if}}
+            <div class="type">{{unbound fa-icon "fa-music"}}</div>
             <div class="number">{{newMeethubComments.length}}</div>
           </div>
         {{/link-to}}

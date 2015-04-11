@@ -2,7 +2,9 @@
   <div class="col-xs-12 col-md-3 no-padding align-left">
     <img {{bind-attr src=comment.author.picture}} class="account_img" />
     {{#if comment.new_comment}}
-      {{unbound fa-icon "fa-circle"}}
+      {{#unless comment.author.isMe}}
+        {{unbound fa-icon "fa-circle"}}
+      {{/unless}}
     {{/if}}
     <div class="comment-infos align-left no-padding col-xs-6 col-sm-2">
       <div class="author">{{comment.author.name}}</div>

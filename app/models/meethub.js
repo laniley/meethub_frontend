@@ -45,7 +45,13 @@ export default DS.Model.extend({
 
   newComments: function() {
     var comments = this.get('comments');
-    return comments.filterBy('new_comment', true);
+    var new_comments = comments.filterBy('new_comment', true);
+
+    var new_comments_not_from_me = new_comments.filter(function(comment) {
+      return comment.get('author').get('isMe') === false;
+    });
+
+    return new_comments_not_from_me;
   }.property('comments.@each.new_comment'),
 
   hasNewComments: function() {
