@@ -1,5 +1,7 @@
 # Meethub-frontend
 
+[![devDependency Status](https://david-dm.org/dennismende/meethub_frontend/dev-status.svg)](https://david-dm.org/dennismende/meethub_frontend#info=devDependencies)
+
 This README outlines the details of collaborating on this Ember application.
 A short introduction of this app could easily go here.
 
