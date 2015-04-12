@@ -53,7 +53,8 @@ Em.I18n.translations = {
       "create" : "Create",
       "cancel" : "Cancel"
     },
-    "new_comments": "new comments",
+    "new_comments.one": "{{count}} new comment",
+    "new_comments.other": "{{count}} new comments",
     "confirm_delete": "Are you sure you want to delete this comment?"
   },
   "calendar": "Calendar",
