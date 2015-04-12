@@ -428,7 +428,7 @@ export default Ember.Controller.extend({
         }
 
         event.save().then(function() {
-          self.handleFBMessage(response, event);
+          self.handleFBMessage(response, event, status, user_fb_id);
         });
       });
     }
@@ -445,10 +445,9 @@ export default Ember.Controller.extend({
       }
 
       event.save().then(function() {
-        self.handleFBMessage(response, event);
+        self.handleFBMessage(response, event, status, user_fb_id);
       });
     }
-
   },
 
   addFriendsToEvent: function(user_fb_id, event, status) {
@@ -468,7 +467,7 @@ export default Ember.Controller.extend({
     }
   },
 
-  handleFBMessage: function(response, event) {
+  handleFBMessage: function(response, event, status, user_fb_id) {
 
     var self = this;
 
@@ -476,6 +475,24 @@ export default Ember.Controller.extend({
 
     var messages = unfiltered_messages.filterBy('fb_id', response.id);
 
+    // if it is an eventInv of a friend, handle eventInv for friend
+    if(user_fb_id !== 'me')
+    {
+      var unfiltered_users = this.store.all('user');
+      var filtered_users = unfiltered_users.filterBy('fb_id', user_fb_id);
+      var friend = filtered_users.get('firstObject');
+
+      var eventInvitation = self.store.createRecord('eventInvitation', {
+        event: event,
+        invited_user: friend,
+        status: status,
+        message: null
+      });
+
+      eventInvitation.save();
+    }
+
+    // handle eventInv for me
     if(Ember.isEmpty(messages))
     {
       var message = self.store.createRecord('message', {

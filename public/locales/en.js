@@ -8,7 +8,8 @@ Em.I18n.translations = {
     },
     "meethub-invitations": "new meethub-invitations",
     "event-invitations": "new event-invitations",
-    "meethub-comments": "new meethub-comments"
+    "meethub-comments": "new meethub-comments",
+    "meethub-event-infos": "new meethub-eventinfos"
   },
   "friend": {
     "title": "Friends",

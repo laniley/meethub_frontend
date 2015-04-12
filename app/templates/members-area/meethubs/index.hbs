@@ -15,11 +15,11 @@
         {{#link-to 'members-area.meethubs.comments'}}
           <div {{bind-attr class=":summary-item hasNewMeethubComments:highlight"}} {{translateAttr  title='welcome.meethub-comments'}}>
             {{#if hasNewMeethubComments}}
-              <div {{bind-attr class=":section-icon hasNewMeethubComments:has-unread-messages"}}>{{unbound fa-icon "fa-share-alt"}}</div>
+              <div {{bind-attr class=":section-icon hasNewMeethubComments:has-unread-messages"}}>{{unbound fa-icon "fa-list"}}</div>
             {{else}}
-              <div class="section-icon">{{unbound fa-icon "fa-share-alt"}}</div>
+              <div class="section-icon">{{unbound fa-icon "fa-list"}}</div>
             {{/if}}
-            <div class="type">{{unbound fa-icon "fa-list"}}</div>
+            <div class="type">{{unbound fa-icon "fa-share-alt"}}</div>
             <div class="number">{{newMeethubComments.length}}</div>
           </div>
         {{/link-to}}

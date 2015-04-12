@@ -146,6 +146,7 @@ export default AuthenticateRoute.extend({
 
     self.controllerFor('members-area.index').set('model', user);
     self.controllerFor('members-area.meethubs.index').set('model', user);
+    self.controllerFor('members-area.meethubs.calendar.list').set('model', user);
 
     var map_controller = self.controllerFor('members-area.map');
         map_controller.getCurrentPosition();

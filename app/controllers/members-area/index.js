@@ -34,6 +34,10 @@ export default Ember.Controller.extend({
 
   }.property('model.meethubComments.@each.new_comment'),
 
+  newMeethubEventInfos: function() {
+    return this.get('model.upcomingEventsOfMeethubs');
+  }.property('model.upcomingEventsOfMeethubs.@each'),
+
   hasUnreadMessages: function() {
 
     if(this.get('unreadMessages').get('length') > 0)
@@ -86,6 +90,19 @@ export default Ember.Controller.extend({
 
   }.property('newMeethubComments.@each'),
 
+  hasNewMeethubEventInfos: function() {
+
+    if(this.get('newMeethubEventInfos.length') > 0)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+
+  }.property('newMeethubEventInfos.length'),
+
   number_of_new_meethub_invitations: function() {
 
     var unreadMessages = [];
@@ -132,6 +149,8 @@ export default Ember.Controller.extend({
 
     return unreadEventInvitations.get('length');
 
-  }.property('model.messages.@each.hasBeenRead', 'model.messages.@each.isEventInvitation')
+  }.property('model.messages.@each.hasBeenRead', 'model.messages.@each.isEventInvitation'),
+
+
 
 });
