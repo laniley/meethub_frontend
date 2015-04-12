@@ -44,11 +44,19 @@
 
   &.highlight {
     color: $blue;
+    .section-icon {
+      color: $orange;
+    }
+  }
+
+  &:not(.highlight) {
+    .section-icon {
+      color: #a3a3a3;
+    }
   }
 
   .section-icon {
     display: inline-block;
-    color: #a3a3a3;
   }
 
   .type {
