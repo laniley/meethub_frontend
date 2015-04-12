@@ -1,8 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  needs: ['members-area'],
+  needs: ['members-area', 'members-area/index'],
   membersArea_controller: Ember.computed.alias("controllers.members-area"),
+  membersArea_index_controller: Ember.computed.alias("controllers.members-area/index"),
 
   isSidebarOpen: function() {
     return this.get('membersArea_controller').get('isSidebarOpen');
@@ -36,6 +37,14 @@ export default Ember.Controller.extend({
       return false;
     }
 
-  }.property('newMeethubComments.@each')
+  }.property('newMeethubComments.@each'),
+
+  hasNewMeethubEventInfos: function() {
+    return this.get('membersArea_index_controller.hasNewMeethubEventInfos');
+  }.property('membersArea_index_controller.hasNewMeethubEventInfos'),
+
+  newMeethubEventInfos: function() {
+    return this.get('membersArea_index_controller.newMeethubEventInfos');
+  }.property('membersArea_index_controller.newMeethubEventInfos'),
 
 });
