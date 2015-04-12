@@ -66,6 +66,16 @@
       border-bottom: 1px solid $border-color;
       margin-bottom: 10px;
     }
+
+    .sub-item {
+      position: relative;
+      top: -15px;
+      right: -20px;
+      font-size: small;
+      background-color: rgb(216, 216, 216);
+      width: 20px;
+      border-radius: 2px;
+    }
   }
 
   .section-content {
