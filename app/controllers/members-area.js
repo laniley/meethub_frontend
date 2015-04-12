@@ -1,8 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  needs: ['members-area/map'],
+  needs: ['members-area/map', 'members-area/index'],
   map_controller: Ember.computed.alias("controllers.members-area/map"),
+  membersArea_index_controller: Ember.computed.alias("controllers.members-area/index"),
 
   FB: null,
 
@@ -33,26 +34,13 @@ export default Ember.Controller.extend({
     self.store.find('meethubComment', { user: self.get('model').get('id') });
   },
 
-  newMeethubComments: function() {
 
-    var newMeethubComments = [];
+  newMeethubInfosCount: function() {
+    return this.get('membersArea_index_controller.newMeethubComments.length') + this.get('membersArea_index_controller.newMeethubEventInfos.length');
+  }.property('membersArea_index_controller.newMeethubComments.length', 'membersArea_index_controller.newMeethubEventInfos.length'),
 
-    if(this.get('model.meethubComments.length') > 0)
-    {
-      var self = this;
-
-      newMeethubComments = this.get('model.meethubComments').filter(function(comment) {
-        return comment.get('new_comment') === true && comment.get('author').get('id') !== self.get('model').get('id');
-      });
-    }
-
-    return newMeethubComments;
-
-  }.property('model.meethubComments.@each.new_comment'),
-
-  hasNewMeethubComments: function() {
-
-    if(this.get('newMeethubComments').get('length') > 0)
+  hasNewMeethubInfos: function() {
+    if(this.get('newMeethubInfosCount') > 0)
     {
       return true;
     }
@@ -60,8 +48,7 @@ export default Ember.Controller.extend({
     {
       return false;
     }
-
-  }.property('newMeethubComments.@each'),
+  }.property('newMeethubInfosCount'),
 
   hasUnreadMessages: function() {
 
