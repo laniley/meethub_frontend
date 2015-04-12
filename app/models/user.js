@@ -81,15 +81,13 @@ export default DS.Model.extend({
   }.property('membersOfAcceptedMeethubs.@each.messages'),
 
   upcomingEventsOfMeethubs: function() {
-
     var events = [];
 
     this.get('eventInvitationsOfmembersOfAcceptedMeethubs').forEach(function(eventInv) {
 
       var anEvent = eventInv.get('event');
-      var today = new Date();
 
-      if(events.indexOf(anEvent) === -1 && anEvent.get('start') >= today)
+      if(events.indexOf(anEvent) === -1 && anEvent.get('is_upcoming') === true)
       {
         events.push(anEvent);
       }
@@ -98,5 +96,5 @@ export default DS.Model.extend({
 
     return events;
 
-  }.property('eventInvitationsOfmembersOfAcceptedMeethubs.@each.event')
+  }.property('eventInvitationsOfmembersOfAcceptedMeethubs.@each.event.is_upcoming')
 });

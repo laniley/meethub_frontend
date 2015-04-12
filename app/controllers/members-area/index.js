@@ -34,9 +34,61 @@ export default Ember.Controller.extend({
 
   }.property('model.meethubComments.@each.new_comment'),
 
-  newMeethubEventInfos: function() {
+  upcomingEventsOfMeethubs: function() {
     return this.get('model.upcomingEventsOfMeethubs');
   }.property('model.upcomingEventsOfMeethubs.@each'),
+
+  friendEventsOfUpcomingEventsOfMeethubs: function() {
+    var upcomingEvents = this.get('upcomingEventsOfMeethubs');
+
+    if(upcomingEvents !== null)
+    {
+      var friendEventInvs = [];
+
+      upcomingEvents.forEach(function(upcomingEvent) {
+
+        var eventInvs = upcomingEvent.get('friend_event_invitations');
+
+        eventInvs.forEach(function(eventInv) {
+
+          if(friendEventInvs.indexOf(eventInv) === -1)
+          {
+            friendEventInvs.push(eventInv);
+          }
+
+        });
+
+      });
+
+      return friendEventInvs;
+    }
+  }.property('upcomingEventsOfMeethubs.@each.friend_event_invitations'),
+
+  newMeethubEventInfos: function() {
+    var self = this;
+
+    if(this.get('friendEventsOfUpcomingEventsOfMeethubs') !== undefined)
+    {
+      var newFriendEventInvs = this.get('friendEventsOfUpcomingEventsOfMeethubs').filter(function(friendEventInv) {
+
+        if(friendEventInv.get('updated_at') !== undefined)
+        {
+          if(friendEventInv.get('updated_at') >= self.get('model').get('last_login'))
+          {
+            return true;
+          }
+          else
+          {
+            return false;
+          }
+        }
+
+      });
+
+      return newFriendEventInvs;
+    }
+
+  }.property('friendEventsOfUpcomingEventsOfMeethubs.@each.updated_at'),
 
   hasUnreadMessages: function() {
 

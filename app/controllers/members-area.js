@@ -421,12 +421,6 @@ export default Ember.Controller.extend({
           // console.log('event in DB', response.name);
         }
 
-        // if the user is not me
-        if(user_fb_id !== 'me')
-        {
-          self.addFriendsToEvent(user_fb_id, event, status);
-        }
-
         event.save().then(function() {
           self.handleFBMessage(response, event, status, user_fb_id);
         });
@@ -438,32 +432,9 @@ export default Ember.Controller.extend({
       // console.log('event in store already', response.name);
       event = filtered_events.get('firstObject');
 
-      // if the user is not me
-      if(user_fb_id !== 'me')
-      {
-        self.addFriendsToEvent(user_fb_id, event, status);
-      }
-
       event.save().then(function() {
         self.handleFBMessage(response, event, status, user_fb_id);
       });
-    }
-  },
-
-  addFriendsToEvent: function(user_fb_id, event, status) {
-    var self = this;
-    var unfiltered_users = self.store.all('user');
-    var user = unfiltered_users.findBy('fb_id', user_fb_id);
-
-    if(status === 'attending')
-    {
-      event.get('friends_attending').pushObject(user);
-      console.log('friend is attending');
-    }
-    else if(status === 'maybe')
-    {
-      event.get('friends_attending_maybe').pushObject(user);
-      console.log('friend is attending maybe');
     }
   },
 

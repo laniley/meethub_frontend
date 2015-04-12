@@ -10,11 +10,40 @@ export default DS.Model.extend({
   eventInvitations: DS.hasMany('eventInvitation'),
   created_at: DS.attr('date'),
   updated_at: DS.attr('date'),
-  new_event: DS.attr('boolean', { defaultValue: false }),
 
-  friends_attending: DS.hasMany('user'),
-  friends_attending_maybe: DS.hasMany('user'),
-  friends_declined: DS.hasMany('user'),
+  friend_event_invitations: function() {
+    return this.get('eventInvitations').filter(function(eventInv) {
+      return eventInv.get('invited_user').get('isMe') === false;
+    });
+  }.property('eventInvitations.length'),
+
+  friend_event_invitations_attending: function() {
+    return this.get('friend_event_invitations').filterBy('status', 'attending');
+  }.property('friend_event_invitations.@each.status'),
+
+  friend_event_invitations_attending_maybe: function() {
+    return this.get('friend_event_invitations').filterBy('status', 'maybe');
+  }.property('friend_event_invitations.@each.status'),
+
+  friend_event_invitations_declined: function() {
+    return this.get('friend_event_invitations').filterBy('status', 'declined');
+  }.property('friend_event_invitations.@each.status'),
+
+  friends_attending: function() {
+    return this.get('friend_event_invitations_attending').mapBy('invited_user');
+  }.property('friend_event_invitations_attending.length'),
+
+  friends_attending_maybe: function() {
+    return this.get('friend_event_invitations_attending_maybe').mapBy('invited_user');
+  }.property('friend_event_invitations_attending.length'),
+
+  friends_declined: function() {
+    return this.get('friend_event_invitations_declined').mapBy('invited_user');
+  }.property('friend_event_invitations_attending.length'),
+
+  connected_friends_length: function() {
+    return this.get('friends_attending').get('length') + this.get('friends_attending_maybe').get('length') + this.get('friends_declined').get('length');
+  }.property('friends_attending.length', 'friends_attending_maybe.length', 'friends_declined.length'),
 
   hasConnectedFriends: function() {
     if(this.get('connected_friends_length') > 0)
@@ -26,10 +55,6 @@ export default DS.Model.extend({
       return false;
     }
   }.property('connected_friends_length'),
-
-  connected_friends_length: function() {
-    return this.get('friends_attending').get('length') + this.get('friends_attending_maybe').get('length') + this.get('friends_declined').get('length');
-  }.property('friends_attending.length', 'friends_attending_maybe.length', 'friends_declined.length'),
 
   social_points: function() {
     return this.get('friends_attending').get('length') * 3 + this.get('friends_attending_maybe').get('length') * 2 + this.get('friends_declined').get('length');
@@ -55,5 +80,18 @@ export default DS.Model.extend({
   start_date_converted_to_us: function() {
     var date_arr = this.get('start_date').split('-');
     return date_arr[1] + '/' + date_arr[2] + '/' + date_arr[0];
-  }.property('start_date')
+  }.property('start_date'),
+
+  is_upcoming: function() {
+    var today = new Date();
+
+    if(this.get('start') >= today)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }.property('start')
 });
