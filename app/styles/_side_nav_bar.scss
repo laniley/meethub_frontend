@@ -31,33 +31,26 @@
     border-right: 1px solid $border-color;
     font-size: 28px;
 
-    i {
-      &:hover {
-        cursor: pointer;
-      }
-    }
-
     a {
       i {
         width: 100%;
       }
 
+      &:hover {
+        cursor: pointer;
+      }
+
       &.active {
 
         background-color: $active-item-background-color;
-
-        i {
-          color: $link-color-active;
-        }
+        color: $link-color-active;
       }
 
       &:not(.active) {
-        i {
-          color: $link-color;
+        color: $link-color;
 
-          &:hover {
-            color: $link-color-hover;
-          }
+        &:hover {
+          color: $link-color-hover;
         }
       }
     }
@@ -68,6 +61,7 @@
 
       &:hover {
         color: black;
+        cursor: pointer;
       }
     }
 
