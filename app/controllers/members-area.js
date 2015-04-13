@@ -14,7 +14,7 @@ export default Ember.Controller.extend({
 
   init: function() {
 
-    var self = this;
+    // var self = this;
 
     setInterval
     (
@@ -214,11 +214,11 @@ export default Ember.Controller.extend({
 
     user.get('friends').then(function(friends) {
 
-      friends.forEach(function(friend, index) {
+      friends.forEach(function(friend) {
 
         self.store.find('user', friend.get('id')).then(function(user) {
 
-          FB.api('/' + user.get('fb_id') + '/events/attending', function(response)
+          self.get('FB').api('/' + user.get('fb_id') + '/events/attending', function(response)
           {
             if( !response.error )
             {
@@ -235,7 +235,7 @@ export default Ember.Controller.extend({
             }
           });
 
-          FB.api('/' + user.get('fb_id') + '/events/maybe', function(response)
+          self.get('FB').api('/' + user.get('fb_id') + '/events/maybe', function(response)
           {
             if( !response.error )
             {
@@ -252,7 +252,7 @@ export default Ember.Controller.extend({
             }
           });
 
-          FB.api('/' + user.get('fb_id') + '/events/not_replied', function(response)
+          self.get('FB').api('/' + user.get('fb_id') + '/events/not_replied', function(response)
           {
             if( !response.error )
             {
@@ -360,7 +360,6 @@ export default Ember.Controller.extend({
     var self = this;
     var unfiltered_events = [];
     var filtered_events = [];
-    var events = [];
     var event = null;
 
     unfiltered_events = self.store.all('event');
