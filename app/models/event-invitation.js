@@ -1,12 +1,36 @@
 import DS from 'ember-data';
 
 export default DS.Model.extend({
+  me: DS.belongsTo('user', { async: true }),
   event: DS.belongsTo('event', { async: true }),
   invited_user: DS.belongsTo('user', { async: true }),
   message: DS.belongsTo('message', { async: true }),
   status: DS.attr('string'),
+
   created_at: DS.attr('date'),
   updated_at: DS.attr('date'),
+
+  newSinceLastLogin: function() {
+    if(this.get('created_at') >= this.get('me').get('last_login'))
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }.property('created_at', 'me.last_login'),
+
+  updatedSinceLastLogin: function() {
+    if(this.get('updated_at') >= this.get('me').get('last_login'))
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }.property('updated_at', 'me.last_login'),
 
   hasBeenAccepted: function() {
     if(this.get('status') === 'attending')
@@ -39,5 +63,5 @@ export default DS.Model.extend({
     {
       return false;
     }
-  }.property('status'),
+  }.property('status')
 });

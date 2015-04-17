@@ -440,6 +440,7 @@ export default Ember.Controller.extend({
       var friend = filtered_users.get('firstObject');
 
       var eventInvitation = self.store.createRecord('eventInvitation', {
+        me: self.get('model'),
         event: event,
         invited_user: friend,
         status: status,
@@ -461,6 +462,7 @@ export default Ember.Controller.extend({
       message.save().then(function() {
 
         var eventInvitation = self.store.createRecord('eventInvitation', {
+          me: self.get('model'),
           event: event,
           invited_user: self.get('model'),
           status: status,

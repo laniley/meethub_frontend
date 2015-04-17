@@ -8,6 +8,7 @@ export default DS.Model.extend({
   start_date: DS.attr('string'),
   location: DS.belongsTo('location', { async: true }),
   eventInvitations: DS.hasMany('eventInvitation'),
+
   created_at: DS.attr('date'),
   updated_at: DS.attr('date'),
 
@@ -16,6 +17,12 @@ export default DS.Model.extend({
       return eventInv.get('invited_user').get('isMe') === false;
     });
   }.property('eventInvitations.length'),
+
+  friend_event_invitations_updated_since_last_login: function() {
+    return this.get('eventInvitations').filter(function(eventInv) {
+      return eventInv.get('invited_user').get('isMe') === false && eventInv.get('updatedSinceLastLogin') === true;
+    });
+  }.property('eventInvitations.length', 'eventInvitations.@each.updatedSinceLastLogin'),
 
   friend_event_invitations_attending: function() {
     return this.get('friend_event_invitations').filterBy('status', 'attending');
@@ -59,6 +66,17 @@ export default DS.Model.extend({
   social_points: function() {
     return this.get('friends_attending').get('length') * 3 + this.get('friends_attending_maybe').get('length') * 2 + this.get('friends_declined').get('length');
   }.property('friends_attending.length', 'friends_attending_maybe.length', 'friends_declined.length'),
+
+  hasSocialPointUpdates: function() {
+    if(this.get('friend_event_invitations_updated_since_last_login.length') > 0)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }.property('friend_event_invitations_updated_since_last_login.length'),
 
   start: function() {
     return moment(this.get('start_date'), "YYYY-MM-DDTHH:mm:ss.SSSSZ");

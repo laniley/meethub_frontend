@@ -7,15 +7,18 @@ export default DS.Model.extend({
   picture: DS.attr(),
   locale: DS.attr('string'),
   gender: DS.attr('string'),
-  first_login: DS.attr('boolean', { defaultValue: true }),
-  created_at: DS.attr('date'),
-  updated_at: DS.attr('date'),
-  last_login: DS.attr('date'),
   isMe: DS.attr('boolean', { defaultValue: false }),
+
   friends: DS.hasMany('user', { async: true }),
   meethubInvitations: DS.hasMany('meethub-invitation', { async: true }),
   meethubComments: DS.hasMany('meethub-comment', { async: true, inverse: 'user' }),
+  eventInvitations: DS.hasMany('event-invitations', { asnyc: true, inverse: 'invited_user'}),
   messages: DS.hasMany('message', { inverse: 'to_user' }),
+
+  created_at: DS.attr('date'),
+  updated_at: DS.attr('date'),
+  first_login: DS.attr('boolean', { defaultValue: true }),
+  last_login: DS.attr('date'),
 
   name: function() {
     return this.get('first_name') + ' ' + this.get('last_name');
