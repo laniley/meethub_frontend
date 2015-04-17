@@ -39,12 +39,12 @@ export default Ember.Controller.extend({
 
   }.property('newMeethubComments.@each'),
 
-  hasNewMeethubEventInfos: function() {
-    return this.get('membersArea_index_controller.hasNewMeethubEventInfos');
-  }.property('membersArea_index_controller.hasNewMeethubEventInfos'),
+  hasSocialPointUpdates: function() {
+    return this.get('membersArea_index_controller.hasSocialPointUpdates');
+  }.property('membersArea_index_controller.hasSocialPointUpdates'),
 
-  newMeethubEventInfos: function() {
-    return this.get('membersArea_index_controller.newMeethubEventInfos');
-  }.property('membersArea_index_controller.newMeethubEventInfos'),
+  socialPointUpdates: function() {
+    return this.get('membersArea_index_controller.socialPointUpdates');
+  }.property('membersArea_index_controller.socialPointUpdates'),
 
 });

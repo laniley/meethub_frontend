@@ -36,8 +36,8 @@ export default Ember.Controller.extend({
 
 
   newMeethubInfosCount: function() {
-    return this.get('membersArea_index_controller.newMeethubComments.length') + this.get('membersArea_index_controller.newMeethubEventInfos.length');
-  }.property('membersArea_index_controller.newMeethubComments.length', 'membersArea_index_controller.newMeethubEventInfos.length'),
+    return this.get('membersArea_index_controller.newMeethubComments.length') + this.get('membersArea_index_controller.socialPointUpdates');
+  }.property('membersArea_index_controller.newMeethubComments.length', 'membersArea_index_controller.socialPointUpdates'),
 
   hasNewMeethubInfos: function() {
     if(this.get('newMeethubInfosCount') > 0)
