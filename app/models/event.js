@@ -64,7 +64,7 @@ export default DS.Model.extend({
   }.property('connected_friends_length'),
 
   social_points: function() {
-    return this.get('friends_attending').get('length') * 3 + this.get('friends_attending_maybe').get('length') * 2 + this.get('friends_declined').get('length');
+    return this.get('friends_attending').get('length') * 3 + this.get('friends_attending_maybe').get('length');
   }.property('friends_attending.length', 'friends_attending_maybe.length', 'friends_declined.length'),
 
   hasSocialPointUpdates: function() {
