@@ -101,9 +101,9 @@ export default DS.Model.extend({
   }.property('start_date'),
 
   is_upcoming: function() {
-    var today = new Date();
+    var yesterday = moment().add(-1, 'd');
 
-    if(this.get('start') >= today)
+    if(this.get('start').isSame(yesterday) || this.get('start').isAfter(yesterday))
     {
       return true;
     }

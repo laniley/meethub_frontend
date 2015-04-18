@@ -99,5 +99,5 @@ export default DS.Model.extend({
 
     return events;
 
-  }.property('eventInvitationsOfmembersOfAcceptedMeethubs.@each.event.is_upcoming')
+  }.property('eventInvitationsOfmembersOfAcceptedMeethubs.@each.event')
 });

@@ -19,7 +19,7 @@ export default Ember.Component.extend({
   }.property('comment.text.length'),
 
   actions: {
-    editComment: function(comment) {
+    editComment: function() {
       this.set('inEditMode', true);
     },
     cancelEditing: function(comment) {
