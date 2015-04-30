@@ -1,4 +1,4 @@
-<h2>{{t 'calendar'}}</h2>
+<h2>{{#link-to "members-area.meethubs.calendar.list"}}{{t 'calendar'}}{{/link-to}}</h2>
 <div class="container-fluid main-area-list">
   {{#each event in sortedEvents}}
   <div {{bind-attr class=":row :main-area-list-item :calendar-list-row"}}>
