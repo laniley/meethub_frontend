@@ -52,9 +52,11 @@
       <ul class="nav navbar-nav navbar-right">
         <li class="custom-link">
           {{#link-to 'members-area.messages'}}
-            {{!-- <span class="message-counter">{{model.messages.length}}</span> --}}
-            <span {{bind-attr class=":link-icon hasUnreadMessages"}}>{{unbound fa-icon "fa-fixed-with fa-envelope"}}</span>
+            <span {{bind-attr class=":link-icon"}}>{{unbound fa-icon "fa-fixed-with fa-envelope"}}</span>
             <span class="link-label visible-xs">Messages</span>
+            {{#if 'hasUnreadMessages'}}
+              <span class="info-counter">{{unreadMessages.length}}</span>
+            {{/if}}
           {{/link-to}}
         </li>
         <li class="dropdown">
