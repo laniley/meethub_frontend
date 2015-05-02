@@ -64,5 +64,6 @@ Em.I18n.translations = {
   "edit": "Bearbeiten",
   "leave": "Verlassen",
   "save": "Speichern",
-  "short-description": "Kurzbeschreibung"
+  "short-description": "Kurzbeschreibung",
+  "invite-friends-button": "Lade weitere Freunde ein"
 };

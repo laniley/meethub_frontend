@@ -2,6 +2,9 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
+  needs: ['members-area'],
+  membersArea_controller: Ember.computed.alias("controllers.members-area"),
+
   sortProperties: ['created_at:desc'],
   sortedMessages: Ember.computed.sort('filteredMessages', 'sortProperties'),
 
@@ -12,7 +15,8 @@ export default Ember.Controller.extend({
   filteredMessages: function() {
 
     var self = this;
-    var messages = this.get('model');
+    var me = this.get('membersArea_controller').get('model');
+    var messages = this.get('model').filterBy('to_user', me);
     var event_inv = this.get('event_inv');
     var meethub_inv = this.get('meethub_inv');
     var filteredMessages = messages;

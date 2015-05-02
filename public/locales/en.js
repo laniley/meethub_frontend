@@ -64,5 +64,6 @@ Em.I18n.translations = {
   "edit": "Edit",
   "leave": "Leave",
   "save": "Save",
-  "short-description": "Short description"
+  "short-description": "Short description",
+  "invite-friends-button": "Invite more friends to Meethub"
 };

@@ -286,10 +286,14 @@
             }
 
             &.open {
-              // border: 1px solid $blue;
-              background-color: $blue;
-              color: #fff;
-              // color: $blue;
+              // background-color: $blue;
+              // color: #fff;
+
+              color: #167698;
+              border-radius: 5px;
+              border: 1px solid #ccc;
+              background-color: white;
+              box-shadow: #BFC8CB 0px 0px 10px inset;
             }
           }
         }

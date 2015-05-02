@@ -6,8 +6,9 @@
   {{/if}}
 </div>
 <div class="friends_search_results">
-  {{#each friend in search_results}}
-    {{#unless 'friend.isMe'}}
+  <button class=" facebook-button" {{action "inviteFacebookFriends"}}>{{unbound fa-icon "fa-facebook"}} | {{t "invite-friends-button"}}</button>
+  {{#each friend in search_results.content}}
+    {{#unless friend.isMe}}
       <div class="friends_search_result">
         <img {{bind-attr src=friend.picture }} />
         {{friend.name}}
