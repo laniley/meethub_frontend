@@ -1,10 +1,14 @@
 <h2>{{#link-to "members-area.meethubs.calendar.list"}}{{t 'calendar'}}{{/link-to}}</h2>
 <div class="container-fluid main-area-list">
   {{#each event in sortedEvents}}
-  <div {{bind-attr class=":row :main-area-list-item :calendar-list-row"}}>
-    <div class="date">{{formatted-date event.start_date 'L'}}</div>
-    <div {{bind-attr class="event.hasSocialPointUpdates"}}>{{event.social_points}}</div>
-    <div class="title"><a target="_blank" href="https://www.facebook.com/events/{{event.fb_id}}/">{{event.name}}</a></div>
-  </div>
+    <div {{bind-attr class=":row :main-area-list-item :calendar-list-row"}}>
+      <div class="col-xs-0 col-lg-2"></div>
+      <div class="col-xs-12 col-lg-8 no-padding">
+        <div class="date col-xs-2 col-sm-3 col-md-2 col-lg-2">{{formatted-date event.start_date 'L'}}</div>
+        <div {{bind-attr class=":col-xs-1 :col-sm-1 :col-md-1 :col-lg-1 event.hasSocialPointUpdates"}}>{{event.social_points}}</div>
+        <div class="col-xs-9 col-sm-8 col-md-9 col-lg-9 title align-left"><a target="_blank" href="https://www.facebook.com/events/{{event.fb_id}}/">{{event.name}}</a></div>
+      </div>
+      <div class="col-xs-0 col-lg-2"></div>
+    </div>
   {{/each}}
 </div>

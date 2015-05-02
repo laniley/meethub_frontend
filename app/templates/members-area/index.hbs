@@ -57,12 +57,12 @@
         {{#link-to 'members-area.meethubs.calendar.list'}}
           <div {{bind-attr class=":summary-item hasSocialPointUpdates:highlight"}} title={{t "welcome.meethub-event-infos"}}>
             {{#if hasSocialPointUpdates}}
-              <div {{bind-attr class=":section-icon hasSocialPointUpdates:has-unread-messages"}}>{{unbound fa-icon "fa-certificate"}}</div>
-              <div class="type">{{unbound fa-icon "fa-share-alt"}}</div>
+              <div {{bind-attr class=":section-icon hasSocialPointUpdates:has-unread-messages"}}>{{unbound fa-icon "fa-calendar"}}</div>
+              <div class="type">{{unbound fa-icon "fa-certificate"}}</div>
               <div class="number">{{socialPointUpdates}}</div>
             {{else}}
-              <div class="section-icon">{{unbound fa-icon "fa-certificate"}}</div>
-              <div class="type">{{unbound fa-icon "fa-share-alt"}}</div>
+              <div class="section-icon">{{unbound fa-icon "fa-calendar"}}</div>
+              <div class="type">{{unbound fa-icon "fa-certificate"}}</div>
               <div class="number">0</div>
             {{/if}}
           </div>
