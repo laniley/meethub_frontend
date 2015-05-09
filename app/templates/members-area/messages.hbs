@@ -51,24 +51,32 @@
       {{!-- BODY --}}
       <div {{bind-attr class=":body message.isOpen:open"}}>
         {{#if message.isEventInvitation}}
-          <div class="question">{{t 'messages.participation-question'}}</div>
-          <div>
+          <div class="info-box-row question">
+            {{t 'messages.participation-question'}}
+          </div>
+          <div class="info-box-row buttons">
             <div {{bind-attr class=":button :accept message.eventInvitation.hasBeenAccepted:active"}} {{action 'acceptEventInvitation' message.eventInvitation.id}} {{translateAttr  title='messages.accept'}}>{{unbound fa-icon "fa-check"}}</div>
             <div {{bind-attr class=":button :maybe message.eventInvitation.hasBeenAcceptedMaybe:active"}} {{action 'maybeAcceptEventInvitation' message.eventInvitation.id}} {{translateAttr  title='messages.maybe'}}>{{unbound fa-icon "fa-question"}}</div>
             <div {{bind-attr class=":button :decline message.eventInvitation.hasBeenDeclined:active"}} {{action 'declineEventInvitation' message.eventInvitation.id}} {{translateAttr  title='messages.decline'}}>{{unbound fa-icon "fa-remove"}}</div>
           </div>
-          <div class="start">
+          <div class="info-box-row start">
             {{#link-to 'members-area.messages.calendar'}}
               {{formatted-date message.eventInvitation.event.start_date 'L'}}
                - {{message.eventInvitation.event.start_time_converted}}
             {{/link-to}}
           </div>
-          <div class="location">
-            {{#link-to 'members-area.messages.map'}}
+          <div class="info-box-row location">
+            {{!-- {{#link-to 'members-area.messages.map'}} --}}
               {{message.eventInvitation.event.location.name}}
-            {{/link-to}}
+            {{!-- {{/link-to}} --}}
           </div>
-          <div class="participants">
+          <div class="info-box-row more_infos">
+            <a target="_blank" href="https://www.facebook.com/events/{{message.eventInvitation.event.fb_id}}/">zur Facebook-Seite des Events</a>
+          </div>
+          <div {{bind-attr class=":info-box-row :social-points message.eventInvitation.event.hasSocialPoints"}}>
+            {{unbound fa-icon "fa-certificate"}} {{message.eventInvitation.event.social_points}} Social-Points
+          </div>
+          <div class="info-box-row participants">
             {{#if message.eventInvitation.event.hasConnectedFriends}}
               <div class="row participants-title">{{t 'participants.title'}}</div>
               {{#each friend in message.eventInvitation.event.friends_attending}}
@@ -83,11 +91,7 @@
             {{/if}}
           </div>
         {{else}}
-          {{#if message.isEventInvitation}}
-            <div class="text">{{message.text}} {{message.from_user.name}}</div>
-          {{else}}
             <div class="text">{{message.text}}</div>
-          {{/if}}
         {{/if}}
       </div>
     </div>

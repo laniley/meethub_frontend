@@ -67,6 +67,17 @@ export default DS.Model.extend({
     return this.get('friends_attending').get('length') * 3 + this.get('friends_attending_maybe').get('length');
   }.property('friends_attending.length', 'friends_attending_maybe.length', 'friends_declined.length'),
 
+  hasSocialPoints: function() {
+    if(this.get('social_points') > 0)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }.property('social_points'),
+
   hasSocialPointUpdates: function() {
     if(this.get('friend_event_invitations_updated_since_last_login.length') > 0)
     {

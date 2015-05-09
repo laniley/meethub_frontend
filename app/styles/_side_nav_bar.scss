@@ -400,8 +400,8 @@
       border: 1px solid #B9BFC2;
     }
 
-    .question {
-      padding: 0 15px 15px 15px;
+    .info-box-row {
+      padding: 0 15px 10px 15px;
     }
 
     .button {
@@ -456,7 +456,6 @@
     }
 
     .start {
-      line-height: 50px;
 
       .start_date {
         width: 40%;
@@ -471,12 +470,9 @@
       }
     }
 
-    .location {
-      clear: both;
-
-      &:hover {
-        cursor: pointer;
-      }
+    .has-social-points {
+      color: $orange;
+      font-size: larger;
     }
   }
 
