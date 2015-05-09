@@ -66,6 +66,7 @@ Em.I18n.translations = {
   "edit": "Bearbeiten",
   "leave": "Verlassen",
   "save": "Speichern",
+  "send": "Absenden",
   "short-description": "Kurzbeschreibung",
   "invite-friends-button": "Lade weitere Freunde ein",
   "go-to-facebook-page": "zur Facebook-Seite des Events"

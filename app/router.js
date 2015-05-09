@@ -13,9 +13,15 @@ export default Router.map(function() {
   this.route("members-area", {
     path: "/"
   }, function() {
+
+    this.route("bugreports", function() {
+      this.route("create");
+    });
+
     this.route("meethubs", {
       path: "/meethubs"
     }, function() {
+
       this.route("map", function() {});
 
       this.route("calendar", function() {
