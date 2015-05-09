@@ -17,17 +17,6 @@ export default Ember.Route.extend({
       this.controllerFor('members-area/messages').set('meethub_inv', true);
     }
 
-    var currentSection = this.controllerFor('members-area').get('currentSection');
-
-    if(currentSection === 'calendar')
-    {
-      this.transitionTo('members-area.messages.calendar');
-    }
-    else
-    {
-      this.transitionTo('members-area.messages.map');
-    }
-
     this.controllerFor('members-area').set('showSidebar', true);
   },
   setupController: function(controller) {

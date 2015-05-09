@@ -43,8 +43,7 @@
           {{/if}}
           {{#if message.isMeethubInvitation}}
             <div class="message-type">{{unbound fa-icon "fa-share-alt"}}</div>
-            <div {{bind-attr class=":methubInvitation-status message.meethubInvitation.hasBeenAccepted:accepted message.meethubInvitation.hasBeenDeclined:declined"}}>
-              {{unbound fa-icon "fa-circle"}}</div>
+            <div {{bind-attr class=":methubInvitation-status message.meethubInvitation.hasBeenAccepted:accepted message.meethubInvitation.hasBeenDeclined:declined"}}></div>
           {{/if}}
         </div>
         <div class="subject">{{message.subject}}</div>

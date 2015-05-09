@@ -1,6 +1,13 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
+  needs: ['members-area', 'members-area/index'],
+  membersArea_controller: Ember.computed.alias("controllers.members-area"),
+  membersArea_index_controller: Ember.computed.alias("controllers.members-area/index"),
+
+  isSidebarOpen: function() {
+    return this.get('membersArea_controller').get('isSidebarOpen');
+  }.property('membersArea_controller.isSidebarOpen'),
 
   unreadMessages: function() {
 
@@ -16,69 +23,6 @@ export default Ember.Controller.extend({
     return unreadMessages;
 
   }.property('model.messages.@each.hasBeenRead'),
-
-  newMeethubComments: function() {
-
-    var newMeethubComments = [];
-
-    if(this.get('model.meethubComments.length') > 0)
-    {
-      var self = this;
-
-      newMeethubComments = this.get('model.meethubComments').filter(function(comment) {
-        return comment.get('new_comment') === true && comment.get('author').get('id') !== self.get('model').get('id');
-      });
-    }
-
-    return newMeethubComments;
-
-  }.property('model.meethubComments.@each.new_comment'),
-
-  upcomingEventsOfMeethubs: function() {
-    return this.get('model.upcomingEventsOfMeethubs');
-  }.property('model.upcomingEventsOfMeethubs.@each'),
-
-  friendEventsOfUpcomingEventsOfMeethubs: function() {
-    var upcomingEvents = this.get('upcomingEventsOfMeethubs');
-
-    if(upcomingEvents !== null)
-    {
-      var friendEventInvs = [];
-
-      upcomingEvents.forEach(function(upcomingEvent) {
-
-        var eventInvs = upcomingEvent.get('friend_event_invitations');
-
-        eventInvs.forEach(function(eventInv) {
-
-          if(friendEventInvs.indexOf(eventInv) === -1)
-          {
-            friendEventInvs.push(eventInv);
-          }
-
-        });
-
-      });
-
-      return friendEventInvs;
-    }
-  }.property('upcomingEventsOfMeethubs.@each.friend_event_invitations'),
-
-  socialPointUpdates: function() {
-    var self = this;
-    var upcomingEventsOfMeethubs = this.get('upcomingEventsOfMeethubs');
-    var socialPointUpdates = 0;
-
-    if(upcomingEventsOfMeethubs !== null)
-    {
-      upcomingEventsOfMeethubs.forEach(function(upcomingEvent) {
-        socialPointUpdates += upcomingEvent.get('friend_event_invitations_updated_since_last_login.length');
-      });
-
-      return socialPointUpdates;
-    }
-
-  }.property('upcomingEventsOfMeethubs.@each.friend_event_invitations_updated_since_last_login.length'),
 
   hasUnreadMessages: function() {
 
@@ -118,32 +62,6 @@ export default Ember.Controller.extend({
     }
 
   }.property('number_of_new_event_invitations'),
-
-  hasNewMeethubComments: function() {
-
-    if(this.get('newMeethubComments').get('length') > 0)
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
-
-  }.property('newMeethubComments.@each'),
-
-  hasSocialPointUpdates: function() {
-
-    if(this.get('socialPointUpdates') > 0)
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
-
-  }.property('socialPointUpdates'),
 
   number_of_new_meethub_invitations: function() {
 
@@ -191,6 +109,5 @@ export default Ember.Controller.extend({
 
     return unreadEventInvitations.get('length');
 
-  }.property('model.messages.@each.hasBeenRead', 'model.messages.@each.isEventInvitation')
-
+  }.property('model.messages.@each.hasBeenRead', 'model.messages.@each.isEventInvitation'),
 });

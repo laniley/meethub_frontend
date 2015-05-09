@@ -54,7 +54,7 @@
           {{#link-to 'members-area.messages'}}
             <span {{bind-attr class=":link-icon"}}>{{unbound fa-icon "fa-fixed-with fa-envelope"}}</span>
             <span class="link-label visible-xs">Messages</span>
-            {{#if 'hasUnreadMessages'}}
+            {{#if hasUnreadMessages}}
               <span class="info-counter">{{unreadMessages.length}}</span>
             {{/if}}
           {{/link-to}}

@@ -63,7 +63,7 @@ export default Ember.Controller.extend({
       return false;
     }
 
-  }.property('unreadMessages.@each'),
+  }.property('unreadMessages.length'),
 
   number_of_new_meethub_invitations: function() {
 
