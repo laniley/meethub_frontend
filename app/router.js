@@ -33,7 +33,9 @@ export default Router.map(function() {
       path: "/messages"
     }, function() {
       this.route("map");
-      this.route("calendar");
+      this.route("calendar", function() {
+        this.route("list");
+      });
     });
 
     this.route("friends", function() {
