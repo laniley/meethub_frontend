@@ -52,9 +52,9 @@
       <div {{bind-attr class=":body message.isOpen:open"}}>
         {{#if message.isEventInvitation}}
           <div class="info-box-row question">
-            {{t 'messages.participation-question'}}
+            {{t 'messages.event-participation-question'}}
           </div>
-          <div class="info-box-row buttons">
+          <div class="buttons">
             <div {{bind-attr class=":button :accept message.eventInvitation.hasBeenAccepted:active"}} {{action 'acceptEventInvitation' message.eventInvitation.id}} {{translateAttr  title='messages.accept'}}>{{unbound fa-icon "fa-check"}}</div>
             <div {{bind-attr class=":button :maybe message.eventInvitation.hasBeenAcceptedMaybe:active"}} {{action 'maybeAcceptEventInvitation' message.eventInvitation.id}} {{translateAttr  title='messages.maybe'}}>{{unbound fa-icon "fa-question"}}</div>
             <div {{bind-attr class=":button :decline message.eventInvitation.hasBeenDeclined:active"}} {{action 'declineEventInvitation' message.eventInvitation.id}} {{translateAttr  title='messages.decline'}}>{{unbound fa-icon "fa-remove"}}</div>
@@ -71,7 +71,7 @@
             {{!-- {{/link-to}} --}}
           </div>
           <div class="info-box-row more_infos">
-            <a target="_blank" href="https://www.facebook.com/events/{{message.eventInvitation.event.fb_id}}/">zur Facebook-Seite des Events</a>
+            <a target="_blank" href="https://www.facebook.com/events/{{message.eventInvitation.event.fb_id}}/">{{t "go-to-facebook-page"}}</a>
           </div>
           <div {{bind-attr class=":info-box-row :social-points message.eventInvitation.event.hasSocialPoints"}}>
             {{unbound fa-icon "fa-certificate"}} {{message.eventInvitation.event.social_points}} Social-Points
@@ -91,7 +91,16 @@
             {{/if}}
           </div>
         {{else}}
-            <div class="text">{{message.text}}</div>
+            <div class="info-box-row text">{{message.text}}</div>
+            {{#if message.isMeethubInvitation}}
+              <div class="info-box-row question">
+                {{t 'messages.meethub-participation-question'}}
+              </div>
+              <div class="buttons">
+                <div {{bind-attr class=":button :accept message.meethubInvitation.hasBeenAccepted:active"}} {{action 'acceptMeethubInvitation' message.meethubInvitation.id}} {{translateAttr  title='messages.accept'}}>{{unbound fa-icon "fa-check"}}</div>
+                <div {{bind-attr class=":button :decline message.meethubInvitation.hasBeenDeclined:active"}} {{action 'declineMeethubInvitation' message.meethubInvitation.id}} {{translateAttr  title='messages.decline'}}>{{unbound fa-icon "fa-remove"}}</div>
+              </div>
+            {{/if}}
         {{/if}}
       </div>
     </div>

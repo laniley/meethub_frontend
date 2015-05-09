@@ -21,7 +21,8 @@ Em.I18n.translations = {
     }
   },
   "meethub": {
-    "not-in-a-meethub": "You are not in a meethub yet.<br /> Do you want to create one?",
+    "not-in-a-meethub-part-1": "You don't know yet, what you want to do today? Just create a Meethub, invite your friends and get to know, what they are going to do.",
+    "not-in-a-meethub-part-2": "Keep an eye on the Social-Points. They give you a hint, which events are the most interessting ones for you. Is one of your friends attending, the event gets 3 Social-Points for it, is a friends attending maybe, it gets 1 Social-Point.",
     "members": "members",
     "select-new-admin-advice": "When you leave the Meethub, no one will be admin. Please select a new admin for the Meethub first.",
     "button": {
@@ -31,7 +32,8 @@ Em.I18n.translations = {
     }
   },
   "messages": {
-    "participation-question": "Will you participate?",
+    "event-participation-question": "Will you participate?",
+    "meethub-participation-question": "Do you accept?",
     "accept": "accept",
     "maybe": "maybe",
     "decline": "decline",
@@ -65,5 +67,6 @@ Em.I18n.translations = {
   "leave": "Leave",
   "save": "Save",
   "short-description": "Short description",
-  "invite-friends-button": "Invite more friends to Meethub"
+  "invite-friends-button": "Invite more friends to Meethub",
+  "go-to-facebook-page": "go to facebook page"
 };

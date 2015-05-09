@@ -43,90 +43,102 @@
       <span {{bind-attr class=":side-nav-button :reset-search-button searchIsEmpty:do-not-display"}} {{action 'resetSearch'}} title={{t "meethub.button.cancel"}}>{{unbound fa-icon "fa-remove"}}</span>
     </div>
   {{/if}}
-  {{#each meethubInvitation in sortedMeethubInvitations}}
-    <div {{bind-attr class=":side-nav-item :meethub :no-padding meethub.isOpen:open"}}>
-    	{{!-- TITLE --}}
-      <div {{bind-attr class=":title meethubInvitation.meethub.isInEditMode:editMode:selectable meethubInvitation.meethub.isOpen:open"}} {{action 'toggleMeethub' meethubInvitation.meethub}}>
-        {{#if meethubInvitation.meethub.hasNewComments}}
-          <span {{bind-attr class=":side-nav-info-counter meethubInvitation.meethub.hasNewComments:highlight"}}>
-            {{meethubInvitation.meethub.newComments.length}}
-          </span>
-        {{/if}}
-        {{#if meethubInvitation.meethub.isInEditMode}}
-          {{input value=meethubInvitation.meethub.name}}
-        {{else}}
-          {{meethubInvitation.meethub.name}}
-        {{/if}}
-     	</div>
-     	{{!-- BODY --}}
-      <div {{bind-attr class=":body meethubInvitation.meethub.isOpen:open"}}>
-        <div class="item-options">
+  {{#if hasMeethubs}}
+    {{#each meethubInvitation in sortedMeethubInvitations}}
+      <div {{bind-attr class=":side-nav-item :meethub :no-padding meethub.isOpen:open"}}>
+      	{{!-- TITLE --}}
+        <div {{bind-attr class=":title meethubInvitation.meethub.isInEditMode:editMode:selectable meethubInvitation.meethub.isOpen:open"}} {{action 'toggleMeethub' meethubInvitation.meethub}}>
+          {{#if meethubInvitation.meethub.hasNewComments}}
+            <span {{bind-attr class=":side-nav-info-counter meethubInvitation.meethub.hasNewComments:highlight"}}>
+              {{meethubInvitation.meethub.newComments.length}}
+            </span>
+          {{/if}}
           {{#if meethubInvitation.meethub.isInEditMode}}
-            <div class="item-option save-button" {{action 'save' meethubInvitation.meethub}}>{{unbound fa-icon "fa-check"}} {{t 'save'}}</div>
-            <div class="item-option cancel-button" {{action 'cancelEditing' meethubInvitation.meethub}}>{{unbound fa-icon "fa-remove"}} {{t 'meethub.button.cancel'}}</div>
+            {{input value=meethubInvitation.meethub.name}}
           {{else}}
-            {{#if meethubInvitation.meethub.selectNewAdmin}}
+            {{meethubInvitation.meethub.name}}
+          {{/if}}
+       	</div>
+       	{{!-- BODY --}}
+        <div {{bind-attr class=":body meethubInvitation.meethub.isOpen:open"}}>
+          <div class="item-options">
+            {{#if meethubInvitation.meethub.isInEditMode}}
+              <div class="item-option save-button" {{action 'save' meethubInvitation.meethub}}>{{unbound fa-icon "fa-check"}} {{t 'save'}}</div>
               <div class="item-option cancel-button" {{action 'cancelEditing' meethubInvitation.meethub}}>{{unbound fa-icon "fa-remove"}} {{t 'meethub.button.cancel'}}</div>
             {{else}}
-              {{edit-button
-                  user=user
-                  parent=meethubInvitation}}
-              {{leave-button
-                  parent=meethubInvitation}}
+              {{#if meethubInvitation.meethub.selectNewAdmin}}
+                <div class="item-option cancel-button" {{action 'cancelEditing' meethubInvitation.meethub}}>{{unbound fa-icon "fa-remove"}} {{t 'meethub.button.cancel'}}</div>
+              {{else}}
+                {{edit-button
+                    user=user
+                    parent=meethubInvitation}}
+                {{leave-button
+                    parent=meethubInvitation}}
+              {{/if}}
+            {{/if}}
+          </div>
+          {{#if meethubInvitation.meethub.selectNewAdmin}}
+            <div class="new-admin-selection">
+              {{t 'meethub.select-new-admin-advice'}}
+              {{user-search
+                user=user
+                friends=meethubInvitation.meethub.invitedUser
+                setAutofocus=setAutofocus
+                parent=meethubInvitation
+                type='makeAdmin'}}
+            </div>
+          {{/if}}
+          {{#if meethubInvitation.meethub.isInEditMode}}
+            <div class="short-description edit">
+              {{#if isGerman}}
+                {{textarea placeholder="Kurzbeschreibung" cols="50" rows="3" maxlength="250" value=meethubInvitation.meethub.short_description}}
+              {{else}}
+                {{textarea placeholder="Short description" cols="50" rows="3" maxlength="250" value=meethubInvitation.meetub.short_description}}
+              {{/if}}
+            </div>
+          {{else}}
+            {{#if meethubInvitation.meethub.hasShortDescription}}
+              <div class="short-description">{{meethubInvitation.meethub.short_description}}</div>
             {{/if}}
           {{/if}}
-        </div>
-        {{#if meethubInvitation.meethub.selectNewAdmin}}
-          <div class="new-admin-selection">
-            {{t 'meethub.select-new-admin-advice'}}
+          <div class="summary">
+            <div {{bind-attr class="meethubInvitation.meethub.hasNewComments:highlight"}}>{{#link-to 'members-area.meethubs.comments.meethub' meethubInvitation.meethub}}{{t "comment.new_comments" countBinding="meethubInvitation.meethub.newComments.length"}}{{/link-to}}</div>
+            <div>{{#link-to 'members-area.meethubs.calendar.list'}}0 Social-Point-Updates{{/link-to}}</div>
+            {{!-- <div>0 neue Mitgleider</div> --}}
+          </div>
+        	<div class="members-title">{{t 'meethub.members'}}</div>
+          <div class="members">
+            {{#each invitation in meethubInvitation.meethub.acceptedInvitations}}
+              <img class="accepted" {{bind-attr src=invitation.invited_user.picture }} {{bind-attr title=invitation.invited_user.name}} />
+            {{/each}}
+            {{#each invitation in meethubInvitation.meethub.pendingInvitations}}
+              <img class="pending" {{bind-attr src=invitation.invited_user.picture }} {{bind-attr title=invitation.invited_user.name}} />
+            {{/each}}
+            <div {{bind-attr class=":add-new-member meethubInvitation.meethub.showAddMembersForm:open"}} {{action 'toggle_add_members_form' meethubInvitation.meethub}}>
+              {{unbound fa-icon "fa-user-plus"}}
+            </div>
+          </div>
+          {{#if meethubInvitation.meethub.showAddMembersForm}}
             {{user-search
-              user=user
-              friends=meethubInvitation.meethub.invitedUser
-              setAutofocus=setAutofocus
-              parent=meethubInvitation
-              type='makeAdmin'}}
-          </div>
-        {{/if}}
-        {{#if meethubInvitation.meethub.isInEditMode}}
-          <div class="short-description edit">
-            {{#if isGerman}}
-              {{textarea placeholder="Kurzbeschreibung" cols="50" rows="3" maxlength="250" value=meethubInvitation.meethub.short_description}}
-            {{else}}
-              {{textarea placeholder="Short description" cols="50" rows="3" maxlength="250" value=meethubInvitation.meetub.short_description}}
-            {{/if}}
-          </div>
-        {{else}}
-          {{#if meethubInvitation.meethub.hasShortDescription}}
-            <div class="short-description">{{meethubInvitation.meethub.short_description}}</div>
+                user=user
+                friends=friends
+                setAutofocus=setAutofocus
+                parent=meethubInvitation.meethub
+                type='meethubInvite'}}
           {{/if}}
-        {{/if}}
-        <div class="summary">
-          <div {{bind-attr class="meethubInvitation.meethub.hasNewComments:highlight"}}>{{#link-to 'members-area.meethubs.comments.meethub' meethubInvitation.meethub}}{{t "comment.new_comments" countBinding="meethubInvitation.meethub.newComments.length"}}{{/link-to}}</div>
-          <div>{{#link-to 'members-area.meethubs.calendar.list'}}0 Social-Point-Updates{{/link-to}}</div>
-          {{!-- <div>0 neue Mitgleider</div> --}}
         </div>
-      	<div class="members-title">{{t 'meethub.members'}}</div>
-        <div class="members">
-          {{#each invitation in meethubInvitation.meethub.acceptedInvitations}}
-            <img class="accepted" {{bind-attr src=invitation.invited_user.picture }} {{bind-attr title=invitation.invited_user.name}} />
-          {{/each}}
-          {{#each invitation in meethubInvitation.meethub.pendingInvitations}}
-            <img class="pending" {{bind-attr src=invitation.invited_user.picture }} {{bind-attr title=invitation.invited_user.name}} />
-          {{/each}}
-          <div {{bind-attr class=":add-new-member meethubInvitation.meethub.showAddMembersForm:open"}} {{action 'toggle_add_members_form' meethubInvitation.meethub}}>
-            {{unbound fa-icon "fa-user-plus"}}
-          </div>
-        </div>
-        {{#if meethubInvitation.meethub.showAddMembersForm}}
-          {{user-search
-              user=user
-              friends=friends
-              setAutofocus=setAutofocus
-              parent=meethubInvitation.meethub
-              type='meethubInvite'}}
-        {{/if}}
       </div>
-    </div>
-  {{/each}}
+    {{/each}}
+  {{else}}
+    {{#unless createIsOpen}}
+      <div class="text-box">
+        <p>{{t "meethub.not-in-a-meethub-part-1"}}</p>
+
+        <p><button {{action 'toggleCreate'}}>{{t "meethub.button.create"}}</button></p>
+
+        <p>{{t "meethub.not-in-a-meethub-part-2"}}</p>
+      </div>
+    {{/unless}}
+  {{/if}}
 </div>
 

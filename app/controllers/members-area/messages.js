@@ -72,6 +72,7 @@ export default Ember.Controller.extend({
     toggleEventInvFilter: function() {
       this.toggleProperty('event_inv');
     },
+    // Event-Invitations
     acceptEventInvitation: function(eventInvitation_id) {
       this.store.find('eventInvitation', eventInvitation_id).then(function(eventInvitation) {
         eventInvitation.set('status', 'attending');
@@ -88,6 +89,20 @@ export default Ember.Controller.extend({
       this.store.find('eventInvitation', eventInvitation_id).then(function(eventInvitation) {
         eventInvitation.set('status', 'declined');
         eventInvitation.save();
+      });
+    },
+
+    // Meethub-Invitations
+    acceptMeethubInvitation: function(id) {
+      this.store.find('meethubInvitation', id).then(function(meethubInvitation) {
+        meethubInvitation.set('status', 'attending');
+        meethubInvitation.save();
+      });
+    },
+    declineMeethubInvitation: function(id) {
+      this.store.find('meethubInvitation', id).then(function(meethubInvitation) {
+        meethubInvitation.set('status', 'declined');
+        meethubInvitation.save();
       });
     }
   }

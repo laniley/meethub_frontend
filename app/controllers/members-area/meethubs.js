@@ -18,6 +18,17 @@ export default Ember.Controller.extend({
   // SEARCH
   search_term: '',
 
+  hasMeethubs: function() {
+    if(this.get('myMeethubInvitations.length') > 0)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }.property('myMeethubInvitations.length'),
+
   myMeethubInvitations: function() {
     var self = this;
 
