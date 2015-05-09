@@ -69,5 +69,6 @@ Em.I18n.translations = {
   "send": "Send",
   "short-description": "Short description",
   "invite-friends-button": "Invite more friends to Meethub",
-  "go-to-facebook-page": "go to facebook page"
+  "go-to-facebook-page": "go to facebook page",
+  "thank-you": "Many thanks for your support!"
 };

@@ -2,6 +2,17 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
+  needs: ['members-area'],
+  membersArea_controller: Ember.computed.alias("controllers.members-area"),
+
+  description: '',
+
+  showThankYou: false,
+
+  user: function() {
+    return this.get('membersArea_controller').get('model');
+  }.property(),
+
   isGerman: function() {
     if(Ember.I18n.locale === 'de')
     {
@@ -16,20 +27,22 @@ export default Ember.Controller.extend({
   actions: {
     sendMail: function() {
 
-      if(document.getElementById('bugreport-text').value.length > 0)
+      if(this.get('description.length') > 0)
       {
-        var body = navigator.appCodeName + "\r\n"
-                 + navigator.platform + "\r\n"
-                 + navigator.appName + "\r\n"
-                 + navigator.appVersion + ":\r\n \r\n"
-                 + escape(document.getElementById('bugreport-text').value);
+        var newBug = this.store.createRecord('bug', {
+          reported_by: this.get('user'),
+          browserCodeName: navigator.appCodeName,
+          browserOfficialName: navigator.appName,
+          browserVersion: navigator.appVersion,
+          platform: navigator.platform,
+          text: escape(this.get('description')),
+          status: 'open'
+        });
 
-        var mail = "mailto:bugs@meethubs.net"
-                 + "?subject=" + escape("Bugreport - Meethub")
-                 + "&body=" + encodeURIComponent(body)
-        ;
+        newBug.save();
 
-        window.location.href = mail;
+        this.set('description', '');
+        this.set('showThankYou', true);
       }
     }
   }

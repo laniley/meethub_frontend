@@ -69,5 +69,6 @@ Em.I18n.translations = {
   "send": "Absenden",
   "short-description": "Kurzbeschreibung",
   "invite-friends-button": "Lade weitere Freunde ein",
-  "go-to-facebook-page": "zur Facebook-Seite des Events"
+  "go-to-facebook-page": "zur Facebook-Seite des Events",
+  "thank-you": "Vielen Dank für deine Unterstützung!"
 };

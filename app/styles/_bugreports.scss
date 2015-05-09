@@ -3,8 +3,19 @@
     margin-bottom: 70px;
   }
 
+  .thank-you-row {
+    margin-top: 20px;
+    color: $orange;
+    font-size: 18px;
+    visibility: hidden;
+
+    &.show-thank-you {
+      visibility: visible;
+    }
+  }
+
   .button-row {
-    margin-top: 50px;
+    margin-top: 30px;
   }
 }
 
