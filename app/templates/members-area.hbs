@@ -109,6 +109,12 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
       <ul class="nav navbar-nav navbar-right">
         <li>
+          {{#link-to 'privacy-policy'}}
+            <span>{{unbound fa-icon "fa-fixed-with  fa-info-circle"}}</span>
+            <span class="link-label">Privacy Policy</span>
+          {{/link-to}}
+        </li>
+        <li>
           {{#link-to 'members-area.bugreports.create'}}
             <span>{{unbound fa-icon "fa-fixed-with  fa-bug"}}</span>
             <span class="link-label">Report a bug</span>
