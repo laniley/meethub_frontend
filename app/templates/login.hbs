@@ -1,15 +1,20 @@
 <div class="login-container container-fluid">
-  <div class="hidden-xs hidden-sm col-md-4"></div>
-  <div class="col-xs-12 col-md-4">
-    <div class="row login-logo-row">
-      <img class="login-logo" src="assets/images/logo_square_120x120.png" />
+  <div class="row">
+    <div class="hidden-xs hidden-sm col-md-4"></div>
+    <div class="col-xs-12 col-md-4">
+      <div class="row login-logo-row">
+        <img class="login-logo" src="assets/images/logo_square_120x120.png" />
+      </div>
+      <div class="row">
+        <div class="login-title">MEETHUB <div class="beta-label">BETA</div></div>
+      </div>
+      <div class="row">
+        <button class="fb-login-button" {{action "login"}}>{{unbound fa-icon "facebook-square"}} Log in with facebook</button>
+      </div>
     </div>
-    <div class="row">
-      <div class="login-title">MEETHUB <div class="beta-label">BETA</div></div>
-    </div>
-    <div class="row">
-      <button class="fb-login-button" {{action "login"}}>{{unbound fa-icon "facebook-square"}} Log in with facebook</button>
-    </div>
+    <div class="hidden-xs hidden-sm col-md-4"></div>
   </div>
-  <div class="hidden-xs hidden-sm col-md-4"></div>
+  <div class="row">
+    <div class="col-xs-12 login-link-to-privacy-policy">{{#link-to 'privacy-policy'}}Privacy Policy{{/link-to}}</div>
+  </div>
 </div>
