@@ -59,4 +59,6 @@ export default Router.map(function() {
       this.route("calendar");
     });
   });
+
+  this.route('privacy-policy');
 });

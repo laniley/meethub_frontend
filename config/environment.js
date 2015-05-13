@@ -40,7 +40,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
 
-    ENV.backend_url = 'http://localhost:8000',
+    ENV.backend_url = 'http://localhost:8000/meethubbe',
 
     ENV['torii'] = {
       providers: {
@@ -75,16 +75,19 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
+
+    ENV.backend_url = 'http://meethub.de/meethubbe',
+
     ENV['torii'] = {
       providers: {
         'facebook-oauth2': {
-          apiKey: '560143030797393',
-          redirectUri: 'http://localhost:4200/'
+          apiKey: '560142730797423',
+          redirectUri: 'https://meethub.net/public/'
         },
         'facebook-connect': {
-          appId: '560143030797393',
-          scope: 'public_profile, user_friends, user_events'
-          //redirectUri: 'http://localhost:4200/members-area'
+          appId: '560142730797423',
+          scope: 'public_profile, user_friends, user_events',
+          redirectUri: 'https://meethub.net/public/'
         }
       }
     };
