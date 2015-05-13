@@ -382,12 +382,6 @@
     border-bottom: 1px solid $border-color;
   }
 
-  .section-title {
-    font-family: Ethno_regular, Arial, sans-serif;
-    font-size: 20px;
-    color: $header-text-color;
-  }
-
   .body {
     padding: 10px;
 
@@ -569,4 +563,10 @@
 
 .text-box {
   padding: 15px 5px;
+}
+
+.section-title {
+  font-family: Ethno_regular, Arial, sans-serif;
+  font-size: 20px;
+  color: $header-text-color;
 }

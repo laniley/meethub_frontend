@@ -155,3 +155,11 @@ ul {
     /* inline-block space fix */
     margin-right:-4px;
 }
+
+.full-container {
+  margin: 5%;
+
+  .section-title {
+    margin-bottom: 50px;
+  }
+}
