@@ -5,7 +5,7 @@ export default DS.Model.extend({
   author: DS.belongsTo('user', { async: true }),
   text: DS.attr('string'),
   meethub: DS.belongsTo('meethub', { async: true }),
-  created_at: DS.attr('date'),
+  created_at: DS.attr(),
 
   new_comment: function() {
     if(this.get('created_at') > this.get('user.last_login'))

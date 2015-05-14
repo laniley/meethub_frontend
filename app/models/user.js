@@ -15,10 +15,10 @@ export default DS.Model.extend({
   eventInvitations: DS.hasMany('event-invitations', { asnyc: true, inverse: 'invited_user'}),
   messages: DS.hasMany('message', { inverse: 'to_user' }),
 
-  created_at: DS.attr('date'),
-  updated_at: DS.attr('date'),
+  created_at: DS.attr(),
+  updated_at: DS.attr(),
   first_login: DS.attr('boolean', { defaultValue: true }),
-  last_login: DS.attr('date'),
+  last_login: DS.attr(),
 
   name: function() {
     return this.get('first_name') + ' ' + this.get('last_name');

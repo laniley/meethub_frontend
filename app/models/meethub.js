@@ -4,8 +4,8 @@ export default DS.Model.extend({
   name: DS.attr('string'),
   short_description: DS.attr('string'),
 
-  created_at: DS.attr('date'),
-  updated_at: DS.attr('date'),
+  created_at: DS.attr(),
+  updated_at: DS.attr(),
 
   founder: DS.belongsTo('user', { async: true }),
   invitations: DS.hasMany('meethub-invitation', { async: true }),

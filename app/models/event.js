@@ -9,8 +9,8 @@ export default DS.Model.extend({
   location: DS.belongsTo('location', { async: true }),
   eventInvitations: DS.hasMany('eventInvitation'),
 
-  created_at: DS.attr('date'),
-  updated_at: DS.attr('date'),
+  created_at: DS.attr(),
+  updated_at: DS.attr(),
 
   friend_event_invitations: function() {
     return this.get('eventInvitations').filter(function(eventInv) {

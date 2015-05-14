@@ -10,8 +10,8 @@ export default DS.Model.extend({
   hasBeenRead: DS.attr('boolean', {defaultValue: true}),
   eventInvitation: DS.belongsTo('eventInvitation', { async: true }),
   meethubInvitation: DS.belongsTo('meethubInvitation', { async: true }),
-  created_at: DS.attr('date'),
-  updated_at: DS.attr('date'),
+  created_at: DS.attr(),
+  updated_at: DS.attr(),
 
   isEventInvitation: function() {
     if(Ember.isEmpty(this.get('eventInvitation.id')))

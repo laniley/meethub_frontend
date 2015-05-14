@@ -7,8 +7,8 @@ export default DS.Model.extend({
   message: DS.belongsTo('message', { async: true }),
   status: DS.attr('string'),
 
-  created_at: DS.attr('date'),
-  updated_at: DS.attr('date'),
+  created_at: DS.attr(),
+  updated_at: DS.attr(),
 
   newSinceLastLogin: function() {
     if(this.get('created_at') >= this.get('me').get('last_login'))
