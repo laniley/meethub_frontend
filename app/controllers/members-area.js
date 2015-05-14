@@ -16,12 +16,12 @@ export default Ember.Controller.extend({
 
   init: function() {
 
-    // var self = this;
+    var self = this;
 
     setInterval
     (
       function() {
-        // self.update();
+        self.update();
       },
       10000
     );
