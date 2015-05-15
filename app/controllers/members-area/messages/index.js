@@ -109,5 +109,6 @@ export default Ember.Controller.extend({
 
     return unreadEventInvitations.get('length');
 
-  }.property('model.messages.@each.hasBeenRead', 'model.messages.@each.isEventInvitation'),
+  }.property('model.messages.@each.hasBeenRead', 'model.messages.@each.isEventInvitation')
+
 });

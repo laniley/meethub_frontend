@@ -95,7 +95,7 @@ export default Ember.Controller.extend({
     // Meethub-Invitations
     acceptMeethubInvitation: function(id) {
       this.store.find('meethubInvitation', id).then(function(meethubInvitation) {
-        meethubInvitation.set('status', 'attending');
+        meethubInvitation.set('status', 'accepted');
         meethubInvitation.save();
       });
     },
