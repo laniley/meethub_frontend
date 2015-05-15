@@ -32,6 +32,7 @@ export default Ember.Controller.extend({
     self.loadUserEventsFromFB();
     self.loadFriendEventsFromFB();
     self.store.find('meethubInvitation', { invited_user: self.get('model').get('id') });
+    self.store.find('eventInvitation', { invited_user: self.get('model').get('id') });
     self.store.find('message', { user: self.get('model').get('id') });
     self.store.find('meethubComment', { user: self.get('model').get('id') });
   },
@@ -218,9 +219,11 @@ export default Ember.Controller.extend({
 
       friends.forEach(function(friend) {
 
-        self.store.find('user', friend.get('id')).then(function(user) {
+        self.store.find('user', friend.get('id')).then(function(friend) {
 
-          self.get('FB').api('/' + user.get('fb_id') + '/events/attending', function(response)
+          self.store.find('eventInvitation', { 'invited_user': friend.get('id') });
+
+          self.get('FB').api('/' + friend.get('fb_id') + '/events/attending', function(response)
           {
             if( !response.error )
             {
@@ -228,7 +231,7 @@ export default Ember.Controller.extend({
 
               for(var i = 0; i < response.data.length; i++)
               {
-                self.handleFBEventResponse(response.data[i], 'attending', user.get('fb_id'));
+                self.handleFBEventResponse(response.data[i], 'attending', friend.get('fb_id'));
               }
             }
             else
@@ -237,7 +240,7 @@ export default Ember.Controller.extend({
             }
           });
 
-          self.get('FB').api('/' + user.get('fb_id') + '/events/maybe', function(response)
+          self.get('FB').api('/' + friend.get('fb_id') + '/events/maybe', function(response)
           {
             if( !response.error )
             {
@@ -245,7 +248,7 @@ export default Ember.Controller.extend({
 
               for(var i = 0; i < response.data.length; i++)
               {
-                self.handleFBEventResponse(response.data[i], 'maybe', user.get('fb_id'));
+                self.handleFBEventResponse(response.data[i], 'maybe', friend.get('fb_id'));
               }
             }
             else
@@ -254,7 +257,7 @@ export default Ember.Controller.extend({
             }
           });
 
-          self.get('FB').api('/' + user.get('fb_id') + '/events/not_replied', function(response)
+          self.get('FB').api('/' + friend.get('fb_id') + '/events/not_replied', function(response)
           {
             if( !response.error )
             {
@@ -262,7 +265,7 @@ export default Ember.Controller.extend({
 
               for(var i = 0; i < response.data.length; i++)
               {
-                self.handleFBEventResponse(response.data[i], 'not_replied', user.get('fb_id'));
+                self.handleFBEventResponse(response.data[i], 'not_replied', friend.get('fb_id'));
               }
             }
             else
@@ -305,7 +308,7 @@ export default Ember.Controller.extend({
 
         self.get('map_controller').get('markers').addObject({title: response.location, lat: response.venue.latitude, lng: response.venue.longitude, isDraggable: false});
 
-        location.save().then(function() {
+        location.save().then(function(location) {
           self.handleFBEvent(response, location, status, user_fb_id);
         });
       }
@@ -334,7 +337,7 @@ export default Ember.Controller.extend({
               name: response.location
             });
 
-            location.save().then(function() {
+            location.save().then(function(location) {
               self.handleFBEvent(response, location, status, user_fb_id);
             });
           }
@@ -408,7 +411,7 @@ export default Ember.Controller.extend({
             location: location
           });
 
-          event.save().then(function() {
+          event.save().then(function(event) {
             self.handleFBMessage(response, event, status, user_fb_id);
           });
         }
@@ -439,7 +442,7 @@ export default Ember.Controller.extend({
       console.log('event in store already', response.name);
       event = filtered_events.get('firstObject');
 
-      event.save().then(function() {
+      event.save().then(function(event) {
         self.handleFBMessage(response, event, status, user_fb_id);
       });
     }
@@ -447,54 +450,98 @@ export default Ember.Controller.extend({
 
   handleFBMessage: function(response, event, status, user_fb_id) {
 
+    console.log('handle FB message');
+
     var self = this;
 
-    var unfiltered_messages = this.store.all('message');
+    self.store.find('message', { fb_id: event.get('fb_id') }).then(function(store_response) {
 
-    var messages = unfiltered_messages.filterBy('fb_id', response.id);
+      var user_id = null;
 
-    // if it is an eventInv of a friend, handle eventInv for friend
-    if(user_fb_id !== 'me')
-    {
-      var unfiltered_users = this.store.all('user');
-      var filtered_users = unfiltered_users.filterBy('fb_id', user_fb_id);
-      var friend = filtered_users.get('firstObject');
+      if(user_fb_id !== 'me')
+      {
+        var unfiltered_users = self.store.all('user');
+        var filtered_users = unfiltered_users.filterBy('fb_id', user_fb_id);
+        user_id = filtered_users.get('firstObject').get('id');
+      }
+      else
+      {
+        user_id = self.get('model').get('id');
+      }
 
-      var eventInvitation = self.store.createRecord('eventInvitation', {
-        me: self.get('model'),
-        event: event,
-        invited_user: friend,
-        status: status,
-        message: null
+      var filtered_messages = store_response.filter(function(response) {
+        return response.get('to_user').get('id') === user_id;
       });
 
-      eventInvitation.save();
-    }
+      var message = filtered_messages.get('firstObject');
 
-    // handle eventInv for me
-    if(Ember.isEmpty(messages))
-    {
-      var message = self.store.createRecord('message', {
-        fb_id: response.id,
-        subject: response.name,
-        to_user: self.get('model')
-      });
+      // if message not already in the DB, create it
+      if(Ember.isEmpty(message))
+      {
+        console.log('message not already in the DB');
 
-      message.save().then(function() {
+        // if it is an eventInv of a friend, handle eventInv for friend
+        if(user_fb_id !== 'me')
+        {
+          // console.log('message for a friend');
 
-        var eventInvitation = self.store.createRecord('eventInvitation', {
-          me: self.get('model'),
-          event: event,
-          invited_user: self.get('model'),
-          status: status,
-          message: message
+          var unfiltered_users = self.store.all('user');
+          var filtered_users = unfiltered_users.filterBy('fb_id', user_fb_id);
+          var friend = filtered_users.get('firstObject');
+
+          var message = self.store.createRecord('message', {
+            fb_id: event.get('fb_id'),
+            subject: response.name,
+            to_user: friend
+          });
+
+          message.save().then(function(message) {
+            var eventInvitation = self.store.createRecord('eventInvitation', {
+              me: self.get('model'),
+              event: event,
+              invited_user: friend,
+              status: status,
+              message: message
+            });
+
+            eventInvitation.save().then(function(eventInvitation) {
+              message.set('eventInvitation', eventInvitation);
+            });
+
+          });
+        }
+
+        // console.log('message for me');
+        // handle eventInv for me
+        var message = self.store.createRecord('message', {
+          fb_id: event.get('fb_id'),
+          subject: response.name,
+          to_user: self.get('model')
         });
 
-        eventInvitation.save().then(function() {
-          message.set('eventInvitation', eventInvitation);
+        message.save().then(function(message) {
+
+          var eventInvitation = self.store.createRecord('eventInvitation', {
+            me: self.get('model'),
+            event: event,
+            invited_user: self.get('model'),
+            status: status,
+            message: message
+          });
+
+          eventInvitation.save().then(function(eventInvitation) {
+            message.set('eventInvitation', eventInvitation);
+          });
         });
-      });
-    }
+
+      }
+      // message already in the DB
+      else
+      {
+        console.log('message already in the DB', message.get('eventInvitation').get('id'));
+      }
+
+    });
   },
 
   actions: {

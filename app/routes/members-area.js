@@ -109,7 +109,7 @@ export default AuthenticateRoute.extend({
             {
               if( !friend_response.error )
               {
-                console.log('friend: ', friend_response);
+                // console.log('friend: ', friend_response);
 
                 var friend = self.store.createRecord('user', {
                     fb_id: friend_response.id,
