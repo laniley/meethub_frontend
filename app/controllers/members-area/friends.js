@@ -8,10 +8,14 @@ export default Ember.Controller.extend({
 
   search_results: function() {
     var self = this;
+    var filteredFriends = [];
 
-    var filteredFriends = self.get('model').filter(function(friend) {
-      return friend.get('name').toLowerCase().indexOf(self.get('search_term').toLowerCase()) !== -1;
-    });
+    if(self.get('model') !== null)
+    {
+      filteredFriends = self.get('model').filter(function(friend) {
+        return friend.get('first_name') !== undefined && friend.get('name').toLowerCase().indexOf(self.get('search_term').toLowerCase()) !== -1;
+      });
+    }
 
     return filteredFriends;
 
