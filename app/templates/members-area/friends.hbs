@@ -18,6 +18,11 @@
     </div>
     <span {{bind-attr class=":side-nav-button :reset-search-button searchIsEmpty:do-not-display"}} {{action 'resetSearch'}} title={{t "meethub.button.cancel"}}>{{unbound fa-icon "fa-remove"}}</span>
   </div>
+  <div class="side-nav-item">
+    <button class=" facebook-button" {{action "inviteFacebookFriends"}}>
+      {{unbound fa-icon "fa-facebook"}} | {{t "invite-friends-button"}}
+    </button>
+  </div>
   {{#each friend in search_results}}
     <div class="side-nav-item selectable friend">
       <div class="picture"><img {{bind-attr src=friend.picture }} /></div>

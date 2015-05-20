@@ -43,6 +43,14 @@ export default Ember.Controller.extend({
       {
         this.set('searchIsOpen', true);
       }
+    },
+
+    inviteFacebookFriends: function() {
+      FB.ui ({
+       method: 'apprequests',
+       message: 'Meet me on Meethub...',
+       filters: ['app_non_users']
+      });
     }
 
   }
