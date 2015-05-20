@@ -1,11 +1,11 @@
 {{!-- TITLE --}}
 <div class="section-title">
-  {{t friend.title}}
+  {{t "friend.title"}}
 </div>
 {{!-- FILTER --}}
 <div class="side-nav-item section-buttons">
   {{!-- SEARCH --}}
-  <span {{bind-attr class=":section-button searchIsOpen:active"}} {{translateAttr  title='friend.button.search'}} {{action 'toggleSearch'}}>
+  <span {{bind-attr class=":section-button searchIsOpen:active"}} title={{t "friend.button.search"}} {{action "toggleSearch"}}>
     {{unbound fa-icon "fa-search"}}
   </span>
 </div>
@@ -16,7 +16,7 @@
     <div class="search">
       {{input class="search-input" placeholder="Search..." value=search_term}}
     </div>
-    <span {{bind-attr class=":side-nav-button :reset-search-button searchIsEmpty:do-not-display"}} {{action 'resetSearch'}} {{translateAttr  title='meethub.button.cancel'}}>{{unbound fa-icon "fa-remove"}}</span>
+    <span {{bind-attr class=":side-nav-button :reset-search-button searchIsEmpty:do-not-display"}} {{action 'resetSearch'}} title={{t "meethub.button.cancel"}}>{{unbound fa-icon "fa-remove"}}</span>
   </div>
   {{#each friend in search_results}}
     <div class="side-nav-item selectable friend">

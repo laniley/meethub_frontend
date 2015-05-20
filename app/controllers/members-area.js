@@ -478,7 +478,7 @@ export default Ember.Controller.extend({
       // if message not already in the DB, create it
       if(Ember.isEmpty(message))
       {
-        console.log('message not already in the DB');
+        // console.log('message not already in the DB');
 
         // if it is an eventInv of a friend, handle eventInv for friend
         if(user_fb_id !== 'me')
@@ -538,7 +538,7 @@ export default Ember.Controller.extend({
       // message already in the DB
       else
       {
-        console.log('message already in the DB', message.get('eventInvitation').get('id'));
+        // console.log('message already in the DB', message.get('eventInvitation').get('id'));
       }
 
     });
