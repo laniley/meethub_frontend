@@ -35,7 +35,7 @@ export default Ember.Controller.extend({
           browserOfficialName: navigator.appName,
           browserVersion: navigator.appVersion,
           platform: navigator.platform,
-          text: escape(this.get('description')),
+          text: this.get('description'),
           status: 'open'
         });
 
