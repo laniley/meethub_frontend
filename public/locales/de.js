@@ -70,5 +70,6 @@ Em.I18n.translations = {
   "short-description": "Kurzbeschreibung",
   "invite-friends-button": "Lade weitere Freunde ein",
   "go-to-facebook-page": "zur Facebook-Seite des Events",
-  "thank-you": "Vielen Dank für deine Unterstützung!"
+  "thank-you": "Vielen Dank für deine Unterstützung!",
+  "popup-blocker-message": "Bitte deaktiviere deinen Popup-Blocker und lade die Seite dann neu.<br /><br/>Wir können dich sonst nicht bei Facebook anmelden."
 };

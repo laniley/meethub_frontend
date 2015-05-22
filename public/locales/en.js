@@ -70,5 +70,6 @@ Em.I18n.translations = {
   "short-description": "Short description",
   "invite-friends-button": "Invite more friends to Meethub",
   "go-to-facebook-page": "go to facebook page",
-  "thank-you": "Many thanks for your support!"
+  "thank-you": "Many thanks for your support!",
+  "popup-blocker-message": "Please deactivate your popup blocker and reload the page.<br /><br/>Otherwise we can not log you into facebook."
 };

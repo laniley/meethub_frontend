@@ -157,56 +157,64 @@ export default Ember.Controller.extend({
 
     var self = this;
 
-    this.get('FB').api('/me/events/attending', function(response)
+    if(this.get('FB') != null)
     {
-      if( !response.error )
+      this.get('FB').api('/me/events/attending', function(response)
       {
-        console.log('user events - attending: ', response);
-
-        for(var i = 0; i < response.data.length; i++)
+        if( !response.error )
         {
-          self.handleFBEventResponse(response.data[i], 'attending', 'me');
-        }
-      }
-      else
-      {
-        console.log(response.error);
-      }
-    });
+          console.log('user events - attending: ', response);
 
-    this.get('FB').api('/me/events/maybe', function(response)
+          for(var i = 0; i < response.data.length; i++)
+          {
+            self.handleFBEventResponse(response.data[i], 'attending', 'me');
+          }
+        }
+        else
+        {
+          console.log(response.error);
+        }
+      });
+
+      this.get('FB').api('/me/events/maybe', function(response)
+      {
+        if( !response.error )
+        {
+          console.log('user events - maybe: ', response);
+
+          for(var i = 0; i < response.data.length; i++)
+          {
+            self.handleFBEventResponse(response.data[i], 'maybe', 'me');
+          }
+        }
+        else
+        {
+          console.log(response.error);
+        }
+      });
+
+      this.get('FB').api('/me/events/not_replied', function(response)
+      {
+        if( !response.error )
+        {
+          console.log('user events - not_replied: ', response);
+
+          for(var i = 0; i < response.data.length; i++)
+          {
+            self.handleFBEventResponse(response.data[i], 'not_replied', 'me');
+          }
+        }
+        else
+        {
+          console.log(response.error);
+        }
+      });
+    }
+    else
     {
-      if( !response.error )
-      {
-        console.log('user events - maybe: ', response);
+      console.log('FB is not defined!');
+    }
 
-        for(var i = 0; i < response.data.length; i++)
-        {
-          self.handleFBEventResponse(response.data[i], 'maybe', 'me');
-        }
-      }
-      else
-      {
-        console.log(response.error);
-      }
-    });
-
-    this.get('FB').api('/me/events/not_replied', function(response)
-    {
-      if( !response.error )
-      {
-        console.log('user events - not_replied: ', response);
-
-        for(var i = 0; i < response.data.length; i++)
-        {
-          self.handleFBEventResponse(response.data[i], 'not_replied', 'me');
-        }
-      }
-      else
-      {
-        console.log(response.error);
-      }
-    });
   },
 
   loadFriendEventsFromFB: function () {
@@ -453,6 +461,9 @@ export default Ember.Controller.extend({
     console.log('handle FB message');
 
     var self = this;
+    var unfiltered_users = null;
+    var filtered_users = null;
+    var message = null;
 
     self.store.find('message', { fb_id: event.get('fb_id') }).then(function(store_response) {
 
@@ -460,8 +471,8 @@ export default Ember.Controller.extend({
 
       if(user_fb_id !== 'me')
       {
-        var unfiltered_users = self.store.all('user');
-        var filtered_users = unfiltered_users.filterBy('fb_id', user_fb_id);
+        unfiltered_users = self.store.all('user');
+        filtered_users = unfiltered_users.filterBy('fb_id', user_fb_id);
         user_id = filtered_users.get('firstObject').get('id');
       }
       else
@@ -473,7 +484,7 @@ export default Ember.Controller.extend({
         return response.get('to_user').get('id') === user_id;
       });
 
-      var message = filtered_messages.get('firstObject');
+      message = filtered_messages.get('firstObject');
 
       // if message not already in the DB, create it
       if(Ember.isEmpty(message))
@@ -485,11 +496,11 @@ export default Ember.Controller.extend({
         {
           // console.log('message for a friend');
 
-          var unfiltered_users = self.store.all('user');
-          var filtered_users = unfiltered_users.filterBy('fb_id', user_fb_id);
+          unfiltered_users = self.store.all('user');
+          filtered_users = unfiltered_users.filterBy('fb_id', user_fb_id);
           var friend = filtered_users.get('firstObject');
 
-          var message = self.store.createRecord('message', {
+          message = self.store.createRecord('message', {
             fb_id: event.get('fb_id'),
             subject: response.name,
             to_user: friend
@@ -513,7 +524,7 @@ export default Ember.Controller.extend({
 
         // console.log('message for me');
         // handle eventInv for me
-        var message = self.store.createRecord('message', {
+        message = self.store.createRecord('message', {
           fb_id: event.get('fb_id'),
           subject: response.name,
           to_user: self.get('model')

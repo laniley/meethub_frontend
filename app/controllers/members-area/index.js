@@ -2,6 +2,20 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
+  needs: ['members-area'],
+  membersArea_controller: Ember.computed.alias("controllers.members-area"),
+
+  hasFB: function() {
+    if(this.get('membersArea_controller').get('FB') !== null)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }.property('membersArea_controller.FB'),
+
   unreadMessages: function() {
 
     var unreadMessages = [];
