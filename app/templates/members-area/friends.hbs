@@ -14,7 +14,7 @@
   {{!-- SEARCH --}}
   <div {{bind-attr class=":side-nav-item :align-left searchIsOpen:open:do-not-display"}}>
     <div class="search">
-      {{input class="search-input" placeholder="Search..." value=search_term}}
+      {{focused-input class="search-input" placeholder="Search..." value=search_term}}
     </div>
     <span {{bind-attr class=":side-nav-button :reset-search-button searchIsEmpty:do-not-display"}} {{action 'resetSearch'}} title={{t "meethub.button.cancel"}}>{{unbound fa-icon "fa-remove"}}</span>
   </div>

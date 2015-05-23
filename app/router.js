@@ -45,7 +45,9 @@ export default Router.map(function() {
     });
 
     this.route("friends", function() {
-      this.route("calendar");
+      this.route("calendar", function() {
+        this.route('list');
+      });
       this.route("map");
     });
 
