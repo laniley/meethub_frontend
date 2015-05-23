@@ -13,6 +13,17 @@ export default Ember.Component.extend({
   selected: null,
   disabled: false,
 
+  hasMeethubs: function() {
+    if(this.get('meethubs') !== null && this.get('meethubs.length') > 0)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }.property('meethubs'),
+
   commentIsEmpty: function() {
     if(this.get('comment.length') > 0)
     {

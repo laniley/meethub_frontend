@@ -58,7 +58,8 @@ Em.I18n.translations = {
     },
     "new_comments.one": "{{count}} neuer Kommentar",
     "new_comments.other": "{{count}} neue Kommentare",
-    "confirm_delete": "Bist du sicher, dass du den Kommentar löschen möchtest?"
+    "confirm_delete": "Bist du sicher, dass du den Kommentar löschen möchtest?",
+    "no_meethub_message": "Du bist noch nicht in einem Meethub, daher kannst du noch keine Kommentare schreiben.<br /><br />Klicke auf den Button <b>Meethub erstellen</b> im rechten Seitenmenu."
   },
   "calendar": "Kalender",
   "comments": "Kommentare",

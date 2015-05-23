@@ -23,7 +23,7 @@ module.exports = function(environment) {
     // for the FB-SDK
     contentSecurityPolicy: {
       'default-src': "'none'",
-      'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net facebook.com graph.facebook.com maps.googleapis.com maps.gstatic.com mt0.googleapis.com mt1.googleapis.com",
+      'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net facebook.com graph.facebook.com maps.googleapis.com maps.gstatic.com mt0.googleapis.com mt1.googleapis.com http://www.google-analytics.com/analytics.js",
       'font-src': "'self' data: use.typekit.net fonts.gstatic.com",
       'connect-src': "'self' localhost:8000",
       'img-src': "'self' www.paypalobjects.com graph.facebook.com www.facebook.com p.typekit.net fbcdn-profile-a.akamaihd.net maps.gstatic.com mt0.googleapis.com mt1.googleapis.com maps.googleapis.com csi.gstatic.com mt.googleapis.com",
@@ -76,7 +76,7 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
 
-    ENV.backend_url = 'https://meethub.de/meethubbe',
+    ENV.backend_url = 'http://meethub.de/meethubbe',
 
     ENV['torii'] = {
       providers: {

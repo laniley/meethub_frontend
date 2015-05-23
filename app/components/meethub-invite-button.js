@@ -85,7 +85,7 @@ export default Ember.Component.extend({
           text: 'Du wurdest von ' + self.get('user').get('name') + ' in den Meethub ' + self.get('meethub').get('name') + ' eingeladen.'
         });
 
-        message.save().then(function() {
+        message.save().then(function(message) {
 
           var meethubInvitation = self.get('parentView.targetObject.store').createRecord('meethubInvitation', {
             invited_user: friend,
