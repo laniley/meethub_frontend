@@ -72,5 +72,9 @@ Em.I18n.translations = {
   "invite-friends-button": "Invite more friends to Meethub",
   "go-to-facebook-page": "go to facebook page",
   "thank-you": "Many thanks for your support!",
-  "popup-blocker-message": "Please deactivate your popup blocker and reload the page.<br /><br/>Otherwise we can not log you into facebook."
+  "popup-blocker-message": "Please deactivate your popup blocker and reload the page.<br /><br/>Otherwise we can not log you into facebook.",
+
+  "attending": "{{name}} is attending",
+  "maybe": "{{name}} is attending maybe",
+  "declined": "{{name}} declined"
 };

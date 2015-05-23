@@ -72,5 +72,10 @@ Em.I18n.translations = {
   "invite-friends-button": "Lade weitere Freunde ein",
   "go-to-facebook-page": "zur Facebook-Seite des Events",
   "thank-you": "Vielen Dank für deine Unterstützung!",
-  "popup-blocker-message": "Bitte deaktiviere deinen Popup-Blocker und lade die Seite dann neu.<br /><br/>Wir können dich sonst nicht bei Facebook anmelden."
+  "popup-blocker-message": "Bitte deaktiviere deinen Popup-Blocker und lade die Seite dann neu.<br /><br/>Wir können dich sonst nicht bei Facebook anmelden.",
+
+  "attending": "{{name}} nimmt teil",
+  "maybe": "{{name}} nimmt vielleicht teil",
+  "declined": "{{name}} nimmt nicht teil"
+
 };

@@ -93,3 +93,17 @@
     }
   }
 }
+
+.eventInv-status {
+  &.attending {
+    color: $blue;
+  }
+
+  &.maybe {
+    color: $yellow;
+  }
+
+  &.declined {
+    color: $orange;
+  }
+}
