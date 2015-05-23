@@ -14,7 +14,7 @@ export default Ember.Component.extend({
     var friend_id = this.get('friend_id');
     var accepted_invitations = this.get('meethub').get('acceptedInvitations');
 
-    var isInMeethub = accepted_invitations.some(function(invitation, index, self) {
+    var isInMeethub = accepted_invitations.some(function(invitation) {
 
       if(invitation.get('invited_user').get('id') === friend_id)
       {
@@ -41,7 +41,7 @@ export default Ember.Component.extend({
     var friend_id = this.get('friend_id');
     var pending_invitations = this.get('meethub').get('pendingInvitations');
 
-    var isPending = pending_invitations.some(function(invitation, index, self) {
+    var isPending = pending_invitations.some(function(invitation) {
 
       if(invitation.get('invited_user').get('id') === friend_id)
       {

@@ -12,28 +12,19 @@
 
     <div class="row messages row-centered">
       <div class="col-centered">
-        {{#link-to 'members-area.messages' (query-params meethub_inv=true event_inv=false)}}
+        {{#link-to 'members-area.friends.index' (query-params show_new=true)}}
           <div {{bind-attr class=":summary-item hasUnreadMeethubInvitations:highlight"}} title={{t "welcome.meethub-invitations"}}>
             {{#if hasUnreadMeethubInvitations}}
-              <div {{bind-attr class=":section-icon hasUnreadMeethubInvitations:has-unread-messages"}}>{{unbound fa-icon "fa-envelope"}}</div>
+              <div {{bind-attr class=":section-icon hasUnreadMeethubInvitations:has-unread-messages"}}>
+                {{unbound fa-icon "fa-group"}}
+              </div>
             {{else}}
-              <div class="section-icon">{{unbound fa-icon "fa-envelope-o"}}</div>
+              <div class="section-icon">
+                {{unbound fa-icon "fa-group"}}
+              </div>
             {{/if}}
-            <div class="type">{{unbound fa-icon "fa-share-alt"}}</div>
+            <div class="type">{{unbound fa-icon "fa-plus"}}</div>
             <div class="number">{{number_of_new_meethub_invitations}}</div>
-          </div>
-        {{/link-to}}
-      </div>
-      <div class="col-centered">
-        {{#link-to 'members-area.messages' (query-params meethub_inv=false event_inv=true)}}
-          <div {{bind-attr class=":summary-item hasUnreadEventInvitations:highlight"}} title={{t "welcome.event-invitations"}}>
-            {{#if hasUnreadEventInvitations}}
-              <div {{bind-attr class=":section-icon hasUnreadEventInvitations:has-unread-messages"}}>{{unbound fa-icon "fa-envelope"}}</div>
-            {{else}}
-              <div class="section-icon">{{unbound fa-icon "fa-envelope-o"}}</div>
-            {{/if}}
-            <div class="type">{{unbound fa-icon "fa-music"}}</div>
-            <div class="number">{{number_of_new_event_invitations}}</div>
           </div>
         {{/link-to}}
       </div>
