@@ -10,12 +10,12 @@
       {{/if}}
     </div>
 
-    <div class="row messages row-centered">
+    <div class="row friends row-centered">
       <div class="col-centered">
         {{#link-to 'members-area.friends.index' (query-params show_new=true)}}
-          <div {{bind-attr class=":summary-item hasUnreadMeethubInvitations:highlight"}} title={{t "friend.new"}}>
-            {{#if hasUnreadMeethubInvitations}}
-              <div {{bind-attr class=":section-icon hasUnreadMeethubInvitations:has-unread-messages"}}>
+          <div {{bind-attr class=":summary-item hasUnseenNewFriends:highlight"}} title={{t "friend.new"}}>
+            {{#if hasUnseenNewFriends}}
+              <div {{bind-attr class=":section-icon hasUnseenNewFriends:has-unread-messages"}}>
                 {{unbound fa-icon "fa-group"}}
               </div>
             {{else}}
@@ -24,7 +24,7 @@
               </div>
             {{/if}}
             <div class="type">{{unbound fa-icon "fa-plus"}}</div>
-            <div class="number">{{number_of_new_meethub_invitations}}</div>
+            <div class="number">{{number_of_unseen_new_friends}}</div>
           </div>
         {{/link-to}}
       </div>
