@@ -7,6 +7,30 @@ export default Ember.Controller.extend({
 
   isSidebarOpen: function() {
     return this.get('membersArea_controller').get('isSidebarOpen');
-  }.property('membersArea_controller.isSidebarOpen')
+  }.property('membersArea_controller.isSidebarOpen'),
+
+  number_of_unseen_friends: function() {
+
+    // var unreadMessages = [];
+
+    // if(this.get('model.messages.length') > 0)
+    // {
+    //   unreadMessages = this.get('model.messages').filter(function(message) {
+    //     return message.get('hasBeenRead') === false;
+    //   });
+    // }
+
+    // var unreadEventInvitations = [];
+
+    // if(unreadMessages.get('length') > 0)
+    // {
+    //   unreadEventInvitations = unreadMessages.filter(function(message) {
+    //     return message.get('isEventInvitation') === true;
+    //   });
+    // }
+
+    // return unreadEventInvitations.get('length');
+
+  }.property('model.@each')
 
 });
