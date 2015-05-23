@@ -36,13 +36,16 @@ export default Ember.Controller.extend({
         }
         else
         {
-          var index = 0;
+          var index = 1;
 
           for(var k = 0; k < sortedEventInvs.length; k++)
           {
             if(!upcomingEventInvs[i].get('event').get('start').isAfter(sortedEventInvs[k].get('event').get('start')))
             {
-              index = k;
+              index++;
+            }
+            else
+            {
               break;
             }
           }
