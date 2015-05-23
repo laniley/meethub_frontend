@@ -12,14 +12,14 @@ export default Ember.Controller.extend({
 
     if(self.get('model') !== null)
     {
-      filteredFriends = self.get('model').filter(function(friend) {
+      filteredFriends = self.get('model').get('friends').filter(function(friend) {
         return friend.get('first_name') !== undefined && friend.get('name').toLowerCase().indexOf(self.get('search_term').toLowerCase()) !== -1;
       });
     }
 
     return filteredFriends;
 
-  }.property('search_term','model.@each'),
+  }.property('search_term','model.friends.@each'),
 
   searchIsEmpty: function() {
     if(this.get('search_term') !== '')

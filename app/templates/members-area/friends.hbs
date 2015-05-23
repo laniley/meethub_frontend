@@ -24,9 +24,11 @@
     </button>
   </div>
   {{#each friend in search_results}}
-    <div class="side-nav-item selectable friend">
-      <div class="picture"><img {{bind-attr src=friend.picture }} /></div>
-      <div>{{friend.name}}</div>
-    </div>
+    {{#link-to 'members-area.friends.calendar.list.friend' friend}}
+      <div class="side-nav-item selectable friend">
+        <div class="picture"><img {{bind-attr src=friend.picture }} /></div>
+        <div>{{friend.name}}</div>
+      </div>
+    {{/link-to}}
   {{/each}}
 </div>

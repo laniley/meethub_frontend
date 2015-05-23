@@ -158,6 +158,8 @@ export default AuthenticateRoute.extend({
     self.controllerFor('members-area.index').set('model', user);
     self.controllerFor('members-area.meethubs.index').set('model', user);
     self.controllerFor('members-area.messages.index').set('model', user);
+    self.controllerFor('members-area.friends').set('model', user);
+    self.controllerFor('members-area.friends.index').set('model', user);
   }
 
 });
