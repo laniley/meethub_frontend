@@ -2,6 +2,10 @@
   <div class="container-fluid welcome-container">
 
     {{#if hasFB}}
+      <div class="row dashboard-title">
+        <span class="current-section">Dashboard</span>
+      </div>
+
       <div class="row greeting">
         <h1>Hi {{model.first_name}}</h1>
         {{#if model.first_login}}

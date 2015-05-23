@@ -1,16 +1,11 @@
 <div class="main-area">
-  <div {{bind-attr class=":main-container :container-fluid :welcome-container isSidebarOpen:open:closed"}}>
+  <div {{bind-attr class=":main-container :container-fluid :dashboard isSidebarOpen:open:closed"}}>
 
-    <div class="row greeting">
-      <h1>Hi {{model.first_name}}</h1>
-      {{#if model.first_login}}
-        <h3>{{t 'welcome.first-login.greeting'}}</h3>
-      {{else}}
-        <h3>{{t 'welcome.not-first-login.greeting'}}</h3>
-      {{/if}}
+    <div class="row dashboard-title">
+      {{#link-to "members-area.index"}}Dashboard{{/link-to}} / <span class="current-section">Meethubs</span>
     </div>
 
-    <div class="row comments row-centered">
+    <div class="row comments row-centered item-container">
       <div class="col-centered">
         {{#link-to 'members-area.meethubs.comments'}}
           <div {{bind-attr class=":summary-item hasNewMeethubComments:highlight"}} title={{t "welcome.meethub-comments"}}>

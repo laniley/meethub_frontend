@@ -9,28 +9,34 @@ export default Ember.Controller.extend({
     return this.get('membersArea_controller').get('isSidebarOpen');
   }.property('membersArea_controller.isSidebarOpen'),
 
-  number_of_unseen_friends: function() {
+  unseen_new_friends: function() {
+    var unseenFriends = [];
 
-    // var unreadMessages = [];
+    if(this.get('model.length') > 0)
+    {
+      unseenFriends = this.get('model').filter(function(friend) {
+        return friend.get('is_a_new_friend') === true && friend.get('has_been_seen') === false;
+      });
+    }
 
-    // if(this.get('model.messages.length') > 0)
-    // {
-    //   unreadMessages = this.get('model.messages').filter(function(message) {
-    //     return message.get('hasBeenRead') === false;
-    //   });
-    // }
+    return unseenFriends;
+  }.property('model.@each'),
 
-    // var unreadEventInvitations = [];
+  number_of_unseen_new_friends: function() {
 
-    // if(unreadMessages.get('length') > 0)
-    // {
-    //   unreadEventInvitations = unreadMessages.filter(function(message) {
-    //     return message.get('isEventInvitation') === true;
-    //   });
-    // }
+    return this.get('unseen_new_friends.length');
 
-    // return unreadEventInvitations.get('length');
+  }.property('unseen_new_friends'),
 
-  }.property('model.@each')
+  hasUnseenNewFriends: function() {
+    if(this.get('number_of_unseen_new_friends') > 0)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }.property('number_of_unseen_new_friends')
 
 });
