@@ -101,6 +101,8 @@ export default AuthenticateRoute.extend({
       {
         var friend_id = response.friends.data[i].id;
 
+        self.store.find('friend', { fb_id: friend_id });
+
         self.store.find('user', { fb_id: friend_id }).then(function(users)
         {
           if(Ember.isEmpty(users))

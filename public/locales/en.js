@@ -18,7 +18,8 @@ Em.I18n.translations = {
     "button": {
       "cancel": "cancel",
       "search": "search for a friend"
-    }
+    },
+    "new": "Friends of you, that are using Meethub now, too."
   },
   "meethub": {
     "not-in-a-meethub-part-1": "You don't know yet, what you want to do today? Just create a Meethub, invite your friends and get to know, what they are going to do.",

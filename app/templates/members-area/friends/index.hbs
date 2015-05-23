@@ -13,7 +13,7 @@
     <div class="row messages row-centered">
       <div class="col-centered">
         {{#link-to 'members-area.friends.index' (query-params show_new=true)}}
-          <div {{bind-attr class=":summary-item hasUnreadMeethubInvitations:highlight"}} title={{t "welcome.meethub-invitations"}}>
+          <div {{bind-attr class=":summary-item hasUnreadMeethubInvitations:highlight"}} title={{t "friend.new"}}>
             {{#if hasUnreadMeethubInvitations}}
               <div {{bind-attr class=":section-icon hasUnreadMeethubInvitations:has-unread-messages"}}>
                 {{unbound fa-icon "fa-group"}}
