@@ -15,8 +15,10 @@ export default Ember.Controller.extend({
     var eventInvs = this.get('model').get('eventInvitations');
 
     var upcomingEventInvs = [];
+    var sortedEventInvs = [];
 
     if(eventInvs !== undefined) {
+
       eventInvs.forEach(function(eventInv) {
         var currentEvent = eventInv.get('event');
 
@@ -25,9 +27,34 @@ export default Ember.Controller.extend({
           upcomingEventInvs.push(eventInv);
         }
       });
+
+      for(var i = 0; i < upcomingEventInvs.length; i++)
+      {
+        if(sortedEventInvs.length === 0)
+        {
+          sortedEventInvs.push(upcomingEventInvs[i]);
+        }
+        else
+        {
+          var index = 0;
+
+          for(var k = 0; k < sortedEventInvs.length; k++)
+          {
+            if(!upcomingEventInvs[i].get('event').get('start').isAfter(sortedEventInvs[k].get('event').get('start')))
+            {
+              index = k;
+              break;
+            }
+          }
+
+          sortedEventInvs.splice(index, 0, upcomingEventInvs[i]);
+        }
+      }
+
     }
 
-    return upcomingEventInvs;
+    return sortedEventInvs;
+
   }.property('model.eventInvitations.@each')
 
 });
