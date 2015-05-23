@@ -113,6 +113,15 @@ export default AuthenticateRoute.extend({
               {
                 // console.log('friend: ', friend_response);
 
+                self.store.createRecord('friend', {
+                    fb_id: friend_response.id,
+                    first_name: friend_response.first_name,
+                    last_name: friend_response.last_name,
+                    picture: 'http://graph.facebook.com/' + friend_response.id + '/picture',
+                    gender: friend_response.gender,
+                    first_login: true
+                });
+
                 var friend = self.store.createRecord('user', {
                     fb_id: friend_response.id,
                     first_name: friend_response.first_name,
