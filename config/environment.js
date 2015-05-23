@@ -76,7 +76,7 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
 
-    ENV.backend_url = 'http://meethub.de/meethubbe',
+    ENV.backend_url = 'https://meethub.de/meethubbe',
 
     ENV['torii'] = {
       providers: {

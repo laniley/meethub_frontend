@@ -101,6 +101,24 @@ export default Ember.Component.extend({
         });
 
         this.set('status', 'pending');
+
+        var message = '';
+
+        if(Ember.I18n.locale === 'de')
+        {
+          message = self.get('user').get('name') + ' hat dich in den Meethub ' + self.get('meethub').get('name') + ' eingeladen';
+        }
+        else
+        {
+          message = self.get('user').get('name') + ' invited you to the Meethub ' + self.get('meethub').get('name');
+        }
+
+        FB.ui ({
+         method: 'apprequests',
+         message: message,
+         to:[friend.get('fb_id')]
+        });
+
         console.log('invited');
       }
     }
