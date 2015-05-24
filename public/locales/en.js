@@ -77,5 +77,6 @@ Em.I18n.translations = {
 
   "attending": "{{name}} is attending",
   "maybe": "{{name}} is attending maybe",
-  "declined": "{{name}} declined"
+  "declined": "{{name}} declined",
+  "not_replied": "{{name}} not replied"
 };

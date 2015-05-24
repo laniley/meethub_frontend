@@ -1,5 +1,7 @@
 // import Ember from 'ember';
 import AuthenticateRoute from './authenticate';
+// import Torii from 'simple-auth-torii/authenticators/torii';
+import ENV from '../config/environment';
 
 /* global FB */
 
@@ -9,22 +11,36 @@ export default AuthenticateRoute.extend({
 
     var self = this;
 
-    if(this.controllerFor('login').get('hasFacebook'))
+    if(this.controllerFor('members-area').get('hasFacebook'))
     {
       this.getUserInfos(controller);
     }
     else
     {
-      this.get('torii').open('facebook-connect').then(function(){
-        // FB.api is now available. authorization contains the UID and accessToken.
-        // var UID = authorization.UID;
-        // var accessToken = authorization.accessToken;
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : ENV.fb_app_id,
+          cookie     : true,  // enable cookies to allow the server to access
+                              // the session
+          xfbml      : true,  // parse social plugins on this page
+          version    : 'v2.2' // use version 2.2
+        });
 
-        controller.set('FB', FB);
-        self.controllerFor('login').set('hasFacebook', true);
+        self.controllerFor('members-area').set('hasFacebook', true);
+        self.controllerFor('members-area').set('FB', FB);
 
-        self.getUserInfos(controller);
-      });
+        self.controllerFor('members-area').get('FB').getLoginStatus(function(response) {
+          if(response.status === "connected")
+          {
+            self.getUserInfos(controller);
+          }
+          else
+          {
+            console.log("FB response status: ", response.status);
+          }
+        });
+
+      };
     }
   },
 
@@ -34,7 +50,10 @@ export default AuthenticateRoute.extend({
 
     var self = this;
 
-    FB.api('/me', {fields: 'id,email,first_name,last_name,picture.width(120).height(120),friends'}, function(response)
+    self.controllerFor('members-area').get('FB').api(
+        '/me',
+        {fields: 'id,email,first_name,last_name,picture.width(120).height(120),friends'},
+        function(response)
     {
       if( !response.error )
       {
@@ -107,7 +126,7 @@ export default AuthenticateRoute.extend({
         {
           if(Ember.isEmpty(users))
           {
-            FB.api('/' + friend_id, function(friend_response)
+            self.controllerFor('members-area').get('FB').api('/' + friend_id, function(friend_response)
             {
               if( !friend_response.error )
               {

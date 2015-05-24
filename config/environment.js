@@ -33,6 +33,12 @@ module.exports = function(environment) {
     }
   };
 
+  ENV['simple-auth'] = {
+      routeAfterAuthentication: 'members-area',
+      routeIfAlreadyAuthenticated: 'members-area',
+      store: 'simple-auth-session-store:local-storage'
+  };
+
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
@@ -41,8 +47,10 @@ module.exports = function(environment) {
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
 
     ENV.backend_url = 'http://localhost:8000/meethubbe',
+    ENV.fb_app_id = '560143030797393',
 
     ENV['torii'] = {
+      sessionServiceName: 'session',
       providers: {
         'facebook-oauth2': {
           apiKey: '560143030797393',
@@ -54,11 +62,6 @@ module.exports = function(environment) {
           redirectUri: 'http://localhost:4200/'
         }
       }
-    };
-
-    ENV['simple-auth'] = {
-      routeAfterAuthentication: 'members-area',
-      routeIfAlreadyAuthenticated: 'members-area'
     };
   }
 
@@ -77,8 +80,10 @@ module.exports = function(environment) {
   if (environment === 'production') {
 
     ENV.backend_url = 'http://meethub.de/meethubbe',
+    ENV.fb_app_id = '560142730797423',
 
     ENV['torii'] = {
+      sessionServiceName: 'session',
       providers: {
         'facebook-oauth2': {
           apiKey: '560142730797423',
@@ -90,11 +95,6 @@ module.exports = function(environment) {
           redirectUri: 'https://meethub.net/public/'
         }
       }
-    };
-
-    ENV['simple-auth'] = {
-      routeAfterAuthentication: 'members-area',
-      routeIfAlreadyAuthenticated: 'members-area'
     };
   }
 
