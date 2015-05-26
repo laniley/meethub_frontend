@@ -1,4 +1,4 @@
-// import Ember from 'ember';
+import Ember from 'ember';
 import AuthenticateRoute from './authenticate';
 // import Torii from 'simple-auth-torii/authenticators/torii';
 import ENV from '../config/environment';
@@ -79,6 +79,7 @@ export default AuthenticateRoute.extend({
           {
             var user = self.store.createRecord('user', {
               fb_id: response.id,
+              email: response.email,
               first_name: response.first_name,
               last_name: response.last_name,
               picture: 'http://graph.facebook.com/' + response.id + '/picture',
@@ -101,6 +102,7 @@ export default AuthenticateRoute.extend({
           {
             var user = users.get('firstObject');
             user.set('isMe', true);
+            user.set('email', response.email);
             user.set('last_login', last_login);
             user.set('first_login', false);
             user.save().then
@@ -132,7 +134,7 @@ export default AuthenticateRoute.extend({
       {
         var friend_id = response.friends.data[i].id;
 
-        self.store.find('friend', { fb_id: friend_id });
+        // self.store.find('friend', { fb_id: friend_id });
 
         self.store.find('user', { fb_id: friend_id }).then(function(users)
         {

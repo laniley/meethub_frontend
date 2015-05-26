@@ -36,7 +36,7 @@ export default Ember.Controller.extend({
 
     return filteredMessages;
 
-  }.property('model.@each', 'event_inv', 'meethub_inv'),
+  }.property('model.@each', 'event_inv', 'meethub_inv', 'membersArea_controller.model'),
 
   isGerman: function() {
     if(Ember.I18n.locale === 'de')
