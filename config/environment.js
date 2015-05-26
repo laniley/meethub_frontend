@@ -87,12 +87,12 @@ module.exports = function(environment) {
       providers: {
         'facebook-oauth2': {
           apiKey: '560142730797423',
-          redirectUri: 'https://meethub.net/public/'
+          redirectUri: 'http://meethub.de/'
         },
         'facebook-connect': {
           appId: '560142730797423',
           scope: 'public_profile, user_friends, user_events',
-          redirectUri: 'https://meethub.net/public/'
+          redirectUri: 'http://meethub.de/'
         }
       }
     };

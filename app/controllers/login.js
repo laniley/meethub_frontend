@@ -15,8 +15,8 @@ export default Ember.Controller.extend({
           // accessToken.
           console.log('SUCCESS: ' + self.get('session.token'));
 
-          self.set('FB', FB);
-          self.set('hasFacebook', true);
+          self.controllerFor('members-area').set('FB', FB);
+          self.controllerFor('members-area').set('hasFacebook', true);
         },
         function(error) {
           console.error(error.stack);

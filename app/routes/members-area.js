@@ -13,11 +13,16 @@ export default AuthenticateRoute.extend({
 
     if(this.controllerFor('members-area').get('hasFacebook'))
     {
+      console.log("FB ready");
+
       this.getUserInfos(controller);
     }
     else
     {
+      console.log("FB not ready");
+
       window.fbAsyncInit = function() {
+
         FB.init({
           appId      : ENV.fb_app_id,
           cookie     : true,  // enable cookies to allow the server to access
@@ -26,17 +31,24 @@ export default AuthenticateRoute.extend({
           version    : 'v2.2' // use version 2.2
         });
 
+        (function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/en_US/sdk.js";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
         self.controllerFor('members-area').set('hasFacebook', true);
         self.controllerFor('members-area').set('FB', FB);
 
         self.controllerFor('members-area').get('FB').getLoginStatus(function(response) {
+
+          console.log("FB response status: ", response.status);
+
           if(response.status === "connected")
           {
             self.getUserInfos(controller);
-          }
-          else
-          {
-            console.log("FB response status: ", response.status);
           }
         });
 
