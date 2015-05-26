@@ -103,7 +103,7 @@ export default AuthenticateRoute.extend({
             var user = users.get('firstObject');
             user.set('isMe', true);
             user.set('email', response.email);
-            // user.set('last_login', last_login);
+            user.set('last_login', user.get('updated_at'));
             user.set('first_login', false);
             user.save().then
             (
