@@ -21,7 +21,7 @@ export default Ember.Controller.extend({
     setInterval
     (
       function() {
-        // self.update();
+        self.update();
       },
       10000
     );
