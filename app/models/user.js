@@ -2,6 +2,7 @@ import DS from 'ember-data';
 
 export default DS.Model.extend({
   fb_id: DS.attr('string'),
+  email: DS.attr('string'),
   first_name: DS.attr('string'),
   last_name: DS.attr('string'),
   picture: DS.attr(),
