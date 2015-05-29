@@ -9,7 +9,7 @@ export default Ember.Controller.extend({
     {
       var self = this;
       // this.get('session').open('facebook-oauth2').then(
-      this.get('session').authenticate('simple-auth-authenticator:torii', 'facebook-oauth2').then(
+      this.get('session').authenticate('simple-auth-authenticator:torii', 'facebook-connect').then(
         function(authorization) {
           // FB.api is now available. authorization contains the UID and
           // accessToken.

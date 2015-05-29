@@ -44,12 +44,18 @@ export default AuthenticateRoute.extend({
 
         self.controllerFor('members-area').get('FB').getLoginStatus(function(response) {
 
-          console.log("FB response status: ", response.status);
+            console.log("FB response status: ", response.status);
 
-          if(response.status === "connected")
-          {
-            self.getUserInfos(controller);
-          }
+            if(response.status === "connected")
+            {
+              self.getUserInfos(controller);
+            }
+            else
+            {
+              self.get('session').invalidate();
+              self.transitionTo('login');
+            }
+
         });
 
       };
@@ -64,7 +70,7 @@ export default AuthenticateRoute.extend({
 
     self.controllerFor('members-area').get('FB').api(
         '/me',
-        {fields: 'id,email,first_name,last_name,picture.width(120).height(120),friends'},
+        {fields: 'id, email, first_name, last_name, picture.width(120).height(120), friends'},
         function(response)
     {
       if( !response.error )

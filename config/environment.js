@@ -58,7 +58,7 @@ module.exports = function(environment) {
         },
         'facebook-connect': {
           appId: '560143030797393',
-          scope: 'public_profile, user_friends, user_events',
+          scope: 'public_profile, user_friends, user_events, email',
           redirectUri: 'http://localhost:4200/'
         }
       }
@@ -79,7 +79,7 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
 
-    ENV.backend_url = 'http://meethub.de/meethubbe',
+    ENV.backend_url = 'https://meethub.de/meethubbe',
     ENV.fb_app_id = '560142730797423',
 
     ENV['torii'] = {
@@ -87,12 +87,12 @@ module.exports = function(environment) {
       providers: {
         'facebook-oauth2': {
           apiKey: '560142730797423',
-          redirectUri: 'http://meethub.de/'
+          redirectUri: 'https://meethub.de/'
         },
         'facebook-connect': {
           appId: '560142730797423',
-          scope: 'public_profile, user_friends, user_events',
-          redirectUri: 'http://meethub.de/'
+          scope: 'public_profile, user_friends, user_events, email',
+          redirectUri: 'https://meethub.de/'
         }
       }
     };
