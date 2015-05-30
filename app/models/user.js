@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import DS from 'ember-data';
 
 export default DS.Model.extend({
@@ -91,7 +92,7 @@ export default DS.Model.extend({
 
       })).then(invitedUsers => {
 
-        return invitedUsers.reduce((previousValue, currentValue, index, array) => {
+        return invitedUsers.reduce((previousValue, currentValue) => {
 
           return previousValue.concat(currentValue);
 
@@ -158,7 +159,7 @@ export default DS.Model.extend({
 
       })).then(events => {
 
-        return event.uniq();
+        return events.uniq();
 
       });
 
