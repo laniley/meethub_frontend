@@ -51,12 +51,8 @@ export default Ember.Controller.extend({
 
   }.property('model.meethubComments.@each.new_comment'),
 
-  upcomingEventsOfMeethubs: function() {
-    return this.get('model.upcomingEventsOfMeethubs');
-  }.property('model.upcomingEventsOfMeethubs.@each'),
-
   friendEventsOfUpcomingEventsOfMeethubs: function() {
-    var upcomingEvents = this.get('upcomingEventsOfMeethubs');
+    var upcomingEvents = this.get('model.upcomingEventsOfMeethubs');
 
     if(upcomingEvents !== null)
     {
@@ -79,11 +75,11 @@ export default Ember.Controller.extend({
 
       return friendEventInvs;
     }
-  }.property('upcomingEventsOfMeethubs.@each.friend_event_invitations'),
+  }.property('model.upcomingEventsOfMeethubs.@each.friend_event_invitations'),
 
   socialPointUpdates: function() {
     var self = this;
-    var upcomingEventsOfMeethubs = this.get('upcomingEventsOfMeethubs');
+    var upcomingEventsOfMeethubs = this.get('model.upcomingEventsOfMeethubs');
     var socialPointUpdates = 0;
 
     if(upcomingEventsOfMeethubs !== null)
@@ -95,7 +91,7 @@ export default Ember.Controller.extend({
       return socialPointUpdates;
     }
 
-  }.property('upcomingEventsOfMeethubs.@each.friend_event_invitations_updated_since_last_login.length'),
+  }.property('model.upcomingEventsOfMeethubs.@each.friend_event_invitations_updated_since_last_login.length'),
 
   hasUnreadMessages: function() {
 

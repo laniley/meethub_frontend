@@ -50,17 +50,21 @@ export default DS.Model.extend({
 
   acceptedMeethubs: function() {
 
-    return this.get('acceptedMeethubInvitations').then(acceptedInvitations => {
+    return DS.PromiseArray.create({
 
-      return Ember.RSVP.all(acceptedInvitations.map(acceptedInvitation => {
+      promise: this.get('acceptedMeethubInvitations').then(acceptedInvitations => {
 
-        return acceptedInvitation.get('meethub').then(meethub => {
+          return Ember.RSVP.all(acceptedInvitations.map(acceptedInvitation => {
 
-          return meethub;
+            return acceptedInvitation.get('meethub').then(meethub => {
 
-        });
+              return meethub;
 
-      }));
+            });
+
+          }));
+
+      })
 
     });
 
@@ -68,37 +72,41 @@ export default DS.Model.extend({
 
   membersOfAcceptedMeethubs: function() {
 
-    return this.get('acceptedMeethubs').then(acceptedMeethubs => {
+    return DS.PromiseArray.create({
 
-      return Ember.RSVP.all(acceptedMeethubs.map(acceptedMeethub => {
+      promise: this.get('acceptedMeethubs').then(acceptedMeethubs => {
 
-        return acceptedMeethub.get('acceptedInvitations').then(acceptedInvitations => {
+        return Ember.RSVP.all(acceptedMeethubs.map(acceptedMeethub => {
 
-          return Ember.RSVP.all(acceptedInvitations.map(acceptedInvitation => {
+          return acceptedMeethub.get('acceptedInvitations').then(acceptedInvitations => {
 
-            return acceptedInvitation.get('invitedUser').then(invitedUser => {
+            return Ember.RSVP.all(acceptedInvitations.map(acceptedInvitation => {
 
-              return invitedUser;
+              return acceptedInvitation.get('invitedUser').then(invitedUser => {
+
+                return invitedUser;
+
+              });
+
+            })).then(invitedUsers => {
+
+              return invitedUsers.uniq();
 
             });
 
-          })).then(invitedUsers => {
-
-            return invitedUsers.uniq();
-
           });
+
+        })).then(invitedUsers => {
+
+          return invitedUsers.reduce((previousValue, currentValue) => {
+
+            return previousValue.concat(currentValue);
+
+          }).uniq();
 
         });
 
-      })).then(invitedUsers => {
-
-        return invitedUsers.reduce((previousValue, currentValue) => {
-
-          return previousValue.concat(currentValue);
-
-        }).uniq();
-
-      });
+      })
 
     });
 
