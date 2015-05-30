@@ -18,16 +18,19 @@ export default Ember.Controller.extend({
 
   unreadMessages: function() {
 
-    var unreadMessages = [];
+    if(this.get('model.messages.length')) {
 
-    if(this.get('model.messages.length') > 0)
-    {
-      unreadMessages = this.get('model.messages').filter(function(message) {
-        return message.get('hasBeenRead') === false;
+      return this.get('model.messages').then(messages => {
+
+        messages.filter(message => {
+
+          return !message.get('hasBeenRead');
+
+        });
+
       });
-    }
 
-    return unreadMessages;
+    }
 
   }.property('model.messages.@each.hasBeenRead'),
 
