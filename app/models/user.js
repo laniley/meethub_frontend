@@ -14,7 +14,7 @@ export default DS.Model.extend({
   meethubInvitations: DS.hasMany('meethub-invitation', { async: true }),
   meethubComments: DS.hasMany('meethub-comment', { async: true, inverse: 'user' }),
   eventInvitations: DS.hasMany('event-invitations', { asnyc: true, inverse: 'invited_user'}),
-  messages: DS.hasMany('message', { inverse: 'to_user' }),
+  messages: DS.hasMany('message', { async: true, inverse: 'to_user' }),
 
   created_at: DS.attr(),
   updated_at: DS.attr(),
@@ -26,79 +26,144 @@ export default DS.Model.extend({
   }.property('first_name', 'last_name'),
 
   acceptedMeethubInvitations: function() {
-    var self = this;
 
-    var filteredMeethubInvitations = self.get('meethubInvitations').filter(function(meethubInvitation) {
-      return meethubInvitation.get('invited_user') !== null && meethubInvitation.get('invited_user').get('id') === self.get('id') && meethubInvitation.get('status') === 'accepted';
+    return DS.PromiseArray.create({
+
+      promise: this.get('meethubInvitations').then(meethubInvitations => {
+
+        return Ember.RSVP.filter(meethubInvitations.toArray(), meethubInvitation => {
+
+          return meethubInvitation.get('invited_user').then(invitedUser => {
+
+            return !Ember.isEmpty(invitedUser) && Ember.isEqual(invitedUser.get('id'), this.get('id')) && Ember.isEqual(meethubInvitation.get('status'),'accepted');
+
+          });
+
+        });
+
+      })
+
     });
 
-    return filteredMeethubInvitations;
   }.property('meethubInvitations.@each'),
 
   acceptedMeethubs: function() {
-    return this.get('acceptedMeethubInvitations').mapBy('meethub');
+
+    return this.get('acceptedMeethubInvitations').then(acceptedInvitations => {
+
+      return Ember.RSVP.all(acceptedInvitations.map(acceptedInvitation => {
+
+        return acceptedInvitation.get('meethub').then(meethub => {
+
+          return meethub;
+
+        });
+
+      }));
+
+    });
+
   }.property('acceptedMeethubInvitations.@each'),
 
   membersOfAcceptedMeethubs: function() {
-    var self = this;
 
-    var members = [];
+    return this.get('acceptedMeethubs').then(acceptedMeethubs => {
 
-    self.get('acceptedMeethubs').forEach(function(meethub) {
-      var acceptedInvs = meethub.get('acceptedInvitations');
+      return Ember.RSVP.all(acceptedMeethubs.map(acceptedMeethub => {
 
-      acceptedInvs.forEach(function(acceptedInv) {
-        var member = acceptedInv.get('invited_user');
+        return acceptedMeethub.get('acceptedInvitations').then(acceptedInvitations => {
 
-        if(members.indexOf(member) === -1)
-        {
-          members.push(member);
-        }
+          return Ember.RSVP.all(acceptedInvitations.map(acceptedInvitation => {
+
+            return acceptedInvitation.get('invitedUser').then(invitedUser => {
+
+              return invitedUser;
+
+            });
+
+          })).then(invitedUsers => {
+
+            return invitedUsers.uniq();
+
+          });
+
+        });
+
+      })).then(invitedUsers => {
+
+        return invitedUsers.reduce((previousValue, currentValue, index, array) => {
+
+          return previousValue.concat(currentValue);
+
+        }).uniq();
+
       });
 
     });
-
-    return members;
 
   }.property('acceptedMeethubs.@each.acceptedInvitations'),
 
-  eventInvitationsOfmembersOfAcceptedMeethubs: function() {
+  eventInvitationsOfMembersOfAcceptedMeethubs: function() {
 
-    var eventInvMessages = [];
+    return this.get('membersOfAcceptedMeethubs').then(members => {
 
-    this.get('membersOfAcceptedMeethubs').forEach(function(member) {
+      return Ember.RSVP.all(members.map(member => {
 
-      var messagesOfMember = member.get('messages');
+        return member.get('messages').then(messages => {
 
-      messagesOfMember.forEach(function(message) {
+          return messages.filter(message => {
 
-        if(message.get('isEventInvitation') === true && eventInvMessages.indexOf(message) === -1)
-        {
-          eventInvMessages.push(message);
-        }
+            return message.get('isEventInvitation');
+
+          });
+
+        });
+
+      })).then(eventInvitationMessages => {
+
+        return Ember.RSVP.all(eventInvitationMessages.uniq().map(eventInvitationMessage => {
+
+          return eventInvitationMessage.get('eventInvitation').then(eventInvitation => {
+
+            return eventInvitation;
+
+          });
+
+        })).then(eventInvitations => {
+
+          return eventInvitations.uniq();
+
+        });
+
       });
 
     });
-
-    return eventInvMessages.mapBy('eventInvitation');
 
   }.property('membersOfAcceptedMeethubs.@each.messages'),
 
   upcomingEventsOfMeethubs: function() {
-    var events = [];
 
-    this.get('eventInvitationsOfmembersOfAcceptedMeethubs').forEach(function(eventInv) {
+    return this.get('eventInvitationsOfMembersOfAcceptedMeethubs').then(eventInvitationsOfMembersOfAcceptedMeethubs => {
 
-      var anEvent = eventInv.get('event');
+      return Ember.RSVP.all(eventInvitationsOfMembersOfAcceptedMeethubs.map(eventInvitation => {
 
-      if(events.indexOf(anEvent) === -1 && anEvent.get('is_upcoming') === true)
-      {
-        events.push(anEvent);
-      }
+        return eventInvitation.get('event').then(event => {
+
+          if(event.get('is_upcoming'))
+          {
+            return event;
+          }
+
+        });
+
+      })).then(events => {
+
+        return event.uniq();
+
+      });
 
     });
 
-    return events;
-
   }.property('eventInvitationsOfmembersOfAcceptedMeethubs.@each.event')
+
 });

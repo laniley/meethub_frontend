@@ -1,9 +1,9 @@
 import DS from 'ember-data';
 
 export default DS.Model.extend({
-  invited_user: DS.belongsTo('user'),
+  invited_user: DS.belongsTo('user', {async: true}),
   message: DS.belongsTo('message', {async: true}),
-  meethub: DS.belongsTo('meethub'),
+  meethub: DS.belongsTo('meethub', {async: true}),
   role: DS.attr('string'),
   status: DS.attr('string'),
 
