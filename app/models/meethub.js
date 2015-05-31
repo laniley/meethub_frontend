@@ -16,20 +16,54 @@ export default DS.Model.extend({
   selectNewAdmin: DS.attr('boolean', {defaultValue: false}),
   showAddMembersForm: DS.attr('boolean', {defaultValue: false}),
 
-  invitedUser: function() {
-    var invitations = this.get('invitations');
-    var user = invitations.mapBy('invited_user');
-    return user;
+  invitedUsers: function() {
+
+    return DS.PromiseArray.create({
+
+      promise: this.get('invitations').then(invitations => {
+
+        return Ember.RSVP.all(invitations.map(invitation => {
+
+          return invitation.get('invited_user').then(invitedUser => {
+
+            return invitedUser;
+
+          });
+
+        }));
+
+      })
+
+    });
+
   }.property('invitations.@each'),
 
   acceptedInvitations: function() {
-    var invitations = this.get('invitations');
-    return invitations.filterBy('status', 'accepted');
+
+    return DS.PromiseArray.create({
+
+      promise: this.get('invitations').then(invitations => {
+
+        return invitations.filterBy('status', 'accepted');
+
+      })
+
+    });
+
   }.property('invitations.@each.status'),
 
   pendingInvitations: function() {
-    var invitations = this.get('invitations');
-    return invitations.filterBy('status', 'pending');
+
+    return DS.PromiseArray.create({
+
+      promise: this.get('invitations').then(invitations => {
+
+        return invitations.filterBy('status', 'pending');
+
+      })
+
+    });
+
   }.property('invitations.@each.status'),
 
   hasShortDescription: function() {

@@ -46,7 +46,7 @@ export default DS.Model.extend({
 
     });
 
-  }.property('meethubInvitations.@each'),
+  }.property('meethubInvitations.@each.status'),
 
   acceptedMeethubs: function() {
 
@@ -68,7 +68,7 @@ export default DS.Model.extend({
 
     });
 
-  }.property('acceptedMeethubInvitations.@each'),
+  }.property('acceptedMeethubInvitations.length'),
 
   membersOfAcceptedMeethubs: function() {
 
@@ -82,7 +82,7 @@ export default DS.Model.extend({
 
             return Ember.RSVP.all(acceptedInvitations.map(acceptedInvitation => {
 
-              return acceptedInvitation.get('invitedUser').then(invitedUser => {
+              return acceptedInvitation.get('invited_user').then(invitedUser => {
 
                 return invitedUser;
 
@@ -98,11 +98,18 @@ export default DS.Model.extend({
 
         })).then(invitedUsers => {
 
-          return invitedUsers.reduce((previousValue, currentValue) => {
+          if(invitedUsers.length > 0)
+          {
+            return invitedUsers.reduce((previousValue, currentValue) => {
 
-            return previousValue.concat(currentValue);
+              return previousValue.concat(currentValue);
 
-          }).uniq();
+            }).uniq();
+          }
+          else
+          {
+            return [];
+          }
 
         });
 
@@ -110,69 +117,85 @@ export default DS.Model.extend({
 
     });
 
-  }.property('acceptedMeethubs.@each.acceptedInvitations'),
+  }.property('acceptedMeethubs.@each'),
 
   eventInvitationsOfMembersOfAcceptedMeethubs: function() {
 
-    return this.get('membersOfAcceptedMeethubs').then(members => {
+    return DS.PromiseArray.create({
 
-      return Ember.RSVP.all(members.map(member => {
+      promise: this.get('membersOfAcceptedMeethubs').then(members => {
 
-        return member.get('messages').then(messages => {
+        // map members on messages, that are eventInvitations
+        return Ember.RSVP.all(members.map(member => {
 
-          return messages.filter(message => {
+          return member.get('messages').then(messages => {
 
-            return message.get('isEventInvitation');
-
-          });
-
-        });
-
-      })).then(eventInvitationMessages => {
-
-        return Ember.RSVP.all(eventInvitationMessages.uniq().map(eventInvitationMessage => {
-
-          return eventInvitationMessage.get('eventInvitation').then(eventInvitation => {
-
-            return eventInvitation;
+            return messages.filterBy('isEventInvitation', true);
 
           });
 
-        })).then(eventInvitations => {
+        })).then(eventInvitationMessagesPerMember => {
 
-          return eventInvitations.uniq();
-
-        });
-
-      });
-
-    });
-
-  }.property('membersOfAcceptedMeethubs.@each.messages'),
-
-  upcomingEventsOfMeethubs: function() {
-
-    return this.get('eventInvitationsOfMembersOfAcceptedMeethubs').then(eventInvitationsOfMembersOfAcceptedMeethubs => {
-
-      return Ember.RSVP.all(eventInvitationsOfMembersOfAcceptedMeethubs.map(eventInvitation => {
-
-        return eventInvitation.get('event').then(event => {
-
-          if(event.get('is_upcoming'))
+          if(eventInvitationMessagesPerMember.length > 0)
           {
-            return event;
+            return Ember.RSVP.all(eventInvitationMessagesPerMember.reduce((previousValue, currentValue) => {
+
+              return previousValue.concat(currentValue);
+
+            }).uniq().map(eventInvitationMessage => {
+
+              return eventInvitationMessage.get('eventInvitation').then(eventInvitation => {
+
+                return eventInvitation;
+
+              });
+
+            })).then(eventInvitations => {
+
+              return eventInvitations.uniq();
+
+            });
+          }
+          else
+          {
+            return [];
           }
 
         });
 
-      })).then(events => {
-
-        return events.uniq();
-
-      });
+      })
 
     });
 
-  }.property('eventInvitationsOfmembersOfAcceptedMeethubs.@each.event')
+  }.property('membersOfAcceptedMeethubs.@each'),
+
+  upcomingEventsOfMeethubs: function() {
+
+    return DS.PromiseArray.create({
+
+      promise: this.get('eventInvitationsOfMembersOfAcceptedMeethubs').then(eventInvitationsOfMembersOfAcceptedMeethubs => {
+
+        return Ember.RSVP.all(eventInvitationsOfMembersOfAcceptedMeethubs.map(eventInvitation => {
+
+          return eventInvitation.get('event').then(event => {
+
+            if(event.get('is_upcoming'))
+            {
+              return event;
+            }
+
+          });
+
+        })).then(events => {
+
+          return events.uniq();
+
+        });
+
+      })
+
+    });
+
+  }.property('eventInvitationsOfmembersOfAcceptedMeethubs.@each')
 
 });
