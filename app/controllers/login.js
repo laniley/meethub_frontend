@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import Torii from 'simple-auth-torii/authenticators/torii';
+// import Torii from 'simple-auth-torii/authenticators/torii';
 
 /* global FB */
 
@@ -13,7 +13,7 @@ export default Ember.Controller.extend({
         function(authorization) {
           // FB.api is now available. authorization contains the UID and
           // accessToken.
-          console.log('SUCCESS: ' + self.get('session.token'));
+          console.log('SUCCESS: ' + authorization);
 
           self.controllerFor('members-area').set('FB', FB);
           self.controllerFor('members-area').set('hasFacebook', true);

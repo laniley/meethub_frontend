@@ -6,6 +6,7 @@ import {
 moduleFor('controller:members-area/messages/index', {
   // Specify the other units that are required for this test.
   // needs: ['controller:foo']
+  needs: ['controller:members-area', 'controller:members-area/index']
 });
 
 // Replace this with your real tests.

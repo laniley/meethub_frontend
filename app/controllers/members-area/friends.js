@@ -2,6 +2,9 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
+  needs: ['members-area'],
+  membersArea_controller: Ember.computed.alias("controllers.members-area"),
+
   searchIsOpen: false,
 
   search_term: '',
@@ -50,7 +53,7 @@ export default Ember.Controller.extend({
     },
 
     inviteFacebookFriends: function() {
-      FB.ui ({
+      this.get('membersArea_controller').get('FB').ui ({
        method: 'apprequests',
        message: 'Meet me on Meethub...',
        filters: ['app_non_users']

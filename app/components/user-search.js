@@ -46,31 +46,11 @@ export default Ember.Component.extend({
     },
 
     inviteFacebookFriends: function() {
-      FB.ui ({
+      this.controllerFor('members-area').get('FB').ui ({
        method: 'apprequests',
        message: 'Meet me on Meethub...',
        filters: ['app_non_users']
       });
-
-      // FB.api(
-      //     "/me/invitable_friends",
-      //     function (response) {
-      //       if (response && !response.error) {
-
-      //         var friend_ids = [];
-
-      //         for(var i = 0; i < response.length; i++)
-      //         {
-      //           friend_ids.push(reponse.data[i].id);
-      //         }
-
-      //         FB.ui ({
-      //          method: 'apprequests',
-      //          message: 'Invite your friends'
-      //         });
-      //       }
-      //     }
-      // );
     }
   }
 });

@@ -78,7 +78,7 @@ export default Ember.Controller.extend({
   }.property('model.upcomingEventsOfMeethubs.@each.friend_event_invitations'),
 
   socialPointUpdates: function() {
-    var self = this;
+
     var upcomingEventsOfMeethubs = this.get('model.upcomingEventsOfMeethubs');
     var socialPointUpdates = 0;
 

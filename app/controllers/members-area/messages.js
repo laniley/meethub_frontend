@@ -14,7 +14,6 @@ export default Ember.Controller.extend({
 
   filteredMessages: function() {
 
-    var self = this;
     var me = this.get('membersArea_controller').get('model');
     var messages = this.get('model').filterBy('to_user', me);
     var event_inv = this.get('event_inv');

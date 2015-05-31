@@ -16,7 +16,7 @@ export default Ember.Controller.extend({
 
   init: function() {
 
-    var self = this;
+    // var self = this;
 
     setInterval
     (

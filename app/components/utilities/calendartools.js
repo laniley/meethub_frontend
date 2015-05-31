@@ -8,7 +8,7 @@ import Ember from 'ember';
 /*
  * The layout methods
  */
-var DisplayedEvent, Range, getEventsByWeek, getEventsVisibleInPeriod, getLayoutsByWeek, layoutEvents, lib, splitTimeInWeeks, visualizeLayout;
+var DisplayedEvent, getEventsByWeek, getEventsVisibleInPeriod, getLayoutsByWeek, layoutEvents, lib, splitTimeInWeeks, visualizeLayout;
 
 layoutEvents = function(events) {
   var de, e, lane, laneEvents, remainingEvents, result, sortFunc, _i, _j, _len, _len1;
@@ -287,26 +287,26 @@ DisplayedEvent = (function() {
 
 
 /*
- * The CalendarTools.Range class
+ * The CalendarTools.CalRange class
  */
 
-Range = (function() {
-  Range.prototype.start = null;
+var CalRange = (function() {
+  CalRange.prototype.start = null;
 
-  Range.prototype.end = null;
+  CalRange.prototype.end = null;
 
-  function Range(hash) {
+  function CalRange(hash) {
     this.start = moment(hash.start ||  null);
     this.end = moment(hash.end ||  null);
   }
 
-  return Range;
+  return CalRange;
 
 })();
 
 lib = {
   DisplayedEvent: Ember.Object.extend(DisplayedEvent.prototype),
-  Range: Range,
+  CalRange: CalRange,
   layoutEvents: layoutEvents,
   getLayoutsByWeek: getLayoutsByWeek,
   visualizeLayout: visualizeLayout

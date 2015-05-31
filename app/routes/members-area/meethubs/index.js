@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  setupController: function(controller) {
+  setupController: function() {
     this.controllerFor('members-area').set('showSidebar', true);
   },
   renderTemplate: function() {

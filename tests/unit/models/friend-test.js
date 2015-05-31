@@ -5,7 +5,15 @@ import {
 
 moduleForModel('friend', {
   // Specify the other units that are required for this test.
-  needs: []
+  needs: [
+    'model:user',
+    'model:meethub-invitation',
+    'model:meethub-comment',
+    'model:event-invitation',
+    'model:message',
+    'model:meethub',
+    'model:event'
+  ]
 });
 
 test('it exists', function(assert) {

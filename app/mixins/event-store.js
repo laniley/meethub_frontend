@@ -1,5 +1,4 @@
 
-/* global _ */
 import Ember from 'ember';
 var component;
 
