@@ -22,10 +22,12 @@ export default DS.Model.extend({
   first_login: DS.attr('boolean', { defaultValue: true }),
   last_login: DS.attr(),
 
+  /* unit-test exists */
   name: function() {
     return this.get('first_name') + ' ' + this.get('last_name');
   }.property('first_name', 'last_name'),
 
+  /* unit-test exists */
   acceptedMeethubInvitations: function() {
 
     return DS.PromiseArray.create({
