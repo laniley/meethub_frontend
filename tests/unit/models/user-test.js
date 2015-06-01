@@ -6,7 +6,7 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForModel('user', 'User Model', {
+moduleForModel('user', {
   // Specify the other units that are required for this test.
   needs: [
     'model:meethub-invitation',
@@ -82,7 +82,9 @@ test('name correctly concats first_name and last_name', function(assert) {
   assert.equal(user.get('name'), 'Julia September', 'Updates full_name');
 });
 
-test('acceptedMeethubInvitations correctly returns all accepted meethub-invitations of the current user', function(assert) {
+test('acceptedMeethubInvitations correctly returns all accepted meethub-invitations of the current user',
+
+  function(assert) {
 
   var store = this.store();
 
@@ -156,7 +158,5 @@ test('acceptedMeethubInvitations correctly returns all accepted meethub-invitati
         assert.equal(currentUser.get('acceptedMeethubInvitations').get('length'), 2, 'Returns accepted meethub invitations of current user after status update');
       });
     });
-
   });
-
 });

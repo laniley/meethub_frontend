@@ -3,7 +3,15 @@
 }
 
 .login-logo-row {
-  margin-top: 150px;
+  @media (min-width: 760px)
+  {
+    margin-top: 150px;
+  }
+
+  @media (max-width: 760px)
+  {
+    margin-top: 50px;
+  }
 }
 
 .login-logo {
