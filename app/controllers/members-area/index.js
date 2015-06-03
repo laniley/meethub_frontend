@@ -5,7 +5,9 @@ export default Ember.Controller.extend({
   needs: ['members-area'],
   membersArea_controller: Ember.computed.alias("controllers.members-area"),
 
-  isSyncing: true,
+  isSyncing: function() {
+    return this.get('membersArea_controller').get('isSyncing');
+  }.property('membersArea_controller.isSyncing'),
 
   hasFB: function() {
     if(this.get('membersArea_controller').get('FB') !== null)

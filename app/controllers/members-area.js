@@ -10,32 +10,845 @@ export default Ember.Controller.extend({
   showSidebar: false,
   isSidebarOpen: true,
 
-  currentSection: 'news',
+  isSyncing: true,
+  userEventsSynced: false,
+  friendsSynced: false,
 
   pendingFBEventRequests: [],
 
-  init: function() {
+  onInit: function() {
 
-    // var self = this;
+    var self = this;
 
     setInterval
     (
       function() {
-        // self.update();
+        self.update();
       },
       10000
     );
-  },
+  }.on('init'),
 
   update: function() {
     var self = this;
-    self.loadUserEventsFromFB();
-    self.loadFriendEventsFromFB();
     self.store.find('meethubInvitation', { invited_user: self.get('model').get('id') });
     self.store.find('eventInvitation', { invited_user: self.get('model').get('id') });
     self.store.find('message', { user: self.get('model').get('id') });
     self.store.find('meethubComment', { user: self.get('model').get('id') });
   },
+
+  getUserInfosFromFB: function() {
+
+    var self = this;
+
+    self.get('FB').api(
+        '/me',
+        {fields: 'id, email, first_name, last_name, picture.width(120).height(120)'},
+        function(response)
+    {
+      if( !response.error )
+      {
+        console.log('Successful login to FB for: ' + response.first_name + ' ' + response.last_name, response);
+
+        var user = null;
+
+        self.store.find('user', { fb_id: response.id }).then(function(users)
+        {
+          var last_login = new Date();
+
+          if(Ember.isEmpty(users))
+          {
+            user = self.store.createRecord('user', {
+              fb_id: response.id,
+              email: response.email,
+              first_name: response.first_name,
+              last_name: response.last_name,
+              picture: 'http://graph.facebook.com/' + response.id + '/picture',
+              first_login: true,
+              last_login: last_login
+            });
+
+            user.save().then
+            (
+              function()
+              {
+                user.set('isMe', true);
+                self.set('model', user);
+                self.update();
+                self.syncWithFB();
+              }
+            );
+          }
+          else
+          {
+            user = users.get('firstObject');
+            user.set('isMe', true);
+            user.set('email', response.email);
+            user.set('last_login', user.get('updated_at'));
+            user.set('first_login', false);
+            user.save().then
+            (
+              function() {
+                self.set('model', user);
+                self.update();
+                self.syncWithFB();
+              }
+            );
+          }
+
+        });
+      }
+      else
+      {
+        console.log(response.error);
+      }
+
+    });
+  },
+
+  syncWithFB: function() {
+    this.set('isSyncing', true);
+    this.set('userEventsSynced', false);
+    this.set('friendsSynced', false);
+
+    var self = this;
+
+    this.loadUserEventsFromFB(function() {
+      console.log('finished loading user events from FB');
+      self.set('userEventsSynced', true);
+      if(self.get('friendsSynced'))
+      {
+        self.set('isSyncing', false);
+      }
+    });
+
+    this.getFriendsFromFB(function() {
+      console.log('finished loading friend events from FB');
+      self.set('friendsSynced', true);
+      if(self.get('userEventsSynced'))
+      {
+        self.set('isSyncing', false);
+      }
+    });
+  },
+
+  getFriendsFromFB: function(callback) {
+
+    var self = this;
+
+    self.get('FB').api('/me/friends', function(response)
+    {
+      if( !response.error )
+      {
+        console.log('Successful loaded friends from FB: ', response);
+
+        var friend_response_length = response.data.length;
+        var finished_friend_response_counter = 0;
+
+        if(friend_response_length > 0)
+        {
+          for(var i = 0; i < friend_response_length; i++)
+          {
+            self.handleResponseForAFBFriend(response.data[i].id, function() {
+
+              finished_friend_response_counter++;
+
+              if(finished_friend_response_counter === friend_response_length)
+              {
+                self.loadFriendEventsFromFB(function() {
+                  callback()
+                });
+              }
+            });
+          }
+        }
+      }
+      else
+      {
+        console.log(response.error);
+      }
+
+    });
+  },
+
+  handleResponseForAFBFriend: function(friend_fb_id, callback) {
+
+    var self = this;
+
+    self.store.find('user', { fb_id: friend_fb_id }).then(function(users)
+    {
+      if(Ember.isEmpty(users))
+      {
+        self.controllerFor('members-area').get('FB').api('/' + friend_fb_id, function(friend_response)
+        {
+          if( !friend_response.error )
+          {
+            self.store.createRecord('friend', {
+                fb_id: friend_response.id,
+                first_name: friend_response.first_name,
+                last_name: friend_response.last_name,
+                picture: 'http://graph.facebook.com/' + friend_response.id + '/picture',
+                gender: friend_response.gender,
+                first_login: true
+            });
+
+            var friend = self.store.createRecord('user', {
+                fb_id: friend_response.id,
+                first_name: friend_response.first_name,
+                last_name: friend_response.last_name,
+                picture: 'http://graph.facebook.com/' + friend_response.id + '/picture',
+                gender: friend_response.gender,
+                first_login: true
+            });
+
+            friend.save().then(function() {
+              self.get('model').get('friends').then(function(friends) {
+                friends.pushObject(friend);
+                self.get('model').save().then(function() {
+                  callback();
+                });
+              });
+            });
+          }
+          else
+          {
+            console.log(friend_response.error);
+          }
+        });
+      }
+      else
+      {
+        self.get('model').get('friends').then(function(friends) {
+          friends.pushObject(users.get('firstObject'));
+          self.get('model').save().then(function() {
+            callback();
+          });
+        });
+      }
+    });
+  },
+
+  loadUserEventsFromFB: function (callback) {
+    var self = this;
+
+    if(this.get('FB') != null)
+    {
+      var finished_requests = 0;
+
+      this.get('FB').api('/me/events/attending', function(response)
+      {
+        if( !response.error )
+        {
+          console.log('user events - attending: ', response);
+
+          var attending_reponses = response.data.length;
+          var finished_attending_responses = 0;
+
+          if(response.data.length > 0)
+          {
+            for(var i = 0; i < response.data.length; i++)
+            {
+              self.handleFBEventResponse(response.data[i], 'attending', 'me', function() {
+
+                finished_attending_responses++;
+
+                if(finished_attending_responses === attending_reponses)
+                {
+                  finished_requests++;
+
+                  if(finished_requests === 3)
+                  {
+                    callback();
+                  }
+                }
+              });
+            }
+          }
+          else
+          {
+            finished_requests++;
+
+            callback();
+          }
+        }
+        else
+        {
+          console.log(response.error);
+        }
+      });
+
+      this.get('FB').api('/me/events/maybe', function(response)
+      {
+        if( !response.error )
+        {
+          console.log('user events - maybe: ', response);
+
+          var maybe_reponses = response.data.length;
+          var finished_maybe_responses = 0;
+
+          if(response.data.length > 0)
+          {
+            for(var i = 0; i < response.data.length; i++)
+            {
+              self.handleFBEventResponse(response.data[i], 'maybe', 'me', function() {
+
+                finished_maybe_responses++;
+
+                if(finished_maybe_responses === maybe_reponses)
+                {
+                  finished_requests++;
+
+                  if(finished_requests === 3)
+                  {
+                    callback();
+                  }
+                }
+              });
+            }
+          }
+          else
+          {
+            finished_requests++;
+
+            callback();
+          }
+        }
+        else
+        {
+          console.log(response.error);
+        }
+      });
+
+      this.get('FB').api('/me/events/not_replied', function(response)
+      {
+        if( !response.error )
+        {
+          console.log('user events - not_replied: ', response);
+
+          var not_replied_reponses = response.data.length;
+          var finished_not_replied_responses = 0;
+
+          if(response.data.length > 0)
+          {
+            for(var i = 0; i < response.data.length; i++)
+            {
+              self.handleFBEventResponse(response.data[i], 'not_replied', 'me', function() {
+
+                finished_not_replied_responses++;
+
+                if(finished_not_replied_responses === not_replied_reponses)
+                {
+                  finished_requests++;
+
+                  if(finished_requests === 3)
+                  {
+                    callback();
+                  }
+                }
+              });
+            }
+          }
+          else
+          {
+            finished_requests++;
+
+            callback();
+          }
+        }
+        else
+        {
+          console.log(response.error);
+        }
+      });
+    }
+    else
+    {
+      console.log('FB is not defined!');
+    }
+  },
+
+  loadFriendEventsFromFB: function (callback) {
+
+    var self = this;
+
+    var user = self.get('model');
+
+    user.get('friends').then(function(friends) {
+
+      var friends_length = user.get('friends').get('length');
+      var finished_friends_counter = 0;
+
+      if(friends_length > 0)
+      {
+        friends.forEach(function(friend) {
+
+          self.store.find('user', friend.get('id')).then(function(friend) {
+
+            var finished_requests = 0;
+
+            self.get('FB').api('/' + friend.get('fb_id') + '/events/attending', function(response)
+            {
+              if( !response.error )
+              {
+                console.log('friend events - attending: ', response);
+
+                if(response.data.length > 0)
+                {
+                  var attending_reponses = response.data.length;
+                  var finished_attending_responses = 0;
+
+                  for(var i = 0; i < response.data.length; i++)
+                  {
+                    self.handleFBEventResponse(response.data[i], 'attending', friend.get('fb_id'), function() {
+
+                      finished_attending_responses++;
+
+                      if(finished_attending_responses === attending_reponses)
+                      {
+                        finished_requests++;
+
+                        if(finished_requests === 3)
+                        {
+                          finished_friends_counter++;
+
+                          if(finished_friends_counter === friends_length)
+                          {
+                            callback();
+                          }
+                        }
+                      }
+
+                    });
+                  }
+                }
+                else
+                {
+                  finished_requests++;
+
+                  if(finished_requests === 3)
+                  {
+                    finished_friends_counter++;
+
+                    if(finished_friends_counter === friends_length)
+                    {
+                      callback();
+                    }
+                  }
+                }
+              }
+              else
+              {
+                console.log(response.error);
+              }
+            });
+
+            self.get('FB').api('/' + friend.get('fb_id') + '/events/maybe', function(response)
+            {
+              if( !response.error )
+              {
+                console.log('friend events - maybe: ', response);
+
+                if(response.data.length > 0)
+                {
+                  var maybe_reponses = response.data.length;
+                  var finished_maybe_responses = 0;
+
+                  for(var i = 0; i < response.data.length; i++)
+                  {
+                    self.handleFBEventResponse(response.data[i], 'maybe', friend.get('fb_id'), function() {
+
+                      finished_maybe_responses++;
+
+                      if(finished_maybe_responses === maybe_reponses)
+                      {
+                        finished_requests++;
+
+                        if(finished_requests === 3)
+                        {
+                          finished_friends_counter++;
+
+                          if(finished_friends_counter === friends_length)
+                          {
+                            callback();
+                          }
+                        }
+                      }
+                    });
+                  }
+                }
+                else
+                {
+                  finished_requests++;
+
+                  if(finished_requests === 3)
+                  {
+                    finished_friends_counter++;
+
+                    if(finished_friends_counter === friends_length)
+                    {
+                      callback();
+                    }
+                  }
+                }
+              }
+              else
+              {
+                console.log(response.error);
+              }
+            });
+
+            self.get('FB').api('/' + friend.get('fb_id') + '/events/not_replied', function(response)
+            {
+              if( !response.error )
+              {
+                console.log('friend events - not_replied: ', response);
+
+                if(response.data.length > 0)
+                {
+                  var not_replied_reponses = response.data.length;
+                  var finished_not_replied_responses = 0;
+
+                  for(var i = 0; i < response.data.length; i++)
+                  {
+                    self.handleFBEventResponse(response.data[i], 'not_replied', friend.get('fb_id'), function() {
+
+                      finished_not_replied_responses++;
+
+                      if(finished_not_replied_responses === not_replied_reponses)
+                      {
+                        finished_requests++;
+
+                        if(finished_requests === 3)
+                        {
+                          finished_friends_counter++;
+
+                          if(finished_friends_counter === friends_length)
+                          {
+                            callback();
+                          }
+                        }
+                      }
+                    });
+                  }
+                }
+                else
+                {
+                  finished_requests++;
+
+                  if(finished_requests === 3)
+                  {
+                    finished_friends_counter++;
+
+                    if(finished_friends_counter === friends_length)
+                    {
+                      callback();
+                    }
+                  }
+                }
+              }
+              else
+              {
+                console.log(response.error);
+              }
+            });
+
+          });
+
+        });
+      }
+      else
+      {
+        console.log('friends ready');
+      }
+
+    });
+  },
+
+  handleFBEventResponse: function(response, status, user_fb_id, callback) {
+
+    var self = this;
+
+    var unfiltered_locations = self.store.all('location');
+    var location = null;
+    var locations = [];
+
+    if(response.venue)
+    {
+      locations = unfiltered_locations.filterBy('fb_id', response.venue.id);
+
+      if(Ember.isEmpty(locations))
+      {
+        location = this.store.createRecord('location', {
+          fb_id: response.venue.id,
+          name: response.location,
+          country: response.venue.country,
+          city: response.venue.city,
+          zip: response.venue.zip,
+          street: response.venue.street,
+          latitude: response.venue.latitude,
+          longitude: response.venue.longitude
+        });
+
+        self.get('map_controller').get('markers').addObject({title: response.location, lat: response.venue.latitude, lng: response.venue.longitude, isDraggable: false});
+
+        location.save().then(function(location) {
+          self.handleFBEvent(response, location, status, user_fb_id, function() {
+            callback();
+          });
+        });
+      }
+      else
+      {
+        location = locations.get('firstObject');
+        self.handleFBEvent(response, location, status, user_fb_id, function() {
+          callback();
+        });
+      }
+    }
+    else
+    {
+      locations = unfiltered_locations.filterBy('name', response.location);
+
+      if(Ember.isEmpty(locations)) // location befindet sich noch nicht im store
+      {
+        self.store.find('location', { name: response.location }).then(function(store_response) {
+
+          location = store_response.get('firstObject');
+
+          // location not already in the DB, create it
+          if(Ember.isEmpty(location))
+          {
+            // console.log('location not yet in DB');
+
+            location = self.store.createRecord('location', {
+              name: response.location
+            });
+
+            location.save().then(function(location) {
+              self.handleFBEvent(response, location, status, user_fb_id, function() {
+                callback();
+              });
+            });
+          }
+          // location already in the DB
+          else
+          {
+            // console.log('location already in DB');
+            self.handleFBEvent(response, location, status, user_fb_id, function() {
+              console.log(callback);
+              callback();
+            });
+          }
+        });
+      }
+      else // location befindet sich bereits im store
+      {
+        // console.log('location already in store');
+        location = locations.get('firstObject');
+        self.handleFBEvent(response, location, status, user_fb_id, function() {
+          callback();
+        });
+      }
+    }
+  },
+
+  handleFBEvent: function(response, location, status, user_fb_id, callback) {
+
+    var self = this;
+    var unfiltered_events = [];
+    var filtered_events = [];
+    var event = null;
+
+    unfiltered_events = self.store.all('event');
+
+    filtered_events = unfiltered_events.filterBy('fb_id', response.id);
+
+    // event befindet sich noch nicht im store
+    // und es wurde noch kein request ans backend abgesetzt
+    if(Ember.isEmpty(filtered_events) && this.get('pendingFBEventRequests').indexOf(response.id) === -1)
+    {
+      console.log('event not yet in store', response.name);
+
+      this.get('pendingFBEventRequests').push(response.id);
+
+      self.store.find('event', { fb_id: response.id}).then(function(store_response) {
+
+        event = store_response.get('firstObject');
+
+        // if event not already in the DB, create it
+        if(Ember.isEmpty(event))
+        {
+          console.log('event not yet in DB - create new', response.name);
+          var date_time_arr = response.start_time.split('T');
+          var date_time = '';
+          var date_day = '';
+
+          if(date_time_arr[1])
+          {
+            date_time = date_time_arr[1].trim();
+          }
+
+          if(date_time_arr[0])
+          {
+            date_day = date_time_arr[0].trim();
+          }
+
+          event = self.store.createRecord('event', {
+            fb_id: response.id,
+            name: response.name,
+            description: response.descrption,
+            start_time: date_time,
+            start_date: date_day,
+            timezone: response.timezone,
+            location: location
+          });
+
+          event.save().then(function(event) {
+            self.handleFBMessage(response, event, status, user_fb_id, function() {
+              callback();
+            });
+          });
+        }
+        else
+        {
+          console.log('event in DB', response.name);
+          self.handleFBMessage(response, event, status, user_fb_id, function() {
+            callback();
+          });
+        }
+      });
+    }
+    // event befindet sich noch nicht im store
+    // aber es wurde bereits ein request ans backend abgesetzt
+    else if(Ember.isEmpty(filtered_events) && this.get('pendingFBEventRequests').indexOf(response.id) !== -1)
+    {
+      console.log('event request pending', response.name);
+
+      setTimeout
+      (
+        function() {
+          self.handleFBEvent(response, location, status, user_fb_id, function() {
+            callback();
+          });
+        },
+        1000
+      );
+    }
+    // event befindet sich im store
+    else
+    {
+      console.log('event in store already', response.name);
+      event = filtered_events.get('firstObject');
+
+      event.save().then(function(event) {
+        self.handleFBMessage(response, event, status, user_fb_id, function() {
+          callback();
+        });
+      });
+    }
+  },
+
+  handleFBMessage: function(response, event, status, user_fb_id, callback) {
+
+    console.log('handle FB message');
+
+    var self = this;
+    var unfiltered_users = null;
+    var filtered_users = null;
+    var message = null;
+
+    self.store.find('message', { fb_id: event.get('fb_id') }).then(function(store_response) {
+
+      var user_id = null;
+
+      if(user_fb_id !== 'me')
+      {
+        unfiltered_users = self.store.all('user');
+        filtered_users = unfiltered_users.filterBy('fb_id', user_fb_id);
+        user_id = filtered_users.get('firstObject').get('id');
+      }
+      else
+      {
+        user_id = self.get('model').get('id');
+      }
+
+      var filtered_messages = store_response.filter(function(response) {
+        return response.get('to_user').get('id') === user_id;
+      });
+
+      message = filtered_messages.get('firstObject');
+
+      // if message not already in the DB, create it
+      if(Ember.isEmpty(message))
+      {
+        // console.log('message not already in the DB');
+
+        // if it is an eventInv of a friend, handle eventInv for friend
+        if(user_fb_id !== 'me')
+        {
+          // console.log('message for a friend');
+
+          unfiltered_users = self.store.all('user');
+          filtered_users = unfiltered_users.filterBy('fb_id', user_fb_id);
+          var friend = filtered_users.get('firstObject');
+
+          message = self.store.createRecord('message', {
+            fb_id: event.get('fb_id'),
+            subject: response.name,
+            to_user: friend
+          });
+
+          message.save().then(function(message) {
+            var eventInvitation = self.store.createRecord('eventInvitation', {
+              me: self.get('model'),
+              event: event,
+              invited_user: friend,
+              status: status,
+              message: message
+            });
+
+            eventInvitation.save().then(function(eventInvitation) {
+              message.set('eventInvitation', eventInvitation);
+            });
+
+          });
+        }
+
+        // console.log('message for me');
+        // handle eventInv for me
+        message = self.store.createRecord('message', {
+          fb_id: event.get('fb_id'),
+          subject: response.name,
+          to_user: self.get('model')
+        });
+
+        message.save().then(function(message) {
+
+          var eventInvitation = self.store.createRecord('eventInvitation', {
+            me: self.get('model'),
+            event: event,
+            invited_user: self.get('model'),
+            status: status,
+            message: message
+          });
+
+          eventInvitation.save().then(function(eventInvitation) {
+            message.set('eventInvitation', eventInvitation);
+            callback();
+          });
+        });
+
+      }
+      // message already in the DB
+      else
+      {
+        // console.log('message already in the DB', message.get('eventInvitation').get('id'));
+        callback();
+      }
+
+    });
+  },
+
 
 
   newMeethubInfosCount: function() {
@@ -153,407 +966,6 @@ export default Ember.Controller.extend({
     return unreadMessages;
   }.property('model.messages.@each.hasBeenRead'),
 
-  loadUserEventsFromFB: function () {
-
-    var self = this;
-
-    if(this.get('FB') != null)
-    {
-      this.get('FB').api('/me/events/attending', function(response)
-      {
-        if( !response.error )
-        {
-          console.log('user events - attending: ', response);
-
-          for(var i = 0; i < response.data.length; i++)
-          {
-            self.handleFBEventResponse(response.data[i], 'attending', 'me');
-          }
-        }
-        else
-        {
-          console.log(response.error);
-        }
-      });
-
-      this.get('FB').api('/me/events/maybe', function(response)
-      {
-        if( !response.error )
-        {
-          console.log('user events - maybe: ', response);
-
-          for(var i = 0; i < response.data.length; i++)
-          {
-            self.handleFBEventResponse(response.data[i], 'maybe', 'me');
-          }
-        }
-        else
-        {
-          console.log(response.error);
-        }
-      });
-
-      this.get('FB').api('/me/events/not_replied', function(response)
-      {
-        if( !response.error )
-        {
-          console.log('user events - not_replied: ', response);
-
-          for(var i = 0; i < response.data.length; i++)
-          {
-            self.handleFBEventResponse(response.data[i], 'not_replied', 'me');
-          }
-        }
-        else
-        {
-          console.log(response.error);
-        }
-      });
-    }
-    else
-    {
-      console.log('FB is not defined!');
-    }
-
-  },
-
-  loadFriendEventsFromFB: function () {
-
-    var self = this;
-
-    var user = self.get('model');
-
-    user.get('friends').then(function(friends) {
-
-      friends.forEach(function(friend) {
-
-        self.store.find('user', friend.get('id')).then(function(friend) {
-
-          self.store.find('eventInvitation', { 'invited_user': friend.get('id') });
-
-          self.get('FB').api('/' + friend.get('fb_id') + '/events/attending', function(response)
-          {
-            if( !response.error )
-            {
-              console.log('friend events - attending: ', response);
-
-              for(var i = 0; i < response.data.length; i++)
-              {
-                self.handleFBEventResponse(response.data[i], 'attending', friend.get('fb_id'));
-              }
-            }
-            else
-            {
-              console.log(response.error);
-            }
-          });
-
-          self.get('FB').api('/' + friend.get('fb_id') + '/events/maybe', function(response)
-          {
-            if( !response.error )
-            {
-              console.log('friend events - maybe: ', response);
-
-              for(var i = 0; i < response.data.length; i++)
-              {
-                self.handleFBEventResponse(response.data[i], 'maybe', friend.get('fb_id'));
-              }
-            }
-            else
-            {
-              console.log(response.error);
-            }
-          });
-
-          self.get('FB').api('/' + friend.get('fb_id') + '/events/not_replied', function(response)
-          {
-            if( !response.error )
-            {
-              console.log('friend events - not_replied: ', response);
-
-              for(var i = 0; i < response.data.length; i++)
-              {
-                self.handleFBEventResponse(response.data[i], 'not_replied', friend.get('fb_id'));
-              }
-            }
-            else
-            {
-              console.log(response.error);
-            }
-          });
-
-        });
-
-      });
-
-    });
-  },
-
-  handleFBEventResponse: function(response, status, user_fb_id) {
-
-    var self = this;
-
-    var unfiltered_locations = self.store.all('location');
-    var location = null;
-    var locations = [];
-
-    if(response.venue)
-    {
-      locations = unfiltered_locations.filterBy('fb_id', response.venue.id);
-
-      if(Ember.isEmpty(locations))
-      {
-        location = this.store.createRecord('location', {
-          fb_id: response.venue.id,
-          name: response.location,
-          country: response.venue.country,
-          city: response.venue.city,
-          zip: response.venue.zip,
-          street: response.venue.street,
-          latitude: response.venue.latitude,
-          longitude: response.venue.longitude
-        });
-
-        self.get('map_controller').get('markers').addObject({title: response.location, lat: response.venue.latitude, lng: response.venue.longitude, isDraggable: false});
-
-        location.save().then(function(location) {
-          self.handleFBEvent(response, location, status, user_fb_id);
-        });
-      }
-      else
-      {
-        location = locations.get('firstObject');
-        self.handleFBEvent(response, location, status, user_fb_id);
-      }
-    }
-    else
-    {
-      locations = unfiltered_locations.filterBy('name', response.location);
-
-      if(Ember.isEmpty(locations)) // location befindet sich noch nicht im store
-      {
-        self.store.find('location', { name: response.location }).then(function(store_response) {
-
-          location = store_response.get('firstObject');
-
-          // location not already in the DB, create it
-          if(Ember.isEmpty(location))
-          {
-            // console.log('location not yet in DB');
-
-            location = self.store.createRecord('location', {
-              name: response.location
-            });
-
-            location.save().then(function(location) {
-              self.handleFBEvent(response, location, status, user_fb_id);
-            });
-          }
-          // location already in the DB
-          else
-          {
-            // console.log('location already in DB');
-
-            self.handleFBEvent(response, location, status, user_fb_id);
-          }
-        });
-      }
-      else // location befindet sich bereits im store
-      {
-        // console.log('location already in store');
-
-        location = locations.get('firstObject');
-        self.handleFBEvent(response, location, status, user_fb_id);
-      }
-    }
-  },
-
-  handleFBEvent: function(response, location, status, user_fb_id) {
-
-    var self = this;
-    var unfiltered_events = [];
-    var filtered_events = [];
-    var event = null;
-
-    unfiltered_events = self.store.all('event');
-
-    filtered_events = unfiltered_events.filterBy('fb_id', response.id);
-
-    // event befindet sich noch nicht im store
-    // und es wurde noch kein request ans backend abgesetzt
-    if(Ember.isEmpty(filtered_events) && this.get('pendingFBEventRequests').indexOf(response.id) === -1)
-    {
-      console.log('event not yet in store', response.name);
-
-      this.get('pendingFBEventRequests').push(response.id);
-
-      self.store.find('event', { fb_id: response.id}).then(function(store_response) {
-
-        event = store_response.get('firstObject');
-
-        // if event not already in the DB, create it
-        if(Ember.isEmpty(event))
-        {
-          console.log('event not yet in DB - create new', response.name);
-          var date_time_arr = response.start_time.split('T');
-          var date_time = '';
-          var date_day = '';
-
-          if(date_time_arr[1])
-          {
-            date_time = date_time_arr[1].trim();
-          }
-
-          if(date_time_arr[0])
-          {
-            date_day = date_time_arr[0].trim();
-          }
-
-          event = self.store.createRecord('event', {
-            fb_id: response.id,
-            name: response.name,
-            description: response.descrption,
-            start_time: date_time,
-            start_date: date_day,
-            timezone: response.timezone,
-            location: location
-          });
-
-          event.save().then(function(event) {
-            self.handleFBMessage(response, event, status, user_fb_id);
-          });
-        }
-        else
-        {
-          console.log('event in DB', response.name);
-          self.handleFBMessage(response, event, status, user_fb_id);
-        }
-      });
-    }
-    // event befindet sich noch nicht im store
-    // aber es wurde bereits ein request ans backend abgesetzt
-    else if(Ember.isEmpty(filtered_events) && this.get('pendingFBEventRequests').indexOf(response.id) !== -1)
-    {
-      console.log('event request pending', response.name);
-
-      setTimeout
-      (
-        function() {
-          self.handleFBEvent(response, location, status, user_fb_id);
-        },
-        1000
-      );
-    }
-    // event befindet sich im store
-    else
-    {
-      console.log('event in store already', response.name);
-      event = filtered_events.get('firstObject');
-
-      event.save().then(function(event) {
-        self.handleFBMessage(response, event, status, user_fb_id);
-      });
-    }
-  },
-
-  handleFBMessage: function(response, event, status, user_fb_id) {
-
-    console.log('handle FB message');
-
-    var self = this;
-    var unfiltered_users = null;
-    var filtered_users = null;
-    var message = null;
-
-    self.store.find('message', { fb_id: event.get('fb_id') }).then(function(store_response) {
-
-      var user_id = null;
-
-      if(user_fb_id !== 'me')
-      {
-        unfiltered_users = self.store.all('user');
-        filtered_users = unfiltered_users.filterBy('fb_id', user_fb_id);
-        user_id = filtered_users.get('firstObject').get('id');
-      }
-      else
-      {
-        user_id = self.get('model').get('id');
-      }
-
-      var filtered_messages = store_response.filter(function(response) {
-        return response.get('to_user').get('id') === user_id;
-      });
-
-      message = filtered_messages.get('firstObject');
-
-      // if message not already in the DB, create it
-      if(Ember.isEmpty(message))
-      {
-        // console.log('message not already in the DB');
-
-        // if it is an eventInv of a friend, handle eventInv for friend
-        if(user_fb_id !== 'me')
-        {
-          // console.log('message for a friend');
-
-          unfiltered_users = self.store.all('user');
-          filtered_users = unfiltered_users.filterBy('fb_id', user_fb_id);
-          var friend = filtered_users.get('firstObject');
-
-          message = self.store.createRecord('message', {
-            fb_id: event.get('fb_id'),
-            subject: response.name,
-            to_user: friend
-          });
-
-          message.save().then(function(message) {
-            var eventInvitation = self.store.createRecord('eventInvitation', {
-              me: self.get('model'),
-              event: event,
-              invited_user: friend,
-              status: status,
-              message: message
-            });
-
-            eventInvitation.save().then(function(eventInvitation) {
-              message.set('eventInvitation', eventInvitation);
-            });
-
-          });
-        }
-
-        // console.log('message for me');
-        // handle eventInv for me
-        message = self.store.createRecord('message', {
-          fb_id: event.get('fb_id'),
-          subject: response.name,
-          to_user: self.get('model')
-        });
-
-        message.save().then(function(message) {
-
-          var eventInvitation = self.store.createRecord('eventInvitation', {
-            me: self.get('model'),
-            event: event,
-            invited_user: self.get('model'),
-            status: status,
-            message: message
-          });
-
-          eventInvitation.save().then(function(eventInvitation) {
-            message.set('eventInvitation', eventInvitation);
-          });
-        });
-
-      }
-      // message already in the DB
-      else
-      {
-        // console.log('message already in the DB', message.get('eventInvitation').get('id'));
-      }
-
-    });
-  },
 
   actions: {
     toggleSidebar: function() {
