@@ -13,16 +13,16 @@ export default Ember.Controller.extend({
     var self = this;
     var filteredFriends = [];
 
-    if(self.get('model') !== null)
+    if(self.get('membersArea_controller').get('model') !== null)
     {
-      filteredFriends = self.get('model').get('friends').filter(function(friend) {
+      filteredFriends = self.get('membersArea_controller').get('model').get('friends').filter(function(friend) {
         return friend.get('first_name') !== undefined && friend.get('name').toLowerCase().indexOf(self.get('search_term').toLowerCase()) !== -1;
       });
     }
 
     return filteredFriends;
 
-  }.property('search_term','model.friends.@each'),
+  }.property('search_term','membersArea_controller.model.friends.@each'),
 
   searchIsEmpty: function() {
     if(this.get('search_term') !== '')

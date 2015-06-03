@@ -12,15 +12,15 @@ export default Ember.Controller.extend({
   unseen_new_friends: function() {
     var unseenFriends = [];
 
-    if(this.get('model.length') > 0)
+    if(this.get('membersArea_controller').get('model.length') > 0)
     {
-      unseenFriends = this.get('model').filter(function(friend) {
+      unseenFriends = this.get('membersArea_controller').get('model').get('friends').filter(function(friend) {
         return friend.get('is_a_new_friend') === true && friend.get('has_been_seen') === false;
       });
     }
 
     return unseenFriends;
-  }.property('model.@each'),
+  }.property('membersArea_controller.model.friends.@each'),
 
   number_of_unseen_new_friends: function() {
 
