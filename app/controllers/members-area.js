@@ -853,20 +853,54 @@ export default Ember.Controller.extend({
 
 
 
-  newMeethubInfosCount: function() {
-    return this.get('membersArea_index_controller.newMeethubComments.length') + this.get('membersArea_index_controller.socialPointUpdates');
-  }.property('membersArea_index_controller.newMeethubComments.length', 'membersArea_index_controller.socialPointUpdates'),
+  newMeethubComments: function() {
 
-  hasNewMeethubInfos: function() {
-    if(this.get('newMeethubInfosCount') > 0)
+    var newMeethubComments = [];
+
+    if(this.get('model.meethubComments.length') > 0)
     {
-      return true;
+      var self = this;
+
+      newMeethubComments = this.get('model.meethubComments').filter(function(comment) {
+        return comment.get('new_comment') === true && comment.get('author').get('id') !== self.get('model').get('id');
+      });
     }
-    else
+
+    return newMeethubComments;
+
+  }.property('model.meethubComments.length'),
+
+
+  // newMeethubInfosCount: function() {
+  //   return this.get('model.newMeethubComments.length') + this.get('model.socialPointUpdates');
+  // }.property('model.newMeethubComments.length', 'model.socialPointUpdates'),
+
+  // hasNewMeethubInfos: function() {
+  //   if(this.get('newMeethubInfosCount') > 0)
+  //   {
+  //     return true;
+  //   }
+  //   else
+  //   {
+  //     return false;
+  //   }
+  // }.property('newMeethubInfosCount'),
+
+
+  unreadMessages: function() {
+    var unreadMessages = [];
+
+    if(this.get('model.messages.length') > 0)
     {
-      return false;
+      unreadMessages = this.get('model.messages').filter(function(message) {
+        return message.get('hasBeenRead') === false;
+      });
     }
-  }.property('newMeethubInfosCount'),
+
+    return unreadMessages;
+  }.property('model.messages.@each.hasBeenRead'),
+
+
 
   hasUnreadMessages: function() {
 
@@ -880,6 +914,53 @@ export default Ember.Controller.extend({
     }
 
   }.property('unreadMessages.length'),
+
+  hasUnreadMeethubInvitations: function() {
+
+    if(this.get('number_of_new_meethub_invitations') > 0)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+
+  }.property('number_of_new_meethub_invitations'),
+
+  hasUnreadEventInvitations: function() {
+
+    if(this.get('number_of_new_event_invitations') > 0)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+
+  }.property('number_of_new_event_invitations'),
+
+  hasNewMeethubComments: function() {
+
+    if(this.get('newMeethubComments').get('length') > 0)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+
+  }.property('newMeethubComments.length'),
+
+
+
+  number_of_new_meethub_comments: function() {
+
+    return this.get('newMeethubComments').get('length');
+
+  }.property('newMeethubComments.length'),
 
   number_of_new_meethub_invitations: function() {
 
@@ -929,44 +1010,6 @@ export default Ember.Controller.extend({
 
   }.property('model.messages.@each.hasBeenRead', 'model.messages.@each.isEventInvitation'),
 
-  hasUnreadMeethubInvitations: function() {
-
-    if(this.get('number_of_new_meethub_invitations') > 0)
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
-
-  }.property('number_of_new_meethub_invitations'),
-
-  hasUnreadEventInvitations: function() {
-
-    if(this.get('number_of_new_event_invitations') > 0)
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
-
-  }.property('number_of_new_event_invitations'),
-
-  unreadMessages: function() {
-    var unreadMessages = [];
-
-    if(this.get('model.messages.length') > 0)
-    {
-      unreadMessages = this.get('model.messages').filter(function(message) {
-        return message.get('hasBeenRead') === false;
-      });
-    }
-
-    return unreadMessages;
-  }.property('model.messages.@each.hasBeenRead'),
 
 
   actions: {
