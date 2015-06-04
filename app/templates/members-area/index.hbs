@@ -7,14 +7,12 @@
 
       {{#if isSyncing}}
         <div class="row greeting">
-          {{!-- <h1>Hi {{model.first_name}}</h1>
-          {{#if model.first_login}}
-            <h3>{{t "welcome.first-login.greeting"}}</h3>
-          {{else}}
-            <h3>{{t "welcome.not-first-login.greeting"}}</h3>
-          {{/if}} --}}
-
-          <div class="fb-sync-icon">{{unbound fa-icon "fa-facebook-square"}} {{unbound fa-icon "fa-refresh fa-spin"}}</div>
+          <div class="fb-sync-icon is-syncing">
+            <span class="fa-stack fa-2x">
+              {{unbound fa-icon "fa-refresh fa-spin fa-stack-2x fa-3x"}}
+              {{unbound fa-icon "fa-facebook-square fa-stack-1x"}}
+            </span>
+          </div>
           <div class="fb-sync-text"><h3>Syncing your friends and events with facebook.<br />Please wait...</h3></div>
         </div>
       {{/if}}

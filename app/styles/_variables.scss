@@ -13,6 +13,7 @@ $babyblue: #A9CCD7;
 // $blue: #2588AB;
 $blue: #167698;
 $darkblue: #2A2C4C;
+$fb-blue: #4865B4;
 
 $lightgrey: #e7e7e7;
 $mediumgrey: #777;
@@ -86,3 +87,21 @@ $divider-color: $blue;
 .do-not-display {
   display: none;
 }
+
+.fb-sync-icon {
+  &.is-syncing {
+    .fa-refresh {
+      color: rgb(156, 168, 202);
+    }
+
+    .fa-facebook-square {
+      color: $fb-blue;
+    }
+  }
+  &:not(.is-syncing) {
+    .fa-refresh {
+      color: #a3a3a3;
+    }
+  }
+}
+

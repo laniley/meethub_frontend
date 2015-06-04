@@ -382,6 +382,8 @@ export default Ember.Controller.extend({
       {
         friends.forEach(function(friend) {
 
+          self.store.find('eventInvitation', { 'invited_user': friend.get('id') });
+
           self.store.find('user', friend.get('id')).then(function(friend) {
 
             var finished_requests = 0;
@@ -977,6 +979,10 @@ export default Ember.Controller.extend({
       {
         this.set('isSidebarOpen', true);
       }
+    },
+
+    resyncWithFB : function() {
+      this.syncWithFB();
     }
   }
 });

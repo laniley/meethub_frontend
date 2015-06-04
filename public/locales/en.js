@@ -33,6 +33,7 @@ Em.I18n.translations = {
     }
   },
   "messages": {
+    "title": "Messages",
     "event-participation-question": "Will you participate?",
     "meethub-participation-question": "Do you accept?",
     "accept": "accept",
@@ -78,5 +79,6 @@ Em.I18n.translations = {
   "attending": "{{name}} is attending",
   "maybe": "{{name}} is attending maybe",
   "declined": "{{name}} declined",
-  "not_replied": "{{name}} not replied"
+  "not_replied": "{{name}} not replied",
+  "resync-with-facebook": "ReSync with facebook"
 };
