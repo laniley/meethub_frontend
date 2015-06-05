@@ -677,7 +677,7 @@ export default Ember.Controller.extend({
 
         event = store_response.get('firstObject');
 
-        // if event not already in the DB, create it
+        // event not already in the DB, create it
         if(Ember.isEmpty(event))
         {
           console.log('event not yet in DB - create new', response.name);
@@ -706,14 +706,21 @@ export default Ember.Controller.extend({
           });
 
           event.save().then(function(event) {
+
+            event.set('me', self.get('model'));
+
             self.handleFBMessage(response, event, status, user_fb_id, function() {
               callback();
             });
           });
         }
+        // event already in the DB
         else
         {
           console.log('event in DB', response.name);
+
+          event.set('me', self.get('model'));
+
           self.handleFBMessage(response, event, status, user_fb_id, function() {
             callback();
           });
@@ -740,12 +747,13 @@ export default Ember.Controller.extend({
     else
     {
       console.log('event in store already', response.name);
+
       event = filtered_events.get('firstObject');
 
-      event.save().then(function(event) {
-        self.handleFBMessage(response, event, status, user_fb_id, function() {
-          callback();
-        });
+      event.set('me', self.get('model'));
+
+      self.handleFBMessage(response, event, status, user_fb_id, function() {
+        callback();
       });
     }
   },

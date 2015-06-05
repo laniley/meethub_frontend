@@ -1,11 +1,13 @@
 import DS from 'ember-data';
 
 export default DS.Model.extend({
+  me: DS.belongsTo('user'),
   fb_id: DS.attr('string'),
   name: DS.attr('string'),
   description: DS.attr('string'),
   start_time: DS.attr('string'),
   start_date: DS.attr('string'),
+  new_since_last_login: DS.attr('boolean', { defaultValue: false }),
   location: DS.belongsTo('location', { async: true }),
   eventInvitations: DS.hasMany('eventInvitation', { async: true }),
 
