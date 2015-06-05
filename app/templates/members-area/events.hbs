@@ -1,31 +1,20 @@
-{{!-- TITLE --}}
-<div class="section-title">
-  Events
-</div>
-{{!-- FILTER --}}
-<div class="side-nav-item selectable" {{action "centerMapOnCurrentPosition"}}>
-  Events Filter
-</div>
-{{!-- LIST --}}
-<div class="side-nav-item-container">
-  {{#each event in model}}
-    <div class="side-nav-item selectable" {{action 'center_map' event}}>
-      <div>{{event.name}}</div>
-      <div>{{event.location.name}}</div>
-      <div class="participants">
-        {{#if event.hasConnectedFriends}}
-          <div class="row participants-title">{{t 'participants.title'}}</div>
-          {{#each friend in event.friends_attending}}
-            <img class="attending" {{bind-attr src=friend.picture}} {{bind-attr title=friend.name}} />
-          {{/each}}
-          {{#each friend in event.friends_attending_maybe}}
-            <img class="attending-maybe" {{bind-attr src=friend.picture}} {{bind-attr title=friend.name}} />
-          {{/each}}
-          {{#each friend in event.friends_declined}}
-            <img class="declined" {{bind-attr src=friend.picture}} {{bind-attr title=friend.name}} />
-          {{/each}}
-        {{/if}}
-      </div>
+<div class="main-area">
+  <div {{bind-attr class=":main-container :container-fluid isSidebarOpen:open:closed"}}>
+
+    <h2>{{#link-to "members-area.meethubs.calendar.list"}}{{t 'calendar'}}{{/link-to}}</h2>
+    <div class="container-fluid main-area-list">
+      {{#each event in sortedEvents}}
+        <div {{bind-attr class=":row :main-area-list-item :calendar-list-row"}}>
+          <div class="col-xs-0 col-lg-2"></div>
+          <div class="col-xs-12 col-lg-8 no-padding">
+            <div class="date col-xs-2 col-sm-3 col-md-2 col-lg-2">{{formatted-date event.start_date 'L'}}</div>
+            <div title="Social Points" {{bind-attr class=":col-xs-1 :col-sm-1 :col-md-1 :col-lg-1 event.hasSocialPointUpdates :social-point-counter"}}>{{unbound fa-icon "fa-certificate"}} {{event.social_points}}</div>
+            <div class="col-xs-9 col-sm-8 col-md-9 col-lg-9 title align-left"><a target="_blank" href="https://www.facebook.com/events/{{event.fb_id}}/">{{event.name}}</a></div>
+          </div>
+          <div class="col-xs-0 col-lg-2"></div>
+        </div>
+      {{/each}}
     </div>
-  {{/each}}
+
+  </div>
 </div>

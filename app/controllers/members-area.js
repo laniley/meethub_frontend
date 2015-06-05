@@ -156,7 +156,7 @@ export default Ember.Controller.extend({
               if(finished_friend_response_counter === friend_response_length)
               {
                 self.loadFriendEventsFromFB(function() {
-                  callback()
+                  callback();
                 });
               }
             });

@@ -9,106 +9,24 @@ export default Ember.Controller.extend({
     return this.get('membersArea_controller').get('isSidebarOpen');
   }.property('membersArea_controller.isSidebarOpen'),
 
-  unreadMessages: function() {
 
-    var unreadMessages = [];
-
-    if(this.get('model.messages.length') > 0)
-    {
-      unreadMessages = this.get('model.messages').filter(function(message) {
-        return message.get('hasBeenRead') === false;
-      });
-    }
-
-    return unreadMessages;
-
-  }.property('model.messages.@each.hasBeenRead'),
-
-  hasUnreadMessages: function() {
-
-    if(this.get('unreadMessages').get('length') > 0)
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
-
-  }.property('unreadMessages.length'),
 
   hasUnreadMeethubInvitations: function() {
-
-    if(this.get('number_of_new_meethub_invitations') > 0)
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
-
-  }.property('number_of_new_meethub_invitations'),
+    return this.get('membersArea_controller').get('hasUnreadMeethubInvitations');
+  }.property('membersArea_controller.hasUnreadMeethubInvitations'),
 
   hasUnreadEventInvitations: function() {
+    return this.get('membersArea_controller').get('hasUnreadEventInvitations');
+  }.property('membersArea_controller.hasUnreadEventInvitations'),
 
-    if(this.get('number_of_new_event_invitations') > 0)
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
 
-  }.property('number_of_new_event_invitations'),
 
   number_of_new_meethub_invitations: function() {
-
-    var unreadMessages = [];
-
-    if(this.get('model.messages.length') > 0)
-    {
-      unreadMessages = this.get('model.messages').filter(function(message) {
-        return message.get('hasBeenRead') === false;
-      });
-    }
-
-    var unreadMeethubInvitations = [];
-
-    if(unreadMessages.get('length') > 0)
-    {
-      unreadMeethubInvitations = unreadMessages.filter(function(message) {
-        return message.get('isMeethubInvitation') === true;
-      });
-    }
-
-    return unreadMeethubInvitations.get('length');
-
-  }.property('model.messages.@each.hasBeenRead', 'model.messages.@each.isMeethubInvitation'),
+    return this.get('membersArea_controller.number_of_new_meethub_invitations');
+  }.property('membersArea_controller.number_of_new_meethub_invitations'),
 
   number_of_new_event_invitations: function() {
-
-    var unreadMessages = [];
-
-    if(this.get('model.messages.length') > 0)
-    {
-      unreadMessages = this.get('model.messages').filter(function(message) {
-        return message.get('hasBeenRead') === false;
-      });
-    }
-
-    var unreadEventInvitations = [];
-
-    if(unreadMessages.get('length') > 0)
-    {
-      unreadEventInvitations = unreadMessages.filter(function(message) {
-        return message.get('isEventInvitation') === true;
-      });
-    }
-
-    return unreadEventInvitations.get('length');
-
-  }.property('model.messages.@each.hasBeenRead', 'model.messages.@each.isEventInvitation')
+    return this.get('membersArea_controller.number_of_new_event_invitations');
+  }.property('membersArea_controller.number_of_new_event_invitations')
 
 });

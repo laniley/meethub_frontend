@@ -20,8 +20,16 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       {{!-- CENTER AREA / TOP-NAV-BAR --}}
       <ul class="nav navbar-nav center-links">
-
         <li>
+          {{#link-to 'members-area.events'}}
+            <span>{{unbound fa-icon "fa-fixed-with  fa-calendar"}}</span>
+            <span class="link-label hidden-sm">{{t 'calendar'}}</span>
+            {{#if hasNewMeethubInfos}}
+              <span class="info-counter">{{newMeethubInfosCount}}</span>
+            {{/if}}
+          {{/link-to}}
+        </li>
+{{!--         <li>
           {{#link-to 'members-area.meethubs'}}
             <span>{{unbound fa-icon "fa-fixed-with  fa-share-alt"}}</span>
             <span class="link-label hidden-sm">Meethubs</span>
@@ -29,19 +37,13 @@
               <span class="info-counter">{{newMeethubInfosCount}}</span>
             {{/if}}
           {{/link-to}}
-        </li>
+        </li> --}}
          <li>
           {{#link-to 'members-area.friends'}}
             <span>{{unbound fa-icon "fa-fixed-with fa-group"}}</span>
             <span class="link-label hidden-sm">{{t 'friend.title'}}</span>
           {{/link-to}}
         </li>
-        {{!-- <li>
-          {{#link-to 'members-area.events'}}
-            <span>{{unbound fa-icon "fa-fixed-with fa-music"}}</span>
-            <span class="link-label hidden-sm">Events</span>
-          {{/link-to}}
-        </li> --}}
         {{!-- <li>
           {{#link-to 'members-area.locations'}}
             <span>{{unbound fa-icon "fa-fixed-with fa-compass"}}</span>
