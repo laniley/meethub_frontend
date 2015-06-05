@@ -6,10 +6,10 @@ export default Ember.Route.extend({
     this.controllerFor('members-area').set('showSidebar', true);
   },
   renderTemplate: function() {
-    this.render('members-area.events.side-nav-buttons', {
-      into: 'members-area',
-      outlet: 'side-nav-buttons'
-    });
+    // this.render('members-area.events.side-nav-buttons', {
+    //   into: 'members-area',
+    //   outlet: 'side-nav-buttons'
+    // });
     this.render('members-area.events', {
       into: 'members-area'
     });
