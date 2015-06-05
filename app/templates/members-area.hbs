@@ -24,8 +24,8 @@
           {{#link-to 'members-area.events'}}
             <span>{{unbound fa-icon "fa-fixed-with  fa-calendar"}}</span>
             <span class="link-label hidden-sm">{{t 'calendar'}}</span>
-            {{#if hasNewMeethubInfos}}
-              <span class="info-counter">{{newMeethubInfosCount}}</span>
+            {{#if hasUnreadEventInvitations}}
+              <span class="info-counter">{{number_of_new_event_invitations}}</span>
             {{/if}}
           {{/link-to}}
         </li>
