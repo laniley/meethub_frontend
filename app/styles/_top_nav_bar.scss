@@ -1,13 +1,7 @@
 .center-links {
-  li {
+  li a {
     @media (max-width: $screen-xs-max) {
-      margin-left: 10px;
-
-      span {
-        display: inline-block;
-        width: 30px;
-      }
-
+      padding-left: 25px;
     }
   }
 }
@@ -38,7 +32,7 @@
 
       .link-label {
         @media (max-width: $screen-xs-max) {
-          margin-left: 10px;
+          margin-left: 25px;
         }
       }
 
@@ -145,7 +139,7 @@
         }
 
         .link-label {
-          margin-left: 50px;
+          margin-left: 60px;
         }
       }
       @media (min-width: $screen-sm-min) {
@@ -229,6 +223,10 @@
 
   @media (max-width: $screen-xs-max) {
     background: rgba(76, 78, 90, 0.7);
+
+    -webkit-box-shadow: 0px 8px 13px -5px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 8px 13px -5px rgba(0,0,0,0.75);
+box-shadow: 0px 8px 13px -5px rgba(0,0,0,0.75);
   }
 }
 
@@ -244,6 +242,9 @@
   }
   .account_name {
     display: inline-block;
+    @media (max-width: $screen-xs-max) {
+      margin-left: 10px;
+    }
   }
 }
 
@@ -257,7 +258,7 @@
   position: absolute;
 
   @media (max-width: $screen-xs-max) {
-    left: 40px;
+    left: 50px;
     top: 10px;
   }
 

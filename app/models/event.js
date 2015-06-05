@@ -7,12 +7,22 @@ export default DS.Model.extend({
   description: DS.attr('string'),
   start_time: DS.attr('string'),
   start_date: DS.attr('string'),
-  new_since_last_login: DS.attr('boolean', { defaultValue: false }),
   location: DS.belongsTo('location', { async: true }),
   eventInvitations: DS.hasMany('eventInvitation', { async: true }),
 
   created_at: DS.attr(),
   updated_at: DS.attr(),
+
+  newSinceLastLogin: function() {
+    if(this.get('me') && this.get('created_at') >= this.get('me').get('last_login'))
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }.property('created_at', 'me.last_login'),
 
   friend_event_invitations: function() {
     return this.get('eventInvitations').filter(function(eventInv) {

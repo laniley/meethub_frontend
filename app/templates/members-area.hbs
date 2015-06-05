@@ -53,7 +53,7 @@
       </ul>
       {{!-- RIGHT AREA --}}
       <ul class="nav navbar-nav navbar-right">
-        <li class="custom-link">
+        {{!-- <li class="custom-link">
           {{#link-to 'members-area.messages'}}
             <span {{bind-attr class=":link-icon"}}>{{unbound fa-icon "fa-fixed-with fa-envelope"}}</span>
             <span class="link-label visible-xs">{{t 'messages.title'}}</span>
@@ -61,7 +61,7 @@
               <span class="info-counter">{{unreadMessages.length}}</span>
             {{/if}}
           {{/link-to}}
-        </li>
+        </li> --}}
         <li {{bind-attr class=":custom-link :fb-sync-icon isSyncing"}} {{action "resyncWithFB"}}>
           <span class="fa-stack">
             {{#if isSyncing}}

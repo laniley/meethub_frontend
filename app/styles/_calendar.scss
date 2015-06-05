@@ -54,6 +54,18 @@
   }
 }
 
+.calendar-list-row {
+  .date, .social-point-counter, .new-flag, .title {
+    margin: 10px 0;
+  }
+
+  .new-flag, .has-social-points {
+    color: $orange;
+    font-weight: bold;
+  }
+}
+
+
 .view-toggle {
   position: absolute;
   left: 5px;

@@ -11,14 +11,8 @@ export default Ember.Controller.extend({
     return this.get('membersArea_controller').get('isSidebarOpen');
   }.property('membersArea_controller.isSidebarOpen'),
 
-  user: function() {
-    return this.get('membersArea_controller').get('model');
-  }.property('membersArea_controller.model'),
-
   unsortedUpcomingEvents: function() {
-
     return this.get('model').filterBy('is_upcoming', true);
-
   }.property('model.@each.is_upcoming')
 
 });
