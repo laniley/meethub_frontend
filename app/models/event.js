@@ -14,15 +14,31 @@ export default DS.Model.extend({
   updated_at: DS.attr(),
 
   newSinceLastLogin: function() {
-    if(this.get('me') && this.get('created_at') >= this.get('me').get('last_login'))
+
+    if(this.get('me'))
     {
-      return true;
+      var eventInvs = this.get('me').get('eventInvitations').filter(eventInvitation => {
+
+        return Ember.isEqual(eventInvitation.get('event').get('id'), this.get('id'));
+
+      });
+
+      if(eventInvs.get('firstObject').get('message').get('hasBeenRead'))
+      {
+        return false;
+      }
+      else
+      {
+        return true;
+      }
+
     }
     else
     {
       return false;
     }
-  }.property('created_at', 'me.last_login'),
+
+  }.property('me.last_login', 'me.eventInvitations'),
 
   friend_event_invitations: function() {
     return this.get('eventInvitations').filter(function(eventInv) {
