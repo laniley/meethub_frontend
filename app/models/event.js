@@ -15,7 +15,7 @@ export default DS.Model.extend({
 
   newSinceLastLogin: function() {
 
-    if(this.get('my_event_invitation').get('message').get('hasBeenRead'))
+    if(this.get('my_event_invitation') && this.get('my_event_invitation').get('message').get('hasBeenRead'))
     {
       return false;
     }

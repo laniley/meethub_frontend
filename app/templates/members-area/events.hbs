@@ -4,7 +4,7 @@
     <h1>{{t 'calendar'}}</h1>
     <div class="container-fluid main-area-list">
       {{#each event in sortedEvents}}
-        {{#link-to 'members-area'}}
+        {{#link-to 'members-area.events.event' event}}
           <div {{bind-attr class=":row :main-area-list-item :calendar-list-row :no-padding"}}>
 
             <div class="col-xs-0 col-lg-2"></div>

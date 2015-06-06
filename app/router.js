@@ -58,6 +58,9 @@ export default Router.map(function() {
     this.route("events", function() {
       this.route("map");
       this.route("calendar");
+      this.route('event', {
+        path: "/:event_id"
+      });
     });
 
     this.route("locations", function() {
