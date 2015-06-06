@@ -15,30 +15,24 @@ export default DS.Model.extend({
 
   newSinceLastLogin: function() {
 
-    if(this.get('me'))
-    {
-      var eventInvs = this.get('me').get('eventInvitations').filter(eventInvitation => {
-
-        return Ember.isEqual(eventInvitation.get('event').get('id'), this.get('id'));
-
-      });
-
-      if(eventInvs.get('firstObject').get('message').get('hasBeenRead'))
-      {
-        return false;
-      }
-      else
-      {
-        return true;
-      }
-
-    }
-    else
+    if(this.get('my_event_invitation').get('message').get('hasBeenRead'))
     {
       return false;
     }
+    else
+    {
+      return true;
+    }
 
-  }.property('me.last_login', 'me.eventInvitations'),
+  }.property('my_event_invitation.message.hasBeenRead'),
+
+  my_event_invitation: function() {
+    var eventInvs = this.get('eventInvitations').filter(function(eventInv) {
+      return eventInv.get('invited_user').get('isMe') === true;
+    });
+
+    return eventInvs.get('firstObject');
+  }.property('eventInvitations.length'),
 
   friend_event_invitations: function() {
     return this.get('eventInvitations').filter(function(eventInv) {
