@@ -191,200 +191,7 @@
         }
       }
 
-      .side-nav-item {
 
-        float: left;
-
-        width: 100%;
-
-        &.open {
-          // box-shadow: #BFC8CB 0px 0px 10px inset;
-        }
-
-        &.message {
-
-          &:not(.has-been-read) {
-            .title {
-              font-weight: bold;
-            }
-          }
-
-          .button {
-            width: 28%;
-            margin: 0 1.66666%;
-            padding: 2px 5px;
-            margin-bottom: 10px;
-            display: inline-block;
-            float: none;
-          }
-
-          .envelope {
-            float: left;
-            font-size: 24px;
-            margin-top: -10px;
-            margin-right: 10px;
-
-            &:not(.has-been-read) {
-              color: $orange;
-            }
-          }
-
-          .message-type {
-            float: left;
-            margin-left: -20px;
-            margin-top: 6px;
-          }
-
-          .eventInvitation-status {
-            float: left;
-            margin: 5px -40px;
-            font-size: 16px;
-            color: #ddd;
-            text-shadow: 0 -1px 1px #FFFFFF, 0 1px 1px #000000;
-
-            &.accepted {
-              color: $blue;
-            }
-            &.maybe {
-              color: $yellow;
-            }
-            &.declined {
-              color: $orange;
-            }
-          }
-        }
-
-        &.friend {
-          line-height: 50px;
-          text-align: left;
-
-          .picture {
-            float: left;
-            margin-right: 20px;
-
-            img {
-              height: 50px;
-            }
-          }
-        }
-
-        &.meethub {
-
-          img {
-            width: 40px;
-            border-radius: 5px;
-          }
-
-          .members-title {
-            margin-bottom: 10px;
-            color: #000;
-          }
-
-          .add-new-member {
-            display: inline-block;
-            line-height: 40px;
-            font-size: 22px;
-            cursor: pointer;
-            vertical-align: middle;
-            width: 40px;
-            height: 40px;
-            border-radius: 5px;
-            border: 1px solid $border-color;
-
-            color: $link-color;
-
-            &:hover {
-              &:not(.open) {
-                color: $link-color-hover;
-                border: 1px solid $link-color-hover;
-              }
-            }
-
-            &.open {
-              // background-color: $blue;
-              // color: #fff;
-
-              color: #167698;
-              border-radius: 5px;
-              border: 1px solid #ccc;
-              background-color: white;
-              box-shadow: #BFC8CB 0px 0px 10px inset;
-            }
-          }
-        }
-
-        .title {
-          padding: 15px 10px;
-
-          &.open {
-            background-color: #efefef;
-            color: #000;
-            border: 1px solid #B9BFC2;
-            border-bottom: none;
-          }
-
-          .icons {
-            position: absolute;
-          }
-
-          .subject {
-            position: relative;
-            left: 50px;
-            width: 80%;
-          }
-        }
-
-        .search {
-          width: 100%;
-          float: left;
-
-          input {
-            width: 100%;
-          }
-        }
-
-        .reset-search-button {
-          position: absolute;
-          margin-left: -45px;
-          line-height: 30px;
-        }
-
-        .new-elem-title {
-          text-align: left;
-        }
-
-        .new-elem-short-description {
-          margin-top: 10px;
-        }
-
-        .new-elem-title-input {
-          width: 100%;
-        }
-
-        .short-description {
-          color: #000;
-          border-bottom: 1px solid $divider-color;
-
-          &.edit {
-            height: 98px;
-          }
-
-          &:not(.edit) {
-            line-height: 40px;
-          }
-
-          textarea {
-            margin: 10px 0 5px 0;
-          }
-        }
-
-        .highlight {
-          a {
-            color: $orange;
-          }
-
-        }
-      }
 
       input {
         padding: 0 5px;
@@ -562,6 +369,219 @@
     padding: 5px;
     border-bottom: 1px solid $divider-color;
     margin-bottom: 10px;
+  }
+}
+
+.side-nav-item {
+
+  float: left;
+
+  width: 100%;
+
+  &.open {
+    // box-shadow: #BFC8CB 0px 0px 10px inset;
+  }
+
+  &.message {
+
+    &:not(.has-been-read) {
+      .title {
+        font-weight: bold;
+      }
+    }
+
+    .button {
+      width: 28%;
+      margin: 0 1.66666%;
+      padding: 2px 5px;
+      margin-bottom: 10px;
+      display: inline-block;
+      float: none;
+    }
+
+    .envelope {
+      float: left;
+      font-size: 24px;
+      margin-top: -10px;
+      margin-right: 10px;
+
+      &:not(.has-been-read) {
+        color: $orange;
+      }
+    }
+
+    .message-type {
+      float: left;
+      margin-left: -20px;
+      margin-top: 6px;
+    }
+
+    .eventInvitation-status {
+      float: left;
+      margin: 5px -40px;
+      font-size: 16px;
+      color: #ddd;
+      text-shadow: 0 -1px 1px #FFFFFF, 0 1px 1px #000000;
+
+      &.accepted {
+        color: $blue;
+      }
+      &.maybe {
+        color: $yellow;
+      }
+      &.declined {
+        color: $orange;
+      }
+    }
+  }
+
+  &.friend {
+    line-height: 50px;
+    text-align: left;
+
+    .picture {
+      float: left;
+      margin-right: 20px;
+
+      img {
+        height: 50px;
+      }
+    }
+  }
+
+  &.meethub {
+
+    img {
+      width: 40px;
+      border-radius: 5px;
+    }
+
+    .members-title {
+      margin-bottom: 10px;
+      color: #000;
+    }
+
+    .add-new-member {
+      display: inline-block;
+      line-height: 40px;
+      font-size: 22px;
+      cursor: pointer;
+      vertical-align: middle;
+      width: 40px;
+      height: 40px;
+      border-radius: 5px;
+      border: 1px solid $border-color;
+
+      color: $link-color;
+
+      &:hover {
+        &:not(.open) {
+          color: $link-color-hover;
+          border: 1px solid $link-color-hover;
+        }
+      }
+
+      &.open {
+        // background-color: $blue;
+        // color: #fff;
+
+        color: #167698;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        background-color: white;
+        box-shadow: #BFC8CB 0px 0px 10px inset;
+      }
+    }
+  }
+
+  .title {
+    font-weight: bold;
+    color: $blue;
+    padding: 13px 0;
+    margin: 10px 20px;
+    border-bottom: 1px solid $border-color;
+
+    &.open {
+      background-color: #efefef;
+      color: #000;
+      border: 1px solid #B9BFC2;
+      border-bottom: none;
+    }
+
+    .icons {
+      position: absolute;
+    }
+
+    .subject {
+      position: relative;
+      left: 50px;
+      width: 80%;
+    }
+  }
+
+  .search {
+    width: 100%;
+    float: left;
+
+    input {
+      width: 100%;
+    }
+  }
+
+  .buttons {
+    display: inline-block;
+    width: 100%;
+    margin: 15px 0;
+
+    .button {
+      width: 30%;
+
+      &.maybe {
+        margin: 0 5%;
+      }
+    }
+  }
+
+  .reset-search-button {
+    position: absolute;
+    margin-left: -45px;
+    line-height: 30px;
+  }
+
+  .new-elem-title {
+    text-align: left;
+  }
+
+  .new-elem-short-description {
+    margin-top: 10px;
+  }
+
+  .new-elem-title-input {
+    width: 100%;
+  }
+
+  .short-description {
+    color: #000;
+    border-bottom: 1px solid $divider-color;
+
+    &.edit {
+      height: 98px;
+    }
+
+    &:not(.edit) {
+      line-height: 40px;
+    }
+
+    textarea {
+      margin: 10px 0 5px 0;
+    }
+  }
+
+  .highlight {
+    a {
+      color: $orange;
+    }
+
   }
 }
 

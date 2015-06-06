@@ -31,6 +31,7 @@ export default Ember.Controller.extend({
 
   update: function() {
     var self = this;
+
     self.store.find('meethubInvitation', { invited_user: self.get('model').get('id') });
     self.store.find('eventInvitation', { invited_user: self.get('model').get('id') });
     self.store.find('message', { user: self.get('model').get('id') });
