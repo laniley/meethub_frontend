@@ -135,6 +135,18 @@ ul {
   }
 }
 
+.main-area-list {
+  a {
+    &.active
+    {
+      .main-area-list-item
+      {
+        background-color: #E1EEF5;
+      }
+    }
+  }
+}
+
 .bold {
   font-weight: bold;
 }

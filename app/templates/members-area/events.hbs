@@ -10,18 +10,20 @@
             <div class="col-xs-0 col-lg-2"></div>
 
             <div class="col-xs-12 col-lg-8 no-padding">
-              <div {{bind-attr class=":col-xs-4 :col-sm-2 :col-md-2 :col-lg-2 :date :align-left :no-padding"}}>
-                {{formatted-date event.start_date 'L'}}
+              <div class="col-xs-12 col-sm-12 col-md-4 col-lg-3 align-left">
+                <div {{bind-attr class=":date :align-left :no-padding"}}>
+                  {{formatted-date event.start_date 'L'}}
+                </div>
+                <div {{bind-attr class=":new-flag :align-left :no-padding"}}>
+                  {{#if event.newSinceLastLogin}}
+                    new
+                  {{/if}}
+                </div>
+                <div {{bind-attr class="event.hasSocialPoints :social-point-counter :align-left :no-padding"}} title="Social Points" >
+                      {{unbound fa-icon "fa-certificate"}} {{event.social_points}}
+                </div>
               </div>
-              <div {{bind-attr class="event.hasSocialPoints :col-xs-3 :col-sm-1 :social-point-counter :align-left :no-padding"}} title="Social Points" >
-                    {{unbound fa-icon "fa-certificate"}} {{event.social_points}}
-              </div>
-              <div {{bind-attr class=":col-xs-2 :col-sm-1 :new-flag :align-left"}}>
-                {{#if event.newSinceLastLogin}}
-                  new
-                {{/if}}
-              </div>
-              <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 title align-left no-padding">
+              <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9 title align-left">
                 {{event.name}}
                 {{!-- <a target="_blank" href="https://www.facebook.com/events/{{event.fb_id}}/">{{event.name}}</a> --}}
               </div>
