@@ -7,9 +7,7 @@ export default Ember.Controller.extend({
   sortProperties: ['start_date:asc', 'social_points:desc'],
   sortedEvents: Ember.computed.sort('unsortedUpcomingEvents', 'sortProperties'),
 
-  isSidebarOpen: function() {
-    return this.get('membersArea_controller').get('isSidebarOpen');
-  }.property('membersArea_controller.isSidebarOpen'),
+  isSidebarOpen: false,
 
   unsortedUpcomingEvents: function() {
     return this.get('model').filterBy('is_upcoming', true);
