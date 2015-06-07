@@ -13,9 +13,9 @@
       {{t 'messages.event-participation-question'}}
     </div>
     <div class="buttons">
-      <div {{bind-attr class=":button :accept message.eventInvitation.hasBeenAccepted:active"}} {{action 'acceptEventInvitation' model.my_event_invitation.id}} {{translateAttr  title='messages.accept'}}>{{unbound fa-icon "fa-check"}}</div>
-      <div {{bind-attr class=":button :maybe message.eventInvitation.hasBeenAcceptedMaybe:active"}} {{action 'maybeAcceptEventInvitation' model.my_event_invitation.id}} {{translateAttr  title='messages.maybe'}}>{{unbound fa-icon "fa-question"}}</div>
-      <div {{bind-attr class=":button :decline message.eventInvitation.hasBeenDeclined:active"}} {{action 'declineEventInvitation' model.my_event_invitation.id}} {{translateAttr  title='messages.decline'}}>{{unbound fa-icon "fa-remove"}}</div>
+      <div {{bind-attr class=":button :accept model.my_event_invitation.hasBeenAccepted:active"}} {{action 'acceptEventInvitation' model.my_event_invitation.id}} {{translateAttr  title='messages.accept'}}>{{unbound fa-icon "fa-check"}}</div>
+      <div {{bind-attr class=":button :maybe model.my_event_invitation.hasBeenAcceptedMaybe:active"}} {{action 'maybeAcceptEventInvitation' model.my_event_invitation.id}} {{translateAttr  title='messages.maybe'}}>{{unbound fa-icon "fa-question"}}</div>
+      <div {{bind-attr class=":button :decline model.my_event_invitation.hasBeenDeclined:active"}} {{action 'declineEventInvitation' model.my_event_invitation.id}} {{translateAttr  title='messages.decline'}}>{{unbound fa-icon "fa-remove"}}</div>
     </div>
     <div class="info-box-row start">
       {{formatted-date model.start_date 'L'}} - {{model.start_time_converted}}

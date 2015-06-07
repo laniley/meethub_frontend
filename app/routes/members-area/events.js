@@ -1,8 +1,11 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  setupController: function(controller) {
-    controller.set('model', this.store.all('event'));
+  model: function() {
+    return this.store.all('event');
+  },
+  setupController: function(controller, model) {
+    controller.set('model', model);
   },
   renderTemplate: function() {
     this.render('members-area.events', {

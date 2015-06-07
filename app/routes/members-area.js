@@ -18,7 +18,7 @@ export default AuthenticateRoute.extend({
     }
     else
     {
-      console.log("FB not ready");
+      console.log("FB not ready - initialising...");
 
       window.fbAsyncInit = function() {
 
@@ -43,13 +43,15 @@ export default AuthenticateRoute.extend({
         controller.set('hasFacebook', true);
         controller.set('FB', FB);
 
+        console.log('FB initialised');
+
         controller.get('FB').getLoginStatus(function(response) {
 
             console.log("FB response status: ", response.status);
 
             if(response.status === "connected")
             {
-              controller.getUserInfosFromFB();
+              self.getUserInfosFromFB(controller);
             }
             else
             {
@@ -62,5 +64,74 @@ export default AuthenticateRoute.extend({
       };
     }
   },
+
+  getUserInfosFromFB: function(controller) {
+
+    var self = this;
+
+    controller.get('FB').api(
+        '/me',
+        {fields: 'id, email, first_name, last_name, picture.width(120).height(120)'},
+        function(response)
+    {
+      if( !response.error )
+      {
+        console.log('Successful login to FB for: ' + response.first_name + ' ' + response.last_name, response);
+
+        var user = null;
+
+        self.store.find('user', { fb_id: response.id }).then(function(users)
+        {
+          var last_login = new Date();
+
+          if(Ember.isEmpty(users))
+          {
+            user = self.store.createRecord('user', {
+              fb_id: response.id,
+              email: response.email,
+              first_name: response.first_name,
+              last_name: response.last_name,
+              picture: 'http://graph.facebook.com/' + response.id + '/picture',
+              first_login: true,
+              last_login: last_login
+            });
+
+            user.save().then
+            (
+              function()
+              {
+                user.set('isMe', true);
+                controller.set('model', user);
+                controller.update();
+                controller.syncWithFB();
+              }
+            );
+          }
+          else
+          {
+            user = users.get('firstObject');
+            user.set('isMe', true);
+            user.set('email', response.email);
+            user.set('last_login', user.get('updated_at'));
+            user.set('first_login', false);
+            user.save().then
+            (
+              function() {
+                controller.set('model', user);
+                controller.update();
+                controller.syncWithFB();
+              }
+            );
+          }
+
+        });
+      }
+      else
+      {
+        console.log(response.error);
+      }
+
+    });
+  }
 
 });

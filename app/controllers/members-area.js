@@ -38,74 +38,74 @@ export default Ember.Controller.extend({
     self.store.find('meethubComment', { user: self.get('model').get('id') });
   },
 
-  getUserInfosFromFB: function() {
+  // getUserInfosFromFB: function() {
 
-    var self = this;
+  //   var self = this;
 
-    self.get('FB').api(
-        '/me',
-        {fields: 'id, email, first_name, last_name, picture.width(120).height(120)'},
-        function(response)
-    {
-      if( !response.error )
-      {
-        console.log('Successful login to FB for: ' + response.first_name + ' ' + response.last_name, response);
+  //   self.get('FB').api(
+  //       '/me',
+  //       {fields: 'id, email, first_name, last_name, picture.width(120).height(120)'},
+  //       function(response)
+  //   {
+  //     if( !response.error )
+  //     {
+  //       console.log('Successful login to FB for: ' + response.first_name + ' ' + response.last_name, response);
 
-        var user = null;
+  //       var user = null;
 
-        self.store.find('user', { fb_id: response.id }).then(function(users)
-        {
-          var last_login = new Date();
+  //       self.store.find('user', { fb_id: response.id }).then(function(users)
+  //       {
+  //         var last_login = new Date();
 
-          if(Ember.isEmpty(users))
-          {
-            user = self.store.createRecord('user', {
-              fb_id: response.id,
-              email: response.email,
-              first_name: response.first_name,
-              last_name: response.last_name,
-              picture: 'http://graph.facebook.com/' + response.id + '/picture',
-              first_login: true,
-              last_login: last_login
-            });
+  //         if(Ember.isEmpty(users))
+  //         {
+  //           user = self.store.createRecord('user', {
+  //             fb_id: response.id,
+  //             email: response.email,
+  //             first_name: response.first_name,
+  //             last_name: response.last_name,
+  //             picture: 'http://graph.facebook.com/' + response.id + '/picture',
+  //             first_login: true,
+  //             last_login: last_login
+  //           });
 
-            user.save().then
-            (
-              function()
-              {
-                user.set('isMe', true);
-                self.set('model', user);
-                self.update();
-                self.syncWithFB();
-              }
-            );
-          }
-          else
-          {
-            user = users.get('firstObject');
-            user.set('isMe', true);
-            user.set('email', response.email);
-            user.set('last_login', user.get('updated_at'));
-            user.set('first_login', false);
-            user.save().then
-            (
-              function() {
-                self.set('model', user);
-                self.update();
-                self.syncWithFB();
-              }
-            );
-          }
+  //           user.save().then
+  //           (
+  //             function()
+  //             {
+  //               user.set('isMe', true);
+  //               self.set('model', user);
+  //               self.update();
+  //               self.syncWithFB();
+  //             }
+  //           );
+  //         }
+  //         else
+  //         {
+  //           user = users.get('firstObject');
+  //           user.set('isMe', true);
+  //           user.set('email', response.email);
+  //           user.set('last_login', user.get('updated_at'));
+  //           user.set('first_login', false);
+  //           user.save().then
+  //           (
+  //             function() {
+  //               self.set('model', user);
+  //               self.update();
+  //               self.syncWithFB();
+  //             }
+  //           );
+  //         }
 
-        });
-      }
-      else
-      {
-        console.log(response.error);
-      }
+  //       });
+  //     }
+  //     else
+  //     {
+  //       console.log(response.error);
+  //     }
 
-    });
-  },
+  //   });
+  // },
 
   syncWithFB: function() {
     this.set('isSyncing', true);
