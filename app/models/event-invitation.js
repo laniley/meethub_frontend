@@ -10,27 +10,27 @@ export default DS.Model.extend({
   created_at: DS.attr(),
   updated_at: DS.attr(),
 
-  newSinceLastLogin: function() {
-    if(this.get('created_at') >= this.get('me').get('last_login'))
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
-  }.property('created_at', 'me.last_login'),
+  // newSinceLastLogin: function() {
+  //   if(this.get('created_at') >= this.get('me').get('last_login'))
+  //   {
+  //     return true;
+  //   }
+  //   else
+  //   {
+  //     return false;
+  //   }
+  // }.property('created_at', 'me.last_login'),
 
-  updatedSinceLastLogin: function() {
-    if(this.get('updated_at') >= this.get('me').get('last_login'))
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
-  }.property('updated_at', 'me.last_login'),
+  // updatedSinceLastLogin: function() {
+  //   if(this.get('updated_at') >= this.get('me').get('last_login'))
+  //   {
+  //     return true;
+  //   }
+  //   else
+  //   {
+  //     return false;
+  //   }
+  // }.property('updated_at', 'me.last_login'),
 
   hasBeenAccepted: function() {
     if(this.get('status') === 'attending')

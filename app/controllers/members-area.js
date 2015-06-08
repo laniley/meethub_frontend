@@ -27,12 +27,12 @@ export default Ember.Controller.extend({
   }.on('init'),
 
   update: function() {
-    var self = this;
+    // var self = this;
 
-    self.store.find('meethubInvitation', { invited_user: self.get('model').get('id') });
-    self.store.find('eventInvitation', { invited_user: self.get('model').get('id') });
-    self.store.find('message', { user: self.get('model').get('id') });
-    self.store.find('meethubComment', { user: self.get('model').get('id') });
+    // self.store.find('meethubInvitation', { invited_user: self.get('model').get('id') });
+    // self.store.find('eventInvitation', { invited_user: self.get('model').get('id') });
+    // self.store.find('message', { user: self.get('model').get('id') });
+    // self.store.find('meethubComment', { user: self.get('model').get('id') });
   },
 
   syncWithFB: function() {
@@ -69,7 +69,7 @@ export default Ember.Controller.extend({
     {
       if( !response.error )
       {
-        console.log('Successful loaded friends from FB: ', response);
+        console.log('Successfully loaded friends from FB: ', response);
 
         var friend_response_length = response.data.length;
         var finished_friend_response_counter = 0;
@@ -104,23 +104,16 @@ export default Ember.Controller.extend({
 
     var self = this;
 
-    self.store.find('user', { fb_id: friend_fb_id }).then(function(users)
+    self.store.find('user', { fb_id: friend_fb_id }).then(function(friends)
     {
-      if(Ember.isEmpty(users))
+      if(Ember.isEmpty(friends))
       {
+        console.log("friend not yet in store");
+
         self.controllerFor('members-area').get('FB').api('/' + friend_fb_id, function(friend_response)
         {
           if( !friend_response.error )
           {
-            self.store.createRecord('friend', {
-                fb_id: friend_response.id,
-                first_name: friend_response.first_name,
-                last_name: friend_response.last_name,
-                picture: 'http://graph.facebook.com/' + friend_response.id + '/picture',
-                gender: friend_response.gender,
-                first_login: true
-            });
-
             var friend = self.store.createRecord('user', {
                 fb_id: friend_response.id,
                 first_name: friend_response.first_name,
@@ -130,13 +123,15 @@ export default Ember.Controller.extend({
                 first_login: true
             });
 
-            friend.save().then(function() {
-              self.get('model').get('friends').then(function(friends) {
-                friends.pushObject(friend);
-                self.get('model').save().then(function() {
-                  callback();
-                });
+            friend.save().then(newFriend => {
+
+              var friend = newFriend;
+              var user = self.get('model');
+
+              self.handleFriendship(user, friend, function() {
+                callback();
               });
+
             });
           }
           else
@@ -147,12 +142,36 @@ export default Ember.Controller.extend({
       }
       else
       {
-        self.get('model').get('friends').then(function(friends) {
-          friends.pushObject(users.get('firstObject'));
-          self.get('model').save().then(function() {
-            callback();
-          });
+        console.log("friend in store already");
+
+        var friend = friends.get('firstObject');
+        var user = self.get('model');
+
+        self.handleFriendship(user, friend, function() {
+          callback();
         });
+      }
+    });
+  },
+
+  handleFriendship: function (user, friend, callback) {
+    this.store.find('friendship', { user_id: user.get('id'), friend_id: friend.get('id') }).then(friendships => {
+      // friendship not in store
+      if(Ember.isEmpty(friendships))
+      {
+        var friendship = this.store.createRecord('friendship', {
+            user: user,
+            friend: friend
+        });
+
+        friendship.save().then(friendship => {
+          callback();
+        })
+      }
+      // friendship in store
+      else
+      {
+        callback();
       }
     });
   },
@@ -197,7 +216,10 @@ export default Ember.Controller.extend({
           {
             finished_requests++;
 
-            callback();
+            if(finished_requests === 3)
+            {
+              callback();
+            }
           }
         }
         else
@@ -239,7 +261,10 @@ export default Ember.Controller.extend({
           {
             finished_requests++;
 
-            callback();
+            if(finished_requests === 3)
+            {
+              callback();
+            }
           }
         }
         else
@@ -281,7 +306,10 @@ export default Ember.Controller.extend({
           {
             finished_requests++;
 
-            callback();
+            if(finished_requests === 3)
+            {
+              callback();
+            }
           }
         }
         else
@@ -302,185 +330,188 @@ export default Ember.Controller.extend({
 
     var user = self.get('model');
 
-    user.get('friends').then(function(friends) {
+    user.get('friendships').then(friendships => {
 
-      var friends_length = user.get('friends').get('length');
+      var friends_length = friendships.get('length');
       var finished_friends_counter = 0;
 
       if(friends_length > 0)
       {
-        friends.forEach(function(friend) {
+        friendships.forEach(friendship => {
 
-          self.store.find('eventInvitation', { 'invited_user': friend.get('id') });
+          friendship.get('friend').then(friend => {
+            self.store.find('eventInvitation', { 'invited_user': friend.get('id') });
 
-          self.store.find('user', friend.get('id')).then(function(friend) {
+            self.store.find('user', friend.get('id')).then(function(friend) {
 
-            var finished_requests = 0;
+              var finished_requests = 0;
 
-            self.get('FB').api('/' + friend.get('fb_id') + '/events/attending', function(response)
-            {
-              if( !response.error )
+              self.get('FB').api('/' + friend.get('fb_id') + '/events/attending', function(response)
               {
-                console.log('friend events - attending: ', response);
-
-                if(response.data.length > 0)
+                if( !response.error )
                 {
-                  var attending_reponses = response.data.length;
-                  var finished_attending_responses = 0;
+                  console.log('friend events - attending: ', response);
 
-                  for(var i = 0; i < response.data.length; i++)
+                  if(response.data.length > 0)
                   {
-                    self.handleFBEventResponse(response.data[i], 'attending', friend.get('fb_id'), function() {
+                    var attending_reponses = response.data.length;
+                    var finished_attending_responses = 0;
 
-                      finished_attending_responses++;
+                    for(var i = 0; i < response.data.length; i++)
+                    {
+                      self.handleFBEventResponse(response.data[i], 'attending', friend.get('fb_id'), function() {
 
-                      if(finished_attending_responses === attending_reponses)
-                      {
-                        finished_requests++;
+                        finished_attending_responses++;
 
-                        if(finished_requests === 3)
+                        if(finished_attending_responses === attending_reponses)
                         {
-                          finished_friends_counter++;
+                          finished_requests++;
 
-                          if(finished_friends_counter === friends_length)
+                          if(finished_requests === 3)
                           {
-                            callback();
+                            finished_friends_counter++;
+
+                            if(finished_friends_counter === friends_length)
+                            {
+                              callback();
+                            }
                           }
                         }
-                      }
 
-                    });
+                      });
+                    }
+                  }
+                  else
+                  {
+                    finished_requests++;
+
+                    if(finished_requests === 3)
+                    {
+                      finished_friends_counter++;
+
+                      if(finished_friends_counter === friends_length)
+                      {
+                        callback();
+                      }
+                    }
                   }
                 }
                 else
                 {
-                  finished_requests++;
-
-                  if(finished_requests === 3)
-                  {
-                    finished_friends_counter++;
-
-                    if(finished_friends_counter === friends_length)
-                    {
-                      callback();
-                    }
-                  }
+                  console.log(response.error);
                 }
-              }
-              else
-              {
-                console.log(response.error);
-              }
-            });
+              });
 
-            self.get('FB').api('/' + friend.get('fb_id') + '/events/maybe', function(response)
-            {
-              if( !response.error )
+              self.get('FB').api('/' + friend.get('fb_id') + '/events/maybe', function(response)
               {
-                console.log('friend events - maybe: ', response);
-
-                if(response.data.length > 0)
+                if( !response.error )
                 {
-                  var maybe_reponses = response.data.length;
-                  var finished_maybe_responses = 0;
+                  console.log('friend events - maybe: ', response);
 
-                  for(var i = 0; i < response.data.length; i++)
+                  if(response.data.length > 0)
                   {
-                    self.handleFBEventResponse(response.data[i], 'maybe', friend.get('fb_id'), function() {
+                    var maybe_reponses = response.data.length;
+                    var finished_maybe_responses = 0;
 
-                      finished_maybe_responses++;
+                    for(var i = 0; i < response.data.length; i++)
+                    {
+                      self.handleFBEventResponse(response.data[i], 'maybe', friend.get('fb_id'), function() {
 
-                      if(finished_maybe_responses === maybe_reponses)
-                      {
-                        finished_requests++;
+                        finished_maybe_responses++;
 
-                        if(finished_requests === 3)
+                        if(finished_maybe_responses === maybe_reponses)
                         {
-                          finished_friends_counter++;
+                          finished_requests++;
 
-                          if(finished_friends_counter === friends_length)
+                          if(finished_requests === 3)
                           {
-                            callback();
+                            finished_friends_counter++;
+
+                            if(finished_friends_counter === friends_length)
+                            {
+                              callback();
+                            }
                           }
                         }
+                      });
+                    }
+                  }
+                  else
+                  {
+                    finished_requests++;
+
+                    if(finished_requests === 3)
+                    {
+                      finished_friends_counter++;
+
+                      if(finished_friends_counter === friends_length)
+                      {
+                        callback();
                       }
-                    });
+                    }
                   }
                 }
                 else
                 {
-                  finished_requests++;
-
-                  if(finished_requests === 3)
-                  {
-                    finished_friends_counter++;
-
-                    if(finished_friends_counter === friends_length)
-                    {
-                      callback();
-                    }
-                  }
+                  console.log(response.error);
                 }
-              }
-              else
-              {
-                console.log(response.error);
-              }
-            });
+              });
 
-            self.get('FB').api('/' + friend.get('fb_id') + '/events/not_replied', function(response)
-            {
-              if( !response.error )
+              self.get('FB').api('/' + friend.get('fb_id') + '/events/not_replied', function(response)
               {
-                console.log('friend events - not_replied: ', response);
-
-                if(response.data.length > 0)
+                if( !response.error )
                 {
-                  var not_replied_reponses = response.data.length;
-                  var finished_not_replied_responses = 0;
+                  console.log('friend events - not_replied: ', response);
 
-                  for(var i = 0; i < response.data.length; i++)
+                  if(response.data.length > 0)
                   {
-                    self.handleFBEventResponse(response.data[i], 'not_replied', friend.get('fb_id'), function() {
+                    var not_replied_reponses = response.data.length;
+                    var finished_not_replied_responses = 0;
 
-                      finished_not_replied_responses++;
+                    for(var i = 0; i < response.data.length; i++)
+                    {
+                      self.handleFBEventResponse(response.data[i], 'not_replied', friend.get('fb_id'), function() {
 
-                      if(finished_not_replied_responses === not_replied_reponses)
-                      {
-                        finished_requests++;
+                        finished_not_replied_responses++;
 
-                        if(finished_requests === 3)
+                        if(finished_not_replied_responses === not_replied_reponses)
                         {
-                          finished_friends_counter++;
+                          finished_requests++;
 
-                          if(finished_friends_counter === friends_length)
+                          if(finished_requests === 3)
                           {
-                            callback();
+                            finished_friends_counter++;
+
+                            if(finished_friends_counter === friends_length)
+                            {
+                              callback();
+                            }
                           }
                         }
+                      });
+                    }
+                  }
+                  else
+                  {
+                    finished_requests++;
+
+                    if(finished_requests === 3)
+                    {
+                      finished_friends_counter++;
+
+                      if(finished_friends_counter === friends_length)
+                      {
+                        callback();
                       }
-                    });
+                    }
                   }
                 }
                 else
                 {
-                  finished_requests++;
-
-                  if(finished_requests === 3)
-                  {
-                    finished_friends_counter++;
-
-                    if(finished_friends_counter === friends_length)
-                    {
-                      callback();
-                    }
-                  }
+                  console.log(response.error);
                 }
-              }
-              else
-              {
-                console.log(response.error);
-              }
+              });
+
             });
 
           });
@@ -790,22 +821,22 @@ export default Ember.Controller.extend({
 
 
 
-  newMeethubComments: function() {
+  // newMeethubComments: function() {
 
-    var newMeethubComments = [];
+  //   var newMeethubComments = [];
 
-    if(this.get('model.meethubComments.length') > 0)
-    {
-      var self = this;
+  //   if(this.get('model.meethubComments.length') > 0)
+  //   {
+  //     var self = this;
 
-      newMeethubComments = this.get('model.meethubComments').filter(function(comment) {
-        return comment.get('new_comment') === true && comment.get('author').get('id') !== self.get('model').get('id');
-      });
-    }
+  //     newMeethubComments = this.get('model.meethubComments').filter(function(comment) {
+  //       return comment.get('new_comment') === true && comment.get('author').get('id') !== self.get('model').get('id');
+  //     });
+  //   }
 
-    return newMeethubComments;
+  //   return newMeethubComments;
 
-  }.property('model.meethubComments.length'),
+  // }.property('model.meethubComments.length'),
 
 
   // newMeethubInfosCount: function() {

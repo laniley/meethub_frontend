@@ -13,17 +13,38 @@ export default DS.Model.extend({
   created_at: DS.attr(),
   updated_at: DS.attr(),
 
+  my_event_invitation: function() {
+
+    return DS.PromiseObject.create({
+
+      promise: this.get('eventInvitations').then(eventInvitations => {
+
+        return eventInvitations.filter(eventInvitation => {
+
+          return Ember.isEqual(eventInvitation.get('belongsToMe'), true);
+
+        }).get('firstObject');
+
+      })
+
+    });
+
+  }.property('eventInvitations.@each.belongsToMe'),
+
   newSinceLastLogin: function() {
 
     return DS.PromiseObject.create({
 
       promise: this.get('my_event_invitation').then(myEventInvitation => {
 
-        return myEventInvitation.get('message').then(message => {
+        if(!Ember.isEmpty(myEventInvitation))
+        {
+          return myEventInvitation.get('message').then(message => {
 
-          return !message.get('hasBeenRead');
+            return !message.get('hasBeenRead');
 
-        });
+          });
+        }
 
       })
 
@@ -31,35 +52,13 @@ export default DS.Model.extend({
 
   }.property('my_event_invitation.message.hasBeenRead'),
 
-  my_event_invitation: function() {
-
-    return DS.PromiseObject.create({
-
-      promise: this.get('eventInvitations').then(eventInvitations => {
-
-        return Ember.RSVP.filter(eventInvitations.toArray(), eventInvitation => {
-
-          return Ember.isEqual(eventInvitation.get('belongsToMe'), true);
-
-        }).then(myEventInvitations => {
-
-          return myEventInvitations.get('firstObject');
-
-        });
-
-      })
-
-    });
-
-  }.property('eventInvitations.length'),
-
   friend_event_invitations: function() {
 
     return DS.PromiseArray.create({
 
       promise: this.get('eventInvitations').then(eventInvitations => {
 
-        return Ember.RSVP.filter(eventInvitations.toArray(), eventInvitation => {
+        return eventInvitations.filter(eventInvitation => {
 
           return Ember.isEqual(eventInvitation.get('belongsToMe'), false);
 
@@ -69,7 +68,7 @@ export default DS.Model.extend({
 
     });
 
-  }.property('eventInvitations.length'),
+  }.property('eventInvitations.@each.belongsToMe'),
 
   // friend_event_invitations_updated_since_last_login: function() {
   //   return this.get('eventInvitations').filter(function(eventInv) {

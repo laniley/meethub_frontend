@@ -162,4 +162,8 @@
   &.declined {
     color: $orange;
   }
+
+  &.not_replied {
+    color: #adadad;
+  }
 }
