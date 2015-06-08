@@ -63,9 +63,12 @@
     background-color: #f5f5f5;
   }
 
-  .date, .social-point-counter, .new-flag {
-    float: left;
+  .date, .social-point-counter, .new-flag, .eventInv-status, .event-title {
     margin: 10px 10px 10px 0;
+  }
+
+  .date, .social-point-counter, .new-flag, .eventInv-status, .info-points, .event-title {
+    float: left;
   }
 
   .new-flag, .has-social-points {
@@ -73,8 +76,22 @@
     font-weight: bold;
   }
 
-  .date {
+  .date, .eventInv-status {
     margin-right: 20px;
+  }
+
+  .info-points, .event-title {
+    display: inline-block;
+  }
+
+  .event-title {
+    @media (max-width: $screen-xs-max) {
+      width: 100%;
+    }
+
+    // @media (min-width: $screen-sm-min) {
+    //   left: -25px;
+    // }
   }
 
   .social-point-counter {

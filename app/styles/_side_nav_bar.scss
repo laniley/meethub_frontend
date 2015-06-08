@@ -8,6 +8,10 @@
   max-width: 100%;
   border-left: 1px solid $border-color;
 
+  -webkit-box-shadow: -4px 0px 15px -5px rgba(0,0,0,0.75);
+  -moz-box-shadow: -4px 0px 15px -5px rgba(0,0,0,0.75);
+  box-shadow: -4px 0px 15px -5px rgba(0,0,0,0.75);
+
   @media (max-width: $screen-xs-max) {
     width: 100%;
   }
