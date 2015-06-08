@@ -8,66 +8,193 @@ export default DS.Model.extend({
   start_time: DS.attr('string'),
   start_date: DS.attr('string'),
   location: DS.belongsTo('location', { async: true }),
-  eventInvitations: DS.hasMany('eventInvitation', { async: true }),
+  eventInvitations: DS.hasMany('eventInvitation', { async: true, inverse: 'event' }),
 
   created_at: DS.attr(),
   updated_at: DS.attr(),
 
   newSinceLastLogin: function() {
 
-    if(this.get('my_event_invitation') && this.get('my_event_invitation').get('message').get('hasBeenRead'))
-    {
-      return false;
-    }
-    else
-    {
-      return true;
-    }
+    return DS.PromiseObject.create({
+
+      promise: this.get('my_event_invitation').then(myEventInvitation => {
+
+        return myEventInvitation.get('message').then(message => {
+
+          return !message.get('hasBeenRead');
+
+        });
+
+      })
+
+    });
 
   }.property('my_event_invitation.message.hasBeenRead'),
 
   my_event_invitation: function() {
-    var eventInvs = this.get('eventInvitations').filter(function(eventInv) {
-      return eventInv.get('invited_user').get('isMe') === true;
+
+    return DS.PromiseObject.create({
+
+      promise: this.get('eventInvitations').then(eventInvitations => {
+
+        return Ember.RSVP.filter(eventInvitations.toArray(), eventInvitation => {
+
+          return Ember.isEqual(eventInvitation.get('belongsToMe'), true);
+
+        }).then(myEventInvitations => {
+
+          return myEventInvitations.get('firstObject');
+
+        });
+
+      })
+
     });
 
-    return eventInvs.get('firstObject');
   }.property('eventInvitations.length'),
 
   friend_event_invitations: function() {
-    return this.get('eventInvitations').filter(function(eventInv) {
-      return eventInv.get('invited_user').get('isMe') === false;
+
+    return DS.PromiseArray.create({
+
+      promise: this.get('eventInvitations').then(eventInvitations => {
+
+        return Ember.RSVP.filter(eventInvitations.toArray(), eventInvitation => {
+
+          return Ember.isEqual(eventInvitation.get('belongsToMe'), false);
+
+        });
+
+      })
+
     });
+
   }.property('eventInvitations.length'),
 
-  friend_event_invitations_updated_since_last_login: function() {
-    return this.get('eventInvitations').filter(function(eventInv) {
-      return eventInv.get('invited_user').get('isMe') === false && eventInv.get('updatedSinceLastLogin') === true;
-    });
-  }.property('eventInvitations.length', 'eventInvitations.@each.updatedSinceLastLogin'),
+  // friend_event_invitations_updated_since_last_login: function() {
+  //   return this.get('eventInvitations').filter(function(eventInv) {
+  //     return eventInv.get('invited_user').get('isMe') === false && eventInv.get('updatedSinceLastLogin') === true;
+  //   });
+  // }.property('eventInvitations.length', 'eventInvitations.@each.updatedSinceLastLogin'),
 
   friend_event_invitations_attending: function() {
-    return this.get('friend_event_invitations').filterBy('status', 'attending');
+
+    return DS.PromiseArray.create({
+
+      promise: this.get('friend_event_invitations').then(eventInvitations => {
+
+        return Ember.RSVP.filter(eventInvitations.toArray(), eventInvitation => {
+
+          return Ember.isEqual(eventInvitation.get('status'), 'attending');
+
+        });
+
+      })
+
+    });
+
   }.property('friend_event_invitations.@each.status'),
 
   friend_event_invitations_attending_maybe: function() {
-    return this.get('friend_event_invitations').filterBy('status', 'maybe');
+
+    return DS.PromiseArray.create({
+
+      promise: this.get('friend_event_invitations').then(eventInvitations => {
+
+        return Ember.RSVP.filter(eventInvitations.toArray(), eventInvitation => {
+
+          return Ember.isEqual(eventInvitation.get('status'), 'maybe');
+
+        });
+
+      })
+
+    });
+
   }.property('friend_event_invitations.@each.status'),
 
   friend_event_invitations_declined: function() {
-    return this.get('friend_event_invitations').filterBy('status', 'declined');
+
+    return DS.PromiseArray.create({
+
+      promise: this.get('friend_event_invitations').then(eventInvitations => {
+
+        return Ember.RSVP.filter(eventInvitations.toArray(), eventInvitation => {
+
+          return Ember.isEqual(eventInvitation.get('status'), 'declined');
+
+        });
+
+      })
+
+    });
+
   }.property('friend_event_invitations.@each.status'),
 
   friends_attending: function() {
-    return this.get('friend_event_invitations_attending').mapBy('invited_user');
+
+    return DS.PromiseArray.create({
+
+      promise: this.get('friend_event_invitations_attending').then(eventInvitations => {
+
+        return Ember.RSVP.all(eventInvitations.map(eventInvitation => {
+
+          return eventInvitation.get('invited_user').then(invited_user => {
+
+            return invited_user;
+
+          });
+
+        }));
+
+      })
+
+    });
+
   }.property('friend_event_invitations_attending.length'),
 
   friends_attending_maybe: function() {
-    return this.get('friend_event_invitations_attending_maybe').mapBy('invited_user');
+
+    return DS.PromiseArray.create({
+
+      promise: this.get('friend_event_invitations_attending_maybe').then(eventInvitations => {
+
+        return Ember.RSVP.all(eventInvitations.map(eventInvitation => {
+
+          return eventInvitation.get('invited_user').then(invited_user => {
+
+            return invited_user;
+
+          });
+
+        }));
+
+      })
+
+    });
+
   }.property('friend_event_invitations_attending.length'),
 
   friends_declined: function() {
-    return this.get('friend_event_invitations_declined').mapBy('invited_user');
+
+    return DS.PromiseArray.create({
+
+      promise: this.get('friend_event_invitations_declined').then(eventInvitations => {
+
+        return Ember.RSVP.all(eventInvitations.map(eventInvitation => {
+
+          return eventInvitation.get('invited_user').then(invited_user => {
+
+            return invited_user;
+
+          });
+
+        }));
+
+      })
+
+    });
+
   }.property('friend_event_invitations_attending.length'),
 
   connected_friends_length: function() {

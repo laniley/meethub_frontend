@@ -96,16 +96,4 @@
 
   {{outlet}}
 
-  {{#if showSidebar}}
-    <div {{bind-attr class=":side-nav-bar isSidebarOpen:open:closed"}}>
-      {{!-- <div class="side-bar-links">
-        <div class="toggle-button" {{action "toggleSidebar"}}>{{unbound fa-icon "fa-reorder"}}</div>
-        {{outlet "side-nav-buttons"}}
-      </div> --}}
-      <div class="section-content">
-        {{outlet "side-nav-bar"}}
-      </div>
-    </div>
-  {{/if}}
-
 </div>

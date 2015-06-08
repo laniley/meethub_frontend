@@ -1,34 +1,46 @@
-{{!-- TITLE --}}
-<div class="section-title">
-  {{t "friend.title"}}
-</div>
-{{!-- FILTER --}}
-<div class="side-nav-item section-buttons">
-  {{!-- SEARCH --}}
-  <span {{bind-attr class=":section-button searchIsOpen:active"}} title={{t "friend.button.search"}} {{action "toggleSearch"}}>
-    {{unbound fa-icon "fa-search"}}
-  </span>
-</div>
-{{!-- LIST --}}
-<div class="side-nav-item-container">
-  {{!-- SEARCH --}}
-  <div {{bind-attr class=":side-nav-item :align-left searchIsOpen:open:do-not-display"}}>
-    <div class="search">
-      {{focused-input class="search-input" placeholder="Search..." value=search_term}}
+<div class="main-area">
+  <div {{bind-attr class=":main-container :container-fluid isSidebarOpen:open:closed"}}>
+
+    {{!-- TITLE --}}
+    <h1>{{t "friend.title"}}</h1>
+
+    {{!-- FILTER --}}
+    <div class="side-nav-item section-buttons">
+      {{!-- SEARCH --}}
+      <span {{bind-attr class=":section-button searchIsOpen:active"}} title={{t "friend.button.search"}} {{action "toggleSearch"}}>
+        {{unbound fa-icon "fa-search"}}
+      </span>
     </div>
-    <span {{bind-attr class=":side-nav-button :reset-search-button searchIsEmpty:do-not-display"}} {{action 'resetSearch'}} title={{t "meethub.button.cancel"}}>{{unbound fa-icon "fa-remove"}}</span>
-  </div>
-  <div class="side-nav-item">
-    <button class=" facebook-button" {{action "inviteFacebookFriends"}}>
-      {{unbound fa-icon "fa-facebook"}} | {{t "invite-friends-button"}}
-    </button>
-  </div>
-  {{#each friend in search_results}}
-    {{#link-to 'members-area.friends.calendar.list.friend' friend}}
-      <div class="side-nav-item selectable friend">
-        <div class="picture"><img {{bind-attr src=friend.picture }} /></div>
-        <div>{{friend.name}}</div>
+
+    {{!-- LIST --}}
+    <div class="side-nav-item-container">
+      {{!-- SEARCH --}}
+      <div {{bind-attr class=":side-nav-item :align-left searchIsOpen:open:do-not-display"}}>
+        <div class="search">
+          {{focused-input class="search-input" placeholder="Search..." value=search_term}}
+        </div>
+        <span {{bind-attr class=":side-nav-button :reset-search-button searchIsEmpty:do-not-display"}} {{action 'resetSearch'}} title={{t "meethub.button.cancel"}}>{{unbound fa-icon "fa-remove"}}</span>
       </div>
-    {{/link-to}}
-  {{/each}}
+      <div class="side-nav-item">
+        <button class=" facebook-button" {{action "inviteFacebookFriends"}}>
+          {{unbound fa-icon "fa-facebook"}} | {{t "invite-friends-button"}}
+        </button>
+      </div>
+      {{#each friend in search_results}}
+        {{#link-to 'members-area.friends.calendar.list.friend' friend}}
+          <div class="side-nav-item selectable friend">
+            <div class="picture"><img {{bind-attr src=friend.picture }} /></div>
+            <div>{{friend.name}}</div>
+          </div>
+        {{/link-to}}
+      {{/each}}
+    </div>
+
+  </div>
+</div>
+
+<div {{bind-attr class=":side-nav-bar isSidebarOpen:open:closed"}}>
+  <div class="section-content">
+    {{outlet}}
+  </div>
 </div>

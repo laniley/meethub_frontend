@@ -13,7 +13,10 @@ export default Ember.Controller.extend({
         function(authorization) {
           // FB.api is now available. authorization contains the UID and
           // accessToken.
-          console.log('SUCCESS: ' + authorization);
+          // console.log('SUCCESS: ', self.get('session').get('secure'));
+
+          Ember.$.cookie('user_id', self.get('session').get('secure.userId'));
+          Ember.$.cookie('accessToken', self.get('session').get('secure.accessToken'));
 
           self.controllerFor('members-area').set('FB', FB);
           self.controllerFor('members-area').set('hasFacebook', true);

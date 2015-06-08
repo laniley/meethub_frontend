@@ -3,8 +3,8 @@ import DS from 'ember-data';
 
 export default DS.Model.extend({
   fb_id: DS.attr('string'),
-  from_user: DS.belongsTo('user'),
-  to_user: DS.belongsTo('user'),
+  from_user: DS.belongsTo('user', { async: true }),
+  to_user: DS.belongsTo('user', { async: true }),
   subject: DS.attr('string'),
   text: DS.attr('string'),
   isOpen: DS.attr('boolean', {defaultValue: false}),

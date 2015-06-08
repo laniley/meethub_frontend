@@ -5,6 +5,7 @@ export default Ember.Controller.extend({
   needs: ['members-area'],
   membersArea_controller: Ember.computed.alias("controllers.members-area"),
 
+  isSidebarOpen: false,
   searchIsOpen: false,
 
   search_term: '',

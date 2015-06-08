@@ -1,9 +1,16 @@
+import Ember from 'ember';
 import ENV from '../config/environment';
 import AuthenticateRoute from './authenticate';
 
 export default AuthenticateRoute.extend({
 
-  setupController: function(controller) {
+  model: function() {
+    var userArray = this.store.find('user', { 'fb_id': Ember.$.cookie('user_id') });
+    return userArray.get('firstObject');
+  },
+
+  setupController: function(controller, model) {
+    controller.set('model', model);
     this.initFB(controller);
   },
 
@@ -14,10 +21,12 @@ export default AuthenticateRoute.extend({
     {
       console.log("FB ready");
 
-      controller.getUserInfosFromFB();
+      self.getUserInfosFromFB(controller);
     }
     else
     {
+      // console.log('SUCCESS: ', self.get('session').get('secure'));
+
       console.log("FB not ready - initialising...");
 
       window.fbAsyncInit = function() {
@@ -47,17 +56,17 @@ export default AuthenticateRoute.extend({
 
         controller.get('FB').getLoginStatus(function(response) {
 
-            console.log("FB response status: ", response.status);
+          console.log("FB response status: ", response.status);
 
-            if(response.status === "connected")
-            {
-              self.getUserInfosFromFB(controller);
-            }
-            else
-            {
-              self.get('session').invalidate();
-              self.transitionTo('login');
-            }
+          if(response.status === "connected")
+          {
+            self.getUserInfosFromFB(controller);
+          }
+          else
+          {
+            self.get('session').invalidate();
+            self.transitionTo('login');
+          }
 
         });
 

@@ -1,11 +1,11 @@
 import DS from 'ember-data';
 
 export default DS.Model.extend({
-  me: DS.belongsTo('user', { async: true }),
   event: DS.belongsTo('event', { async: true }),
   invited_user: DS.belongsTo('user', { async: true }),
   message: DS.belongsTo('message', { async: true }),
   status: DS.attr('string'),
+  belongsToMe: DS.attr('boolean', { defaultValue: false}),
 
   created_at: DS.attr(),
   updated_at: DS.attr(),

@@ -1,7 +1,10 @@
 <div class="main-area">
   <div {{bind-attr class=":main-container :container-fluid isSidebarOpen:open:closed"}}>
 
+    {{!-- TITLE --}}
     <h1>{{t 'calendar'}}</h1>
+
+    {{!-- LIST --}}
     <div class="container-fluid main-area-list">
       {{#each event in sortedEvents}}
         {{#link-to 'members-area.events.event' event}}

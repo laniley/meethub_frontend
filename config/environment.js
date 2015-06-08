@@ -33,7 +33,9 @@ module.exports = function(environment) {
     }
   };
 
+
   ENV['simple-auth'] = {
+      authorizer: 'authorizer:custom',
       routeAfterAuthentication: 'members-area',
       routeIfAlreadyAuthenticated: 'members-area',
       store: 'simple-auth-session-store:local-storage'
