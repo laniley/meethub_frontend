@@ -4,4 +4,41 @@
 .main-area-list-item {
   padding: 5px 0;
   border-top: 1px solid $border-color;
+
+  .filter-button {
+    padding: 5px;
+    display: inline-block;
+
+    &:hover {
+      cursor: pointer;
+      color: #000;
+    }
+  }
+
+  .search {
+    width: 100%;
+    float: left;
+
+    input {
+      width: 100%;
+      padding: 3px;
+      margin: 10px 0;
+    }
+  }
+
+  .reset-search-button {
+    position: absolute;
+    display: inline-block;
+    margin-top: 15px;
+    right: 5px;
+
+    &:hover {
+      cursor: pointer;
+      color: #000;
+    }
+
+    &.do-not-display {
+      display: none;
+    }
+  }
 }

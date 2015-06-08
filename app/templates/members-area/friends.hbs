@@ -4,33 +4,46 @@
     {{!-- TITLE --}}
     <h1>{{t "friend.title"}}</h1>
 
-    {{!-- FILTER --}}
-    <div class="side-nav-item section-buttons">
-      {{!-- SEARCH --}}
-      <span {{bind-attr class=":section-button searchIsOpen:active"}} title={{t "friend.button.search"}} {{action "toggleSearch"}}>
-        {{unbound fa-icon "fa-search"}}
-      </span>
-    </div>
-
     {{!-- LIST --}}
-    <div class="side-nav-item-container">
+    <div class="container-fluid main-area-list">
+
       {{!-- SEARCH --}}
-      <div {{bind-attr class=":side-nav-item :align-left searchIsOpen:open:do-not-display"}}>
-        <div class="search">
-          {{focused-input class="search-input" placeholder="Search..." value=search_term}}
+      <div {{bind-attr class=":row :main-area-list-item :open"}}>
+        <div class="col-xs-0 col-md-2 col-lg-4"></div>
+        <div class="col-xs-12 col-md-8 col-lg-4 no-padding">
+          <div class="search no-padding align-left">
+            {{focused-input class="search-input" placeholder="Search..." value=search_term}}
+          </div>
+          <div {{bind-attr class=" :reset-search-button searchIsEmpty:do-not-display"}} {{action 'resetSearch'}} title={{t "meethub.button.cancel"}}>
+            {{unbound fa-icon "fa-remove"}}
+          </div>
         </div>
-        <span {{bind-attr class=":side-nav-button :reset-search-button searchIsEmpty:do-not-display"}} {{action 'resetSearch'}} title={{t "meethub.button.cancel"}}>{{unbound fa-icon "fa-remove"}}</span>
+        <div class="col-xs-0 col-md-2 col-lg-4"></div>
       </div>
-      <div class="side-nav-item">
-        <button class=" facebook-button" {{action "inviteFacebookFriends"}}>
-          {{unbound fa-icon "fa-facebook"}} | {{t "invite-friends-button"}}
-        </button>
+
+      <div {{bind-attr class=":row :main-area-list-item :invite-fb-friends"}}>
+        <div class="col-xs-0 col-md-2 col-lg-4"></div>
+        <div class="col-xs-12 col-md-8 col-lg-4 no-padding align-left">
+          <button class="facebook-button" {{action "inviteFacebookFriends"}}>
+            {{unbound fa-icon "fa-facebook"}} | {{t "invite-friends-button"}}
+          </button>
+        </div>
+        <div class="col-xs-0 col-md-2 col-lg-4"></div>
       </div>
+
       {{#each friend in search_results}}
         {{#link-to 'members-area.friends.calendar.list.friend' friend}}
-          <div class="side-nav-item selectable friend">
-            <div class="picture"><img {{bind-attr src=friend.picture }} /></div>
-            <div>{{friend.name}}</div>
+          <div {{bind-attr class=":row :main-area-list-item :friends-list-row :no-padding"}}>
+
+            <div class="col-xs-0 col-md-2 col-lg-4"></div>
+
+            <div class="col-xs-12 col-md-8 col-lg-4 no-padding align-left friend">
+              <div class="picture"><img {{bind-attr src=friend.picture }} /></div>
+              <div class="name">{{friend.name}}</div>
+            </div>
+
+            <div class="col-xs-0 col-md-2 col-lg-4"></div>
+
           </div>
         {{/link-to}}
       {{/each}}
