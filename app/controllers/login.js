@@ -8,18 +8,18 @@ export default Ember.Controller.extend({
     login: function()
     {
       var self = this;
-      // this.get('session').open('facebook-oauth2').then(
+
       this.get('session').authenticate('simple-auth-authenticator:torii', 'facebook-connect').then(
-        function(authorization) {
+        function() {
           // FB.api is now available. authorization contains the UID and
           // accessToken.
           // console.log('SUCCESS: ', self.get('session').get('secure'));
 
-          Ember.$.cookie('user_id', self.get('session').get('secure.userId'));
-          Ember.$.cookie('accessToken', self.get('session').get('secure.accessToken'));
+          // Ember.$.cookie('user_id', self.get('session').get('secure.userId'));
+          // Ember.$.cookie('accessToken', self.get('session').get('secure.accessToken'));
 
-          self.controllerFor('members-area').set('FB', FB);
-          self.controllerFor('members-area').set('hasFacebook', true);
+          // self.controllerFor('members-area').set('FB', FB);
+          // self.controllerFor('members-area').set('hasFacebook', true);
         },
         function(error) {
           console.error(error.stack);

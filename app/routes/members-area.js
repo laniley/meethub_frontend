@@ -4,17 +4,18 @@ import AuthenticateRoute from './authenticate';
 
 export default AuthenticateRoute.extend({
 
-  model: function() {
-    var userArray = this.store.find('user', { 'fb_id': Ember.$.cookie('user_id') });
-    return userArray.get('firstObject');
-  },
+  // model: function() {
+  //   var userArray = this.store.find('user', { 'fb_id': Ember.$.cookie('user_id') });
+  //   return userArray.get('firstObject');
+  // },
 
-  setupController: function(controller, model) {
-    controller.set('model', model);
+  setupController: function(controller) {
+    // controller.set('model', model);
     this.initFB(controller);
   },
 
   initFB: function(controller) {
+
     var self = this;
 
     if(controller.get('hasFacebook'))
@@ -25,52 +26,62 @@ export default AuthenticateRoute.extend({
     }
     else
     {
-      // console.log('SUCCESS: ', self.get('session').get('secure'));
-
       console.log("FB not ready - initialising...");
 
-      window.fbAsyncInit = function() {
+      this.get('session').restore('simple-auth-authenticator:torii', 'facebook-connect').then(
+        function() {
 
-        (function(d, s, id) {
-          var js, fjs = d.getElementsByTagName(s)[0];
-          if (d.getElementById(id))
-          {
-            return;
-          }
-          js = d.createElement(s); js.id = id;
-          js.src = "//connect.facebook.net/en_US/sdk.js";
-          fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
+          console.log("SESSION", self.get('session').get('content'));
+          console.log("SESSION", self.get('session').get('store'));
 
-        FB.init({
-          appId      : ENV.fb_app_id,
-          cookie     : true,  // enable cookies to allow the server to access the session
-          xfbml      : true,  // parse social plugins on this page
-          version    : 'v2.2' // use version 2.2
-        });
+          // window.fbAsyncInit = function() {
 
-        controller.set('hasFacebook', true);
-        controller.set('FB', FB);
+          //   (function(d, s, id) {
+          //     var js, fjs = d.getElementsByTagName(s)[0];
+          //     if (d.getElementById(id))
+          //     {
+          //       return;
+          //     }
+          //     js = d.createElement(s); js.id = id;
+          //     js.src = "//connect.facebook.net/en_US/sdk.js";
+          //     fjs.parentNode.insertBefore(js, fjs);
+          //   }(document, 'script', 'facebook-jssdk'));
 
-        console.log('FB initialised');
+          //   FB.init({
+          //     appId      : ENV.fb_app_id,
+          //     cookie     : true,  // enable cookies to allow the server to access the session
+          //     xfbml      : true,  // parse social plugins on this page
+          //     version    : 'v2.2' // use version 2.2
+          //   });
 
-        controller.get('FB').getLoginStatus(function(response) {
+          //   controller.set('hasFacebook', true);
+          //   controller.set('FB', FB);
 
-          console.log("FB response status: ", response.status);
+          //   console.log('FB initialised');
 
-          if(response.status === "connected")
-          {
-            self.getUserInfosFromFB(controller);
-          }
-          else
-          {
-            self.get('session').invalidate();
-            self.transitionTo('login');
-          }
+          //   controller.get('FB').getLoginStatus(function(response) {
 
-        });
+          //     console.log("FB response status: ", response.status);
 
-      };
+          //     if(response.status === "connected")
+          //     {
+          //       self.getUserInfosFromFB(controller);
+          //     }
+          //     else
+          //     {
+          //       self.get('session').invalidate();
+          //       self.transitionTo('login');
+          //     }
+
+          //   });
+
+          // };
+        },
+        function(error) {
+          console.error(error.stack);
+        }
+      );
+
     }
   },
 
