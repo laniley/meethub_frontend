@@ -2,7 +2,7 @@ import Ember from 'ember';
 import DS from 'ember-data';
 
 export default DS.Model.extend({
-  me: DS.belongsTo('user'),
+
   fb_id: DS.attr('string'),
   name: DS.attr('string'),
   description: DS.attr('string'),
@@ -24,7 +24,7 @@ export default DS.Model.extend({
 
           return Ember.isEqual(eventInvitation.get('belongsToMe'), true);
 
-        }).get('firstObject');
+        }).get("firstObject");
 
       })
 

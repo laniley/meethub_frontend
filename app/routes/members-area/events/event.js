@@ -10,10 +10,13 @@ export default AuthenticateRoute.extend({
     controller.set('model', model);
 
     model.get('my_event_invitation').then(myEventInvitation => {
-      myEventInvitation.get('message').then(message => {
-        message.set('hasBeenRead', true);
-        message.save();
-      });
+      if(myEventInvitation)
+      {
+        myEventInvitation.get('message').then(message => {
+          message.set('hasBeenRead', true);
+          message.save();
+        });
+      }
     });
 
     this.controllerFor('members-area.events').set('isSidebarOpen', true);

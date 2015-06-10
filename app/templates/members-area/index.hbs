@@ -46,9 +46,9 @@
         </div>
         <div class="col-centered">
           {{#link-to 'members-area.friends.index' (query-params show_new=true)}}
-            <div {{bind-attr class=":summary-item hasUnseenNewFriends:highlight"}} title={{t "friend.new"}}>
-              {{#if hasUnseenNewFriends}}
-                <div {{bind-attr class=":section-icon hasUnseenNewFriends:has-unread-messages"}}>
+            <div {{bind-attr class=":summary-item hasUnseenNewFriendships:highlight"}} title={{t "friend.new"}}>
+              {{#if hasUnseenNewFriendships}}
+                <div {{bind-attr class=":section-icon hasUnseenNewFriendships:has-unread-messages"}}>
                   {{unbound fa-icon "fa-group"}}
                 </div>
               {{else}}
@@ -57,7 +57,7 @@
                 </div>
               {{/if}}
               <div class="type">{{unbound fa-icon "fa-plus"}}</div>
-              <div class="number">{{number_of_unseen_new_friends}}</div>
+              <div class="number">{{number_of_unseen_new_friendships}}</div>
             </div>
           {{/link-to}}
         </div>

@@ -64,6 +64,10 @@ export default Ember.Controller.extend({
     return this.get('membersArea_controller').get('hasNewMeethubComments');
   }.property('membersArea_controller.hasNewMeethubComments'),
 
+  hasUnseenNewFriendships: function() {
+    return this.get('membersArea_controller').get('hasUnseenNewFriendships');
+  }.property('membersArea_controller.hasUnseenNewFriendships'),
+
   hasSocialPointUpdates: function() {
 
     if(this.get('socialPointUpdates') > 0)
@@ -88,6 +92,10 @@ export default Ember.Controller.extend({
 
   number_of_new_event_invitations: function() {
     return this.get('membersArea_controller.number_of_new_event_invitations');
-  }.property('membersArea_controller.number_of_new_event_invitations')
+  }.property('membersArea_controller.number_of_new_event_invitations'),
+
+  number_of_unseen_new_friendships: function() {
+    return this.get('membersArea_controller.number_of_unseen_new_friendships');
+  }.property('membersArea_controller.number_of_unseen_new_friendships')
 
 });

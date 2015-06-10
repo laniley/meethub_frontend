@@ -37,8 +37,8 @@ export default Ember.Controller.extend({
 
   syncWithFB: function() {
     this.set('isSyncing', true);
-    this.set('userEventsSynced', false);
-    this.set('friendsSynced', false);
+    this.set('userEventsSynced', true);
+    this.set('friendsSynced', true);
 
     var self = this;
 
@@ -62,6 +62,8 @@ export default Ember.Controller.extend({
   },
 
   getFriendsFromFB: function(callback) {
+
+    this.set('friendsSynced', false);
 
     var self = this;
 
@@ -177,6 +179,9 @@ export default Ember.Controller.extend({
   },
 
   loadUserEventsFromFB: function (callback) {
+
+    this.set('userEventsSynced', false);
+
     var self = this;
 
     if(this.get('FB') != null)
@@ -520,7 +525,7 @@ export default Ember.Controller.extend({
       }
       else
       {
-        console.log('friends ready');
+        console.log('no friendships');
       }
 
     });
@@ -629,7 +634,7 @@ export default Ember.Controller.extend({
     // und es wurde noch kein request ans backend abgesetzt
     if(Ember.isEmpty(filtered_events) && this.get('pendingFBEventRequests').indexOf(response.id) === -1)
     {
-      console.log('event not yet in store', response.name);
+      // console.log('event not yet in store', response.name);
 
       this.get('pendingFBEventRequests').push(response.id);
 
@@ -640,7 +645,8 @@ export default Ember.Controller.extend({
         // event not already in the DB, create it
         if(Ember.isEmpty(event))
         {
-          console.log('event not yet in DB - create new', response.name);
+          // console.log('event not yet in DB - create new', response.name);
+
           var date_time_arr = response.start_time.split('T');
           var date_time = '';
           var date_day = '';
@@ -677,7 +683,7 @@ export default Ember.Controller.extend({
         // event already in the DB
         else
         {
-          console.log('event in DB', response.name);
+          // console.log('event in DB', response.name);
 
           event.set('me', self.get('model'));
 
@@ -691,7 +697,7 @@ export default Ember.Controller.extend({
     // aber es wurde bereits ein request ans backend abgesetzt
     else if(Ember.isEmpty(filtered_events) && this.get('pendingFBEventRequests').indexOf(response.id) !== -1)
     {
-      console.log('event request pending', response.name);
+      // console.log('event request pending', response.name);
 
       setTimeout
       (
@@ -706,7 +712,7 @@ export default Ember.Controller.extend({
     // event befindet sich im store
     else
     {
-      console.log('event in store already', response.name);
+      // console.log('event in store already', response.name);
 
       event = filtered_events.get('firstObject');
 
@@ -769,12 +775,21 @@ export default Ember.Controller.extend({
           });
 
           message.save().then(function(message) {
+
+            var belongsToMe = false;
+
+            if(user_fb_id === "me")
+            {
+              belongsToMe = true;
+            }
+
             var eventInvitation = self.store.createRecord('eventInvitation', {
               me: self.get('model'),
               event: event,
               invited_user: friend,
               status: status,
-              message: message
+              message: message,
+              belongsToMe: belongsToMe
             });
 
             eventInvitation.save().then(function(eventInvitation) {
@@ -794,12 +809,20 @@ export default Ember.Controller.extend({
 
         message.save().then(function(message) {
 
+          var belongsToMe = false;
+
+          if(user_fb_id === "me")
+          {
+            belongsToMe = true;
+          }
+
           var eventInvitation = self.store.createRecord('eventInvitation', {
             me: self.get('model'),
             event: event,
             invited_user: self.get('model'),
             status: status,
-            message: message
+            message: message,
+            belongsToMe: belongsToMe
           });
 
           eventInvitation.save().then(function(eventInvitation) {
@@ -871,6 +894,21 @@ export default Ember.Controller.extend({
     return unreadMessages;
   }.property('model.messages.@each.hasBeenRead'),
 
+  unseenNewFriendships: function() {
+    var unseenNewFriendships = [];
+
+    if(this.get('model.friendships.length') > 0)
+    {
+      unseenNewFriendships = this.get('model.friendships').filter(function(friendship) {
+        return friendship.get('has_been_seen') === false;
+      });
+    }
+
+    return unseenNewFriendships;
+  }.property('model.friendships.@each.has_been_seen'),
+
+
+
 
 
   hasUnreadMessages: function() {
@@ -912,9 +950,9 @@ export default Ember.Controller.extend({
 
   }.property('number_of_new_event_invitations'),
 
-  hasNewMeethubComments: function() {
+  hasUnseenNewFriendships: function() {
 
-    if(this.get('newMeethubComments').get('length') > 0)
+    if(this.get('number_of_unseen_new_friendships') > 0)
     {
       return true;
     }
@@ -923,39 +961,52 @@ export default Ember.Controller.extend({
       return false;
     }
 
-  }.property('newMeethubComments.length'),
+  }.property('number_of_unseen_new_friendships'),
+
+  // hasNewMeethubComments: function() {
+
+  //   if(this.get('newMeethubComments').get('length') > 0)
+  //   {
+  //     return true;
+  //   }
+  //   else
+  //   {
+  //     return false;
+  //   }
+
+  // }.property('newMeethubComments.length'),
 
 
 
-  number_of_new_meethub_comments: function() {
+  // number_of_new_meethub_comments: function() {
 
-    return this.get('newMeethubComments').get('length');
+  //   return this.get('newMeethubComments').get('length');
 
-  }.property('newMeethubComments.length'),
+  // }.property('newMeethubComments.length'),
 
-  number_of_new_meethub_invitations: function() {
+  // number_of_new_meethub_invitations: function() {
 
-    var unreadMessages = [];
+  //   var unreadMessages = [];
 
-    if(this.get('model.messages.length') > 0)
-    {
-      unreadMessages = this.get('model.messages').filter(function(message) {
-        return message.get('hasBeenRead') === false;
-      });
-    }
+  //   if(this.get('model.messages.length') > 0)
+  //   {
+  //     unreadMessages = this.get('model.messages').filter(function(message) {
+  //       return message.get('hasBeenRead') === false;
+  //     });
+  //   }
 
-    var unreadMeethubInvitations = [];
+  //   var unreadMeethubInvitations = [];
 
-    if(unreadMessages.get('length') > 0)
-    {
-      unreadMeethubInvitations = unreadMessages.filter(function(message) {
-        return message.get('isMeethubInvitation') === true;
-      });
-    }
+  //   if(unreadMessages.get('length') > 0)
+  //   {
+  //     unreadMeethubInvitations = unreadMessages.filter(function(message) {
+  //       return message.get('isMeethubInvitation') === true;
+  //     });
+  //   }
 
-    return unreadMeethubInvitations.get('length');
+  //   return unreadMeethubInvitations.get('length');
 
-  }.property('model.messages.@each.hasBeenRead', 'model.messages.@each.isMeethubInvitation'),
+  // }.property('model.messages.@each.hasBeenRead', 'model.messages.@each.isMeethubInvitation'),
 
   number_of_new_event_invitations: function() {
 
@@ -980,6 +1031,12 @@ export default Ember.Controller.extend({
     return unreadEventInvitations.get('length');
 
   }.property('model.messages.@each.hasBeenRead', 'model.messages.@each.isEventInvitation'),
+
+  number_of_unseen_new_friendships: function() {
+
+    return this.get('unseenNewFriendships').get('length');
+
+  }.property('unseenNewFriendships.length'),
 
 
 

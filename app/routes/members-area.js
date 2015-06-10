@@ -35,18 +35,18 @@ export default AuthenticateRoute.extend({
 
           new Ember.RSVP.Promise(function(resolve, reject){
 
-            window.fbAsyncInit = function(){
-              FB.init({
-                appId      : ENV.fb_app_id,
-                cookie     : true,  // enable cookies to allow the server to access the session
-                xfbml      : true,  // parse social plugins on this page
-                version    : 'v2.2' // use version 2.2
-              });
+              window.fbAsyncInit = function(){
+                FB.init({
+                  appId      : ENV.fb_app_id,
+                  cookie     : true,  // enable cookies to allow the server to access the session
+                  xfbml      : true,  // parse social plugins on this page
+                  version    : 'v2.2' // use version 2.2
+                });
 
-              Ember.run(null, resolve);
-            };
+                Ember.run(null, resolve);
+              };
 
-            $.getScript('//connect.facebook.net/en_US/sdk.js');
+              $.getScript('//connect.facebook.net/en_US/sdk.js');
 
           }).then(function(){
 

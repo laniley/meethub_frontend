@@ -14,7 +14,7 @@ export default DS.Model.extend({
   friendships: DS.hasMany('friendship', { async: true, inverse: 'user' }),
   meethubInvitations: DS.hasMany('meethub-invitation', { async: true }),
   meethubComments: DS.hasMany('meethub-comment', { async: true, inverse: 'user' }),
-  eventInvitations: DS.hasMany('event-invitations', { asnyc: true, inverse: 'invited_user'}),
+  eventInvitations: DS.hasMany('event-invitation', { asnyc: true, inverse: 'invited_user'}),
   messages: DS.hasMany('message', { async: true, inverse: 'to_user' }),
 
   created_at: DS.attr(),
