@@ -15,11 +15,11 @@ export default Ember.Controller.extend({
           // accessToken.
           // console.log('SUCCESS: ', self.get('session').get('secure'));
 
-          // Ember.$.cookie('user_id', self.get('session').get('secure.userId'));
+          Ember.$.cookie('user_id', self.get('session').get('secure.userId'));
           // Ember.$.cookie('accessToken', self.get('session').get('secure.accessToken'));
 
-          // self.controllerFor('members-area').set('FB', FB);
-          // self.controllerFor('members-area').set('hasFacebook', true);
+          self.controllerFor('members-area').set('FB', FB);
+          self.controllerFor('members-area').set('hasFacebook', true);
         },
         function(error) {
           console.error(error.stack);

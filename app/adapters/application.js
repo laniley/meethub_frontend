@@ -5,6 +5,6 @@ import ENV from '../config/environment';
 export default DS.RESTAdapter.extend({
   host: ENV.backend_url,
   headers: {
-    'user_id': self.get('session').get('secure.userId')
+    'user_id': Ember.$.cookie('user_id')
   }
 });

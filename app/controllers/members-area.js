@@ -819,7 +819,10 @@ export default Ember.Controller.extend({
     });
   },
 
-
+  logout: function() {
+    this.get('session').invalidate();
+    this.transitionTo('login');
+  },
 
   // newMeethubComments: function() {
 
