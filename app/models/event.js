@@ -24,8 +24,10 @@ export default DS.Model.extend({
 
           return Ember.isEqual(eventInvitation.get('belongsToMe'), true);
 
-        }).get("firstObject");
+        });
 
+      }).then(eventInvs => {
+        return eventInvs.get("firstObject");
       })
 
     });
@@ -42,7 +44,7 @@ export default DS.Model.extend({
         {
           return myEventInvitation.get('message').then(message => {
 
-            return !message.get('hasBeenRead');
+            return !Ember.isEmpty(message) && !message.get('hasBeenRead');
 
           });
         }

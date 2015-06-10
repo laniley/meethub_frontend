@@ -13,8 +13,11 @@ export default AuthenticateRoute.extend({
       if(myEventInvitation)
       {
         myEventInvitation.get('message').then(message => {
-          message.set('hasBeenRead', true);
-          message.save();
+          if(message)
+          {
+            message.set('hasBeenRead', true);
+            message.save();
+          }
         });
       }
     });
