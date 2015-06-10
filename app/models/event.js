@@ -22,7 +22,7 @@ export default DS.Model.extend({
 
         return eventInvitations.filter(eventInvitation => {
 
-          return Ember.isEqual(eventInvitation.get('belongsToMe'), true);
+          return !Ember.isEmpty(eventInvitation) && Ember.isEqual(eventInvitation.get('belongsToMe'), true);
 
         });
 
