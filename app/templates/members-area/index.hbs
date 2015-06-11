@@ -1,98 +1,101 @@
 <div class="main-area">
   <div class="container-fluid welcome-container">
 
-      <div class="row dashboard-title">
-        <span class="current-section">Meethub</span>
-      </div>
+    {{!-- TITLE --}}
+    <h1>Meethub</h1>
 
-      {{#if isSyncing}}
-        <div class="row greeting">
-          <div class="fb-sync-icon is-syncing">
-            <span class="fa-stack fa-2x">
-              {{unbound fa-icon "fa-refresh fa-spin fa-stack-2x fa-3x"}}
-              {{unbound fa-icon "fa-facebook-square fa-stack-1x"}}
-            </span>
+    {{!-- <div class="row dashboard-title">
+      <span class="current-section">Meethub</span>
+    </div> --}}
+
+    {{#if isSyncing}}
+      <div class="row greeting">
+        <div class="fb-sync-icon is-syncing">
+          <span class="fa-stack fa-2x">
+            {{unbound fa-icon "fa-refresh fa-spin fa-stack-2x fa-3x"}}
+            {{unbound fa-icon "fa-facebook-square fa-stack-1x"}}
+          </span>
+        </div>
+        <div class="fb-sync-text"><h3>Syncing your friends and events with facebook.<br />Please wait...</h3></div>
+      </div>
+    {{/if}}
+
+    <div class="row dashboard row-centered">
+      {{!-- <div class="col-centered">
+        {{#link-to 'members-area.messages' (query-params meethub_inv=true event_inv=false)}}
+          <div {{bind-attr class=":summary-item hasUnreadMeethubInvitations:highlight"}} title={{t "welcome.meethub-invitations"}}>
+            {{#if hasUnreadMeethubInvitations}}
+              <div {{bind-attr class=":section-icon hasUnreadMeethubInvitations:has-unread-messages"}}>{{unbound fa-icon "fa-envelope"}}</div>
+            {{else}}
+              <div class="section-icon">{{unbound fa-icon "fa-envelope-o"}}</div>
+            {{/if}}
+            <div class="type">{{unbound fa-icon "fa-share-alt"}}</div>
+            <div class="number">{{number_of_new_meethub_invitations}}</div>
           </div>
-          <div class="fb-sync-text"><h3>Syncing your friends and events with facebook.<br />Please wait...</h3></div>
-        </div>
-      {{/if}}
-
-      <div class="row messages row-centered">
-        {{!-- <div class="col-centered">
-          {{#link-to 'members-area.messages' (query-params meethub_inv=true event_inv=false)}}
-            <div {{bind-attr class=":summary-item hasUnreadMeethubInvitations:highlight"}} title={{t "welcome.meethub-invitations"}}>
-              {{#if hasUnreadMeethubInvitations}}
-                <div {{bind-attr class=":section-icon hasUnreadMeethubInvitations:has-unread-messages"}}>{{unbound fa-icon "fa-envelope"}}</div>
-              {{else}}
-                <div class="section-icon">{{unbound fa-icon "fa-envelope-o"}}</div>
-              {{/if}}
-              <div class="type">{{unbound fa-icon "fa-share-alt"}}</div>
-              <div class="number">{{number_of_new_meethub_invitations}}</div>
-            </div>
-          {{/link-to}}
-        </div> --}}
-        <div class="col-centered">
-          {{#link-to 'members-area.events'}}
-            <div {{bind-attr class=":summary-item hasUnreadEventInvitations:highlight"}} title={{t "welcome.event-invitations"}}>
-              {{#if hasUnreadEventInvitations}}
-                <div {{bind-attr class=":section-icon hasUnreadEventInvitations:has-unread-messages"}}>{{unbound fa-icon "fa-calendar"}}</div>
-              {{else}}
-                <div class="section-icon">{{unbound fa-icon "fa-calendar"}}</div>
-              {{/if}}
-              <div class="type">{{unbound fa-icon "fa-plus"}}</div>
-              <div class="number">{{number_of_new_event_invitations}}</div>
-            </div>
-          {{/link-to}}
-        </div>
-        <div class="col-centered">
-          {{#link-to 'members-area.friends.index' (query-params show_new=true)}}
-            <div {{bind-attr class=":summary-item hasUnseenNewFriendships:highlight"}} title={{t "friend.new"}}>
-              {{#if hasUnseenNewFriendships}}
-                <div {{bind-attr class=":section-icon hasUnseenNewFriendships:has-unread-messages"}}>
-                  {{unbound fa-icon "fa-group"}}
-                </div>
-              {{else}}
-                <div class="section-icon">
-                  {{unbound fa-icon "fa-group"}}
-                </div>
-              {{/if}}
-              <div class="type">{{unbound fa-icon "fa-plus"}}</div>
-              <div class="number">{{number_of_unseen_new_friendships}}</div>
-            </div>
-          {{/link-to}}
-        </div>
-      </div>
-
-      {{!-- <div class="row meethubs row-centered">
-        <div class="col-centered">
-          {{#link-to 'members-area.meethubs.comments'}}
-            <div {{bind-attr class=":summary-item hasNewMeethubComments:highlight"}} title={{t "welcome.meethub-comments"}}>
-              {{#if hasNewMeethubComments}}
-                <div {{bind-attr class=":section-icon hasNewMeethubComments:has-unread-messages"}}>{{unbound fa-icon "fa-list"}}</div>
-              {{else}}
-                <div class="section-icon">{{unbound fa-icon "fa-list"}}</div>
-              {{/if}}
-              <div class="type">{{unbound fa-icon "fa-share-alt"}}</div>
-              <div class="number">{{number_of_new_meethub_comments}}</div>
-            </div>
-          {{/link-to}}
-        </div>
-        <div class="col-centered">
-          {{#link-to 'members-area.meethubs.calendar.list'}}
-            <div {{bind-attr class=":summary-item hasSocialPointUpdates:highlight"}} title={{t "welcome.meethub-event-infos"}}>
-              {{#if hasSocialPointUpdates}}
-                <div {{bind-attr class=":section-icon hasSocialPointUpdates:has-unread-messages"}}>{{unbound fa-icon "fa-calendar"}}</div>
-                <div class="type">{{unbound fa-icon "fa-certificate"}}</div>
-                <div class="number">{{socialPointUpdates}}</div>
-              {{else}}
-                <div class="section-icon">{{unbound fa-icon "fa-calendar"}}</div>
-                <div class="type">{{unbound fa-icon "fa-certificate"}}</div>
-                <div class="number">0</div>
-              {{/if}}
-            </div>
-          {{/link-to}}
-        </div>
+        {{/link-to}}
       </div> --}}
+      <div class="col-centered">
+        {{#link-to 'members-area.events'}}
+          <div {{bind-attr class=":summary-item hasUnreadEventInvitations:highlight"}} title={{t "welcome.event-invitations"}}>
+            {{#if hasUnreadEventInvitations}}
+              <div {{bind-attr class=":section-icon hasUnreadEventInvitations:has-unread-messages"}}>{{unbound fa-icon "fa-calendar"}}</div>
+            {{else}}
+              <div class="section-icon">{{unbound fa-icon "fa-calendar"}}</div>
+            {{/if}}
+            <div class="type">{{unbound fa-icon "fa-plus"}}</div>
+            <div class="number">{{number_of_new_event_invitations}}</div>
+          </div>
+        {{/link-to}}
+      </div>
+      <div class="col-centered">
+        {{#link-to 'members-area.friends.index' (query-params show_new=true)}}
+          <div {{bind-attr class=":summary-item hasUnseenNewFriendships:highlight"}} title={{t "friend.new"}}>
+            {{#if hasUnseenNewFriendships}}
+              <div {{bind-attr class=":section-icon hasUnseenNewFriendships:has-unread-messages"}}>
+                {{unbound fa-icon "fa-group"}}
+              </div>
+            {{else}}
+              <div class="section-icon">
+                {{unbound fa-icon "fa-group"}}
+              </div>
+            {{/if}}
+            <div class="type">{{unbound fa-icon "fa-plus"}}</div>
+            <div class="number">{{number_of_unseen_new_friendships}}</div>
+          </div>
+        {{/link-to}}
+      </div>
+    </div>
+
+    {{!-- <div class="row meethubs row-centered">
+      <div class="col-centered">
+        {{#link-to 'members-area.meethubs.comments'}}
+          <div {{bind-attr class=":summary-item hasNewMeethubComments:highlight"}} title={{t "welcome.meethub-comments"}}>
+            {{#if hasNewMeethubComments}}
+              <div {{bind-attr class=":section-icon hasNewMeethubComments:has-unread-messages"}}>{{unbound fa-icon "fa-list"}}</div>
+            {{else}}
+              <div class="section-icon">{{unbound fa-icon "fa-list"}}</div>
+            {{/if}}
+            <div class="type">{{unbound fa-icon "fa-share-alt"}}</div>
+            <div class="number">{{number_of_new_meethub_comments}}</div>
+          </div>
+        {{/link-to}}
+      </div>
+      <div class="col-centered">
+        {{#link-to 'members-area.meethubs.calendar.list'}}
+          <div {{bind-attr class=":summary-item hasSocialPointUpdates:highlight"}} title={{t "welcome.meethub-event-infos"}}>
+            {{#if hasSocialPointUpdates}}
+              <div {{bind-attr class=":section-icon hasSocialPointUpdates:has-unread-messages"}}>{{unbound fa-icon "fa-calendar"}}</div>
+              <div class="type">{{unbound fa-icon "fa-certificate"}}</div>
+              <div class="number">{{socialPointUpdates}}</div>
+            {{else}}
+              <div class="section-icon">{{unbound fa-icon "fa-calendar"}}</div>
+              <div class="type">{{unbound fa-icon "fa-certificate"}}</div>
+              <div class="number">0</div>
+            {{/if}}
+          </div>
+        {{/link-to}}
+      </div>
+    </div> --}}
 
   </div>
 </div>
