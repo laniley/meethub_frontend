@@ -59,6 +59,14 @@ export default Ember.Controller.extend({
        message: 'Meet me on Meethub...',
        filters: ['app_non_users']
       });
+    },
+
+    openFriendship: function(friendship) {
+      // console.log(friendship_id);
+      // this.store.find('friendship', friendship_id).then(function(friendship) {
+        friendship.set('has_been_seen', true);
+        friendship.save();
+      // });
     }
 
   }
