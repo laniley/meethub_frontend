@@ -80,5 +80,6 @@ Em.I18n.translations = {
   "maybe": "{{name}} is attending maybe",
   "declined": "{{name}} declined",
   "not_replied": "{{name}} not replied",
-  "resync-with-facebook": "ReSync with facebook"
+  "resync-with-facebook": "ReSync with facebook",
+  "new": "new"
 };

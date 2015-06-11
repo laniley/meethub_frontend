@@ -80,5 +80,6 @@ Em.I18n.translations = {
   "maybe": "{{name}} nimmt vielleicht teil",
   "declined": "{{name}} nimmt nicht teil",
   "not_replied": "{{name}} hat sich noch nicht entschieden",
-  "resync-with-fb": "ReSync mit facebook"
+  "resync-with-fb": "ReSync mit facebook",
+  "new": "neu"
 };
