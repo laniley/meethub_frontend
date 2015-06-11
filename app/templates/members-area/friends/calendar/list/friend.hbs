@@ -1,17 +1,19 @@
 <div class="container-fluid main-area-list">
   {{#each eventInv in upcomingEventInvsOfFriend}}
-    <div {{bind-attr class=":row :main-area-list-item :calendar-list-row"}}>
-      <div class="col-xs-0 col-lg-2"></div>
-      <div class="col-xs-12 col-lg-8 no-padding">
-        <div class="date col-xs-2 col-sm-3 col-md-2 col-lg-2">{{formatted-date eventInv.event.start_date 'L'}}</div>
-        <div
-            title={{t eventInv.status name=eventInv.invited_user.name}}
-            {{bind-attr class=":col-xs-1 :col-sm-1 :col-md-1 :col-lg-1 eventInv.status :eventInv-status"}}>
-                {{unbound fa-icon "fa-circle"}}
+    {{#link-to 'members-area.friends.calendar.list.friend.event' eventInv.event}}
+      <div {{bind-attr class=":row :main-area-list-item :calendar-list-row"}}>
+        <div class="col-xs-0 col-lg-2"></div>
+        <div class="col-xs-12 col-lg-8 no-padding">
+          <div class="date col-xs-2 col-sm-3 col-md-2 col-lg-2">{{formatted-date eventInv.event.start_date 'L'}}</div>
+          <div
+              title={{t eventInv.status name=eventInv.invited_user.name}}
+              {{bind-attr class=":col-xs-1 :col-sm-1 :col-md-1 :col-lg-1 eventInv.status :eventInv-status"}}>
+                  {{unbound fa-icon "fa-circle"}}
+          </div>
+          <div class="col-xs-9 col-sm-8 col-md-9 col-lg-9 title align-left"><a target="_blank" href="https://www.facebook.com/events/{{eventInv.event.fb_id}}/">{{eventInv.event.name}}</a></div>
         </div>
-        <div class="col-xs-9 col-sm-8 col-md-9 col-lg-9 title align-left"><a target="_blank" href="https://www.facebook.com/events/{{eventInv.event.fb_id}}/">{{eventInv.event.name}}</a></div>
+        <div class="col-xs-0 col-lg-2"></div>
       </div>
-      <div class="col-xs-0 col-lg-2"></div>
-    </div>
+    {{/link-to}}
   {{/each}}
 </div>
