@@ -42,6 +42,9 @@
           {{#link-to 'members-area.friends'}}
             <span>{{unbound fa-icon "fa-fixed-with fa-group"}}</span>
             <span class="link-label hidden-sm">{{t 'friend.title'}}</span>
+            {{#if hasUnseenNewFriendships}}
+              <span class="info-counter">{{number_of_unseen_new_friendships}}</span>
+            {{/if}}
           {{/link-to}}
         </li>
         {{!-- <li>
