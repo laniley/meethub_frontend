@@ -33,7 +33,7 @@
       </div>
 
       {{#each friendship in search_results}}
-        {{#link-to 'members-area.friends.calendar.list.friend' friendship.friend}}
+        {{#link-to 'members-area.friendships.calendar.list.friendship' friendship}}
           <div {{bind-attr class=":row :main-area-list-item :friends-list-row :no-padding"}} {{action 'openFriendship' friendship}}>
 
             <div class="col-xs-0 col-md-2 col-lg-4"></div>

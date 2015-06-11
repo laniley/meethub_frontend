@@ -1,6 +1,6 @@
 <div class="container-fluid main-area-list">
-  {{#each eventInv in upcomingEventInvsOfFriend}}
-    {{#link-to 'members-area.friends.calendar.list.friend.event' eventInv.event}}
+  {{#each eventInv in sortedEventsInvs}}
+    {{#link-to 'members-area.friendships.calendar.list.friendship.event' eventInv.event}}
       <div {{bind-attr class=":row :main-area-list-item :calendar-list-row"}}>
         <div class="col-xs-0 col-lg-2"></div>
         <div class="col-xs-12 col-lg-8 no-padding">

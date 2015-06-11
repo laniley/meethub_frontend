@@ -7,7 +7,7 @@
 
     <div class="row friends row-centered item-container">
       <div class="col-centered">
-        {{#link-to 'members-area.friends.index' (query-params show_new=true)}}
+        {{#link-to 'members-area.friendships.index' (query-params show_new=true)}}
           <div {{bind-attr class=":summary-item hasUnseenNewFriends:highlight"}} title={{t "friend.new"}}>
             {{#if hasUnseenNewFriends}}
               <div {{bind-attr class=":section-icon hasUnseenNewFriends:has-unread-messages"}}>

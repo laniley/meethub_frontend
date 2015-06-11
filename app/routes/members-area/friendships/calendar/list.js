@@ -5,8 +5,8 @@ export default Ember.Route.extend({
     return this.store.all('event');
   },
   renderTemplate: function() {
-    this.render('members-area.friends.calendar.list', {
-      into: 'members-area.friends.calendar',
+    this.render('members-area.friendships.calendar.list', {
+      into: 'members-area.friendships.calendar',
       outlet: 'content'
     });
   }

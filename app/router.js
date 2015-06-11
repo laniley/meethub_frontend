@@ -44,10 +44,10 @@ export default Router.map(function() {
       });
     });
 
-    this.route("friends", function() {
+    this.route("friendships", { path: "/friends" }, function() {
       this.route("calendar", { path: "/events" }, function() {
         this.route("list", function() {
-          this.route("friend", { path: "/:friend_id" }, function() {
+          this.route("friendship", { path: "/:friendship_id" }, function() {
             this.route("event", {
               path: "/:event_id"
             });

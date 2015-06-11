@@ -48,7 +48,7 @@
         {{/link-to}}
       </div>
       <div class="col-centered">
-        {{#link-to 'members-area.friends.index' (query-params show_new=true)}}
+        {{#link-to 'members-area.friendships.index' (query-params show_new=true)}}
           <div {{bind-attr class=":summary-item hasUnseenNewFriendships:highlight"}} title={{t "friend.new"}}>
             {{#if hasUnseenNewFriendships}}
               <div {{bind-attr class=":section-icon hasUnseenNewFriendships:has-unread-messages"}}>
