@@ -25,5 +25,16 @@
     .name {
       line-height: 45px;
     }
+
+    .new {
+      display: inline-block;
+      position: absolute;
+      bottom: -7px;
+      left: 25px;
+      background-color: $orange;
+      color: white;
+      padding: 0 7px;
+      border-radius: 15px;
+    }
   }
 }
