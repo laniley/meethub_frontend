@@ -1,7 +1,7 @@
 <div class="main-area">
   <div {{bind-attr class=":main-container :container-fluid isSidebarOpen:open:closed"}}>
 
-    <h2>{{#link-to "members-area.friends.calendar.list"}}{{t "calendar"}}{{/link-to}} {{outlet "title"}}</h2>
+    <h1>{{t "calendar"}} <span class="subtitle">{{outlet "title"}}</span></h1>
 
     {{outlet "content"}}
 
