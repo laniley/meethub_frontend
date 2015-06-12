@@ -4,13 +4,14 @@ import AuthenticateRoute from './authenticate';
 
 export default AuthenticateRoute.extend({
 
-  model: function() {
-    var userArray = this.store.find('user', { 'fb_id': Ember.$.cookie('user_id') });
-    return userArray.get('firstObject');
-  },
+  // model: function() {
+  //   return this.store.find('user', { 'fb_id': Ember.$.cookie('user_id') }).then(users => {
+  //     return users.get('firstObject');
+  //   });
+  // },
 
   setupController: function(controller, model) {
-    controller.set('model', model);
+    // controller.set('model', model);
     this.initFB(controller);
   },
 

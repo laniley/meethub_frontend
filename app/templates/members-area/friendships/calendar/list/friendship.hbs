@@ -1,19 +1,35 @@
 <div class="container-fluid main-area-list">
   {{#each eventInv in sortedEventsInvs}}
     {{#link-to 'members-area.friendships.calendar.list.friendship.event' eventInv.event}}
-      <div {{bind-attr class=":row :main-area-list-item :calendar-list-row"}}>
-        <div class="col-xs-0 col-lg-2"></div>
-        <div class="col-xs-12 col-lg-8 no-padding">
-          <div class="date col-xs-2 col-sm-3 col-md-2 col-lg-2">{{formatted-date eventInv.event.start_date 'L'}}</div>
+      <div {{bind-attr class=":row :main-area-list-item :calendar-list-row :no-padding"}}>
+
+        <div class="col-xs-0 col-md-2 col-lg-3"></div>
+
+        <div class="col-xs-12 col-md-10 col-lg-9 no-padding">
+
+          <div {{bind-attr class=":date :align-left :no-padding"}}>
+            {{formatted-date eventInv.event.start_date 'L'}}
+          </div>
+
           <div
               title={{t eventInv.status name=eventInv.invited_user.name}}
               {{bind-attr class=":col-xs-1 :col-sm-1 :col-md-1 :col-lg-1 eventInv.status :eventInv-status"}}>
                   {{unbound fa-icon "fa-circle"}}
           </div>
-          <div class="col-xs-9 col-sm-8 col-md-9 col-lg-9 title align-left"><a target="_blank" href="https://www.facebook.com/events/{{eventInv.event.fb_id}}/">{{eventInv.event.name}}</a></div>
+
+          <div {{bind-attr class=":event-title :align-left :no-padding"}}>
+            {{eventInv.event.name}}
+          </div>
+
         </div>
-        <div class="col-xs-0 col-lg-2"></div>
+
       </div>
     {{/link-to}}
   {{/each}}
+</div>
+
+<div {{bind-attr class=":side-nav-bar isSidebarOpen:open:closed"}}>
+  <div class="section-content">
+    {{outlet}}
+  </div>
 </div>

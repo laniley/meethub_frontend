@@ -77,8 +77,11 @@ Em.I18n.translations = {
   "popup-blocker-message": "Please deactivate your popup blocker and reload the page.<br /><br/>Otherwise we can not log you into facebook.",
 
   "attending": "{{name}} is attending",
+  "attending-me": "You are attending",
   "maybe": "{{name}} is attending maybe",
+  "maybe-me": "You are attending maybe",
   "declined": "{{name}} declined",
+  "declined-me": "You declined",
   "not_replied": "{{name}} not replied",
   "resync-with-facebook": "ReSync with facebook",
   "new": "new"
