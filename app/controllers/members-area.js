@@ -907,7 +907,32 @@ export default Ember.Controller.extend({
     return unseenNewFriendships;
   }.property('model.friendships.@each.has_been_seen'),
 
+  myEventInvsOfUpcomingEvents: function() {
 
+    if(this.get('model'))
+    {
+      return DS.PromiseArray.create({
+
+        promise: this.get('model.eventInvitations').then(eventInvs => {
+
+          return Ember.RSVP.filter(eventInvs.toArray(), eventInv => {
+
+            return eventInv.get('event').then(event => {
+              return event.get('is_upcoming') === true
+            });
+
+          });
+
+        })
+
+      });
+    }
+    else
+    {
+      return null;
+    }
+
+  }.property('model.eventInvitations.@each.event.is_upcoming'),
 
 
 
@@ -1010,27 +1035,49 @@ export default Ember.Controller.extend({
 
   number_of_new_event_invitations: function() {
 
-    var unreadMessages = [];
-
-    if(this.get('model.messages.length') > 0)
-    {
-      unreadMessages = this.get('model.messages').filter(function(message) {
-        return message.get('hasBeenRead') === false;
-      });
-    }
-
     var unreadEventInvitations = [];
 
-    if(unreadMessages.get('length') > 0)
+    if(this.get('myEventInvsOfUpcomingEvents.length') > 0)
     {
-      unreadEventInvitations = unreadMessages.filter(function(message) {
-        return message.get('isEventInvitation') === true;
+      unreadEventInvitations = this.get('model.messages').filter(function(message) {
+        return message.get('hasBeenRead') === false && message.get('isEventInvitation') === true;
       });
     }
 
     return unreadEventInvitations.get('length');
 
-  }.property('model.messages.@each.hasBeenRead', 'model.messages.@each.isEventInvitation'),
+
+    return DS.PromiseArray.create({
+
+      promise: this.get('myEventInvsOfUpcomingEvents').then(eventInvs => {
+
+        return Ember.RSVP.all(eventInvs.map(eventInv => {
+
+          return eventInv.get('messages').then(message => {
+
+            return message;
+
+          });
+
+        })).then(messages => {
+
+          return Ember.RSVP.filter(messages.toArray(), message => {
+
+            return message.get('event').then(event => {
+
+              return event.get('is_upcoming') === true;
+
+            });
+
+          });
+
+        });
+
+      })
+
+    });
+
+  }.property('myEventInvsOfUpcomingEvents.@each.messages.@each.hasBeenRead'),
 
   number_of_unseen_new_friendships: function() {
 

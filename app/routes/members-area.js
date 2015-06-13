@@ -62,7 +62,7 @@ export default AuthenticateRoute.extend({
 
               if(response.status === "connected")
               {
-                Ember.$.cookie('user_id', self.get('session').get('secure.userId'));
+                Ember.$.cookie('userid', self.get('session').get('secure.userId'));
 
                 self.getUserInfosFromFB(controller);
               }
