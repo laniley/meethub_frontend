@@ -5,6 +5,7 @@ export default Ember.Route.extend({
     return this.store.all('event');
   },
   setupController: function(controller, model) {
+    this._super(controller, model);
     controller.set('model', model);
   },
   renderTemplate: function() {
