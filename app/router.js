@@ -1,17 +1,17 @@
 import Ember from "ember";
 import config from "./config/environment";
 
-var Router = Ember.Router.extend({
+const Router = Ember.Router.extend({
   location: config.locationType
 });
 
-export default Router.map(function() {
+Router.map(function() {
   this.route("login", {
     path: "/login"
   });
 
   this.route("members-area", {
-    path: "/"
+    path: "/members-area"
   }, function() {
 
     this.route("bugreports", function() {
@@ -73,3 +73,5 @@ export default Router.map(function() {
 
   this.route('privacy-policy');
 });
+
+export default Router;

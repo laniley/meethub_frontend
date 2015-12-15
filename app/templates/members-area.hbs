@@ -22,7 +22,7 @@
       <ul class="nav navbar-nav center-links">
         <li>
           {{#link-to 'members-area.events'}}
-            <span>{{unbound fa-icon "fa-fixed-with  fa-calendar"}}</span>
+            <span>{{fa-icon "calendar" fixedWith=true}}</span>
             <span class="link-label hidden-sm">{{t 'calendar'}}</span>
             {{#if hasUnreadEventInvitations}}
               <span class="info-counter">{{number_of_new_event_invitations}}</span>
@@ -40,7 +40,7 @@
         </li> --}}
          <li>
           {{#link-to 'members-area.friendships'}}
-            <span>{{unbound fa-icon "fa-fixed-with fa-group"}}</span>
+            <span>{{fa-icon "group" fixedWith=true}}</span>
             <span class="link-label hidden-sm">{{t 'friend.title'}}</span>
             {{#if hasUnseenNewFriendships}}
               <span class="info-counter">{{number_of_unseen_new_friendships}}</span>
@@ -65,28 +65,28 @@
             {{/if}}
           {{/link-to}}
         </li> --}}
-        <li {{bind-attr class=":custom-link :fb-sync-icon isSyncing"}} {{action "resyncWithFB"}}>
+        <li class="custom-link fb-sync-icon {{isSyncing}}" {{action "resyncWithFB"}}>
           <span class="fa-stack">
             {{#if isSyncing}}
-              {{unbound fa-icon "fa-refresh fa-spin fa-stack-2x fa-3x"}}
+              {{fa-icon "refresh" spin=true stack=2 size=3}}
             {{else}}
-              {{unbound fa-icon "fa-refresh fa-stack-2x fa-3x"}}
+              {{fa-icon "refresh" stack=2 size=3}}
             {{/if}}
-            {{unbound fa-icon "fa-facebook-square fa-stack-1x"}}
+            {{fa-icon "facebook-square" stack=1}}
           </span>
           <span class="link-label visible-xs">{{t "resync-with-fb"}}</span>
         </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
             <div class="account_img_container">
-              <img {{bind-attr src=model.picture}} class="account_img" />
+              <img src={{model.picture}} class="account_img" />
             </div>
             <div class="account_name">
               {{model.name}}
             </div>
           </a>
           <ul class="dropdown-menu" role="menu">
-            <li {{action "invalidateSession"}}><a href="#">{{unbound fa-icon "fa-sign-out"}} Log Out</a></li>
+            <li {{action "invalidateSession"}}><a href="#">{{fa-icon "sign-out"}} Log Out</a></li>
           </ul>
         </li>
       </ul>

@@ -1,8 +1,8 @@
+/* FB */
 import Ember from 'ember';
 import ENV from '../config/environment';
-import AuthenticateRoute from './authenticate';
 
-export default AuthenticateRoute.extend({
+export default Ember.Route.extend({
 
   // model: function() {
   //   return this.store.find('user', { 'fb_id': Ember.$.cookie('userid') }).then(users => {
@@ -48,7 +48,7 @@ export default AuthenticateRoute.extend({
                 Ember.run(null, resolve);
               };
 
-              $.getScript('//connect.facebook.net/en_US/sdk.js');
+              Ember.$.getScript('//connect.facebook.net/en_US/sdk.js');
 
           }).then(function(){
 
@@ -63,7 +63,7 @@ export default AuthenticateRoute.extend({
 
               if(response.status === "connected")
               {
-                Ember.$.cookie('userid', self.get('session').get('secure.userId'));
+                $.cookie('userid', self.get('session').get('secure.userId'));
 
                 self.getUserInfosFromFB(controller);
               }

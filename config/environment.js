@@ -34,12 +34,12 @@ module.exports = function(environment) {
   };
 
 
-  ENV['simple-auth'] = {
-      authorizer: 'authorizer:custom',
-      routeAfterAuthentication: 'members-area',
-      routeIfAlreadyAuthenticated: 'members-area',
-      store: 'simple-auth-session-store:local-storage'
-  };
+  // ENV['simple-auth'] = {
+  //     authorizer: 'authorizer:custom',
+  //     routeAfterAuthentication: 'members-area',
+  //     routeIfAlreadyAuthenticated: 'members-area',
+  //     store: 'simple-auth-session-store:local-storage'
+  // };
 
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
@@ -48,23 +48,23 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
 
-    ENV.backend_url = 'http://localhost:8000/meethubbe',
-    ENV.fb_app_id = '560143030797393',
+    ENV.backend_url = 'http://localhost:8000/meethubbe';
+    ENV.fb_app_id = '560143030797393';
 
-    ENV['torii'] = {
-      sessionServiceName: 'session',
-      providers: {
-        'facebook-oauth2': {
-          apiKey: '560143030797393',
-          redirectUri: 'http://localhost:4200/'
-        },
-        'facebook-connect': {
-          appId: '560143030797393',
-          scope: 'public_profile, user_friends, user_events, email',
-          redirectUri: 'http://localhost:4200/'
-        }
-      }
-    };
+    // ENV['torii'] = {
+    //   sessionServiceName: 'session',
+    //   providers: {
+    //     'facebook-oauth2': {
+    //       apiKey: '560143030797393',
+    //       redirectUri: 'http://localhost:4200/'
+    //     },
+    //     'facebook-connect': {
+    //       appId: '560143030797393',
+    //       scope: 'public_profile, user_friends, user_events, email',
+    //       redirectUri: 'http://localhost:4200/'
+    //     }
+    //   }
+    // };
   }
 
   if (environment === 'test') {
@@ -81,23 +81,23 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
 
-    ENV.backend_url = 'https://meethub.de/meethubbe',
-    ENV.fb_app_id = '560142730797423',
+    ENV.backend_url = 'https://meethub.de/meethubbe';
+    ENV.fb_app_id = '560142730797423';
 
-    ENV['torii'] = {
-      sessionServiceName: 'session',
-      providers: {
-        'facebook-oauth2': {
-          apiKey: '560142730797423',
-          redirectUri: 'https://meethub.de/'
-        },
-        'facebook-connect': {
-          appId: '560142730797423',
-          scope: 'public_profile, user_friends, user_events, email',
-          redirectUri: 'https://meethub.de/'
-        }
-      }
-    };
+    // ENV['torii'] = {
+    //   sessionServiceName: 'session',
+    //   providers: {
+    //     'facebook-oauth2': {
+    //       apiKey: '560142730797423',
+    //       redirectUri: 'https://meethub.de/'
+    //     },
+    //     'facebook-connect': {
+    //       appId: '560142730797423',
+    //       scope: 'public_profile, user_friends, user_events, email',
+    //       redirectUri: 'https://meethub.de/'
+    //     }
+    //   }
+    // };
   }
 
   return ENV;

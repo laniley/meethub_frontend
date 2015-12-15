@@ -3,11 +3,11 @@
     {{#if hasMeethubs}}
       <div class="new_comment">
         <div class="col-xs-12 col-md-3 no-padding align-left">
-          <img {{bind-attr src=user.picture}} class="account_img" />
+          <img src={{user.picture}} class="account_img" />
           <div class="comment-infos">
             <div class="bold">Meethub</div>
               <div class="meethub-select">
-                {{view "select"
+                {{input type="select"
                     content=meethubs
                     optionValuePath="content.id"
                     optionLabelPath="content.name"
@@ -24,8 +24,8 @@
               maxlength="1000"
               value=comment}}
           <div class="buttons">
-            <div {{bind-attr class=":button :save commentIsEmpty:disabled:enabled"}} {{action 'createComment'}} title={{t "comment.button.create"}}>{{unbound fa-icon "fa-check"}}</div>
-            <div {{bind-attr class=":button :cancel commentIsEmpty:disabled:enabled"}} {{action 'cancelCommentCreation'}} title={{t "comment.button.cancel"}}>{{unbound fa-icon "fa-remove"}}</div>
+            <div class="button save {{if commentIsEmpty 'disabled' 'enabled'}}" {{action 'createComment'}} title={{t "comment.button.create"}}>{{unbound fa-icon "fa-check"}}</div>
+            <div class="button cancel {{if commentIsEmpty 'disabled' 'enabled'}}" {{action 'cancelCommentCreation'}} title={{t "comment.button.cancel"}}>{{fa-icon "fa-remove"}}</div>
           </div>
         </div>
       </div>

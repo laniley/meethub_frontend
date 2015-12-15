@@ -12,52 +12,52 @@
     {{!-- <li {{bind-attr class=":section-button searchIsOpen:active"}} {{translateAttr  title='messages.button.search'}} {{action 'toggleSearch'}}>
       {{unbound fa-icon "fa-search"}}
     </li> --}}
-    <li {{bind-attr class=":section-button meethub_inv:active"}} {{translateAttr  title='messages.button.meethub-inv-filter'}} {{action 'toggleMeethubInvFilter'}}>
-      {{unbound fa-icon "fa-share-alt"}}
+    <li class="section-button {{meethub_inv:active}}" {{translateAttr  title='messages.button.meethub-inv-filter'}} {{action 'toggleMeethubInvFilter'}}>
+      {{fa-icon "fa-share-alt"}}
     </li>
-    <li {{bind-attr class=":section-button event_inv:active"}} {{translateAttr  title='messages.button.event-inv-filter'}} {{action 'toggleEventInvFilter'}}>
-      {{unbound fa-icon "fa-music"}}
+    <li class="section-button {{event_inv:active}}" {{translateAttr  title='messages.button.event-inv-filter'}} {{action 'toggleEventInvFilter'}}>
+      {{fa-icon "fa-music"}}
     </li>
   </ul>
 </div>
 {{!-- LIST --}}
-<div {{bind-attr class=":side-nav-item-container"}}>
-  {{#each message in sortedMessages}}
-    <div {{bind-attr class=":side-nav-item :message :no-padding message.hasBeenRead:has-been-read"}}>
+<div class="side-nav-item-container">
+  {{#each sortedMessages as |message|}}
+    <div class="side-nav-item message no-padding {{message.hasBeenRead:has-been-read}}">
       {{!-- TITLE --}}
-      <div {{bind-attr class=":title :selectable message.isOpen:open"}} {{action 'toggleMessage' message}}>
+      <div class="title selectable {{message.isOpen:open}}" {{action 'toggleMessage' message}}>
         <div class="icons">
-          <div {{bind-attr class=":envelope message.hasBeenRead"}}>
+          <div class="envelope {{message.hasBeenRead}}">
             {{#if message.hasBeenRead}}
-              {{unbound fa-icon "fa-envelope-o"}}
+              {{fa-icon "fa-envelope-o"}}
             {{else}}
-              {{unbound fa-icon "fa-envelope"}}
+              {{fa-icon "fa-envelope"}}
             {{/if}}
           </div>
           {{#if message.isEventInvitation}}
-            <div class="message-type">{{unbound fa-icon "fa-music"}}</div>
+            <div class="message-type">{{fa-icon "fa-music"}}</div>
             {{#if message.hasBeenRead}}
-              <div {{bind-attr class=":eventInvitation-status message.eventInvitation.hasBeenAccepted:accepted message.eventInvitation.hasBeenAcceptedMaybe:maybe message.eventInvitation.hasBeenDeclined:declined"}}>
-              {{unbound fa-icon "fa-circle"}}</div>
+              <div class="eventInvitation-status {{message.eventInvitation.hasBeenAccepted:accepted message.eventInvitation.hasBeenAcceptedMaybe:maybe message.eventInvitation.hasBeenDeclined:declined}}">
+              {{fa-icon "fa-circle"}}</div>
             {{/if}}
           {{/if}}
           {{#if message.isMeethubInvitation}}
-            <div class="message-type">{{unbound fa-icon "fa-share-alt"}}</div>
-            <div {{bind-attr class=":methubInvitation-status message.meethubInvitation.hasBeenAccepted:accepted message.meethubInvitation.hasBeenDeclined:declined"}}></div>
+            <div class="message-type">{{fa-icon "fa-share-alt"}}</div>
+            <div class="methubInvitation-status {{message.meethubInvitation.hasBeenAccepted:accepted message.meethubInvitation.hasBeenDeclined:declined}}"></div>
           {{/if}}
         </div>
         <div class="subject">{{message.subject}}</div>
       </div>
       {{!-- BODY --}}
-      <div {{bind-attr class=":body message.isOpen:open"}}>
+      <div class="body {{message.isOpen:open}}">
         {{#if message.isEventInvitation}}
           <div class="info-box-row question">
             {{t 'messages.event-participation-question'}}
           </div>
           <div class="buttons">
-            <div {{bind-attr class=":button :accept message.eventInvitation.hasBeenAccepted:active"}} {{action 'acceptEventInvitation' message.eventInvitation.id}} {{translateAttr  title='messages.accept'}}>{{unbound fa-icon "fa-check"}}</div>
-            <div {{bind-attr class=":button :maybe message.eventInvitation.hasBeenAcceptedMaybe:active"}} {{action 'maybeAcceptEventInvitation' message.eventInvitation.id}} {{translateAttr  title='messages.maybe'}}>{{unbound fa-icon "fa-question"}}</div>
-            <div {{bind-attr class=":button :decline message.eventInvitation.hasBeenDeclined:active"}} {{action 'declineEventInvitation' message.eventInvitation.id}} {{translateAttr  title='messages.decline'}}>{{unbound fa-icon "fa-remove"}}</div>
+            <div class="button accept {{message.eventInvitation.hasBeenAccepted:active}}" {{action 'acceptEventInvitation' message.eventInvitation.id}} {{translateAttr  title='messages.accept'}}>{{fa-icon "fa-check"}}</div>
+            <div class="button maybe {{message.eventInvitation.hasBeenAcceptedMaybe:active}}" {{action 'maybeAcceptEventInvitation' message.eventInvitation.id}} {{translateAttr  title='messages.maybe'}}>{{fa-icon "fa-question"}}</div>
+            <div class="button decline {{message.eventInvitation.hasBeenDeclined:active}}" {{action 'declineEventInvitation' message.eventInvitation.id}} {{translateAttr  title='messages.decline'}}>{{fa-icon "fa-remove"}}</div>
           </div>
           <div class="info-box-row start">
             {{#link-to 'members-area.messages.calendar'}}
@@ -73,20 +73,20 @@
           <div class="info-box-row more_infos">
             <a target="_blank" href="https://www.facebook.com/events/{{message.eventInvitation.event.fb_id}}/">{{t "go-to-facebook-page"}}</a>
           </div>
-          <div {{bind-attr class=":info-box-row :social-points message.eventInvitation.event.hasSocialPoints"}}>
-            {{unbound fa-icon "fa-certificate"}} {{message.eventInvitation.event.social_points}} Social-Points
+          <div class="info-box-row social-points {{message.eventInvitation.event.hasSocialPoints}}">
+            {{fa-icon "fa-certificate"}} {{message.eventInvitation.event.social_points}} Social-Points
           </div>
           <div class="info-box-row participants">
             {{#if message.eventInvitation.event.hasConnectedFriends}}
               <div class="row participants-title">{{t 'participants.title'}}</div>
-              {{#each friend in message.eventInvitation.event.friends_attending}}
-                <img class="attending" {{bind-attr src=friend.picture}} {{bind-attr title=friend.name}} />
+              {{#each message.eventInvitation.event.friends_attending as |friend|}}
+                <img class="attending" src={{friend.picture}} title={{friend.name}} />
               {{/each}}
-              {{#each friend in message.eventInvitation.event.friends_attending_maybe}}
-                <img class="attending-maybe" {{bind-attr src=friend.picture}} {{bind-attr title=friend.name}} />
+              {{#each message.eventInvitation.event.friends_attending_maybe as |friend|}}
+                <img class="attending-maybe" src={{friend.picture}} title={{friend.name}} />
               {{/each}}
-              {{#each friend in message.eventInvitation.event.friends_declined}}
-                <img class="declined" {{bind-attr src=friend.picture}} {{bind-attr title=friend.name}} />
+              {{#each message.eventInvitation.event.friends_declined as |friend|}}
+                <img class="declined" src={{friend.picture}} title={{friend.name}} />
               {{/each}}
             {{/if}}
           </div>
@@ -97,8 +97,8 @@
                 {{t 'messages.meethub-participation-question'}}
               </div>
               <div class="buttons">
-                <div {{bind-attr class=":button :accept message.meethubInvitation.hasBeenAccepted:active"}} {{action 'acceptMeethubInvitation' message.meethubInvitation.id}} {{translateAttr  title='messages.accept'}}>{{unbound fa-icon "fa-check"}}</div>
-                <div {{bind-attr class=":button :decline message.meethubInvitation.hasBeenDeclined:active"}} {{action 'declineMeethubInvitation' message.meethubInvitation.id}} {{translateAttr  title='messages.decline'}}>{{unbound fa-icon "fa-remove"}}</div>
+                <div class="button accept {{message.meethubInvitation.hasBeenAccepted:active}}" {{action 'acceptMeethubInvitation' message.meethubInvitation.id}} {{translateAttr  title='messages.accept'}}>{{fa-icon "fa-check"}}</div>
+                <div class="button decline {{message.meethubInvitation.hasBeenDeclined:active}}" {{action 'declineMeethubInvitation' message.meethubInvitation.id}} {{translateAttr  title='messages.decline'}}>{{fa-icon "fa-remove"}}</div>
               </div>
             {{/if}}
         {{/if}}
