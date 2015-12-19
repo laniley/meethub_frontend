@@ -16,18 +16,6 @@ export default Ember.Mixin.create({
     });
   },
 
-  getAllComponentModels: function(component) {
-    return this.store.query('rocket-component-model', { 'type': component.get('type') }).then(models => {
-      return models;
-    });
-  },
-
-  getMyComponentModelMms: function(component) {
-    return component.get('rocketComponentModelMms').then(rocketComponentModelMms => {
-      return rocketComponentModelMms;
-    });
-  },
-
   // The response object is returned with a status field that lets the
   // app know the current login status of the person.
   // Full docs on the response object can be found in the documentation
@@ -36,33 +24,34 @@ export default Ember.Mixin.create({
 
     console.log('fb login status', response);
 
-    this.set('me', this.get('store').peekRecord('me', 1));
+    this.set('me', this.store.peekRecord('me', 1));
 
-    if (response.status === 'connected')
-  	{
+    if (response.status === 'connected') {
   			// Logged into your app and Facebook.
         if(Ember.isEmpty(this.get('me'))) {
-          this.get('store').createRecord('me', { id: 1, isLoggedIn: true });
+          this.store.createRecord('me', { id: 1, isLoggedIn: true });
         }
         else {
           this.get('me').set('isLoggedIn', true);
         }
 
   			this.getUserDataFromFB(this.get('store'));
+
+        if(this.controllerFor('application').get('currentRouteName') === 'login') {
+          this.transitionTo('index');
+        }
   	}
-  	else if (response.status === 'not_authorized')
-  	{
+  	else if (response.status === 'not_authorized') {
   			// The person is logged into Facebook, but not your app.
         if(Ember.isEmpty(this.me)) {
           this.get('store').createRecord('me', { id: 1, isLoggedIn: false });
         }
         else {
           this.get('me').set('isLoggedIn', false);
-          this.transitionTo('login');
         }
+        this.transitionTo('login');
   	}
-  	else
-  	{
+  	else {
   			// The person is not logged into Facebook, so we're not sure if
   			// they are logged into this app or not.
         if(Ember.isEmpty(this.get('me'))) {
@@ -70,8 +59,8 @@ export default Ember.Mixin.create({
         }
         else {
           this.get('me').set('isLoggedIn', false);
-          this.transitionTo('login');
         }
+        this.transitionTo('login');
   	}
 
   },
