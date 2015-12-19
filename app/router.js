@@ -10,8 +10,8 @@ Router.map(function() {
     path: "/login"
   });
 
-  this.route("members-area", {
-    path: "/members-area"
+  this.route("index", {
+    path: "/"
   }, function() {
 
     this.route("bugreports", function() {

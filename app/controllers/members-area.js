@@ -76,21 +76,11 @@ export default Ember.Controller.extend({
         var friend_response_length = response.data.length;
         var finished_friend_response_counter = 0;
 
-        if(friend_response_length > 0)
-        {
-          for(var i = 0; i < friend_response_length; i++)
-          {
-            self.handleResponseForAFBFriend(response.data[i].id, function() {
-
-              finished_friend_response_counter++;
-
-              if(finished_friend_response_counter === friend_response_length)
-              {
-                self.loadFriendEventsFromFB(function() {
-                  callback();
-                });
-              }
-            });
+        if(friend_response_length > 0) {
+          for(var i = 0; i < friend_response_length; i++) {
+            self.handleResponseForAFBFriend(response.data[i].id,
+              self.handleFriendCallback(finished_friend_response_counter, friend_response_length, callback)
+            );
           }
         }
       }
@@ -100,6 +90,15 @@ export default Ember.Controller.extend({
       }
 
     });
+  },
+
+  handleFriendCallback(finished_friend_response_counter, friend_response_length, callback) {
+    finished_friend_response_counter++;
+    if(finished_friend_response_counter === friend_response_length) {
+      this.loadFriendEventsFromFB(function() {
+        callback();
+      });
+    }
   },
 
   handleResponseForAFBFriend: function(friend_fb_id, callback) {
@@ -166,9 +165,9 @@ export default Ember.Controller.extend({
             friend: friend
         });
 
-        friendship.save().then(friendship => {
+        friendship.save().then(() => {
           callback();
-        })
+        });
       }
       // friendship in store
       else

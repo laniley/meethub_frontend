@@ -8,20 +8,19 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      {{#link-to 'members-area'}}
+      {{#link-to 'index'}}
         <div class="navbar-brand">
           <img alt="Brand" src="assets/images/logo_square_120x120.png">
           <div class="brand-name">MEETHUB <span class="beta-label">BETA</span></div>
         </div>
       {{/link-to}}
     </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <!-- Collect the nav links, forms, and other content for toggling -->
       {{!-- CENTER AREA / TOP-NAV-BAR --}}
       <ul class="nav navbar-nav center-links">
         <li>
-          {{#link-to 'members-area.events'}}
+          {{#link-to 'index.events'}}
             <span>{{fa-icon "calendar" fixedWith=true}}</span>
             <span class="link-label hidden-sm">{{t 'calendar'}}</span>
             {{#if hasUnreadEventInvitations}}
@@ -29,17 +28,19 @@
             {{/if}}
           {{/link-to}}
         </li>
-{{!--         <li>
-          {{#link-to 'members-area.meethubs'}}
-            <span>{{unbound fa-icon "fa-fixed-with  fa-share-alt"}}</span>
-            <span class="link-label hidden-sm">Meethubs</span>
-            {{#if hasNewMeethubInfos}}
-              <span class="info-counter">{{newMeethubInfosCount}}</span>
-            {{/if}}
-          {{/link-to}}
-        </li> --}}
-         <li>
-          {{#link-to 'members-area.friendships'}}
+        {{!--
+          <li>
+            {{#link-to 'members-area.meethubs'}}
+              <span>{{unbound fa-icon "fa-fixed-with  fa-share-alt"}}</span>
+              <span class="link-label hidden-sm">Meethubs</span>
+              {{#if hasNewMeethubInfos}}
+                <span class="info-counter">{{newMeethubInfosCount}}</span>
+              {{/if}}
+            {{/link-to}}
+          </li>
+        --}}
+        <li>
+          {{#link-to 'index.friendships'}}
             <span>{{fa-icon "group" fixedWith=true}}</span>
             <span class="link-label hidden-sm">{{t 'friend.title'}}</span>
             {{#if hasUnseenNewFriendships}}
@@ -86,17 +87,10 @@
             </div>
           </a>
           <ul class="dropdown-menu" role="menu">
-            <li {{action "invalidateSession"}}><a href="#">{{fa-icon "sign-out"}} Log Out</a></li>
+            <li {{action "logout"}}><a href="#">{{fa-icon "sign-out"}} Log Out</a></li>
           </ul>
         </li>
       </ul>
-
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-
-<div class="row main-row align-center">
-
-  {{outlet}}
-
-</div>
