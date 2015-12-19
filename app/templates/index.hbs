@@ -12,8 +12,8 @@
       <div class="row greeting">
         <div class="fb-sync-icon is-syncing">
           <span class="fa-stack fa-2x">
-            {{unbound fa-icon "fa-refresh fa-spin fa-stack-2x fa-3x"}}
-            {{unbound fa-icon "fa-facebook-square fa-stack-1x"}}
+            {{fa-icon "refresh" spin=true stack=2 size=3}}
+            {{fa-icon "facebook-square" stack=1}}
           </span>
         </div>
         <div class="fb-sync-text"><h3>Syncing your friends and events with facebook.<br />Please wait...</h3></div>
@@ -35,31 +35,31 @@
         {{/link-to}}
       </div> --}}
       <div class="col-centered">
-        {{#link-to 'members-area.events'}}
+        {{#link-to 'index.events'}}
           <div {{bind-attr class=":summary-item hasUnreadEventInvitations:highlight"}} title={{t "welcome.event-invitations"}}>
             {{#if hasUnreadEventInvitations}}
-              <div {{bind-attr class=":section-icon hasUnreadEventInvitations:has-unread-messages"}}>{{unbound fa-icon "fa-calendar"}}</div>
+              <div {{bind-attr class=":section-icon hasUnreadEventInvitations:has-unread-messages"}}>{{fa-icon "calendar"}}</div>
             {{else}}
-              <div class="section-icon">{{unbound fa-icon "fa-calendar"}}</div>
+              <div class="section-icon">{{fa-icon "calendar"}}</div>
             {{/if}}
-            <div class="type">{{unbound fa-icon "fa-plus"}}</div>
+            <div class="type">{{fa-icon "plus"}}</div>
             <div class="number">{{number_of_new_event_invitations}}</div>
           </div>
         {{/link-to}}
       </div>
       <div class="col-centered">
-        {{#link-to 'members-area.friendships.index' (query-params show_new=true)}}
+        {{#link-to 'index.friendships.index' (query-params show_new=true)}}
           <div {{bind-attr class=":summary-item hasUnseenNewFriendships:highlight"}} title={{t "friend.new"}}>
             {{#if hasUnseenNewFriendships}}
               <div {{bind-attr class=":section-icon hasUnseenNewFriendships:has-unread-messages"}}>
-                {{unbound fa-icon "fa-group"}}
+                {{fa-icon "group"}}
               </div>
             {{else}}
               <div class="section-icon">
-                {{unbound fa-icon "fa-group"}}
+                {{fa-icon "group"}}
               </div>
             {{/if}}
-            <div class="type">{{unbound fa-icon "fa-plus"}}</div>
+            <div class="type">{{fa-icon "plus"}}</div>
             <div class="number">{{number_of_unseen_new_friendships}}</div>
           </div>
         {{/link-to}}
