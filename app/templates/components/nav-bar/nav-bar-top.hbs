@@ -66,9 +66,9 @@
             {{/if}}
           {{/link-to}}
         </li> --}}
-        <li class="custom-link fb-sync-icon {{isSyncing}}" {{action "resyncWithFB"}}>
+        <li class="custom-link fb-sync-icon {{me.isSyncingWithFB}}" {{action "resyncWithFB"}}>
           <span class="fa-stack">
-            {{#if isSyncing}}
+            {{#if me.isSyncingWithFB}}
               {{fa-icon "refresh" spin=true stack=2 size=3}}
             {{else}}
               {{fa-icon "refresh" stack=2 size=3}}

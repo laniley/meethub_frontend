@@ -5,7 +5,6 @@ export default DS.Model.extend({
   invited_user: DS.belongsTo('user', { async: true }),
   message: DS.belongsTo('message', { async: true }),
   status: DS.attr('string'),
-  belongsToMe: DS.attr('boolean', { defaultValue: false}),
 
   created_at: DS.attr(),
   updated_at: DS.attr(),

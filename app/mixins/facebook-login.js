@@ -71,65 +71,72 @@ export default Ember.Mixin.create({
 
     console.log('Welcome!  Fetching your information.... ');
 
-    // var self = this;
-    // var store = this.get('store');
-
   	FB.api('/me', {fields: 'id,email,first_name,last_name,picture.width(120).height(120),gender,friends'}, response => {
   		if( !response.error ) {
         console.log('Successful login for: ' + response.first_name + " " + response.last_name, response);
 
-        var user = this.store.query('user', { fb_id: response.id }).then(users => {
+        this.store.query('user', { fb_id: response.id }).then(users => {
+
+            var user = null;
 
             if(Ember.isEmpty(users)) {
               user = this.store.createRecord('user');
+              user.set('fb_id', response.id);
+              user.set('first_login', true);
+              user.set('last_login', new Date());
             }
             else {
               user = users.get('firstObject');
+              user.set('first_login', false);
+              user.set('last_login', user.get('updated_at'));
             }
 
-            user.set('fb_id', response.id);
             user.set('email', response.email);
             user.set('first_name', response.first_name);
             user.set('last_name', response.last_name);
-            user.set('img_url', response.picture.data.url);
-            user.set('gender', response.gender);
+            user.set('picture', response.picture.data.url);
 
-        //     user.save().then(user => {
-        //
+            user.save().then(user => {
               this.get('me').set('user', user);
-        //
-        //       self.loadFriends(me, response);
-        //     });
+              this.saveFriends(response, () => {
+                this.controllerFor('application').syncWithFB();
+              });
+            });
         });
-  		}
+      }
   		else {
   			console.log(response.error);
         this.transitionTo('login');
   		}
   	});
-  }
+  },
 
-  // loadFriends: function(me, response) {
-  //   console.log('friends', response["friends"]);
-  //   response.friends.data.forEach(friend => {
-  //     this.store.createRecord('friend', {
-  //       me: me,
-  //       long_fb_id: friend.id, // real user-id
-  //       name: friend.name,
-  //       img_url: 'http://graph.facebook.com/' + friend.id + '/picture',
-  //       isAlreadyPlaying: true
-  //     });
-  //   });
-  //   console.log('invitable_friends', response.invitable_friends);
-  //   response.invitable_friends.data.forEach(friend => {
-  //     this.store.createRecord('friend', {
-  //       me: me,
-  //       long_fb_id: friend.id, // seesion-id
-  //       name: friend.name,
-  //       img_url: friend.picture.data.url,
-  //       isAlreadyPlaying: false
-  //     });
-  //   });
-  // },
+  saveFriends: function(response, callback) {
+    console.log('friends', response["friends"]);
+    // for each friend
+    response.friends.data.forEach(friend => {
+      this.store.query('user', { fb_id: friend.id }).then(users => {
+        var user = null;
+        if(Ember.isEmpty(users)) {
+          user = this.store.createRecord('user', {
+            fb_id: friend.id // real user-id
+          });
+        }
+        else {
+          user = users.get('firstObject');
+        }
+        user.set('picture', 'http://graph.facebook.com/' + friend.id + '/picture');
+        user.save().then(user => {
+          this.store.createRecord('friend', {
+            user: user,
+            name: friend.name
+          });
+          if(callback) {
+            callback();
+          }
+        });
+      });
+    });
+  }
 
 });
