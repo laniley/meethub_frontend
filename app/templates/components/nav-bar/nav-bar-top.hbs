@@ -40,7 +40,7 @@
           </li>
         --}}
         <li>
-          {{#link-to 'index.friendships'}}
+          {{#link-to 'friends'}}
             <span>{{fa-icon "group" fixedWith=true}}</span>
             <span class="link-label hidden-sm">{{t 'friend.title'}}</span>
             {{#if hasUnseenNewFriendships}}
@@ -81,9 +81,6 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
             <div class="account_img_container">
               <img src={{me.user.content.picture}} class="account_img" />
-            </div>
-            <div class="account_name">
-              {{me.user.content.name}}
             </div>
           </a>
           <ul class="dropdown-menu" role="menu">

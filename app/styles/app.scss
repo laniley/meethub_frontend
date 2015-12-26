@@ -14,12 +14,12 @@
 @import "new_comment";
 @import "main-area-list";
 @import "bugreports";
-@import "dashboard";
 @import "friends";
 
 html, body {
   margin: 0;
   width: 100%;
+  overflow: hidden;
 }
 
 body {
@@ -104,43 +104,30 @@ ul {
   padding: 3px;
 }
 
-.main-row {
+.main-container {
+  display: flex;
+  flex-direction:column;
+  align-items: center;
+
   position: absolute;
   top: 0;
-  bottom: 0;
   left: 0;
   right: 0;
+  bottom: 0;
 
-  margin: 0;
+  overflow: auto;
+
+  margin: -15px;
 
   @media (min-width: $screen-sm-min) {
-    margin-top: 70px;
+    margin-top: 75px;
   }
 
   @media (max-width: $screen-xs-max) {
-    margin-top: 50px;
+    margin-top: 55px;
   }
 
   margin-bottom: 50px;
-
-  .main-container {
-    position: absolute;
-    left: 0;
-    right: 400px;
-    top: 0px;
-    bottom: 0px;
-
-    &.closed {
-      right: 0;
-    }
-  }
-
-  .main-area {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    overflow: auto;
-  }
 }
 
 .main-area-list {

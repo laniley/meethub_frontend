@@ -240,12 +240,6 @@ box-shadow: 0px 8px 13px -5px rgba(0,0,0,0.75);
       @include all_browser(border-radius, 5px);
     }
   }
-  .account_name {
-    display: inline-block;
-    @media (max-width: $screen-xs-max) {
-      margin-left: 10px;
-    }
-  }
 }
 
 .info-counter {

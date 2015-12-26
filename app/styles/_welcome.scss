@@ -1,38 +1,18 @@
-.welcome-container {
+.greeting {
+  margin-bottom: 30px;
+  text-align: center;
 
   @media (max-width: $screen-xs-max) {
-    font-size: 2em;
-    // margin-top: 30px;
+    margin-top: 30px;
   }
 
   @media (min-width: $screen-sm-min) {
-    font-size: 3em;
-    // margin-top: 50px;
+    margin-top: 50px;
   }
 
-  a {
-    color: $mediumgrey;
-
-    &:hover {
-      text-decoration: none;
-    }
+  .fb-sync-icon {
+    font-size: 3rem;
   }
-
-  .fa-facebook-square {
-    font-size: 0.7em;
-  }
-}
-
-.greeting {
-  margin-bottom: 30px;
-
-   @media (max-width: $screen-xs-max) {
-      margin-top: 30px;
-    }
-
-    @media (min-width: $screen-sm-min) {
-      margin-top: 50px;
-    }
 }
 
 .summary-item {

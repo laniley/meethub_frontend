@@ -4,7 +4,7 @@ import Ember from 'ember';
 export default Ember.Mixin.create({
 
   me: null,
-  scope: 'public_profile,email,user_friends,publish_actions',
+  scope: 'public_profile,email,user_friends',
 
   login: function() {
     FB.login(() => { this.checkLoginState(); }, { scope: this.get('scope') });

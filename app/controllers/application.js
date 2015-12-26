@@ -306,14 +306,14 @@ export default Ember.Controller.extend({
           });
 
           event.save().then(event => {
-            this.handleFBMessage(response, event, status, user_fb_id);
+            this.handleFBMessage(response, event, event_status, user_fb_id);
           });
         });
 
       }
       else {
         event = events.get('firstObject');
-        this.handleFBMessage(response, event, status, user_fb_id);
+        this.handleFBMessage(response, event, event_status, user_fb_id);
       }
     });
   },
@@ -367,39 +367,55 @@ export default Ember.Controller.extend({
     var me = this.store.peekRecord('me', 1);
 
     me.get('user').then(user => {
-      this.store.query('message', { fb_id: event.get('fb_id'), to_user_id: user.get('id') }).then(message => {
-      // if message not already in the DB, create it
-        if(Ember.isEmpty(message)) {
+      this.store.query('message', { fb_id: event.get('fb_id'), to_user_id: user.get('id') }).then(messages => {
+        var message = null;
+        // if message not already in the DB, create it
+        if(Ember.isEmpty(messages)) {
           console.log('message not already in the DB');
-
           message = this.store.createRecord('message', {
             fb_id: event.get('fb_id'),
             subject: response.name,
             to_user: user
           });
-
           message.save().then(message => {
-              var eventInvitation = this.store.createRecord('eventInvitation', {
-                event: event,
-                invited_user: user,
-                status: status,
-                message: message
-              });
-
-              eventInvitation.save().then(eventInvitation => {
-                message.set('eventInvitation', eventInvitation);
-                if(callback) {
-                  callback();
-                }
-              });
+            this.handleEventInvitation(event, message, user, status, callback);
           });
         }
         // message already in the DB
         else {
+          message = messages.get('firstObject');
           console.log('message already in the DB', message);
-          if(callback) {
-            callback();
-          }
+          this.handleEventInvitation(event, message, user, status, callback);
+        }
+      });
+    });
+  },
+
+  handleEventInvitation: function(event, message, user, status, callback) {
+    this.store.query('eventInvitation', {
+      'event_id': event.get('id'),
+      'invited_user_id': user.get('id')
+    }).then(eventInvs => {
+      var eventInvitation = null;
+      if(Ember.isEmpty(eventInvs)) {
+        console.log('eventInvitation not already in the DB');
+        eventInvitation = this.store.createRecord('eventInvitation', {
+          event: event,
+          invited_user: user,
+          status: status,
+          message: message
+        });
+      }
+      else {
+        console.log('eventInvitation already in the DB');
+        eventInvitation = eventInvs.get('firstObject');
+        eventInvitation.set('message', message);
+      }
+
+      eventInvitation.save().then(eventInvitation => {
+        message.set('eventInvitation', eventInvitation);
+        if(callback) {
+          callback();
         }
       });
     });
