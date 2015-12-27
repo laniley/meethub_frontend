@@ -127,10 +127,14 @@ export default Ember.Mixin.create({
         }
         user.set('picture', 'http://graph.facebook.com/' + friend.id + '/picture');
         user.save().then(user => {
-          var aFriend = this.store.createRecord('friend', {
-            user: user,
-            name: friend.name
-          });
+          var aFriend = this.store.peekRecord('friend', user.get('id'));
+          if(Ember.isEmpty(aFriend)) {
+            aFriend = this.store.createRecord('friend', {
+              id: user.get('id'),
+              user: user,
+              name: friend.name
+            });
+          }
           var me = this.store.peekRecord('me', 1);
           me.get('friends').pushObject(aFriend);
           if(callback) {
