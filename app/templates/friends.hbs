@@ -1,29 +1,34 @@
-<div class="main-area">
-  <div class="main-container container-fluid dashboard {{isSidebarOpen:open:closed}}">
+{{!-- TITLE --}}
+<h1>{{t "friend.title"}}</h1>
 
-    <div class="row dashboard-title">
-      <span class="current-section">{{t "friend.title"}}</span>
-    </div>
-
-    <div class="row friends row-centered item-container">
-      <div class="col-centered">
-        {{#link-to 'friends' (query-params show_new=true)}}
-          <div class="summary-item {{hasUnseenNewFriends:highlight}}" title={{t "friend.new"}}>
-            {{#if hasUnseenNewFriends}}
-              <div class="section-icon {{hasUnseenNewFriends:has-unread-messages}}">
-                {{fa-icon "group"}}
-              </div>
-            {{else}}
-              <div class="section-icon">
-                {{fa-icon "group"}}
-              </div>
-            {{/if}}
-            <div class="type">{{fa-icon "plus"}}</div>
-            <div class="number">{{number_of_unseen_new_friends}}</div>
-          </div>
-        {{/link-to}}
+<div class="friends item-container">
+  {{#link-to 'friends' (query-params show_new=true)}}
+    <div class="summary-item {{hasUnseenNewFriends:highlight}}" title={{t "friend.new"}}>
+      <div class="section-icon {{hasUnseenNewFriends:has-unread-messages}}">
+        {{fa-icon "group"}}
       </div>
+      <div class="type">{{fa-icon "plus"}}</div>
+      <div class="number">{{number_of_unseen_new_friends}}</div>
     </div>
+  {{/link-to}}
+</div>
 
+<div class="main-area-list">
+  <div class="search no-padding align-left">
+    {{focused-input class="search-input" placeholder="Search..." value=search_term}}
   </div>
+  {{!-- INVITE --}}
+  <div class="item invite-fb-friends">
+    <button class="facebook-button" {{action "inviteFacebookFriends"}}>
+      {{fa-icon "facebook"}} | {{t "invite-friends-button"}}
+    </button>
+  </div>
+  {{#each search_results as |friend|}}
+    <div class="item" {{action 'openFriendship' friendship}}>
+      <img src={{friend.user.picture}} /> {{friend.name}}
+      {{#unless friendship.has_been_seen}}
+        <div class="new">{{t "new"}}</div>
+      {{/unless}}
+    </div>
+  {{/each}}
 </div>

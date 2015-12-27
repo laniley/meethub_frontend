@@ -31,6 +31,7 @@ h1 {
   font-family: Ethno_regular;
   font-size: 28px;
   color: $orange;
+  text-align: center;
 }
 
 .subtitle {
@@ -69,25 +70,6 @@ textarea {
   padding: 0 5px;
 }
 
-textarea:focus,
-input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="datetime"]:focus,
-input[type="datetime-local"]:focus,
-input[type="date"]:focus,
-input[type="month"]:focus,
-input[type="time"]:focus,
-input[type="week"]:focus,
-input[type="number"]:focus,
-input[type="email"]:focus,
-input[type="url"]:focus,
-input[type="search"]:focus,
-input[type="tel"]:focus,
-input[type="color"]:focus,
-.uneditable-input:focus {
-  border: 1px solid $blue;
-}
-
 ul {
   list-style: none;
   margin: 0;
@@ -118,16 +100,18 @@ ul {
   overflow: auto;
 
   margin: -15px;
+  margin-top: 55px;
+  margin-bottom: 50px;
+  padding: 0 25px;
 
   @media (min-width: $screen-sm-min) {
     margin-top: 75px;
+    padding: 0 20%;
   }
 
-  @media (max-width: $screen-xs-max) {
-    margin-top: 55px;
+  @media (min-width: $screen-lg-min) {
+    padding: 0 33.33333%;
   }
-
-  margin-bottom: 50px;
 }
 
 .main-area-list {
@@ -158,16 +142,6 @@ ul {
   i {
     color: $header-text-color;
   }
-}
-
-.row-centered {
-    text-align:center;
-}
-.col-centered {
-    display:inline-block;
-    float:none;
-    /* inline-block space fix */
-    margin-right:-4px;
 }
 
 .full-container {

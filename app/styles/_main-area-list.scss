@@ -1,10 +1,10 @@
 .main-area-list {
-}
-
-.main-area-list-item {
-  padding: 5px 0;
-  border-top: 1px solid $border-color;
-
+  font-size: 2rem;
+  width: 100%;
+  .item {
+    padding: 5px 0;
+    border-bottom: 1px solid $border-color;
+  }
   .filter-button {
     padding: 5px;
     display: inline-block;
@@ -14,18 +14,13 @@
       color: #000;
     }
   }
-
   .search {
-    width: 100%;
-    float: left;
-
     input {
       width: 100%;
       padding: 3px;
-      margin: 10px 0;
+      margin: 15px 0;
     }
   }
-
   .reset-search-button {
     position: absolute;
     display: inline-block;
