@@ -384,7 +384,7 @@ export default Ember.Controller.extend({
         // message already in the DB
         else {
           message = messages.get('firstObject');
-          console.log('message already in the DB', message);
+          console.log('message already in the DB');
           this.handleEventInvitation(event, message, user, status, callback);
         }
       });
