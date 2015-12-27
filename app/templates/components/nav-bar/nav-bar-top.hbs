@@ -20,6 +20,12 @@
       {{!-- CENTER AREA / TOP-NAV-BAR --}}
       <ul class="nav navbar-nav center-links">
         <li>
+          {{#link-to 'index'}}
+            <span>{{fa-icon "envelope" fixedWith=true}}</span>
+            <span class="link-label hidden-sm">News</span>
+          {{/link-to}}
+        </li>
+        <li>
           {{#link-to 'index.events'}}
             <span>{{fa-icon "calendar" fixedWith=true}}</span>
             <span class="link-label hidden-sm">{{t 'calendar'}}</span>
