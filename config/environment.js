@@ -10,7 +10,6 @@ module.exports = function(environment) {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
-        I18N_TRANSLATE_HELPER_SPAN: false
       }
     },
 
@@ -20,7 +19,6 @@ module.exports = function(environment) {
       defaultLocale: 'US-en'
     },
 
-    // for the FB-SDK
     contentSecurityPolicy: {
       'default-src': "'none'",
       'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net facebook.com graph.facebook.com maps.googleapis.com maps.gstatic.com mt0.googleapis.com mt1.googleapis.com http://www.google-analytics.com/analytics.js",
@@ -33,13 +31,7 @@ module.exports = function(environment) {
     }
   };
 
-
-  // ENV['simple-auth'] = {
-  //     authorizer: 'authorizer:custom',
-  //     routeAfterAuthentication: 'members-area',
-  //     routeIfAlreadyAuthenticated: 'members-area',
-  //     store: 'simple-auth-session-store:local-storage'
-  // };
+  ENV.i18n = { defaultLocale: 'en' };
 
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;

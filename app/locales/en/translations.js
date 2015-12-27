@@ -1,4 +1,4 @@
-Em.I18n.translations = {
+export default {
   "welcome": {
     "first-login": {
       "greeting": "Welcome to Meethub."
