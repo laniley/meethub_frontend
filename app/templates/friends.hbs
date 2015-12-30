@@ -1,24 +1,12 @@
 {{!-- TITLE --}}
 <h1>{{t "friend.title"}}</h1>
 
-<div class="friends item-container">
-  {{#link-to 'friends' (query-params show_new=true)}}
-    <div class="summary-item {{hasUnseenNewFriends:highlight}}" title={{t "friend.new"}}>
-      <div class="section-icon {{hasUnseenNewFriends:has-unread-messages}}">
-        {{fa-icon "group"}}
-      </div>
-      <div class="type">{{fa-icon "plus"}}</div>
-      <div class="number">{{number_of_unseen_new_friends}}</div>
-    </div>
-  {{/link-to}}
-</div>
-
 <div class="main-area-list">
-  <div class="search no-padding align-left">
+  <div class="search align-left">
     {{focused-input class="search-input" placeholder="Search..." value=search_term}}
   </div>
   {{!-- INVITE --}}
-  <div class="item invite-fb-friends">
+  <div class="invite-fb-friends">
     <button class="facebook-button" {{action "inviteFacebookFriends"}}>
       {{fa-icon "facebook"}} | {{t "invite-friends-button"}}
     </button>
