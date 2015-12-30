@@ -40,6 +40,6 @@
     "ember-export-application-global": "^1.0.5",
     "ember-google-map": "0.0.20",
     "ember-i18n": "4.2.0",
-    "ember-truth-helpers": "1.1.0"
+    "ember-truth-helpers": "1.2.0"
   }
 }

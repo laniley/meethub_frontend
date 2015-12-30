@@ -2,8 +2,25 @@
   font-size: 2rem;
   width: 100%;
   .item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: 5px 0;
     border-bottom: 1px solid $border-color;
+    &:nth-of-type(1) {
+      border-top: 1px solid $border-color;
+    }
+    &:hover {
+      color: black;
+      cursor: pointer;
+    }
+    .icon {
+      margin-left: 5px;
+      margin-right: 20px;
+    }
+    .subject {
+      flex-grow: 2;
+    }
   }
   .filter-button {
     padding: 5px;

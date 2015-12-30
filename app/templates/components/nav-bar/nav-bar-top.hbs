@@ -22,13 +22,13 @@
         <li>
           {{#link-to 'index'}}
             <span>{{fa-icon "envelope" fixedWith=true}}</span>
-            <span class="link-label hidden-sm">News</span>
+            <span class="link-label hidden-sm">{{t "messages.title"}}</span>
           {{/link-to}}
         </li>
         <li>
-          {{#link-to 'index.events'}}
+          {{#link-to 'events'}}
             <span>{{fa-icon "calendar" fixedWith=true}}</span>
-            <span class="link-label hidden-sm">{{t 'calendar'}}</span>
+            <span class="link-label hidden-sm">{{t 'event.title'}}</span>
             {{#if hasUnreadEventInvitations}}
               <span class="info-counter">{{number_of_new_event_invitations}}</span>
             {{/if}}

@@ -94,7 +94,7 @@ export default Ember.Mixin.create({
             user.set('email', response.email);
             user.set('first_name', response.first_name);
             user.set('last_name', response.last_name);
-            user.set('picture', response.picture.data.url);
+            user.set('picture', 'http://graph.facebook.com/' + response.id + '/picture');
 
             user.save().then(user => {
               this.get('me').set('user', user);
@@ -116,30 +116,36 @@ export default Ember.Mixin.create({
     // for each friend
     response.friends.data.forEach(friend => {
       this.store.query('user', { fb_id: friend.id }).then(users => {
-        var user = null;
+        var user_friend = null;
         if(Ember.isEmpty(users)) {
-          user = this.store.createRecord('user', {
+          user_friend = this.store.createRecord('user', {
             fb_id: friend.id // real user-id
           });
         }
         else {
-          user = users.get('firstObject');
+          user_friend = users.get('firstObject');
         }
-        user.set('picture', 'http://graph.facebook.com/' + friend.id + '/picture');
-        user.save().then(user => {
-          var aFriend = this.store.peekRecord('friend', user.get('id'));
-          if(Ember.isEmpty(aFriend)) {
-            aFriend = this.store.createRecord('friend', {
-              id: user.get('id'),
-              user: user,
-              name: friend.name
+        user_friend.set('picture', 'http://graph.facebook.com/' + friend.id + '/picture');
+        user_friend.save().then(user_friend => {
+        var me = this.store.peekRecord('me', 1);
+          this.store.query('friend', { 'user_id': me.get('user').get('id'), 'friend_id': user_friend.get('id') }).then(friends => {
+            var aFriend = null;
+            if(Ember.isEmpty(friends)) {
+              aFriend = this.store.createRecord('friend', {
+                user: me.get('user'),
+                friend: user_friend,
+                name: friend.name
+              });
+            }
+            else {
+              aFriend = friends.get('firstObject');
+            }
+            aFriend.save().then(() => {
+              if(callback) {
+                callback();
+              }
             });
-          }
-          var me = this.store.peekRecord('me', 1);
-          me.get('friends').pushObject(aFriend);
-          if(callback) {
-            callback();
-          }
+          });
         });
       });
     });

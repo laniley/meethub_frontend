@@ -46,6 +46,7 @@ Router.map(function() {
     });
 
   });
+  this.route('events');
   this.route('friends');
   this.route('privacy-policy');
 });

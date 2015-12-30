@@ -11,6 +11,11 @@ export default {
     "meethub-comments": "neue Meethub-Kommentare",
     "meethub-event-infos": "neue Social-Point-Updates"
   },
+  "event": {
+    "title": "Events",
+    "one": "ein Event",
+    "other": "{{count}} Events"
+  },
   "friend": {
     "title": "Freunde",
     "one": "Freund",

@@ -1,14 +1,23 @@
 /* global FB */
 import Ember from 'ember';
+import DS from 'ember-data';
 
 export default Ember.Controller.extend({
   search_term: '',
 
   search_results: function() {
-    return this.get('model').get('friends').filter(friend => {
-      return friend.get('name').toLowerCase().indexOf(this.get('search_term').toLowerCase()) !== -1;
+    return DS.PromiseArray.create({
+      promise: this.get('model').get('user').then(user => {
+        if(!Ember.isEmpty(user)) {
+          return user.get('friends').then(friends => {
+            return friends.filter(friend => {
+              return friend.get('name').toLowerCase().indexOf(this.get('search_term').toLowerCase()) !== -1;
+            });
+          });
+        }
+      })
     });
-  }.property('search_term','model.friends.[]'),
+  }.property('search_term','model.user.friends.content.[]'),
 
   searchIsEmpty: function() {
     if(this.get('search_term') !== '') {

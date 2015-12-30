@@ -25,10 +25,12 @@
   </div>
   {{#each search_results as |friend|}}
     <div class="item" {{action 'openFriendship' friendship}}>
-      <img src={{friend.user.picture}} /> {{friend.name}}
-      {{#unless friendship.has_been_seen}}
-        <div class="new">{{t "new"}}</div>
-      {{/unless}}
+      <img src={{friend.friend.picture}} /> {{friend.name}}
+      <div class="new">
+        {{#unless friendship.has_been_seen}}
+          {{t "new"}}
+        {{/unless}}
+      </div>
     </div>
   {{/each}}
 </div>
