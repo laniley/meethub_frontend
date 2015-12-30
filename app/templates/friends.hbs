@@ -20,5 +20,15 @@
         {{/unless}}
       </div>
     </div>
+  {{else}}
+    <div class="greeting">
+      <div class="fb-sync-icon is-syncing">
+        <span class="fa-stack fa-2x">
+          {{fa-icon "refresh" spin=true stack=2 size=3}}
+          {{fa-icon "facebook-square" stack=1}}
+        </span>
+      </div>
+      <div class="fb-sync-text"><h3>Syncing your friends and events with facebook.<br />Please wait...</h3></div>
+    </div>
   {{/each}}
 </div>
