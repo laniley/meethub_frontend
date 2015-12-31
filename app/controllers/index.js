@@ -3,6 +3,8 @@ import DS from 'ember-data';
 
 export default Ember.Controller.extend({
 
+  queryParams: ['show_events', 'show_friends'],
+
   sorted_messages: function() {
     return Ember.ArrayProxy.extend(Ember.SortableMixin).create({
       sortProperties: ['created_at'],
@@ -44,6 +46,16 @@ export default Ember.Controller.extend({
         return computed_messages;
       })
     });
-  }.property('model.user.content.friends.content','model.user.content.eventInvitations.content')
+  }.property('model.user.content.friends.content','model.user.content.eventInvitations.content'),
 
+  actions: {
+    toggleQueryParam: function(param) {
+      if(this.get(param) === false || this.get(param) === 'false') {
+        this.set(param, true);
+      }
+      else {
+        this.set(param, false);
+      }
+    }
+  }
 });

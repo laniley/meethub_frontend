@@ -3,20 +3,12 @@
 
 {{!-- FILTERS --}}
 <div class="filter-container">
-  {{#link-to 'index.events'}}
-    <div class="main-area-list-filter {{hasUnreadEventInvitations:highlight}}" title={{t "welcome.event-invitations"}}>
-      <div class="section-icon {{hasUnreadEventInvitations:has-unread-messages}}">
-        {{fa-icon "calendar"}}
-      </div>
-    </div>
-  {{/link-to}}
-  {{#link-to 'friends' (query-params show_new=true)}}
-    <div class="main-area-list-filter {{hasUnseenNewFriendships:highlight}}" title={{t "friend.new"}}>
-      <div class="section-icon {{hasUnseenNewFriendships:has-unread-messages}}">
-        {{fa-icon "group"}}
-      </div>
-    </div>
-  {{/link-to}}
+  <div class="main-area-list-filter" title={{t "welcome.event-invitations"}} {{action "toggleQueryParam" "show_events"}}>
+    {{fa-icon "calendar"}}
+  </div>
+  <div class="main-area-list-filter" title={{t "friend.new"}} {{action "toggleQueryParam" "show_friends"}}>
+    {{fa-icon "group"}}
+  </div>
 </div>
 <div class="main-area-list">
   {{#each sorted_messages as |message|}}
