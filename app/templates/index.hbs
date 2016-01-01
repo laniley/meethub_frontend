@@ -1,49 +1,53 @@
 {{!-- TITLE --}}
 <h1>{{t "messages.title"}}</h1>
 
-{{!-- FILTERS --}}
-<div class="filter-container">
-  <div class="main-area-list-filter {{if (eq show_events 'true') 'active'}}" title={{t "welcome.event-invitations"}} {{action "toggleQueryParam" "show_events"}}>
-    {{fa-icon "calendar"}}
+{{#if (or model.isSyncingWithFB filtered_messages.isPending)}}
+  <div class="greeting">
+    <div class="fb-sync-icon is-syncing">
+      <span class="fa-stack fa-2x">
+        {{fa-icon "refresh" spin=true stack=2 size=3}}
+        {{fa-icon "facebook-square" stack=1}}
+      </span>
+    </div>
+    <div class="fb-sync-text"><h3>Syncing your friends and events with facebook.<br />Please wait...</h3></div>
   </div>
-  <div class="main-area-list-filter {{if (eq show_friends 'true') 'active'}}" title={{t "friend.new"}} {{action "toggleQueryParam" "show_friends"}}>
-    {{fa-icon "group"}}
+{{else}}
+  {{!-- FILTERS --}}
+  <div class="filter-container">
+    <div class="main-area-list-filter {{if (eq show_events 'true') 'active'}}" title={{t "welcome.event-invitations"}} {{action "toggleQueryParam" "show_events"}}>
+      {{fa-icon "calendar"}}
+    </div>
+    <div class="main-area-list-filter {{if (eq show_friends 'true') 'active'}}" title={{t "friend.new"}} {{action "toggleQueryParam" "show_friends"}}>
+      {{fa-icon "group"}}
+    </div>
   </div>
-</div>
-<div class="main-area-list">
-  {{#each sorted_messages.arrangedContent as |message|}}
-    <div class="item" {{action 'toggleMessage' message}}>
-      <div class="icon">
-        {{#if (eq message.message_type 'event')}}
-          {{fa-icon "calendar"}}
-        {{else}}
-          {{#if (eq message.message_type 'friend')}}
-            {{fa-icon "group"}}
+  <div class="main-area-list">
+    {{#each sorted_messages.arrangedContent as |message|}}
+      <div class="item" {{action 'toggleMessage' message}}>
+        <div class="icon">
+          {{#if (eq message.message_type 'event')}}
+            {{fa-icon "calendar"}}
           {{else}}
-            {{fa-icon "envelope"}}
+            {{#if (eq message.message_type 'friend')}}
+              {{fa-icon "group"}}
+            {{else}}
+              {{fa-icon "envelope"}}
+            {{/if}}
           {{/if}}
+        </div>
+        {{!-- <div class="date_of_creation">{{message.reference_object.created_at}}</div> --}}
+        {{#if (eq message.message_type 'friend')}}
+          <img src={{message.reference_object.friend.picture}} />
         {{/if}}
+        <div class="subject">{{message.subject}}</div>
+        <div class="new">
+          {{#unless message.reference_object.has_been_read}}
+            {{t "new"}}
+          {{/unless}}
+        </div>
       </div>
-      {{!-- <div class="date_of_creation">{{message.reference_object.created_at}}</div> --}}
-      {{#if (eq message.message_type 'friend')}}
-        <img src={{message.reference_object.friend.picture}} />
-      {{/if}}
-      <div class="subject">{{message.subject}}</div>
-      <div class="new">
-        {{#unless message.reference_object.has_been_read}}
-          {{t "new"}}
-        {{/unless}}
-      </div>
-    </div>
-  {{else}}
-    <div class="greeting">
-      <div class="fb-sync-icon is-syncing">
-        <span class="fa-stack fa-2x">
-          {{fa-icon "refresh" spin=true stack=2 size=3}}
-          {{fa-icon "facebook-square" stack=1}}
-        </span>
-      </div>
-      <div class="fb-sync-text"><h3>Syncing your friends and events with facebook.<br />Please wait...</h3></div>
-    </div>
-  {{/each}}
-</div>
+    {{else}}
+      No results found.
+    {{/each}}
+  </div>
+{{/if}}

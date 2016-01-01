@@ -9,9 +9,19 @@ export default Ember.Controller.extend({
     return Ember.ArrayProxy.extend(Ember.SortableMixin).create({
       sortProperties: ['created_at'],
       sortAscending: false,
-      content: this.get('computed_messages.content')
+      content: this.get('filtered_messages.content')
     });
-  }.property('computed_messages.[]'),
+  }.property('filtered_messages.[]'),
+
+  filtered_messages: function() {
+    return DS.PromiseArray.create({
+      promise: this.get('computed_messages').then(computed_messages => {
+        return computed_messages.filter(message => {
+          return (this.get('show_events') === 'true' && message.message_type === 'event') || (this.get('show_friends') === 'true' && message.message_type === 'friend');
+        });
+      })
+    });
+  }.property('computed_messages.[]', 'show_events', 'show_friends'),
 
   computed_messages: function() {
     var computed_messages = [];
