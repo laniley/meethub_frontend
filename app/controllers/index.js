@@ -4,6 +4,8 @@ import DS from 'ember-data';
 export default Ember.Controller.extend({
 
   queryParams: ['show_events', 'show_friends'],
+  show_events: true,
+  show_friends: true,
 
   sorted_messages: function() {
     return Ember.ArrayProxy.extend(Ember.SortableMixin).create({
@@ -17,7 +19,7 @@ export default Ember.Controller.extend({
     return DS.PromiseArray.create({
       promise: this.get('computed_messages').then(computed_messages => {
         return computed_messages.filter(message => {
-          return (this.get('show_events') === 'true' && message.message_type === 'event') || (this.get('show_friends') === 'true' && message.message_type === 'friend');
+          return (this.get('show_events') && message.message_type === 'event') || (this.get('show_friends') && message.message_type === 'friend');
         });
       })
     });
@@ -60,12 +62,7 @@ export default Ember.Controller.extend({
 
   actions: {
     toggleQueryParam: function(param) {
-      if(this.get(param) === 'false') {
-        this.set(param, 'true');
-      }
-      else {
-        this.set(param, 'false');
-      }
+      this.toggleProperty(param);
     }
   }
 });
