@@ -1,16 +1,4 @@
 export default {
-  "welcome": {
-    "first-login": {
-      "greeting": "Willkommen bei Meethub."
-    },
-    "not-first-login": {
-      "greeting": "Willkommen zurück."
-    },
-    "meethub-invitations": "neue Meethub-Einladungen",
-    "event-invitations": "neue Events",
-    "meethub-comments": "neue Meethub-Kommentare",
-    "meethub-event-infos": "neue Social-Point-Updates"
-  },
   "event": {
     "title": "Events",
     "one": "ein Event",
@@ -51,6 +39,7 @@ export default {
       "event-inv-filter": "Event-Einladungen"
     }
   },
+  "no_results": "Keine Ergebnisse.",
   "participants": {
     "title": "Deine Freunde:",
     "attending": "{{participant}} nimmt teil!",
@@ -89,5 +78,17 @@ export default {
   "declined-me": "Du nimmst nicht teil",
   "not_replied": "{{name}} hat sich noch nicht entschieden",
   "resync-with-fb": "ReSync mit facebook",
-  "new": "neu"
+  "new": "neu",
+  "welcome": {
+    "first-login": {
+      "greeting": "Willkommen bei Meethub."
+    },
+    "not-first-login": {
+      "greeting": "Willkommen zurück."
+    },
+    "meethub-invitations": "neue Meethub-Einladungen",
+    "event-invitations": "neue Events",
+    "meethub-comments": "neue Meethub-Kommentare",
+    "meethub-event-infos": "neue Social-Point-Updates"
+  }
 };
