@@ -29,8 +29,7 @@
   width: 100%;
   .item {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
     padding: 5px 0;
     border-bottom: 1px solid $border-color;
     &:nth-of-type(1) {
@@ -45,6 +44,19 @@
       margin-left: 5px;
       margin-right: 20px;
     }
+    .info {
+      display: flex;
+      margin-right: 15px;
+      &.active {
+        color: $blue;
+      }
+      &.highlight {
+        color: $orange;
+      }
+      i {
+        margin-right: 5px;
+      }
+    }
     img {
       width: 30px;
       margin-right: 10px;
@@ -56,6 +68,11 @@
       color: $orange;
       font-weight: bold;
     }
+  }
+  .message-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
   }
   .search {
     input {

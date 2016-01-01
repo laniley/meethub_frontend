@@ -32,24 +32,26 @@ export default Ember.Controller.extend({
         if(!Ember.isEmpty(user)) {
           user.get('friends').then(friends => {
             friends.forEach(friend => {
-              var computed_message = {
+              var computed_message = Ember.Object.create({
                 message_type: 'friend',
                 subject: friend.get('name'),
+                is_open: false,
                 created_at: friend.get('created_at'),
                 reference_object: friend
-              };
+              });
               computed_messages.pushObject(computed_message);
             });
           });
           user.get('eventInvitations').then(eventInvitations => {
             eventInvitations.forEach(eventInvitation => {
               eventInvitation.get('event').then(event => {
-                var computed_message = {
+                var computed_message = Ember.Object.create({
                   message_type: 'event',
                   subject: event.get('name'),
+                  is_open: false,
                   created_at: eventInvitation.get('created_at'),
                   reference_object: eventInvitation
-                };
+                });
                 computed_messages.pushObject(computed_message);
               });
             });
@@ -60,9 +62,37 @@ export default Ember.Controller.extend({
     });
   }.property('model.user.content.friends.content','model.user.content.eventInvitations.content'),
 
+  social_points_threshold: function() {
+    var max_social_points = 0;
+    return DS.PromiseObject.create({
+      promise: this.get('model').get('user').then(user => {
+        if(!Ember.isEmpty(user)) {
+          var events = user.get('eventInvitations').mapBy('event');
+          events.forEach(event => {
+            if(event.get('content').get('social_points') > max_social_points) {
+              max_social_points = event.get('content').get('social_points');
+            }
+          });
+          return max_social_points / 2;
+        }
+        else {
+          return max_social_points / 2;
+        }
+      })
+    });
+  }.property('model.user.content.eventInvitations.content'),
+
   actions: {
     toggleQueryParam: function(param) {
       this.toggleProperty(param);
+    },
+    toggleMessage: function(message) {
+      if(message.get('is_open')) {
+        message.set('is_open', false);
+      }
+      else {
+        message.set('is_open', true);
+      }
     }
   }
 });
