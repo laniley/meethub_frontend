@@ -3,15 +3,15 @@
 
 {{!-- FILTERS --}}
 <div class="filter-container">
-  <div class="main-area-list-filter" title={{t "welcome.event-invitations"}} {{action "toggleQueryParam" "show_events"}}>
+  <div class="main-area-list-filter {{if (eq show_events 'true') 'active'}}" title={{t "welcome.event-invitations"}} {{action "toggleQueryParam" "show_events"}}>
     {{fa-icon "calendar"}}
   </div>
-  <div class="main-area-list-filter" title={{t "friend.new"}} {{action "toggleQueryParam" "show_friends"}}>
+  <div class="main-area-list-filter {{if (eq show_friends 'true') 'active'}}" title={{t "friend.new"}} {{action "toggleQueryParam" "show_friends"}}>
     {{fa-icon "group"}}
   </div>
 </div>
 <div class="main-area-list">
-  {{#each sorted_messages as |message|}}
+  {{#each sorted_messages.arrangedContent as |message|}}
     <div class="item" {{action 'toggleMessage' message}}>
       <div class="icon">
         {{#if (eq message.message_type 'event')}}

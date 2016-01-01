@@ -50,11 +50,11 @@ export default Ember.Controller.extend({
 
   actions: {
     toggleQueryParam: function(param) {
-      if(this.get(param) === false || this.get(param) === 'false') {
-        this.set(param, true);
+      if(this.get(param) === 'false') {
+        this.set(param, 'true');
       }
       else {
-        this.set(param, false);
+        this.set(param, 'false');
       }
     }
   }
