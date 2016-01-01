@@ -10,7 +10,7 @@ export default Ember.Route.extend( FacebookLoginMixin, {
     var me = this.store.peekRecord('me', 1);
 
     if(Ember.isEmpty(me)) {
-      return this.store.createRecord('me', { id: 1, isLoggedIn: false });
+      return this.store.createRecord('me', { id: 1 });
     }
     else {
       return me;
