@@ -26,16 +26,53 @@ export default Ember.Controller.extend({
 
     var finished_requests = 0;
 
-    FB.api('/me/events/attending', response => {
-      if( !response.error ) {
-        console.log('user events - attending: ', response);
-          var attending_reponses = response.data.length;
-          var finished_attending_responses = 0;
+    var me = this.store.peekRecord('me', 1);
+
+    me.get('user').then(user => {
+      FB.api('/me/events/attending', response => {
+        if( !response.error ) {
+          console.log('user events - attending: ', response);
+            var attending_reponses = response.data.length;
+            var finished_attending_responses = 0;
+            if(response.data.length > 0) {
+              for(var i = 0; i < response.data.length; i++) {
+                this.handleFBEventResponse(true, response.data[i], 'attending', user, () => {
+                  finished_attending_responses++;
+                  if(finished_attending_responses === attending_reponses) {
+                    finished_requests++;
+                    if(finished_requests === 3) {
+                      callback();
+                    }
+                  }
+                });
+              }
+            }
+            else {
+              finished_requests++;
+              if(finished_requests === 3) {
+                callback();
+              }
+            }
+          }
+        else {
+          console.log(response.error);
+          finished_requests++;
+          if(finished_requests === 3) {
+            callback();
+          }
+        }
+      });
+      FB.api('/me/events/maybe', response => {
+        if( !response.error ) {
+          console.log('user events - maybe: ', response);
+          var maybe_reponses = response.data.length;
+          var finished_maybe_responses = 0;
+
           if(response.data.length > 0) {
             for(var i = 0; i < response.data.length; i++) {
-              this.handleFBEventResponse(response.data[i], 'attending', 'me', () => {
-                finished_attending_responses++;
-                if(finished_attending_responses === attending_reponses) {
+              this.handleFBEventResponse(true, response.data[i], 'maybe', user, () => {
+                finished_maybe_responses++;
+                if(finished_maybe_responses === maybe_reponses) {
                   finished_requests++;
                   if(finished_requests === 3) {
                     callback();
@@ -51,84 +88,49 @@ export default Ember.Controller.extend({
             }
           }
         }
-      else {
-        console.log(response.error);
-        finished_requests++;
-        if(finished_requests === 3) {
-          callback();
-        }
-      }
-    });
-
-    FB.api('/me/events/maybe', response => {
-      if( !response.error ) {
-        console.log('user events - maybe: ', response);
-        var maybe_reponses = response.data.length;
-        var finished_maybe_responses = 0;
-
-        if(response.data.length > 0) {
-          for(var i = 0; i < response.data.length; i++) {
-            this.handleFBEventResponse(response.data[i], 'maybe', 'me', () => {
-              finished_maybe_responses++;
-              if(finished_maybe_responses === maybe_reponses) {
-                finished_requests++;
-                if(finished_requests === 3) {
-                  callback();
-                }
-              }
-            });
-          }
-        }
-        else {
+        else
+        {
+          console.log(response.error);
           finished_requests++;
           if(finished_requests === 3) {
             callback();
           }
         }
-      }
-      else
-      {
-        console.log(response.error);
-        finished_requests++;
-        if(finished_requests === 3) {
-          callback();
-        }
-      }
-    });
+      });
+      FB.api('/me/events/not_replied', response => {
+        if( !response.error ) {
+          console.log('user events - not_replied: ', response);
+          var not_replied_reponses = response.data.length;
+          var finished_not_replied_responses = 0;
 
-    FB.api('/me/events/not_replied', response => {
-      if( !response.error ) {
-        console.log('user events - not_replied: ', response);
-        var not_replied_reponses = response.data.length;
-        var finished_not_replied_responses = 0;
-
-        if(response.data.length > 0) {
-          for(var i = 0; i < response.data.length; i++) {
-            this.handleFBEventResponse(response.data[i], 'not_replied', 'me', () => {
-              finished_not_replied_responses++;
-              if(finished_not_replied_responses === not_replied_reponses) {
-                finished_requests++;
-                if(finished_requests === 3) {
-                  callback();
+          if(response.data.length > 0) {
+            for(var i = 0; i < response.data.length; i++) {
+              this.handleFBEventResponse(true, response.data[i], 'not_replied', user, () => {
+                finished_not_replied_responses++;
+                if(finished_not_replied_responses === not_replied_reponses) {
+                  finished_requests++;
+                  if(finished_requests === 3) {
+                    callback();
+                  }
                 }
-              }
-            });
+              });
+            }
+          }
+          else {
+            finished_requests++;
+            if(finished_requests === 3) {
+              callback();
+            }
           }
         }
         else {
+          console.log(response.error);
           finished_requests++;
           if(finished_requests === 3) {
             callback();
           }
         }
-      }
-      else {
-        console.log(response.error);
-        finished_requests++;
-        if(finished_requests === 3) {
-          callback();
-        }
-      }
+      });
     });
   },
 
@@ -150,24 +152,42 @@ export default Ember.Controller.extend({
     console.log('loading events of ' + friend.get('name'));
     var finished_request_types = 0;
     var number_of_request_types = 3;
-    FB.api('/' + friend.get('friend').get('fb_id') + '/events/attending', response => {
-      if( !response.error ) {
-        console.log('friend events - attending: ', response);
-        if(response.data.length > 0) {
-          for(var i = 0; i < response.data.length; i++) {
-            this.handleFBEventResponse(response.data[i], 'attending', friend.get('friend_fb_id'), () => {
-              if(i === response.data.length - 1) {
-                finished_request_types++;
-                if(finished_request_types === number_of_request_types) {
-                  if(callback) {
-                    callback();
+    friend.get('friend').then(friend => {
+      FB.api('/' + friend.get('fb_id') + '/events/attending', response => {
+        if( !response.error ) {
+          console.log('friend events - attending: ', response);
+          if(response.data.length > 0) {
+            for(var i = 0; i < response.data.length; i++) {
+              var event_data = response.data[i];
+              // for the friend
+              this.handleFBEventResponse(true, event_data, 'attending', friend, () => {
+                if(i === response.data.length - 1) {
+                  finished_request_types++;
+                  if(finished_request_types === number_of_request_types) {
+                    if(callback) {
+                      callback();
+                    }
                   }
                 }
+              });
+              // for me
+              var me = this.store.peekRecord('me', 1);
+              me.get('user').then(user => {
+                this.handleFBEventResponse(false, event_data, '', user);
+              });
+            }
+          }
+          else {
+            finished_request_types++;
+            if(finished_request_types === number_of_request_types) {
+              if(callback) {
+                callback();
               }
-            });
+            }
           }
         }
         else {
+          console.log(response.error);
           finished_request_types++;
           if(finished_request_types === number_of_request_types) {
             if(callback) {
@@ -175,35 +195,43 @@ export default Ember.Controller.extend({
             }
           }
         }
-      }
-      else {
-        console.log(response.error);
-        finished_request_types++;
-        if(finished_request_types === number_of_request_types) {
-          if(callback) {
-            callback();
-          }
-        }
-      }
-    });
-    FB.api('/' + friend.get('friend').get('fb_id') + '/events/maybe', response => {
-      if( !response.error ) {
-        console.log('friend events - maybe: ', response);
-        if(response.data.length > 0) {
-          for(var i = 0; i < response.data.length; i++) {
-            this.handleFBEventResponse(response.data[i], 'maybe', friend.get('friend_fb_id'), () => {
-              if(i === response.data.length - 1) {
-                finished_request_types++;
-                if(finished_request_types === number_of_request_types) {
-                  if(callback) {
-                    callback();
+      });
+      FB.api('/' + friend.get('fb_id') + '/events/maybe', response => {
+        if( !response.error ) {
+          console.log('friend events - maybe: ', response);
+          if(response.data.length > 0) {
+            for(var i = 0; i < response.data.length; i++) {
+              var event_data = response.data[i];
+              // for the friend
+              this.handleFBEventResponse(true, event_data, 'maybe', friend, () => {
+                if(i === response.data.length - 1) {
+                  finished_request_types++;
+                  if(finished_request_types === number_of_request_types) {
+                    if(callback) {
+                      callback();
+                    }
                   }
                 }
+              });
+              // for me
+              var me = this.store.peekRecord('me', 1);
+              me.get('user').then(user => {
+                this.handleFBEventResponse(false, event_data, '', user);
+              });
+            }
+          }
+          else {
+            finished_request_types++;
+            if(finished_request_types === number_of_request_types) {
+              if(callback) {
+                callback();
               }
-            });
+            }
           }
         }
-        else {
+        else
+        {
+          console.log(response.error);
           finished_request_types++;
           if(finished_request_types === number_of_request_types) {
             if(callback) {
@@ -211,36 +239,43 @@ export default Ember.Controller.extend({
             }
           }
         }
-      }
-      else
-      {
-        console.log(response.error);
-        finished_request_types++;
-        if(finished_request_types === number_of_request_types) {
-          if(callback) {
-            callback();
-          }
-        }
-      }
-    });
-    FB.api('/' + friend.get('friend').get('fb_id') + '/events/not_replied', response => {
-      if( !response.error ) {
-        console.log('friend events - not_replied: ', response);
-        if(response.data.length > 0) {
-          for(var i = 0; i < response.data.length; i++) {
-            this.handleFBEventResponse(response.data[i], 'not_replied', friend.get('fb_id'), () => {
-              if(i === response.data.length - 1) {
-                finished_request_types++;
-                if(finished_request_types === number_of_request_types) {
-                  if(callback) {
-                    callback();
+      });
+      FB.api('/' + friend.get('fb_id') + '/events/not_replied', response => {
+        if( !response.error ) {
+          console.log('friend events - not_replied: ', response);
+          if(response.data.length > 0) {
+            for(var i = 0; i < response.data.length; i++) {
+              var event_data = response.data[i];
+              // for the friend
+              this.handleFBEventResponse(true, event_data, 'not_replied', friend, () => {
+                if(i === response.data.length - 1) {
+                  finished_request_types++;
+                  if(finished_request_types === number_of_request_types) {
+                    if(callback) {
+                      callback();
+                    }
                   }
                 }
+              });
+              // for me
+              var me = this.store.peekRecord('me', 1);
+              me.get('user').then(user => {
+                this.handleFBEventResponse(false, event_data, '', user);
+              });
+            }
+          }
+          else {
+            finished_request_types++;
+            if(finished_request_types === number_of_request_types) {
+              if(callback) {
+                callback();
               }
-            });
+            }
           }
         }
-        else {
+        else
+        {
+          console.log(response.error);
           finished_request_types++;
           if(finished_request_types === number_of_request_types) {
             if(callback) {
@@ -248,21 +283,13 @@ export default Ember.Controller.extend({
             }
           }
         }
-      }
-      else
-      {
-        console.log(response.error);
-        finished_request_types++;
-        if(finished_request_types === number_of_request_types) {
-          if(callback) {
-            callback();
-          }
-        }
-      }
+      });
     });
   },
 
-  handleFBEventResponse: function(response, event_status, user_fb_id, callback) {
+  handleFBEventResponse: function(owned_by_user /* true or false */, response, event_status, invited_user, callback) {
+
+    // console.log('handleFBEventResponse', invited_user.get('id'));
 
     if(callback) {
       callback();
@@ -306,14 +333,14 @@ export default Ember.Controller.extend({
           });
 
           event.save().then(event => {
-            this.handleEventInvitation(event, event_status, callback);
+            this.handleEventInvitation(owned_by_user /* true or false */, event, event_status, invited_user, callback);
           });
         });
 
       }
       else {
         event = events.get('firstObject');
-        this.handleEventInvitation(event, event_status, callback);
+        this.handleEventInvitation(owned_by_user /* true or false */, event, event_status, invited_user, callback);
       }
     });
   },
@@ -362,61 +389,32 @@ export default Ember.Controller.extend({
     });
   },
 
-  // handleFBMessage: function(response, event, status, user_fb_id, callback) {
-  //
-  //   var me = this.store.peekRecord('me', 1);
-  //
-  //   me.get('user').then(user => {
-  //     this.store.query('message', { fb_id: event.get('fb_id'), to_user_id: user.get('id') }).then(messages => {
-  //       var message = null;
-  //       // if message not already in the DB, create it
-  //       if(Ember.isEmpty(messages)) {
-  //         console.log('message not already in the DB');
-  //         message = this.store.createRecord('message', {
-  //           fb_id: event.get('fb_id'),
-  //           subject: response.name,
-  //           to_user: user
-  //         });
-  //         message.save().then(message => {
-  //           this.handleEventInvitation(event, message, user, status, callback);
-  //         });
-  //       }
-  //       // message already in the DB
-  //       else {
-  //         message = messages.get('firstObject');
-  //         console.log('message already in the DB');
-  //         this.handleEventInvitation(event, message, user, status, callback);
-  //       }
-  //     });
-  //   });
-  // },
-
-  handleEventInvitation: function(event, status, callback) {
-    var me = this.store.peekRecord('me', 1);
-    me.get('user').then(user => {
-      this.store.query('eventInvitation', {
-        'event_id': event.get('id'),
-        'invited_user_id': user.get('id')
-      }).then(eventInvs => {
-        var eventInvitation = null;
-        if(Ember.isEmpty(eventInvs)) {
-          eventInvitation = this.store.createRecord('eventInvitation', {
-            event: event,
-            invited_user: user,
-            status: status
-          });
-          eventInvitation.save().then(() => {
-            if(callback) {
-              callback();
-            }
-          });
+  handleEventInvitation: function(owned_by_user /* true or false */, event, status, invited_user, callback) {
+    this.store.query('eventInvitation', {
+      'event_id': event.get('id'),
+      'invited_user_id': invited_user.get('id')
+    }).then(eventInvs => {
+      var eventInvitation = null;
+      if(Ember.isEmpty(eventInvs)) {
+        if(!owned_by_user) {
+          status = 'not_replied';
         }
-        else {
+        eventInvitation = this.store.createRecord('eventInvitation', {
+          event: event,
+          user: invited_user,
+          status: status
+        });
+        eventInvitation.save().then(() => {
           if(callback) {
             callback();
           }
+        });
+      }
+      else {
+        if(callback) {
+          callback();
         }
-      });
+      }
     });
   }
 });
