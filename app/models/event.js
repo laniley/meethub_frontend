@@ -27,5 +27,9 @@ export default DS.Model.extend({
 
   social_points: function() {
     return this.get('friends_attending').get('length') * 3 + this.get('friends_attending_maybe').get('length');
-  }.property('friends_attending.length', 'friends_attending_maybe.length')
+  }.property('friends_attending.length', 'friends_attending_maybe.length'),
+
+  start_time_converted: function() {
+    return this.get('start_time').substr(0,5);
+  }.property('start_time')
 });
