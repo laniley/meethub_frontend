@@ -1,0 +1,78 @@
+<div class="message-header" {{action 'toggleMessage'}}>
+  <div class="icon">
+    {{#if (eq message.message_type 'event')}}
+      {{fa-icon "calendar"}}
+    {{else}}
+      {{#if (eq message.message_type 'friend')}}
+        {{fa-icon "group"}}
+      {{else}}
+        {{fa-icon "envelope"}}
+      {{/if}}
+    {{/if}}
+  </div>
+  {{#if (eq message.message_type 'friend')}}
+    <img src={{message.reference_object.friend.picture}} />
+  {{else}}
+    <div class="info {{if (gt message.reference_object.event.social_points social_points_threshold.content) 'highlight'}} {{if (gt message.reference_object.event.social_points 0) 'active'}}">
+      <div>{{fa-icon "certificate"}}</div>
+      <div>{{message.reference_object.event.social_points}}</div>
+    </div>
+  {{/if}}
+  <div class="subject">{{message.subject}}</div>
+  <div class="new">
+    {{#unless message.reference_object.has_been_read}}
+      {{t "new"}}
+    {{/unless}}
+  </div>
+  {{!-- <div class="created-at">{{formatted-date message.created_at 'L'}}</div> --}}
+</div>
+{{#if message.is_open}}
+  <div class="message-body">
+    {{#if (eq message.message_type 'friend')}}
+    {{else}}
+      <div class="info-box-row question">
+        {{#if (eq message.reference_object.status 'accepted')}}
+          {{t 'attending-me'}}
+        {{else}}
+          {{#if (eq message.reference_object.status 'maybe')}}
+            {{t 'maybe-me'}}
+          {{else}}
+            {{#if (eq message.reference_object.status 'declined')}}
+              {{t 'declined-me'}}
+            {{else}}
+              {{t 'messages.event-participation-question'}}
+            {{/if}}
+          {{/if}}
+        {{/if}}
+      </div>
+      <div class="buttons">
+        <div class="button accept {{if (eq message.reference_object.status 'accepted') 'active'}}" {{action 'acceptEventInvitation' message.reference_object}} title={{t 'messages.accept'}}>{{fa-icon "check"}}</div>
+        <div class="button maybe {{if (eq message.reference_object.status 'maybe') 'active'}}" {{action 'maybeAcceptEventInvitation' message.reference_object}} title={{t 'messages.maybe'}}>{{fa-icon "question"}}</div>
+        <div class="button decline {{if (eq message.reference_object.status 'declined') 'active'}}" {{action 'declineEventInvitation' message.reference_object}} title={{t 'messages.decline'}}>{{fa-icon "remove"}}</div>
+      </div>
+      <div class="info-box-row start">
+        {{formatted-date message.reference_object.event.start_date 'L'}} - {{message.reference_object.event.start_time_converted}}
+      </div>
+      <div class="info-box-row location">
+        {{message.reference_object.event.location.name}}
+      </div>
+      <div class="info-box-row more_infos">
+        <a target="_blank" href="https://www.facebook.com/events/{{message.reference_object.event.fb_id}}/">{{t "go-to-facebook-page"}}</a>
+      </div>
+      <div class="info-box-row participants">
+        {{#if message.reference_object.hasConnectedFriends}}
+          <div class="row participants-title">{{t 'participants.title'}}</div>
+          {{#each friend in message.reference_object.event.friends_attending}}
+            <img class="attending" src={{friend.picture}} title={{t "attending" name=friend.name}} />
+          {{/each}}
+          {{#each friend in message.reference_object.event.friends_attending_maybe}}
+            <img class="attending-maybe" src={{friend.picture}} title={{t "maybe" name=friend.name}} />
+          {{/each}}
+          {{#each friend in message.reference_object.event.friends_declined}}
+            <img class="declined" src={{friend.picture}} title={{t "declined" name=friend.name}} />
+          {{/each}}
+        {{/if}}
+      </div>
+    {{/if}}
+  </div>
+{{/if}}

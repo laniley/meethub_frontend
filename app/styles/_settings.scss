@@ -1,51 +1,3 @@
-$yellow: #FAB31B;
-
-$orange: #de2c14;
-
-$lightred: #ffb3b3;
-
-$green: #2BBD41;
-$lightgreen: #B9E7BA;
-$darkgreen: darken($green, 10%);
-
-$lightblue: #99C4D5;
-$babyblue: #A9CCD7;
-// $blue: #2588AB;
-$blue: #167698;
-$darkblue: #2A2C4C;
-$fb-blue: #4865B4;
-
-$lightgrey: #e7e7e7;
-$mediumgrey: #777;
-$darkgrey: #4D5D62;
-
-$header-text-color: $orange;
-$text-color: $mediumgrey;
-$border-color: $lightgrey;
-$border-color-hover: $mediumgrey;
-
-$summery-border-color: #bcbcbc;
-$summery-border-color-hover: $mediumgrey;
-
-$active-item-color: $blue;
-$active-item-background-color: white;
-
-$link-color: $mediumgrey;
-$link-color-hover: #000;
-$link-color-active: $active-item-color;
-
-$input-color: #000;
-
-$unread-message-color: $darkgrey;
-
-$font-size-input: 18px;
-
-$side-navbar-width: 400px;
-
-$cancel-color: $orange;
-
-$divider-color: $blue;
-
 @font-face
 {
   font-family: Ethno_regular;
@@ -104,4 +56,3 @@ $divider-color: $blue;
     }
   }
 }
-

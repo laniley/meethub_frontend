@@ -1,3 +1,6 @@
+$list-item-background-color-active: lighten($babyblue, 10%);
+$list-item-background-color-hover: lighten($babyblue, 10%);
+
 .filter-container {
   margin-bottom: 10px;
   .main-area-list-filter {
@@ -30,49 +33,126 @@
   .item {
     display: flex;
     flex-direction: column;
-    padding: 5px 0;
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid #bfbfbf;
+    color: $blue;
     &:nth-of-type(1) {
-      border-top: 1px solid $border-color;
+      border-top: 1px solid #bfbfbf;
     }
-    &:hover {
-      color: black;
-      cursor: pointer;
-      // background-color: #f5f5f5;
+    &.open {
+      background-color: $list-item-background-color-active;
+      .message-body {
+        background-color: white;
+      }
     }
-    .icon {
-      margin-left: 5px;
-      margin-right: 20px;
+    &:not(.open) {
+      .message-header {
+        &:hover {
+          background-color: $list-item-background-color-hover;
+        }
+      }
     }
-    .info {
+    .message-header {
       display: flex;
-      margin-right: 15px;
-      &.active {
-        color: $blue;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 5px;
+      @media (max-width: $screen-xs-max) {
+        flex-wrap: wrap;
+        justify-content: flex-start;
       }
-      &.highlight {
+      &:hover {
+        cursor: pointer;
+      }
+      .icon {
+        margin-left: 5px;
+        margin-right: 20px;
+      }
+      .info {
+        display: flex;
+        margin-right: 15px;
+        &.active {
+          color: $blue;
+        }
+        &.highlight {
+          color: $orange;
+        }
+        i {
+          margin-right: 5px;
+        }
+      }
+      img {
+        width: 30px;
+        margin-right: 10px;
+      }
+      .subject {
+        flex-grow: 2;
+        @media (max-width: $screen-xs-max) {
+          order: 5;
+          width: 100%;
+          margin-top: 10px;
+        }
+      }
+      .new {
         color: $orange;
-      }
-      i {
-        margin-right: 5px;
+        font-weight: bold;
       }
     }
-    img {
-      width: 30px;
-      margin-right: 10px;
+    .message-body {
+      margin: 5px;
+      padding: 10px;
+      text-align: center;
+      line-height: 40px;
+      color: $text-color;
     }
-    .subject {
-      flex-grow: 2;
+    .buttons {
+      line-height: 30px;
+      padding: 15px;
     }
-    .new {
-      color: $orange;
-      font-weight: bold;
+    .button {
+      width: 20%;
+      margin: 0 1.66666%;
+      display: inline-block;
+      float: none;
+      &.accept {
+        border-color: $blue;
+        &.active {
+          background-color: $blue;
+          color: white;
+          cursor: default;
+        }
+        &:not(.active) {
+          &:hover {
+            color: $blue;
+          }
+        }
+      }
+      &.maybe {
+        border-color: $yellow;
+        &.active {
+          background-color: $yellow;
+          color: white;
+          cursor: default;
+        }
+        &:not(.active) {
+          &:hover {
+            color: darken($yellow, 10%);
+          }
+        }
+      }
+      &.decline {
+        border-color: $orange;
+        &.active {
+          background-color: $orange;
+          color: white;
+          cursor: default;
+        }
+        &:not(.active) {
+          &:hover {
+            color: $orange;
+          }
+        }
+      }
     }
-  }
-  .message-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
   }
   .search {
     input {

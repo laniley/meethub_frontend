@@ -85,14 +85,6 @@ export default Ember.Controller.extend({
   actions: {
     toggleQueryParam: function(param) {
       this.toggleProperty(param);
-    },
-    toggleMessage: function(message) {
-      if(message.get('is_open')) {
-        message.set('is_open', false);
-      }
-      else {
-        message.set('is_open', true);
-      }
     }
   }
 });

@@ -1,10 +1,11 @@
 import Ember from 'ember';
+// import ENV from '../config/environment';
 
 export function formattedDate(date, format) {
   var offset = new Date().getTimezoneOffset() * -1;
   return moment(date)
           .add(offset, 'm')
-          .locale(Ember.I18n.locale)
+          .locale(Ember.$.cookie( 'user-lang' ))
           .format(format);
 }
 
