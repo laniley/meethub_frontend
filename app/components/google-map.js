@@ -28,7 +28,8 @@ export var PLACE_TYPES = Ember.A([
  * @uses GoogleObjectMixin
  * @constructor
  */
-var GoogleMapComponent = Ember.Component.extend(GoogleObjectMixin, ResizeMixin, {
+export default Ember.Component.extend(GoogleObjectMixin, ResizeMixin, {
+
   classNames: ['google-map'],
 
   didInsertElement: function() {
@@ -308,5 +309,3 @@ var GoogleMapComponent = Ember.Component.extend(GoogleObjectMixin, ResizeMixin, 
     }
   })
 });
-
-export default GoogleMapComponent;
