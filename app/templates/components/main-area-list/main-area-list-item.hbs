@@ -13,9 +13,13 @@
   {{#if (eq message.message_type 'friend')}}
     <img src={{message.reference_object.friend.picture}} />
   {{else}}
-    <div class="info {{if (gt message.reference_object.event.social_points social_points_threshold.content) 'highlight'}} {{if (gt message.reference_object.event.social_points 0) 'active'}}">
-      <div>{{fa-icon "certificate"}}</div>
-      <div>{{message.reference_object.event.social_points}}</div>
+    <div class="info">
+      <div class="eventInv-status {{message.reference_object.status}}">
+        {{fa-icon "circle"}}
+      </div>
+      <div class="social-points {{if (gt message.reference_object.event.social_points social_points_threshold.content) 'highlight'}} {{if (gt message.reference_object.event.social_points 0) 'active'}}" title="Social Points">
+        <div>{{fa-icon "certificate"}}</div><div>{{message.reference_object.event.social_points}}</div>
+      </div>
     </div>
   {{/if}}
   <div class="subject">{{message.subject}}</div>
@@ -46,9 +50,9 @@
         {{/if}}
       </div>
       <div class="buttons">
-        <div class="button accept {{if (eq message.reference_object.status 'accepted') 'active'}}" {{action 'acceptEventInvitation' message.reference_object}} title={{t 'messages.accept'}}>{{fa-icon "check"}}</div>
-        <div class="button maybe {{if (eq message.reference_object.status 'maybe') 'active'}}" {{action 'maybeAcceptEventInvitation' message.reference_object}} title={{t 'messages.maybe'}}>{{fa-icon "question"}}</div>
-        <div class="button decline {{if (eq message.reference_object.status 'declined') 'active'}}" {{action 'declineEventInvitation' message.reference_object}} title={{t 'messages.decline'}}>{{fa-icon "remove"}}</div>
+        <div class="button accept {{if (eq message.reference_object.status 'attending') 'active'}}" {{action 'setEventInvitationStatus' message.reference_object 'attending'}} title={{t 'messages.accept'}}>{{fa-icon "check"}}</div>
+        <div class="button maybe {{if (eq message.reference_object.status 'maybe') 'active'}}" {{action 'setEventInvitationStatus' message.reference_object 'maybe'}} title={{t 'messages.maybe'}}>{{fa-icon "question"}}</div>
+        <div class="button decline {{if (eq message.reference_object.status 'declined') 'active'}}" {{action 'setEventInvitationStatus' message.reference_object 'declined'}} title={{t 'messages.decline'}}>{{fa-icon "remove"}}</div>
       </div>
       <div class="info-box-row start">
         {{formatted-date message.reference_object.event.start_date 'L'}} - {{message.reference_object.event.start_time_converted}}

@@ -14,6 +14,10 @@ export default Ember.Component.extend({
       else {
         this.get('message').set('is_open', true);
       }
+    },
+    setEventInvitationStatus: function(eventInvitation, status) {
+      eventInvitation.set('status', status);
+      eventInvitation.save();
     }
   }
 });

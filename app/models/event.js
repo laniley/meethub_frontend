@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import DS from 'ember-data';
 
 export default DS.Model.extend({
@@ -13,17 +14,27 @@ export default DS.Model.extend({
   created_at: DS.attr(),
   updated_at: DS.attr(),
 
-  friends_attending: function() {
-    return this.get('eventInvitations').filter(eventInvitation => {
-      return eventInvitation.get('status') === 'attending';
+  friends_attending: Ember.computed('eventInvitations.@each.status', function() {
+    var me = this.store.peekRecord('me', 1);
+    return DS.PromiseArray.create({
+      promise: me.get('user').then(user => {
+        return this.get('eventInvitations').filter(eventInvitation => {
+          return eventInvitation.get('status') === 'attending' && eventInvitation.get('user').get('id') !== user.get('id');
+        });
+      })
     });
-  }.property('eventInvitations.[].status'),
+  }),
 
-  friends_attending_maybe: function() {
-    return this.get('eventInvitations').filter(eventInvitation => {
-      return eventInvitation.get('status') === 'maybe';
+  friends_attending_maybe: Ember.computed('eventInvitations.@each.status', function() {
+    var me = this.store.peekRecord('me', 1);
+    return DS.PromiseArray.create({
+      promise: me.get('user').then(user => {
+        return this.get('eventInvitations').filter(eventInvitation => {
+          return eventInvitation.get('status') === 'maybe' && eventInvitation.get('user').get('id') !== user.get('id');
+        });
+      })
     });
-  }.property('eventInvitations.[].status'),
+  }),
 
   social_points: function() {
     return this.get('friends_attending').get('length') * 3 + this.get('friends_attending_maybe').get('length');

@@ -70,14 +70,21 @@ $list-item-background-color-hover: lighten($babyblue, 10%);
       .info {
         display: flex;
         margin-right: 15px;
-        &.active {
-          color: $blue;
+        color: $text-color;
+        .eventInv-status {
+          margin-right: 10px;
         }
-        &.highlight {
-          color: $orange;
-        }
-        i {
-          margin-right: 5px;
+        .social-points {
+          display: flex;
+          &.active {
+            color: $blue;
+          }
+          &.highlight {
+            color: $orange;
+          }
+          i {
+            margin-right: 5px;
+          }
         }
       }
       img {
