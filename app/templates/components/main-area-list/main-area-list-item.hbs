@@ -24,7 +24,7 @@
   {{/if}}
   <div class="subject">{{message.subject}}</div>
   <div class="new">
-    {{#unless message.reference_object.has_been_read}}
+    {{#unless message.reference_object.has_been_seen}}
       {{t "new"}}
     {{/unless}}
   </div>

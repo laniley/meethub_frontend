@@ -13,6 +13,10 @@ export default Ember.Component.extend({
       }
       else {
         this.get('message').set('is_open', true);
+        if(!this.get('message').get('reference_object').get('has_been_seen')) {
+          this.get('message').get('reference_object').set('has_been_seen', true);
+          this.get('message').get('reference_object').save();
+        }
       }
     },
     setEventInvitationStatus: function(eventInvitation, status) {

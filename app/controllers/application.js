@@ -2,6 +2,7 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
+  map_controller: Ember.inject.controller("map"),
 
   syncMessage: '',
 
@@ -288,70 +289,74 @@ export default Ember.Controller.extend({
   },
 
   handleFBEventResponse: function(owned_by_user /* true or false */, response, event_status, invited_user, callback) {
-
-    // console.log('handleFBEventResponse', invited_user.get('id'));
-
     if(callback) {
       callback();
     }
+    FB.api(response.id, response => {
+      if( !response.error ) {
+        this.store.query('event', { 'fb_id': response.id }).then(events => {
+          var event = null;
+          if(Ember.isEmpty(events)) {
+            console.log('event not yet in DB - ', response);
+            event = this.store.createRecord('event', {
+              fb_id: response.id
+            });
+          }
+          else {
+            console.log('event already in DB - ', response);
+            event = events.get('firstObject');
+          }
 
-    var event = null;
+          var date_time_arr = response.start_time.split('T');
+          var date_time = '';
+          var date_day = '';
 
-    this.store.query('event', { 'fb_id': response.id }).then(events => {
-      if(Ember.isEmpty(events)) {
-        console.log('event not yet in DB - ', response.name);
-        var date_time_arr = response.start_time.split('T');
-        var date_time = '';
-        var date_day = '';
+          if(date_time_arr[1]) {
+            date_time = date_time_arr[1].trim();
+          }
+          if(date_time_arr[0]) {
+            date_day = date_time_arr[0].trim();
+          }
 
-        if(date_time_arr[1]) {
-          date_time = date_time_arr[1].trim();
-        }
+          event.set('name', response.name);
+          event.set('description', response.description);
+          event.set('start_time', date_time);
+          event.set('start_date', date_day);
+          event.set('timezone', response.timezone);
 
-        if(date_time_arr[0]) {
-          date_day = date_time_arr[0].trim();
-        }
-
-        var location = null;
-
-        if(response.venue) {
-          location = this.getLocationByVenueInformation(response);
-        }
-        else {
-          location = this.getLocationByName(response);
-        }
-
-        location.then(location => {
-          event = this.store.createRecord('event', {
-            fb_id: response.id,
-            name: response.name,
-            description: response.descrption,
-            start_time: date_time,
-            start_date: date_day,
-            location: location,
-            timezone: response.timezone
-          });
-
-          event.save().then(event => {
-            this.handleEventInvitation(owned_by_user /* true or false */, event, event_status, invited_user, callback);
+          this.getLocation(response).then(location => {
+            // console.log('location', location);
+            this.setMapMarker(location);
+            event.set('location', location);
+            event.save().then(event => {
+              this.handleEventInvitation(owned_by_user /* true or false */, event, event_status, invited_user, callback);
+            });
           });
         });
-
       }
       else {
-        event = events.get('firstObject');
-        this.handleEventInvitation(owned_by_user /* true or false */, event, event_status, invited_user, callback);
+        console.log(response.error);
       }
     });
   },
 
+  setMapMarker: function(location) {
+    this.get('map_controller').get('markers').addObject({title: location.get('name'), lat: location.get('latitude'), lng: location.get('longitude'), isDraggable: false});
+  },
+
+  getLocation: function(response) {
+    if(response.venue) {
+      return this.getLocationByVenueInformation(response);
+    }
+    else {
+      return this.getLocationByName(response);
+    }
+  },
+
   getLocationByVenueInformation: function(response) {
+    // console.log('getLocationByVenueInformation');
     return this.store.query('location', { 'fb_id': response.venue.id }).then(locations => {
-
-      this.get('map_controller').get('markers').addObject({title: response.location, lat: response.venue.latitude, lng: response.venue.longitude, isDraggable: false});
-
       var location = null;
-
       if(Ember.isEmpty(locations)) {
         location = this.store.createRecord('location', {
           fb_id: response.venue.id,
@@ -374,6 +379,7 @@ export default Ember.Controller.extend({
   },
 
   getLocationByName: function(response) {
+    // console.log('getLocationByName');
     return this.store.query('location', { 'name': response.location }).then(locations => {
       if(Ember.isEmpty(locations)) {
         var location = this.store.createRecord('location', {
