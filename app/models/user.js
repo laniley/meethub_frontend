@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import DS from 'ember-data';
 
 export default DS.Model.extend({
@@ -21,7 +22,7 @@ export default DS.Model.extend({
   last_login: DS.attr(),
 
   /* unit-test exists */
-  name: function() {
+  name: Ember.computed('first_name', 'last_name', function() {
     return this.get('first_name') + ' ' + this.get('last_name');
-  }.property('first_name', 'last_name')
+  })
 });

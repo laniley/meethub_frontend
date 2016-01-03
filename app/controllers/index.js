@@ -34,7 +34,6 @@ export default Ember.Controller.extend({
             friends.forEach(friend => {
               var computed_message = Ember.Object.create({
                 message_type: 'friend',
-                subject: friend.get('name'),
                 is_open: false,
                 created_at: friend.get('created_at'),
                 reference_object: friend
@@ -62,15 +61,16 @@ export default Ember.Controller.extend({
     });
   }.property('model.user.content.friends.content','model.user.content.eventInvitations.content'),
 
-  social_points_threshold: function() {
-    var max_social_points = 0;
+  social_points_threshold: Ember.computed('model.user.eventInvitations.@each.event.social_points', function() {
     return DS.PromiseObject.create({
       promise: this.get('model').get('user').then(user => {
+        var max_social_points = 0;
         if(!Ember.isEmpty(user)) {
           var events = user.get('eventInvitations').mapBy('event');
           events.forEach(event => {
             if(event.get('content').get('social_points') > max_social_points) {
               max_social_points = event.get('content').get('social_points');
+              console.log('social_points_threshold', max_social_points / 2);
             }
           });
           return max_social_points / 2;
@@ -80,7 +80,7 @@ export default Ember.Controller.extend({
         }
       })
     });
-  }.property('model.user.content.eventInvitations.content'),
+  }),
 
   actions: {
     toggleQueryParam: function(param) {

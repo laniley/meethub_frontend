@@ -22,7 +22,13 @@
       </div>
     </div>
   {{/if}}
-  <div class="subject">{{message.subject}}</div>
+  <div class="subject">
+    {{#if (eq message.message_type 'event')}}
+      {{message.subject}}
+    {{else}}
+      {{message.reference_object.friend.content.name}}
+    {{/if}}
+  </div>
   <div class="new">
     {{#unless message.reference_object.has_been_seen}}
       {{t "new"}}
@@ -33,6 +39,7 @@
 {{#if message.is_open}}
   <div class="message-body">
     {{#if (eq message.message_type 'friend')}}
+      {{t 'friend.new'}}
     {{else}}
       <div class="info-box-row question">
         {{#if (eq message.reference_object.status 'accepted')}}
@@ -60,22 +67,30 @@
       <div class="info-box-row location">
         {{message.reference_object.event.location.name}}
       </div>
-      <div class="info-box-row more_infos">
-        <a target="_blank" href="https://www.facebook.com/events/{{message.reference_object.event.fb_id}}/">{{t "go-to-facebook-page"}}</a>
-      </div>
       <div class="info-box-row participants">
-        {{#if message.reference_object.hasConnectedFriends}}
-          <div class="row participants-title">{{t 'participants.title'}}</div>
-          {{#each friend in message.reference_object.event.friends_attending}}
-            <img class="attending" src={{friend.picture}} title={{t "attending" name=friend.name}} />
+        {{#if message.reference_object.event.hasConnectedFriends}}
+          {{#each message.reference_object.event.friends_attending.content as |friend_event_inv|}}
+            <img class="attending" src={{friend_event_inv.user.content.picture}} title={{t "attending" name=friend_event_inv.user.content.name}} />
           {{/each}}
-          {{#each friend in message.reference_object.event.friends_attending_maybe}}
-            <img class="attending-maybe" src={{friend.picture}} title={{t "maybe" name=friend.name}} />
+          {{#each message.reference_object.event.friends_attending_maybe.content as |friend_event_inv|}}
+            <img class="attending-maybe" src={{friend_event_inv.user.content.picture}} title={{t "maybe" name=friend_event_inv.user.content.name}} />
           {{/each}}
-          {{#each friend in message.reference_object.event.friends_declined}}
-            <img class="declined" src={{friend.picture}} title={{t "declined" name=friend.name}} />
+          {{#each message.reference_object.event.friends_declined.content as |friend_event_inv|}}
+            <img class="declined" src={{friend_event_inv.user.content.picture}} title={{t "declined" name=friend_event_inv.user.content.name}} />
+          {{/each}}
+          {{#each message.reference_object.event.friends_not_replied.content as |friend_event_inv|}}
+            <img class="not_replied" src={{friend_event_inv.user.content.picture}} title={{t "not_replied" name=friend_event_inv.user.content.name}} />
           {{/each}}
         {{/if}}
+      </div>
+      <div class="info-box-row event-cover">
+        <img src={{message.reference_object.event.picture}} />
+      </div>
+      <div class="info-box-row description">
+        {{message.reference_object.event.description}}
+      </div>
+      <div class="info-box-row link-to-fb-page">
+        <a target="_blank" href="https://www.facebook.com/events/{{message.reference_object.event.fb_id}}/">{{t "go-to-facebook-page"}}</a>
       </div>
     {{/if}}
   </div>

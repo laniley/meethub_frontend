@@ -12,7 +12,7 @@ export default {
       "cancel": "cancel",
       "search": "Suche einen Freund"
     },
-    "new": "Freunde von dir, die nun auch Meethub nutzen."
+    "new": "Dieser Freund von dir ist nun auch bei Meethub."
   },
   "meethub": {
     "not-in-a-meethub-part-1": "Du weißt noch nicht, was du heute unternehmen sollst? Dann leg jetzt einen Meethub an, lade deine Freunde ein und erfahre, was bei ihnen so los ist.",
@@ -44,7 +44,8 @@ export default {
     "title": "Deine Freunde:",
     "attending": "{{participant}} nimmt teil!",
     "attending_maybe": "{{participant}} nimmt vielleicht teil!",
-    "declined": "{{participant}} nimmt nicht teil!"
+    "declined": "{{participant}} nimmt nicht teil!",
+    "not_replied": "{{participant}} hat noch nicht geantwortet!"
   },
   "comment" : {
     "button" : {

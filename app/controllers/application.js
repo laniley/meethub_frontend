@@ -292,50 +292,53 @@ export default Ember.Controller.extend({
     if(callback) {
       callback();
     }
-    FB.api(response.id, response => {
-      if( !response.error ) {
-        this.store.query('event', { 'fb_id': response.id }).then(events => {
-          var event = null;
-          if(Ember.isEmpty(events)) {
-            console.log('event not yet in DB - ', response);
-            event = this.store.createRecord('event', {
-              fb_id: response.id
+    this.store.query('event', { 'fb_id': response.id }).then(events => {
+      var event = null;
+      if(Ember.isEmpty(events)) {
+        // console.log('event not yet in DB - ', response);
+        var date_time_arr = response.start_time.split('T');
+        var date_time = '';
+        var date_day = '';
+
+        if(date_time_arr[1]) {
+          date_time = date_time_arr[1].trim();
+        }
+        if(date_time_arr[0]) {
+          date_day = date_time_arr[0].trim();
+        }
+
+        // load location-data from FB
+        FB.api(response.id, {fields: 'id,name,description,cover,start_time,location,venue'}, response => {
+          if( !response.error ) {
+            this.getLocation(response).then(location => {
+              this.setMapMarker(location);
+              event = this.store.createRecord('event', {
+                fb_id: response.id,
+                name: response.name,
+                description: response.description,
+                start_time: date_time,
+                start_date: date_day,
+                timezone: response.timezone,
+                location: location,
+                picture: response.cover.source
+              });
+              event.save().then(event => {
+                this.handleEventInvitation(owned_by_user /* true or false */, event, event_status, invited_user, callback);
+              });
             });
           }
           else {
-            console.log('event already in DB - ', response);
-            event = events.get('firstObject');
+            console.log(response.error);
           }
-
-          var date_time_arr = response.start_time.split('T');
-          var date_time = '';
-          var date_day = '';
-
-          if(date_time_arr[1]) {
-            date_time = date_time_arr[1].trim();
-          }
-          if(date_time_arr[0]) {
-            date_day = date_time_arr[0].trim();
-          }
-
-          event.set('name', response.name);
-          event.set('description', response.description);
-          event.set('start_time', date_time);
-          event.set('start_date', date_day);
-          event.set('timezone', response.timezone);
-
-          this.getLocation(response).then(location => {
-            // console.log('location', location);
-            this.setMapMarker(location);
-            event.set('location', location);
-            event.save().then(event => {
-              this.handleEventInvitation(owned_by_user /* true or false */, event, event_status, invited_user, callback);
-            });
-          });
         });
       }
       else {
-        console.log(response.error);
+        // console.log('event already in DB - ', response);
+        event = events.get('firstObject');
+        event.get('location').then(location => {
+          this.setMapMarker(location);
+        });
+        this.handleEventInvitation(owned_by_user /* true or false */, event, event_status, invited_user, callback);
       }
     });
   },
