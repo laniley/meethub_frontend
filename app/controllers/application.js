@@ -150,13 +150,14 @@ export default Ember.Controller.extend({
   },
 
   loadEventsOfAFriendFromFB: function(friend, callback) {
-    console.log('loading events of ' + friend.get('name'));
+    var friend_name = friend.get('friend').get('name');
+    console.log('loading events of ' + friend_name);
     var finished_request_types = 0;
     var number_of_request_types = 3;
     friend.get('friend').then(friend => {
       FB.api('/' + friend.get('fb_id') + '/events/attending', response => {
         if( !response.error ) {
-          console.log('friend events - attending: ', response);
+          console.log(friend_name + ': events - attending: ', response);
           if(response.data.length > 0) {
             for(var i = 0; i < response.data.length; i++) {
               var event_data = response.data[i];
@@ -199,7 +200,7 @@ export default Ember.Controller.extend({
       });
       FB.api('/' + friend.get('fb_id') + '/events/maybe', response => {
         if( !response.error ) {
-          console.log('friend events - maybe: ', response);
+          console.log(friend_name + ': events - maybe: ', response);
           if(response.data.length > 0) {
             for(var i = 0; i < response.data.length; i++) {
               var event_data = response.data[i];
@@ -243,7 +244,7 @@ export default Ember.Controller.extend({
       });
       FB.api('/' + friend.get('fb_id') + '/events/not_replied', response => {
         if( !response.error ) {
-          console.log('friend events - not_replied: ', response);
+          console.log(friend_name + ': events - not_replied: ', response);
           if(response.data.length > 0) {
             for(var i = 0; i < response.data.length; i++) {
               var event_data = response.data[i];

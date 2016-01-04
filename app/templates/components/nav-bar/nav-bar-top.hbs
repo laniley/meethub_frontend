@@ -25,7 +25,7 @@
             <span class="link-label hidden-sm">{{t "messages.title"}}</span>
           {{/link-to}}
         </li>
-        <li>
+        {{!-- <li>
           {{#link-to 'events'}}
             <span>{{fa-icon "calendar" fixedWith=true}}</span>
             <span class="link-label hidden-sm">{{t 'event.title'}}</span>
@@ -33,7 +33,7 @@
               <span class="info-counter">{{number_of_new_event_invitations}}</span>
             {{/if}}
           {{/link-to}}
-        </li>
+        </li> --}}
         {{!--
           <li>
             {{#link-to 'members-area.meethubs'}}
@@ -45,7 +45,7 @@
             {{/link-to}}
           </li>
         --}}
-        <li>
+        {{!-- <li>
           {{#link-to 'friends'}}
             <span>{{fa-icon "group" fixedWith=true}}</span>
             <span class="link-label hidden-sm">{{t 'friend.title'}}</span>
@@ -53,7 +53,7 @@
               <span class="info-counter">{{number_of_unseen_new_friendships}}</span>
             {{/if}}
           {{/link-to}}
-        </li>
+        </li> --}}
         {{!-- <li>
           {{#link-to 'members-area.locations'}}
             <span>{{unbound fa-icon "fa-fixed-with fa-compass"}}</span>
@@ -72,7 +72,7 @@
             {{/if}}
           {{/link-to}}
         </li> --}}
-        <li class="custom-link fb-sync-icon {{me.isSyncingWithFB}}" {{action "resyncWithFB"}}>
+        {{!-- <li class="custom-link fb-sync-icon {{me.isSyncingWithFB}}" {{action "resyncWithFB"}}>
           <span class="fa-stack">
             {{#if me.isSyncingWithFB}}
               {{fa-icon "refresh" spin=true stack=2 size=3}}
@@ -82,7 +82,7 @@
             {{fa-icon "facebook-square" stack=1}}
           </span>
           <span class="link-label visible-xs">{{t "resync-with-fb"}}</span>
-        </li>
+        </li> --}}
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
             <div class="account_img_container">

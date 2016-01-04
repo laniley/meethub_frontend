@@ -4,7 +4,7 @@ import Ember from 'ember';
 export default Ember.Mixin.create({
 
   me: null,
-  scope: 'public_profile,email,user_friends',
+  scope: 'public_profile,email,user_friends,user_events,rsvp_event',
 
   login: function() {
     FB.login(() => { this.checkLoginState(); }, { scope: this.get('scope') });
@@ -29,10 +29,15 @@ export default Ember.Mixin.create({
     if (response.status === 'connected') {
   			// Logged into your app and Facebook.
         if(Ember.isEmpty(this.get('me'))) {
-          this.store.createRecord('me', { id: 1, isLoggedIn: true });
+          this.store.createRecord('me', {
+            id: 1,
+            isLoggedIn: true,
+            fb_access_token: response.authResponse.accessToken
+          });
         }
         else {
           this.get('me').set('isLoggedIn', true);
+          this.get('me').set('fb_access_token', response.authResponse.accessToken);
         }
 
   			this.getUserDataFromFB(this.get('store'));
@@ -112,7 +117,9 @@ export default Ember.Mixin.create({
   },
 
   saveFriends: function(response, callback) {
-    console.log('friends', response["friends"]);
+    console.log('friends', response.friends);
+    var amount_of_friends = response.friends.data.length;
+    var finished_friends = 0;
     // for each friend
     response.friends.data.forEach(aFriend => {
       FB.api(aFriend.id, {fields: 'id,first_name,last_name'}, friend => {
@@ -143,8 +150,12 @@ export default Ember.Mixin.create({
                 aFriend = friends.get('firstObject');
               }
               aFriend.save().then(() => {
-                if(callback) {
-                  callback();
+                finished_friends++;
+                console.log(finished_friends + ' / ' + amount_of_friends + ' friends saved');
+                if(finished_friends === amount_of_friends) {
+                  if(callback) {
+                    callback();
+                  }
                 }
               });
             });

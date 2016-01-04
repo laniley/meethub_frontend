@@ -61,6 +61,11 @@
         <div class="button maybe {{if (eq message.reference_object.status 'maybe') 'active'}}" {{action 'setEventInvitationStatus' message.reference_object 'maybe'}} title={{t 'messages.maybe'}}>{{fa-icon "question"}}</div>
         <div class="button decline {{if (eq message.reference_object.status 'declined') 'active'}}" {{action 'setEventInvitationStatus' message.reference_object 'declined'}} title={{t 'messages.decline'}}>{{fa-icon "remove"}}</div>
       </div>
+      {{#if participation_status_changed}}
+        <div class="info-box-row post-to-fb" {{action 'postStatusToFB' message.reference_object}}>
+          {{fa-icon "upload"}} post to facebook
+        </div>
+      {{/if}}
       <div class="info-box-row start">
         {{formatted-date message.reference_object.event.start_date 'L'}} - {{message.reference_object.event.start_time_converted}}
       </div>
@@ -81,6 +86,8 @@
           {{#each message.reference_object.event.friends_not_replied.content as |friend_event_inv|}}
             <img class="not_replied" src={{friend_event_inv.user.content.picture}} title={{t "not_replied" name=friend_event_inv.user.content.name}} />
           {{/each}}
+        {{else}}
+          {{t 'participants.no-friends-attending'}}
         {{/if}}
       </div>
       <div class="info-box-row event-cover">

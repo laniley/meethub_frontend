@@ -2,6 +2,7 @@ $list-item-background-color-active: lighten($babyblue, 10%);
 $list-item-background-color-hover: lighten($babyblue, 10%);
 
 .filter-container {
+  height: 60px;
   margin-bottom: 10px;
   .main-area-list-filter {
     border: 1px solid $blue;
@@ -110,6 +111,13 @@ $list-item-background-color-hover: lighten($babyblue, 10%);
       text-align: center;
       line-height: 40px;
       color: $text-color;
+      .post-to-fb {
+        color: $blue;
+        &:hover {
+          cursor: pointer;
+          color: darken($blue, 10%);
+        }
+      }
       .participants {
         margin: 20px 0;
         img {

@@ -42,6 +42,7 @@ export default {
   "no_results": "No results found.",
   "participants": {
     "title": "Your friends:",
+    "no-friends-attending": "None of your friends is attending.",
     "attending": "{{participant}} is attending!",
     "attending_maybe": "{{participant}} is attending maybe!",
     "declined": "{{participant}} declined!",
