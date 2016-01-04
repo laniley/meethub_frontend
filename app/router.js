@@ -49,6 +49,7 @@ Router.map(function() {
   this.route('events');
   this.route('friends');
   this.route('privacy-policy');
+  this.route('terms-of-service');
 });
 
 export default Router;
