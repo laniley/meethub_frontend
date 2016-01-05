@@ -1,17 +1,20 @@
 <div class="message-header" {{action 'toggleMessage'}}>
   <div class="icon">
     {{#if (eq message.message_type 'event')}}
-      {{fa-icon "calendar"}}
+      {{fa-icon "calendar" fixedWith=true}}
     {{else}}
       {{#if (eq message.message_type 'friend')}}
-        {{fa-icon "group"}}
+        {{fa-icon "group" fixedWith=true}}
       {{else}}
-        {{fa-icon "envelope"}}
+        {{fa-icon "envelope" fixedWith=true}}
       {{/if}}
     {{/if}}
   </div>
+  <div class="date">{{formatted-date message.reference_object.created_at 'lll'}}</div>
   {{#if (eq message.message_type 'friend')}}
-    <img src={{message.reference_object.friend.picture}} />
+    <div class="picture">
+      <img src={{message.reference_object.friend.picture}} />
+    </div>
   {{else}}
     <div class="info">
       <div class="eventInv-status {{message.reference_object.status}}">

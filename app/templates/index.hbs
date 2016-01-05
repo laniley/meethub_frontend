@@ -12,7 +12,7 @@
   </div>
 {{else}}
   {{!-- FILTERS --}}
-  <div class="filter-container">
+  <div class="filter-container row">
     <div class="main-area-list-filter {{if show_events 'active'}}" title={{t "welcome.event-invitations"}} {{action "toggleQueryParam" "show_events"}}>
       {{fa-icon "calendar"}}
     </div>

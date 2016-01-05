@@ -2,7 +2,7 @@ $list-item-background-color-active: lighten($babyblue, 10%);
 $list-item-background-color-hover: lighten($babyblue, 10%);
 
 .filter-container {
-  height: 60px;
+  justify-content: center;
   margin-bottom: 10px;
   .main-area-list-filter {
     border: 1px solid $blue;
@@ -56,7 +56,7 @@ $list-item-background-color-hover: lighten($babyblue, 10%);
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      padding: 5px;
+      padding: 15px 5px;
       @media (max-width: $screen-xs-max) {
         flex-wrap: wrap;
         justify-content: flex-start;
@@ -64,9 +64,16 @@ $list-item-background-color-hover: lighten($babyblue, 10%);
       &:hover {
         cursor: pointer;
       }
+      .date {
+        min-width: 170px;
+      }
       .icon {
+        width: 20px;
         margin-left: 5px;
         margin-right: 20px;
+      }
+      .picture {
+        width: 71px;
       }
       .info {
         display: flex;
@@ -90,7 +97,7 @@ $list-item-background-color-hover: lighten($babyblue, 10%);
       }
       img {
         width: 30px;
-        margin-right: 10px;
+        margin-left: 10px;
       }
       .subject {
         flex-grow: 2;
@@ -139,6 +146,8 @@ $list-item-background-color-hover: lighten($babyblue, 10%);
         }
       }
       .event-cover {
+        max-width: 700px;
+        margin: auto;
         img {
           width: 100%;
         }
